@@ -18,6 +18,16 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
 
 \graphicspath{{images/}{../images/}{../../images/}{./}}
 
@@ -60,11 +70,11 @@
 \definecolor{tableheader}{RGB}{232, 238, 246}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-S3-003}
-\newcommand{\docVersion}{1.0}
+\newcommand{\docVersion}{2.0}
 \newcommand{\docProceso}{DESARROLLO DE SOFTWARE / CIBERSEGURIDAD Y CONTROL DE ACCESO}
 \newcommand{\docElaboracion}{14/09/2026}
 \newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
-\newcommand{\docTitulo}{SEGURIDAD, AUTENTICACIÓN Y AUTORIZACIÓN (JWT \& RBAC EN WEBAPI)}
+\newcommand{\docTitulo}{SEGURIDAD, AUTENTICACIÓN Y CONTROL RBAC (EXPRESS V5, JWT, BCRYPT \& HELMET)}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -73,7 +83,7 @@
     \noindent\makebox[\textwidth][c]{%
     \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
         \hline
-        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
         & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
         & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
         \cline{3-3}
@@ -98,101 +108,160 @@
 
 \begin{document}
 
+% =============================================================
+% 1. TÍTULO
+% =============================================================
 \section{Título}
-\textbf{Denominación del Entregable:} Módulo de Seguridad: Autenticación Basada en Tokens JWT y Control de Acceso RBAC (.NET 9 WebAPI)
+\textbf{Denominación del Entregable:} Módulo de Seguridad: Autenticación Basada en Tokens JWT, Criptografía Bcrypt.js, Blindaje HTTP Helmet y Control de Acceso RBAC (Node.js + Express v5 API REST)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{Completado / En Auditoría}}
-    \item \textbf{Período de Ejecución:} Semana 3 (09/09/2026 al 14/09/2026 -- EDT 3.3: 4 días laborables, 32h)
-\end{itemize}
 
+
+% =============================================================
+% 2. INTRODUCCIÓN
+% =============================================================
 \section{Introducción}
-La confidencialidad, trazabilidad y control de privilegios en el sistema \textbf{SIGE} exigen una arquitectura de seguridad robusta y sin estado (*stateless*). Dado que los docentes redactan información sensible y las autoridades emiten dictámenes oficiales con valor legal, la autenticación debe impedir accesos indebidos y garantizar el no repudio.
+La confidencialidad, trazabilidad y control de privilegios en el sistema \textbf{SIGE} exigen una arquitectura de seguridad robusta y sin estado (\textit{stateless}). Dado que los docentes redactan información sensible y las autoridades emiten dictámenes oficiales con valor legal institucional bajo normas ISO 9001:2015, la autenticación debe impedir accesos indebidos, ataques de fuerza bruta y garantizar el principio de no repudio.
 
-El estándar **JSON Web Tokens (JWT)** junto con el modelo de **Control de Acceso Basado en Roles (RBAC)** implementado en ASP.NET Core 9 permite autenticar solicitudes HTTP, transportar claims seguros (identificador de usuario, rol institucional y carrera asignada) y autorizar endpoints mediante políticas estrictas y atributos \texttt{[Authorize(Roles = "...")]}.
+El estándar \textbf{JSON Web Tokens (JWT)} con firma criptográfica HMAC-SHA256, el hashing adaptativo de contraseñas con \textbf{Bcrypt.js} (coste 12 salt rounds), la protección de cabeceras HTTP mediante \textbf{Helmet} y el modelo de \textbf{Control de Acceso Basado en Roles (RBAC)} implementado en middlewares modulares de \textbf{Node.js + Express (v5)} permiten autenticar solicitudes HTTP de forma desacoplada, transportar claims seguros (identificador único UUID, correo institucional, rol institucional y unidad académica) y autorizar endpoints mediante validación estricta de políticas operativas.
 
+% =============================================================
+% 3. OBJETIVO
+% =============================================================
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Desarrollar el módulo de autenticación y autorización en la capa WebAPI de SIGE utilizando JWT y RBAC, blindando los endpoints contra accesos no autorizados y asegurando la segregación de funciones según los roles de la FISEI.
+Desarrollar el módulo de autenticación y autorización en la capa de Backend API REST de SIGE utilizando Node.js, Express (v5), PostgreSQL (18), Bcrypt.js, JWT y Helmet, blindando los endpoints contra accesos no autorizados y asegurando la segregación estricta de funciones según los roles de la FISEI.
 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item Configurar el middleware de autenticación \texttt{JwtBearer} con firma simétrica HMAC-SHA256 y validación estricta de emisor (*Issuer*), audiencia (*Audience*) y tiempo de vida (*Lifetime*).
-    \item Implementar el controlador \texttt{AuthController} con endpoints para inicio de sesión (\texttt{/api/auth/login}) y perfil de usuario autenticado (\texttt{/api/auth/me}).
-    \item Definir políticas de autorización RBAC para restringir acciones críticas (dictámenes, habilitación extemporánea y circuito de firmas).
+    \item Implementar el hashing seguro de credenciales con \texttt{bcryptjs} utilizando un factor de costo de 12 salt rounds tanto en la siembra inicial como en los servicios de autenticación.
+    \item Configurar la generación de pares de tokens en \texttt{token.util.js}: Access Token de corta duración (15--30 minutos) firmado con clave simétrica secreta HMAC-SHA256 y Refresh Token persistente en PostgreSQL 18 (7 días) para rotación segura.
+    \item Desarrollar los middlewares modulares de seguridad en Express (v5): \texttt{auth.middleware.js} para verificación Bearer y control RBAC, \texttt{rateLimiter.middleware.js} para prevención de abusos DoS y \texttt{helmet} para inyección de cabeceras defensivas.
+    \item Implementar el controlador modular \texttt{auth.controller.js} y el servicio \texttt{auth.service.js} con endpoints \texttt{/api/auth/login}, \texttt{/api/auth/refresh}, \texttt{/api/auth/logout} y \texttt{/api/auth/me}.
 \end{itemize}
 
+% =============================================================
+% 4. ALCANCE
+% =============================================================
 \section{Alcance}
 
 \subsection{Alcance Incluido}
-Generación de token JWT firmado con expiración de 120 minutos, claims de identidad (\texttt{sub}, \texttt{email}, \texttt{role}, \texttt{carrera\_id}, \texttt{nombre\_completo}), middleware global de captura de token en cabecera \texttt{Authorization: Bearer <token>} y pruebas de seguridad.
+Generación y verificación de tokens JWT firmados con expiración configurable (\texttt{JWT\_EXPIRES\_IN=15m}, \texttt{REFRESH\_TOKEN\_EXPIRES\_IN=7d}), claims de identidad obligatorios (\texttt{sub}, \texttt{email}, \texttt{role}, \texttt{carreraId}, \texttt{nombreCompleto}), middleware global \texttt{authenticateToken}, middleware \texttt{authorizeRoles}, almacenamiento y rotación de Refresh Tokens en PostgreSQL 18 y blindaje HTTP con Helmet.
 
 \subsection{Límites y Exclusiones}
-No incluye autenticación federada externa con OAuth2 de Google Workspace en esta iteración.
+No incluye autenticación federada externa con OAuth2/SAML de Google Workspace UTA ni autenticación multifactor biométrica en esta versión.
 
+% =============================================================
+% 5. DEFINICIONES
+% =============================================================
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{JWT (JSON Web Token):} Estándar abierto (RFC 7519) para transmitir información segura entre partes en formato JSON.
-    \item \textbf{RBAC (Role-Based Access Control):} Mecanismo de restricción de accesos basado en las responsabilidades institucionales.
+    \item \textbf{JWT (JSON Web Token):} Estándar abierto (RFC 7519) para transmitir información estructurada, compacta y verificable criptográficamente.
+    \item \textbf{Bcrypt.js:} Algoritmo de derivación de clave adaptativo y hashing de contraseñas con salting aleatorio resistente a ataques por GPU.
+    \item \textbf{Helmet:} Colección de middlewares para Express que inyecta y configura 11 cabeceras HTTP de protección defensiva.
+    \item \textbf{RBAC (Role-Based Access Control):} Mecanismo de restricción de accesos donde los permisos se asignan a roles institucionales definidos.
+    \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Descomposición funcional y jerárquica del proyecto.
 \end{itemize}
 
+% =============================================================
+% 6. RESPONSABILIDADES
+% =============================================================
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Nixon Hurtado (Backend / DBA):} Implementación de \texttt{TokenService.cs} y configuración de \texttt{JwtBearer}.
-    \item \textbf{Steeven Toala (Líder / Arquitecto):} Definición de matrices de permisos y revisión de directivas de seguridad.
-    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión y validación del cumplimiento de directivas de seguridad.
+    \item \textbf{Nixon Hurtado (Backend Developer / DBA):} Implementación de \texttt{auth.service.js}, utilidades criptográficas y middlewares en Express (v5).
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} Definición de matrices de permisos RBAC y auditoría de directivas de seguridad.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión técnica y validación del cumplimiento de normativas de seguridad.
 \end{itemize}
 
+% =============================================================
+% 7. NORMATIVA LEGAL Y TÉCNICA
+% =============================================================
 \section{Normativa Legal y Técnica}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Ley Orgánica de Protección de Datos Personales (Ecuador):} Confidencialidad y seguridad de información institucional.
-    \item \textbf{OWASP Top 10 API Security Risks:} Mitigación de fallos de autenticación (API2) y autorización a nivel de objeto (API1).
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (Ecuador):} Confidencialidad y custodia de identidades y accesos digitales.
+    \item \textbf{OWASP Top 10 API Security Risks (2023):} Mitigación de Broken Object Level Authorization (API1) y Broken Authentication (API2).
+    \item \textbf{RFC 7519:} JSON Web Token (JWT) specification.
+    \item \textbf{NIST SP 800-63B:} Digital Identity Guidelines -- Authentication and Lifecycle Management.
 \end{itemize}
 
+% =============================================================
+% 8. MÉTODO, POLÍTICAS Y CONTENIDOS
+% =============================================================
 \section{Método, Políticas y Contenidos}
-Implementación basada en Microsoft ASP.NET Core Identity y Microsoft.AspNetCore.Authentication.JwtBearer. Se establecen políticas rigurosas de seguridad: se prohíbe transportar credenciales o hashes dentro del token JWT, se exige clave simétrica de 256 bits y se devuelven códigos HTTP 401 Unauthorized o 403 Forbidden según corresponda para peticiones no válidas.
+Se aplica una arquitectura modular desacoplada en Node.js y Express (v5) con PostgreSQL 18. Se establecen políticas rigurosas de seguridad:
+\begin{enumerate}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{Confidencialidad del Token:} Se prohíbe transportar contraseñas o hashes dentro del payload del JWT.
+    \item \textbf{Tiempo de Vida Efímero:} El Access Token expira en 15 minutos; el Refresh Token en 7 días y sufre rotación de uso único.
+    \item \textbf{Denegación por Defecto:} Todo endpoint requiere autenticación Bearer a menos que sea explícitamente público.
+    \item \textbf{Blindaje HTTP:} Helmet inyecta cabeceras como X-Frame-Options, X-Content-Type-Options y HSTS.
+\end{enumerate}
 
+% =============================================================
+% 9. DESCRIPCIÓN DE ACTIVIDADES
+% =============================================================
 \section{Descripción de actividades}
 
-\subsection{Estructura del Payload JWT Generado}
-Los tokens emitidos tras la autenticación exitosa contienen las declaraciones necesarias para la toma de decisiones descentralizada:
-\begin{verbatim}
-{
-  "sub": "b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22",
-  "email": "docente.software@uta.edu.ec",
-  "role": "DOCENTE_RESPONSABLE",
-  "carrera_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
-  "nbf": 1726315200,
-  "exp": 1726322400,
-  "iss": "SIGE-UTA-AuthServer",
-  "aud": "SIGE-ClientApp"
-}
-\end{verbatim}
+\subsection{Implementación de Utilidades de Seguridad}
+En \texttt{backend/src/utils/token.util.js} y \texttt{password.util.js} se encapsula el hashing con Bcrypt.js y la firma con JWT:
 
-\subsection{Endpoint /api/auth/login y Control de Acceso RBAC}
-Se implementó el controlador \texttt{AuthController} validando contraseñas mediante hash con sal y protegiendo las rutas con el atributo \texttt{[Authorize(Roles = "...")]}.
+\begin{lstlisting}[language=Java]
+// backend/src/utils/password.util.js
+import bcrypt from 'bcryptjs';
+const SALT_ROUNDS = 12;
 
-\subsection{Matriz de Autorización RBAC en Endpoints}
+export const hashPassword = async (plainPassword) => {
+  return await bcrypt.hash(plainPassword, SALT_ROUNDS);
+};
+
+export const comparePassword = async (plainPassword, hashedPassword) => {
+  return await bcrypt.compare(plainPassword, hashedPassword);
+};
+\end{lstlisting}
+
+\subsection{Middlewares de Autenticación y Autorización RBAC}
+En \texttt{backend/src/middlewares/auth.middleware.js} se interceptan las solicitudes entrantes:
+
+\begin{lstlisting}[language=Java]
+// backend/src/middlewares/auth.middleware.js
+import jwt from 'jsonwebtoken';
+
+export const authenticateToken = (req, res, next) => {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) return res.status(401).json({ success: false, message: 'Token no proporcionado' });
+
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) return res.status(401).json({ success: false, message: 'Token invalido o expirado' });
+    req.user = user;
+    next();
+  });
+};
+
+export const authorizeRoles = (...allowedRoles) => {
+  return (req, res, next) => {
+    if (!req.user || !allowedRoles.includes(req.user.role)) {
+      return res.status(403).json({ success: false, message: 'Acceso denegado: Privilegios insuficientes' });
+    }
+    next();
+  };
+};
+\end{lstlisting}
+
+\subsection{Matriz de Autorización RBAC en Endpoints de SIGE}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{POST /api/auth/login}: Público (autenticación y entrega de Access/Refresh tokens).
+    \item \texttt{POST /api/auth/refresh}: Público (rotación de Access Token mediante Refresh Token).
+    \item \texttt{GET /api/auth/me}: Autenticado (\texttt{*} -- cualquier usuario con token válido).
     \item \texttt{POST /api/documentos}: Restringido a \texttt{DOCENTE\_RESPONSABLE}.
-    \item \texttt{POST /api/revisiones/dictamen}: Restringido a autoridades evaluadoras.
-    \item \texttt{POST /api/administracion/habilitaciones}: Exclusivo para \texttt{ADMINISTRADOR}.
+    \item \texttt{POST /api/revisiones/dictamen}: Restringido a \texttt{COORD\_AREA\_CONOCIMIENTO}, \texttt{COORD\_CARRERA}, \texttt{SUBDECANO}.
+    \item \texttt{POST /api/administracion/usuarios}: Restringido exclusivamente a \texttt{ADMINISTRADOR}.
 \end{itemize}
 
 \subsection{Conclusiones y Recomendaciones Técnicas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item El esquema JWT + RBAC otorga desacoplamiento total entre el cliente frontend y la WebAPI, garantizando transacciones seguras y trazables.
+    \item El esquema JWT + RBAC otorga desacoplamiento total entre el cliente frontend React + Vite y la API REST Express (v5).
     \item Los roles modelados corresponden de forma unívoca a la estructura académica del SGC de la FISEI UTA.
-    \item Configurar HTTPS estricto con certificados SSL en ambientes de producción para evitar la intercepción del token en tránsito.
+    \item Configurar HTTPS con certificados SSL/TLS y cabeceras estrictas HSTS en producción para evitar cualquier intercepción de tráfico.
 \end{itemize}
 
 \vspace{0.3cm}
@@ -231,7 +300,9 @@ Se implementó el controlador \texttt{AuthController} validando contraseñas med
     \rowcolor{gray!20}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Implementación de seguridad JWT y RBAC para Séptimo Semestre "A" & Nixon Hurtado & 14/09/2026 \\
+    1.0 & Implementación preliminar de seguridad JWT. & Nixon Hurtado & 14/09/2026 \\
+    \hline
+    2.0 & Migración al stack oficial: Node.js + Express (v5), Bcrypt.js (12 salt rounds), JWT (Access \& Refresh), Helmet y PostgreSQL 18. & Nixon Hurtado / Steeven Toala & 14/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -245,16 +316,17 @@ Se implementó el controlador \texttt{AuthController} validando contraseñas med
 \subsection*{Anexo 1: Referencias Bibliográficas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Internet Engineering Task Force (IETF). (2015). \textit{RFC 7519: JSON Web Token (JWT)}.
-    \item Microsoft Docs. (2026). \textit{Authentication and authorization in ASP.NET Core Web APIs}.
+    \item Express.js Documentation. (2026). \textit{Express 5.x Security Best Practices and Middleware Architecture}.
+    \item OWASP Foundation. (2023). \textit{OWASP API Security Top 10}.
 \end{itemize}
 
 \subsection*{Anexo 2: Matriz de Códigos de Retorno HTTP de Seguridad}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \texttt{200 OK}: Autenticación exitosa y emisión de token JWT.
+    \item \texttt{200 OK}: Autenticación exitosa, entrega de tokens o perfil recuperado.
     \item \texttt{401 Unauthorized}: Token ausente, firma inválida o expirado.
-    \item \texttt{403 Forbidden}: Token válido pero rol insuficiente para la operación solicitada.
+    \item \texttt{403 Forbidden}: Token válido pero rol o privilegios insuficientes en RBAC.
+    \item \texttt{429 Too Many Requests}: Tasa de peticiones excedida (protección rate limiter).
+    \item \texttt{500 Internal Server Error}: Excepción no controlada gestionada por el middleware centralizado.
 \end{itemize}
 
 \end{document}
-
-

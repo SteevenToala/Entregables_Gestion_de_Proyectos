@@ -18,6 +18,16 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
 
 \graphicspath{{images/}{../images/}{../../images/}{./}}
 
@@ -60,11 +70,11 @@
 \definecolor{tableheader}{RGB}{232, 238, 246}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-S4-001}
-\newcommand{\docVersion}{1.0}
+\newcommand{\docVersion}{2.0}
 \newcommand{\docProceso}{DESARROLLO FRONTEND / WIZARD Y EXPERIENCIA DE USUARIO}
 \newcommand{\docElaboracion}{16/09/2026}
-\newcommand{\docRevision}{EN PROGRESO AVANZADO}
-\newcommand{\docTitulo}{LAYOUT DEL WIZARD MODULAR EN PESTAÑAS (FRONTEND)}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{LAYOUT DEL WIZARD MODULAR EN PESTAÑAS (REACT + VITE + TAILWIND)}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -73,7 +83,7 @@
     \noindent\makebox[\textwidth][c]{%
     \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
         \hline
-        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
         & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
         & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
         \cline{3-3}
@@ -98,68 +108,89 @@
 
 \begin{document}
 
+% =============================================================
+% 1. TÍTULO
+% =============================================================
 \section{Título}
-\textbf{Denominación del Entregable:} Desarrollo del Wizard Modular Asistido por Pasos para Elaboración de Planes e Informes
+\textbf{Denominación del Entregable:} Desarrollo del Wizard Modular Asistido por Pasos para Elaboración de Planes e Informes (React + Vite, Tailwind CSS Keyframes \#00345E)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Desarrollo / Semana 4 en Curso}}
-    \item \textbf{Período de Ejecución:} Semana 4 (15/09/2026 al 18/09/2026 -- EDT 3.5: 4 días laborables, 32h)
-\end{itemize}
 
+
+% =============================================================
+% 2. INTRODUCCIÓN
+% =============================================================
 \section{Introducción}
-Los formatos institucionales del SGC (\texttt{UTA-SGC-A-2-1-P7-T1} para el Plan de Trabajo e \texttt{UTA-SGC-A-2-1-P7-T2} para el Informe de Cumplimiento) se componen de múltiples secciones secuenciales: Datos Informativos, Justificación/Objetivos, Matriz Cronograma de Actividades, Anexos/Evidencias y Circuito de Firmas. La presentación de estos formularios en un formato monolítico extenso satura al usuario y propicia la pérdida de información.
+Los formatos institucionales del Sistema de Gestión de Calidad (SGC) de la FISEI UTA (\texttt{UTA-SGC-A-2-1-P7-T1} para el Plan de Trabajo e \texttt{UTA-SGC-A-2-1-P7-T2} para el Informe de Cumplimiento) se componen de múltiples secciones secuenciales: Datos Informativos, Justificación/Objetivos, Matriz Cronograma de Actividades, Anexos/Evidencias y Circuito de Firmas. La presentación de estos extensos formularios en una sola vista monolítica satura al usuario y propicia la pérdida involuntaria de datos.
 
-Para optimizar la interacción, se diseñó e implementó un componente asistido por pasos (**Wizard Modular**) en React 19. Este asistente divide el llenado en pestañas lógicas conectadas, valida los requisitos mínimos de cada etapa antes de permitir la navegación, proporciona un indicador de avance porcentual en tiempo real y gestiona el estado transaccional del expediente.
+Para resolver esta problemática de interacción, se diseñó e implementó un componente asistido por pasos (\textbf{Wizard Modular}) en \textbf{React + Vite} y \textbf{Tailwind CSS}. Este asistente divide el proceso de llenado en pestañas lógicas conectadas, valida los requisitos mínimos de cada etapa antes de permitir la navegación, proporciona un indicador de avance porcentual en tiempo real y gestiona el estado transaccional del expediente con soporte para microanimaciones CSS Keyframes.
 
+% =============================================================
+% 3. OBJETIVO
+% =============================================================
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Desarrollar el componente de interfaz \texttt{PlanEditorWizard.tsx} bajo la arquitectura de pestañas modulares en React 19, guiando al docente en el llenado guiado y secuencial de su planificación semestral conforme al formato oficial de la FISEI UTA.
+Desarrollar el componente de interfaz \texttt{PlanEditorWizard.jsx} bajo la arquitectura de pestañas modulares en React y Vite, guiando al docente en el llenado guiado y secuencial de su planificación semestral conforme al formato oficial del SGC de la FISEI UTA.
 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item Diseñar la barra de navegación por pasos con estados visuales: *Completado*, *En Edición*, *Pendiente* y *Bloqueado*.
-    \item Implementar validaciones deterministas de salida en cada pestaña (no permitir avanzar si faltan campos obligatorios).
+    \item Diseñar la barra de navegación por pasos con estados visuales claros: \textit{Completado}, \textit{En Edición}, \textit{Pendiente} y \textit{Bloqueado}, aplicando los colores institucionales (\texttt{\#00345E}).
+    \item Implementar validaciones deterministas de salida en cada pestaña (Validation Gates que impiden avanzar si faltan campos obligatorios).
     \item Integrar el cálculo reactivo del porcentaje de completitud global del expediente.
+    \item Conectar el Wizard con el cliente Axios institucional con auto-renovación de tokens y el backend Node.js + Express (v5).
 \end{itemize}
 
+% =============================================================
+% 4. ALCANCE
+% =============================================================
 \section{Alcance}
 
 \subsection{Alcance Incluido}
-Pestaña 1 (Datos Informativos), Pestaña 2 (Justificación y Objetivos), Pestaña 3 (Contenedor de la Matriz de Actividades), Pestaña 4 (Anexos y Evidencias) y Pestaña 5 (Vista previa y Cascada de Firmas).
+Componente \texttt{PlanEditorWizard.jsx} ubicado en \texttt{frontend/src/pages/}, Pestaña 1 (Datos Informativos), Pestaña 2 (Justificación y Objetivos), Pestaña 3 (Contenedor de la Matriz de Actividades y Ponderaciones al 100.00\%), Pestaña 4 (Anexos y Evidencias) y Pestaña 5 (Vista previa y Cascada de Firmas).
 
 \subsection{Límites y Exclusiones}
-El cálculo dinámico de fórmulas de ponderación se encapsula en EDT 3.9.
+El editor enriquecido de texto con autoguardado se encapsula en EDT 4.2; la exportación oficial a PDF/Word se encapsula en EDT 4.3.
 
+% =============================================================
+% 5. DEFINICIONES
+% =============================================================
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Wizard Pattern:} Patrón de diseño de interfaz que descompone una tarea compleja en pasos individuales secuenciales.
-    \item \textbf{Completitud Reactiva:} Cálculo en memoria del progreso del formulario que se actualiza con cada cambio de entrada.
+    \item \textbf{Wizard Pattern:} Patrón de diseño de interfaz que descompone una tarea compleja en pasos secuenciales y validados.
+    \item \textbf{Validation Gate:} Condición de negocio que restringe el paso a la siguiente etapa hasta satisfacer los requisitos de calidad.
+    \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Descomposición funcional jerárquica de entregables del proyecto.
 \end{itemize}
 
+% =============================================================
+% 6. RESPONSABILIDADES
+% =============================================================
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Andrea Vasquez (Frontend / QA):} Programación de componentes React, manejo de estado y validadores de pestañas.
-    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} Ajuste estético, iconos de estado y pruebas de usabilidad según wireframes.
-    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión técnica y validación del diseño UX.
+    \item \textbf{Andrea Vasquez (Frontend Developer / QA):} Programación del componente \texttt{PlanEditorWizard.jsx}, manejo de estado y validadores.
+    \item \textbf{Heidy Villavicencio (UI-UX):} Ajuste estético en Tailwind CSS, paleta \texttt{\#00345E}, animaciones Keyframes e iconos de estado.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión técnica y validación del diseño UX/UI institucional.
 \end{itemize}
 
+% =============================================================
+% 7. NORMATIVA LEGAL Y TÉCNICA
+% =============================================================
 \section{Normativa Legal y Técnica}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Guía de Estilo Visual FISEI UTA:} Uso de tipografías oficiales, contraste institucional y diseño responsivo.
-    \item \textbf{ISO 9241-11:} Ergonomía de la interacción persona-sistema (Usabilidad y Eficacia).
+    \item \textbf{Guía de Estilo Visual FISEI UTA:} Paleta institucional (\texttt{\#00345E}), contraste tipográfico WCAG 2.1 AA y diseño responsive.
+    \item \textbf{ISO 9241-11:} Ergonomía de la interacción persona-sistema (Usabilidad, Eficacia y Satisfacción).
+    \item \textbf{Norma Técnica SGC UTA:} Formatos institucionales \texttt{UTA-SGC-A-2-1-P7-T1} y \texttt{UTA-SGC-A-2-1-P7-T2}.
 \end{itemize}
 
+% =============================================================
+% 8. MÉTODO, POLÍTICAS Y CONTENIDOS
+% =============================================================
 \section{Método, Políticas y Contenidos}
-Construcción de componentes desacoplados en React 19 con TypeScript estricto y React Hook Form. Se definen políticas estrictas de navegación: el usuario puede retornar a pasos anteriores ya guardados, pero se restringe el avance a etapas subsiguientes si el paso activo contiene errores de validación.
+Construcción de componentes funcionales modulares en React con Hooks nativos y Tailwind CSS. Se establecen políticas rigurosas de navegación:
+\begin{enumerate}[leftmargin=1.5em, itemsep=1.5pt]
+    \item El docente puede regresar libremente a pasos anteriores guardados.
+    \item Se bloquea el botón "Siguiente" si el paso actual no satisface la totalidad de validaciones requeridas.
+    \item La pestaña de firmas permanece bloqueada hasta que la matriz de ponderación cierre con exactitud en el 100.00\%.
+\end{enumerate}
 
 \begin{figure}[htbp]
     \centering
@@ -168,17 +199,22 @@ Construcción de componentes desacoplados en React 19 con TypeScript estricto y 
     \label{fig:layout_vistas}
 \end{figure}
 
+% =============================================================
+% 9. DESCRIPCIÓN DE ACTIVIDADES
+% =============================================================
 \section{Descripción de actividades}
 
-\subsection{Estructura de Pasos del Wizard Modular}
-El formulario se divide en 5 pestañas secuenciales claramente delimitadas:
-\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Datos Informativos:} Período, docente, dedicación horaria y carrera.
-    \item \textbf{Justificación y Objetivos:} Metas estratégicas del período.
-    \item \textbf{Matriz de Actividades y Ponderaciones:} Tabla interactiva con validación al 100.00\%.
-    \item \textbf{Anexos y Evidencias:} Repositorio de medios de verificación en MinIO S3.
-    \item \textbf{Cascada de Firmas:} Vista previa de foliación y circuito secuencial de legalización.
-\end{enumerate}
+\subsection{Estructura de Pasos del Wizard (PlanEditorWizard.jsx)}
+\begin{lstlisting}[language=Java]
+// frontend/src/pages/PlanEditorWizard.jsx
+export const WIZARD_STEPS = [
+  { id: 1, key: 'datos', label: '1. Datos Informativos', icon: 'FileText' },
+  { id: 2, key: 'justificacion', label: '2. Justificacion y Objetivos', icon: 'Target' },
+  { id: 3, key: 'matriz', label: '3. Matriz Cronograma (100%)', icon: 'Table' },
+  { id: 4, key: 'evidencias', label: '4. Anexos y Evidencias', icon: 'Paperclip' },
+  { id: 5, key: 'firmas', label: '5. Cascada de Firmas', icon: 'CheckSquare' }
+];
+\end{lstlisting}
 
 \subsection{Flujo de Validación y Completitud Reactiva}
 El avance porcentual se calcula reactivamente en memoria:
@@ -189,9 +225,9 @@ Si el docente intenta acceder a la pestaña de Firmas sin alcanzar el 100\% de p
 
 \subsection{Conclusiones y Recomendaciones Técnicas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item El Wizard modular elimina la fricción de los formatos Word estáticos, reduciendo los errores por omisión de datos obligatorios.
-    \item La arquitectura por componentes facilita el mantenimiento y la reutilización tanto para el Plan de Trabajo como para el Informe de Cumplimiento.
-    \item Conectar el Wizard con el servicio de autoguardado en segundo plano desarrollado en EDT 4.2 para evitar pérdidas accidentales de texto.
+    \item El Wizard modular elimina la fatiga cognitiva del docente frente a formularios largos, guiándolo paso a paso y reduciendo los rechazos por omisión de requisitos.
+    \item La arquitectura por componentes facilita la reutilización inmediata tanto para planes de trabajo como para informes finales de cumplimiento.
+    \item Se recomienda articular el Wizard con el motor de autoguardado periódico TipTap (EDT 4.2) para brindar resiliencia absoluta ante caídas de red.
 \end{itemize}
 
 \vspace{0.3cm}
@@ -230,7 +266,9 @@ Si el docente intenta acceder a la pestaña de Firmas sin alcanzar el 100\% de p
     \rowcolor{gray!20}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Creación del componente Wizard modular de 5 pestañas para Séptimo Semestre "A" & Andrea Vasquez & 16/09/2026 \\
+    1.0 & Creación inicial del componente Wizard modular. & Andrea Vasquez & 16/09/2026 \\
+    \hline
+    2.0 & Actualización integral al stack oficial: React + Vite, Tailwind CSS Keyframes \#00345E e integración con Axios centralizado. & Andrea Vasquez / Heidy Villavicencio & 16/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -244,12 +282,11 @@ Si el docente intenta acceder a la pestaña de Firmas sin alcanzar el 100\% de p
 \subsection*{Anexo 1: Referencias Bibliográficas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Nielsen Norman Group. (2024). \textit{Wizards: Definition and Design Recommendations}.
-    \item React Community. (2026). \textit{React 19 Hooks and Component State}.
+    \item React Community. (2026). \textit{React Component Architecture and Custom Hooks}.
+    \item Tailwind Labs. (2026). \textit{Building Accessible Steppers with Tailwind CSS}.
 \end{itemize}
 
 \subsection*{Anexo 2: Flujo Lógico de Validación por Pasos}
-Matriz de dependencias y condiciones de salida requeridas en cada pestaña antes de habilitar el botón de avance secuencial.
+Diagrama de estados de cada pestaña y transiciones permitidas según el cumplimiento de las Validation Gates del SGC FISEI UTA.
 
 \end{document}
-
-

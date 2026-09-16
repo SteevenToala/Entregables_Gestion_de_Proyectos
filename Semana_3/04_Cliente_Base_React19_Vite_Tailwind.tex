@@ -18,6 +18,16 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
 
 \graphicspath{{images/}{../images/}{../../images/}{./}}
 
@@ -60,11 +70,11 @@
 \definecolor{tableheader}{RGB}{232, 238, 246}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-S3-004}
-\newcommand{\docVersion}{1.0}
+\newcommand{\docVersion}{2.0}
 \newcommand{\docProceso}{DESARROLLO FRONTEND / CLIENTE WEB SPA}
 \newcommand{\docElaboracion}{14/09/2026}
 \newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
-\newcommand{\docTitulo}{CLIENTE BASE EN REACT 19 + TYPESCRIPT + VITE + TAILWIND CSS}
+\newcommand{\docTitulo}{CLIENTE BASE EN REACT + VITE + TAILWIND CSS (KEYFRAMES \& \#00345E)}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -73,7 +83,7 @@
     \noindent\makebox[\textwidth][c]{%
     \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
         \hline
-        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
         & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
         & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
         \cline{3-3}
@@ -98,102 +108,190 @@
 
 \begin{document}
 
+% =============================================================
+% 1. TÍTULO
+% =============================================================
 \section{Título}
-\textbf{Denominación del Entregable:} Configuración del Cliente Web Base: React 19, TypeScript, Vite, Tailwind CSS y Sistema de Navegación
+\textbf{Denominación del Entregable:} Configuración del Cliente Web Base: React + Vite, Tailwind CSS + CSS Keyframes, Sistema de Navegación, Interceptor de Auto-Renovación Axios y Contexto de Autenticación
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{Completado / En Auditoría}}
-    \item \textbf{Período de Ejecución:} Semana 3 (08/09/2026 al 14/09/2026 -- EDT 3.4: 5 días laborables, 40h)
-\end{itemize}
 
+
+% =============================================================
+% 2. INTRODUCCIÓN
+% =============================================================
 \section{Introducción}
-La interfaz de usuario del sistema \textbf{SIGE} debe proporcionar una experiencia moderna, fluida y adaptativa a los docentes y autoridades de la FISEI. Para lograr tiempos de carga instantáneos y alta confiabilidad en tipado estático, se adoptó el stack conformado por **React 19**, **TypeScript**, **Vite** y **Tailwind CSS**.
+La interfaz de usuario del sistema \textbf{SIGE} debe ofrecer una experiencia visual contemporánea, fluida, reactiva y plenamente adaptativa para los docentes, revisores de área, coordinadores de carrera y autoridades de la FISEI. Para lograr tiempos de carga imperceptibles (arranque en milisegundos con Vite ESM), modularidad de componentes y animaciones aceleradas por hardware (GPU), se adoptó la arquitectura de cliente basada en \textbf{React + Vite} y un sistema de estilos con \textbf{Tailwind CSS + CSS Keyframes}.
 
-Este entregable describe la inicialización del proyecto cliente \texttt{SIGE.ClientApp}, la configuración del diseño atómico con la paleta de colores institucional de la UTA, la integración del enrutador SPA (*Single Page Application*) con rutas protegidas según roles, y la capa cliente para la comunicación HTTP con la WebAPI.
+Este entregable formaliza la construcción de la estructura \texttt{frontend/} dentro del repositorio monorepo \texttt{SIGE/}, la configuración del diseño institucional con la paleta oficial (\textbf{Azul UTA/FISEI \#00345E}), la implementación del gestor global de estado de autenticación \texttt{AuthContext.jsx}, el enrutador protegido por roles institucionales y el cliente HTTP Axios con interceptores avanzados para auto-renovación silenciosa de Access Tokens mediante Refresh Tokens.
 
+% =============================================================
+% 3. OBJETIVO
+% =============================================================
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Construir la arquitectura base del cliente frontend en React 19 con TypeScript y Vite, estableciendo el sistema de componentes visuales, el manejo de rutas protegidas y la integración con el API de autenticación.
+Construir la arquitectura base del cliente frontend en React y Vite dentro de la estructura monorepo \texttt{SIGE/frontend/}, estableciendo el sistema de componentes visuales con Tailwind CSS y CSS Keyframes, el enrutamiento protegido por RBAC y la capa de consumo HTTP con auto-renovación de credenciales.
 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item Inicializar el bundle con Vite garantizando compilación ultra-rápida (HMR) y tipado estricto en TypeScript.
-    \item Diseñar la biblioteca de tokens CSS institucional (Rojo UTA \texttt{\#B40000}, Azul Oscuro \texttt{\#0C2340}, Fondo \texttt{\#F8FAFC}).
-    \item Implementar el enrutador con \texttt{react-router-dom} y guardas de navegación (*Guards*) para roles docentes y directivos.
-    \item Crear los componentes base reutilizables: Navbar, Sidebar colapsable, Modal institucional y alertas Toast.
+    \item Configurar el entorno de desarrollo con Vite asegurando recarga en caliente instantánea (\textit{Hot Module Replacement - HMR}) y compilación optimizada para producción.
+    \item Implementar en \texttt{tailwind.config.js} e \texttt{index.css} el sistema de diseño institucional con la paleta de colores UTA/FISEI (\texttt{\#00345E}), componentes con glassmorphism y microanimaciones fluidas por GPU.
+    \item Desarrollar el interceptor HTTP de Axios en \texttt{frontend/src/api/client.js} con inyección de cabeceras Bearer y auto-renovación ante respuestas 401 Unauthorized.
+    \item Construir las páginas fundamentales \texttt{LoginPage.jsx} (autenticación institucional) y \texttt{DashboardPage.jsx} (panel principal según rol).
 \end{itemize}
 
+% =============================================================
+% 4. ALCANCE
+% =============================================================
 \section{Alcance}
 
 \subsection{Alcance Incluido}
-Proyecto SPA \texttt{SIGE.ClientApp} operativo en el puerto 5173, pantalla de inicio de sesión con validación institucional, Dashboard general y cliente Axios con interceptores JWT.
+Estructura de carpetas en \texttt{frontend/}, configuración de \texttt{vite.config.js} y \texttt{tailwind.config.js}, gestión de sesión con \texttt{AuthContext.jsx}, componentes comunes (Navbar institucional, Sidebar responsivo, Cards y Modales), interceptor Axios de dos vías y vista de \texttt{LoginPage.jsx} con heráldica oficial.
 
 \subsection{Límites y Exclusiones}
-No incluye el editor TipTap (EDT 3.6) ni la matriz de actividades (EDT 3.9).
+No incluye el editor enriquecido de texto para informes ni la previsualización interactiva de dictámenes PDF (EDT Semana 4).
 
+% =============================================================
+% 5. DEFINICIONES
+% =============================================================
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Vite:} Herramienta de compilación frontend basada en módulos ES nativos para desarrollo ultra-veloz.
-    \item \textbf{Route Guard:} Componente de protección de rutas que verifica si el usuario autenticado posee el rol requerido.
+    \item \textbf{Vite:} Herramienta de compilación frontend basada en Rollup y esbuild que aprovecha módulos ES nativos para máxima velocidad.
+    \item \textbf{Tailwind CSS:} Framework CSS utilitario para composición atómica y responsive de interfaces sin sobrecarga de estilos redundantes.
+    \item \textbf{CSS Keyframes:} Reglas de animación ejecutadas directamente en GPU que garantizan 60 FPS estables.
+    \item \textbf{Axios Interceptor:} Capa intermedia que manipula peticiones o respuestas HTTP de forma centralizada.
+    \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Descomposición funcional jerárquica del proyecto.
 \end{itemize}
 
+% =============================================================
+% 6. RESPONSABILIDADES
+% =============================================================
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Andrea Vasquez (Frontend / QA):} Estructura de carpetas, configuración de Vite, rutas y consumo de servicios con Axios.
-    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} Maquetación responsiva y alineación con los wireframes de Figma.
-    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Validación de usabilidad y aprobación del cliente base.
+    \item \textbf{Andrea Vasquez (Frontend / QA):} Configuración de Vite, desarrollo de \texttt{api/client.js}, \texttt{AuthContext.jsx} y páginas funcionales.
+    \item \textbf{Heidy Villavicencio (UI-UX):} Maquetación con Tailwind CSS, keyframes, paleta \texttt{\#00345E} y adaptación responsive.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Validación de usabilidad, estética institucional y aprobación del cliente base.
 \end{itemize}
 
+% =============================================================
+% 7. NORMATIVA LEGAL Y TÉCNICA
+% =============================================================
 \section{Normativa Legal y Técnica}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{W3C Web Content Accessibility Guidelines (WCAG 2.1 - Nivel AA):} Contraste tipográfico y navegación accesible.
-    \item \textbf{Estándar IEEE 1471:} Buenas prácticas en arquitectura de software cliente.
+    \item \textbf{W3C Web Content Accessibility Guidelines (WCAG 2.1 - Nivel AA):} Contraste de color mínimo 4.5:1 y accesibilidad por teclado.
+    \item \textbf{Manual de Identidad Visual Corporativa UTA:} Aplicación del color institucional Azul UTA/FISEI \texttt{\#00345E} y heráldica universitaria.
+    \item \textbf{ISO/IEC 25010:} Estándares de calidad de software relativos a usabilidad y eficiencia de rendimiento.
 \end{itemize}
 
+% =============================================================
+% 8. MÉTODO, POLÍTICAS Y CONTENIDOS
+% =============================================================
 \section{Método, Políticas y Contenidos}
-Desarrollo basado en componentes funcionales de React 19 con Hooks nativos y TypeScript estricto sin tipo \texttt{any}. Los estilos visuales se gestionan mediante clases utilitarias de Tailwind CSS evitando CSS arbitrario disperso.
+Desarrollo basado en arquitectura modular de componentes funcionales en React con Hooks nativos y enrutamiento con \texttt{react-router-dom}. Se establecen políticas rigurosas:
+\begin{enumerate}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{Identidad Visual Estricta:} Uso obligatorio de la paleta institucional centrada en \texttt{\#00345E}.
+    \item \textbf{Animaciones por GPU:} Las transiciones de interfaz emplean \texttt{transform} y \texttt{opacity} en CSS Keyframes.
+    \item \textbf{Cliente HTTP Centralizado:} Prohibido el uso directo de \texttt{fetch()}; todas las llamadas deben utilizar la instancia configurada de Axios.
+\end{enumerate}
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.85\textwidth,keepaspectratio]{images/s2_05_paleta_colores.png}
-    \caption{Paleta de Colores Institucional FISEI UTA y Tokens de Diseño en Tailwind CSS.}
+    \caption{Paleta de Colores Institucional FISEI UTA (\#00345E) y Tokens de Diseño en Tailwind CSS.}
     \label{fig:paleta_colores}
 \end{figure}
 
+% =============================================================
+% 9. DESCRIPCIÓN DE ACTIVIDADES
+% =============================================================
 \section{Descripción de actividades}
 
-\subsection{Estructura del Proyecto y Enrutador Modular}
-Se organizó el directorio bajo diseño atómico en \texttt{src/components}, \texttt{src/pages} y \texttt{src/routes}, implementando \texttt{react-router-dom} con rutas protegidas por roles.
+\subsection{Estructura de Directorios del Frontend (SIGE/frontend/)}
+El cliente se organiza modularmente dentro de \texttt{SIGE/frontend/}:
+\begin{lstlisting}
+frontend/
+|-- public/ (logo-uta.png, logo-uta-shield.png, logo-fisei.png)
+|-- src/
+|   |-- api/client.js        # Cliente Axios con auto-renovacion
+|   |-- components/common/   # Navbar, Sidebar, Card, Modal
+|   |-- context/             # AuthContext.jsx
+|   |-- pages/               # LoginPage.jsx, DashboardPage.jsx
+|   |-- App.jsx, index.css, main.jsx
+|-- tailwind.config.js, vite.config.js, package.json
+\end{lstlisting}
 
-\subsection{Configuración de Interceptor Axios para JWT}
-El interceptor inyecta automáticamente el token almacenado en \texttt{localStorage} en todas las peticiones salientes hacia la WebAPI:
-\begin{verbatim}
+\subsection{Interceptor Axios de Auto-Renovación (client.js)}
+\begin{lstlisting}[language=Java]
+// frontend/src/api/client.js
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api',
+});
+
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('sige_token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  const token = localStorage.getItem('sige_access_token');
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
-\end{verbatim}
 
-\subsection{Tokens Institucionales en Tailwind CSS}
-Se definieron los colores oficiales de la Universidad Técnica de Ambato (\texttt{uta-red}: \texttt{\#B40000}, \texttt{fisei-blue}: \texttt{\#0C2340}, \texttt{bg-slate}: \texttt{\#F8FAFC}) asegurando conformidad con el manual de imagen institucional.
+api.interceptors.response.use(
+  (res) => res,
+  async (error) => {
+    const orig = error.config;
+    if (error.response?.status === 401 && !orig._retry) {
+      orig._retry = true;
+      try {
+        const refreshToken = localStorage.getItem('sige_refresh_token');
+        const { data } = await axios.post(`${api.defaults.baseURL}/auth/refresh`, { refreshToken });
+        localStorage.setItem('sige_access_token', data.data.accessToken);
+        orig.headers.Authorization = `Bearer ${data.data.accessToken}`;
+        return api(orig);
+      } catch (err) {
+        localStorage.clear();
+        window.location.href = '/login';
+        return Promise.reject(err);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+export default api;
+\end{lstlisting}
+
+\subsection{Configuración de Tailwind CSS con Paleta \#00345E y Keyframes}
+\begin{lstlisting}[language=Java]
+// frontend/tailwind.config.js
+export default {
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  theme: {
+    extend: {
+      colors: {
+        uta: {
+          blue: '#00345E', // Azul Oficial Institucional
+          dark: '#00223E',
+          light: '#0A4B82',
+          red: '#D9232D',  // Rojo Heraldico
+        },
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0', transform: 'translateY(8px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+      },
+      animation: { 'fade-in': 'fadeIn 0.3s ease-out forwards' }
+    },
+  },
+  plugins: [],
+};
+\end{lstlisting}
 
 \subsection{Conclusiones y Recomendaciones Técnicas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item El cliente frontend en React 19 proporciona una base escalable y altamente receptiva para soportar los módulos de Wizard y gestión de matriz.
-    \item El esquema de rutas protegidas previene accesos no autorizados a las bandejas del comité o administración.
-    \item Integrar un sistema de pruebas unitarias de componentes con Vitest y React Testing Library en el Sprint 4.
+    \item La combinación de React y Vite provee una velocidad de desarrollo y recarga en caliente inigualable (menor a 50 ms).
+    \item El mecanismo de interceptores de Axios con auto-renovación silenciosa salvaguarda el trabajo de redacción del docente frente a expiraciones de sesión.
+    \item La paleta institucional \texttt{\#00345E} y los keyframes por GPU ofrecen una imagen profesional alineada al SGC de la FISEI.
 \end{itemize}
 
 \vspace{0.3cm}
@@ -232,7 +330,9 @@ Se definieron los colores oficiales de la Universidad Técnica de Ambato (\textt
     \rowcolor{gray!20}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Configuración del cliente base en React 19, Vite y Tailwind para Séptimo Semestre "A" & Andrea Vasquez & 14/09/2026 \\
+    1.0 & Configuración inicial del cliente web. & Andrea Vasquez & 14/09/2026 \\
+    \hline
+    2.0 & Actualización integral al stack oficial: React + Vite, Tailwind CSS con paleta institucional \#00345E, animaciones CSS Keyframes y cliente Axios con auto-renovación silenciosa. & Andrea Vasquez / Heidy Villavicencio & 14/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -245,13 +345,12 @@ Se definieron los colores oficiales de la Universidad Técnica de Ambato (\textt
 
 \subsection*{Anexo 1: Referencias Bibliográficas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item React Community. (2026). \textit{React 19 Documentation}.
-    \item Tailwind Labs. (2026). \textit{Tailwind CSS Documentation}.
+    \item React Documentation. (2026). \textit{React: The Library for Web and Native User Interfaces}.
+    \item Vite.js Team. (2026). \textit{Vite: Next Generation Frontend Tooling}.
+    \item Tailwind Labs. (2026). \textit{Tailwind CSS: Rapidly build modern websites without ever leaving your HTML}.
 \end{itemize}
 
 \subsection*{Anexo 2: Paleta de Colores y Tokens CSS Institucionales}
-Definición de variables CSS nativas y clases de utilidad en conformidad con el manual de imagen corporativa de la Universidad Técnica de Ambato.
+Definición de variables CSS nativas y clases utilitarias de Tailwind CSS en estricta conformidad con el manual de imagen corporativa de la Universidad Técnica de Ambato (\#00345E).
 
 \end{document}
-
-

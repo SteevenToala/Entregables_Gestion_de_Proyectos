@@ -18,6 +18,16 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
 
 \graphicspath{{images/}{../images/}{../../images/}{./}}
 
@@ -73,7 +83,7 @@
     \noindent\makebox[\textwidth][c]{%
     \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
         \hline
-        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
         & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
         & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
         \cline{3-3}
@@ -99,34 +109,24 @@
 \begin{document}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Datos Iniciales y Catálogos Institucionales SGC (Seeders en .NET 9 / EF Core)
+\textbf{Denominación del Entregable:} Datos Iniciales y Catálogos Institucionales SGC (Seeders SQL y Bcrypt en Node.js / PostgreSQL 18) (EDT 3.2)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{Completado / En Auditoría}}
-    \item \textbf{Período de Ejecución:} Semana 3 (10/09/2026 al 14/09/2026 -- EDT 3.2: 3 días laborables, 24h)
-\end{itemize}
+
 
 \section{Introducción}
-Para que el sistema \textbf{SIGE} opere en conformidad con la estructura organizativa de la FISEI UTA, la base de datos debe inicializarse de manera idempotente con los catálogos maestros y los usuarios institucionales representativos de cada escalón decisorio. Los procesos de poblamiento automático (*Data Seeding*) garantizan que al desplegar un nuevo contenedor o ambiente de pruebas, la aplicación cuente con las carreras activas, los roles del SGC, los usuarios semilla y el catálogo estandarizado de actividades de docencia, APE y tutorías.
+Para que el sistema \textbf{SIGE} opere en plena correspondencia con el organigrama y normativas de la FISEI UTA, la base de datos relacional debe inicializarse de manera idempotente con los catálogos maestros institucionales, los roles del Sistema de Gestión de Calidad (SGC) y los usuarios acreditados para cada nivel de toma de decisiones. El proceso de sembrado de datos (\textit{Data Seeding}) se articula mediante el script \texttt{backend/src/database/seed.sql} y el módulo de inicialización en Node.js, garantizando que al desplegar los contenedores locales de \textbf{PostgreSQL (18)} se disponga de inmediato de un entorno operativo con credenciales cifradas con \textbf{Bcrypt.js} (cost factor 12).
 
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Poblar de forma automatizada e idempotente los datos semilla institucionales en PostgreSQL 16 mediante un servicio \texttt{DbInitializer} en .NET 9, garantizando la disponibilidad inmediata de carreras, roles y usuarios acreditados para pruebas y auditoría.
+Poblar de forma automatizada e idempotente los datos semilla institucionales en PostgreSQL 18 mediante scripts SQL y utilitarios de cifrado en Node.js + Express (v5), garantizando la disponibilidad inmediata de carreras, roles, usuarios y catálogo SGC para pruebas y auditoría.
 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item Configurar la entidad \texttt{CarrerasUnidades} con la Carrera de Ingeniería de Software de la FISEI.
-    \item Crear usuarios semilla para los 5 roles del SGC (\texttt{DOCENTE\_RESPONSABLE}, \texttt{COORD\_AREA\_CONOCIMIENTO}, \texttt{COORD\_CARRERA}, \texttt{ADMINISTRADOR}, \texttt{SUBDECANO}) con credenciales seguras.
-    \item Inyectar el catálogo maestro de actividades SGC para facilitar el autocompletado en la Matriz de Trabajo.
+    \item Configurar la tabla de carreras con la Carrera de Ingeniería de Software de la FISEI.
+    \item Registrar los roles oficiales del SGC (\texttt{DOCENTE\_RESPONSABLE}, \texttt{COORD\_AREA\_CONOCIMIENTO}, \texttt{COORD\_CARRERA}, \texttt{ADMINISTRADOR}, \texttt{SUBDECANO}).
+    \item Crear usuarios semilla con contraseñas cifradas mediante Bcrypt.js (12 salt rounds) vinculados a sus correos institucionales \texttt{@uta.edu.ec}.
+    \item Inyectar el catálogo maestro de 15 actividades tipo SGC para optimizar el autocompletado en el Wizard de Matriz.
 \end{itemize}
 
 \section{Alcance}
@@ -187,26 +187,28 @@ subdecano.fisei@uta.edu.ec & Heidy Villavicencio & SUBDECANO \\
 \caption{Usuarios Institucionales Semilla Inyectados en Base de Datos.}
 \end{table}
 
-\subsection{Estructura del Seeder Idempotente en .NET 9}
-El método \texttt{SeedAsync} verifica la no existencia previa de registros antes de insertar para garantizar idempotencia absoluta en reinicios del contenedor Docker:
-\begin{verbatim}
-public static async Task SeedAsync(ApplicationDbContext context)
-{
-    if (!await context.CarrerasUnidades.AnyAsync())
-    {
-        var carrera = new CarreraUnidad
-        {
-            Id = Guid.Parse("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"),
-            Codigo = "SOFT-FISEI",
-            Nombre = "Carrera de Ingeniería de Software",
-            Facultad = "Facultad de Ingeniería en Sistemas...",
-            Activo = true
-        };
-        context.CarrerasUnidades.Add(carrera);
-        await context.SaveChangesAsync();
-    }
-}
-\end{verbatim}
+\subsection{Estructura del Seeder Idempotente (\texttt{seed.sql})}
+Las sentencias de inserción utilizan cláusulas de resolución de conflictos para garantizar idempotencia absoluta en cada reinicio del entorno:
+\begin{lstlisting}[language=SQL]
+-- Insercion idempotente de Carrera Institucional
+INSERT INTO carreras_unidades (id, codigo, nombre, facultad, activo)
+VALUES (
+    'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+    'SOFT-FISEI',
+    'Carrera de Ingenieria de Software',
+    'Facultad de Ingenieria en Sistemas, Electronica e Industrial',
+    true
+)
+ON CONFLICT (codigo) DO NOTHING;
+
+-- Insercion idempotente de Roles SGC
+INSERT INTO roles (id, nombre, descripcion) VALUES
+    ('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a01', 'DOCENTE_RESPONSABLE', 'Docente titular elaborador'),
+    ('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a02', 'COORD_AREA_CONOCIMIENTO', 'Coordinador de area revisor'),
+    ('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a03', 'COORD_CARRERA', 'Coordinador de carrera validador'),
+    ('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a04', 'ADMINISTRADOR', 'Administrador del sistema SGC')
+ON CONFLICT (nombre) DO NOTHING;
+\end{lstlisting}
 
 \subsection{Catálogo Maestro de Actividades SGC}
 Se sembraron 15 actividades tipificadas organizadas en Docencia, Prácticas APE, Tutorías y Gestión de Calidad, facilitando el autocompletado en los formularios P7-T1 y P7-T2.
@@ -268,7 +270,7 @@ Se sembraron 15 actividades tipificadas organizadas en Docencia, Prácticas APE,
 \subsection*{Anexo 1: Referencias Bibliográficas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Universidad Técnica de Ambato. (2025). \textit{Estatuto Orgánico de la Universidad Técnica de Ambato}.
-    \item Microsoft Docs. (2026). \textit{Data Seeding in Entity Framework Core}.
+    \item PostgreSQL Global Development Group. (2026). \textit{PostgreSQL 18 Documentation: SQL Data Insertion and Seeding Scripts}.
 \end{itemize}
 
 \subsection*{Anexo 2: Credenciales Semilla para Entornos de Pruebas}

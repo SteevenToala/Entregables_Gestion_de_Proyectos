@@ -1,0 +1,297 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S1-007}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{GESTIÓN DE PROYECTOS Y PLANIFICACIÓN DEL TIEMPO}
+\newcommand{\docElaboracion}{24/08/2026}
+\newcommand{\docRevision}{APROBADO}
+\newcommand{\docTitulo}{PLAN DE GESTIÓN DEL PROYECTO, ESTRUCTURA EDT Y CRONOGRAMA MAESTRO}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Plan de Gestión del Tiempo, Estructura de Desglose del Trabajo (EDT) y Cronograma Maestro (EDT 1.7)
+
+
+
+\section{Introducción}
+La planificación rigurosa del tiempo y el alcance constituye el factor determinante para el éxito en el desarrollo del sistema \textbf{SIGE} de la FISEI -- UTA. Para garantizar que los entregables se completen dentro de los plazos académicos y normativos establecidos por la dirección universitaria, se ha formulado el presente \textbf{Plan de Gestión del Proyecto y Cronograma Maestro}, estructurado mediante la técnica de \textbf{Estructura de Desglose del Trabajo (EDT)} y programado en la herramienta \textbf{Microsoft Project}.
+
+El proyecto abarca un horizonte temporal total de \textbf{80 días calendario} (del miércoles 12 de agosto al viernes 30 de octubre de 2026), equivalentes a \textbf{57 días laborables netos} y \textbf{456 horas de trabajo de ingeniería}, respetando estrictamente la jornada laboral ecuatoriana (lunes a viernes de 08:00 a 17:00, con 1 hora de almuerzo) y protegiendo los descansos obligatorios y el feriado nacional de la Independencia de Guayaquil (viernes 09 de octubre de 2026).
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Establecer la línea base formal de alcance y cronograma del proyecto SIGE mediante la descomposición jerárquica en una EDT de 49 tareas estructuradas en 5 fases secuenciales e iterativas, asegurando una asignación balanceada de recursos y la sincronización con el stack tecnológico institucional (Node.js + Express v5, PostgreSQL 18, React + Vite y Tailwind CSS).
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item Descomponer el ciclo de vida del proyecto en \textbf{49 paquetes de trabajo EDT} orientados a entregables tangibles y verificables.
+    \item Modelar en Microsoft Project el cronograma maestro bajo el calendario oficial de Ambato, cuantificando \textbf{57 días laborables (456 horas netas)}.
+    \item Determinar la \textbf{Ruta Crítica} del proyecto y planificar \textbf{14 tareas concurrentes/paralelas} para optimizar el tiempo global sin sobrecargar al equipo.
+    \item Vincular cada entregable técnico y documental con su respectivo responsable dentro de la matriz RACI del equipo de Séptimo Semestre "A".
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Límites de la Planificación (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{Fase 1: Análisis y Planificación} (EDT 1.0 a 1.8 | 9 días hábiles, 72h).
+    \item \textbf{Fase 2: Diseño Rápido y Arquitectura} (EDT 2.0 a 2.7 | 9 días hábiles, 72h).
+    \item \textbf{Fase 3: Desarrollo Iterativo Core} (EDT 3.0 a 3.16 | 25 días hábiles, 200h distribuidas en 4 Sprints).
+    \item \textbf{Fase 4: Pruebas QA, Seguridad e Integración} (EDT 4.0 a 4.7 | 9 días hábiles, 72h).
+    \item \textbf{Fase 5: Despliegue Final, Capacitación y Cierre} (EDT 5.0 a 5.6 | 5 días hábiles, 40h).
+    \item Calendario laboral institucional: Lunes a viernes de 08:00 a 17:00 (1 hora de receso de 13:00 a 14:00). Exclusión de fines de semana y feriado del 09 de octubre de 2026.
+    \item Tablero visual interactivo \texttt{Tablero\_EDT\_Trello.html} para importación ágil por fases en Trello.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item No abarca horas extraordinarias no autorizadas ni jornadas en días de descanso obligatorio.
+    \item No contempla adquisiciones de licencias comerciales propietarias de software.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{EDT (Estructura de Desglose del Trabajo):} Descomposición jerárquica orientada a entregables de los trabajos que el equipo debe ejecutar. En este proyecto se utiliza con exclusividad la denominación en español EDT.
+    \item \textbf{Hito (\textit{Milestone}):} Evento significativo del proyecto con duración cero (0 días) que marca la conclusión de una fase o entrega formal aprobada.
+    \item \textbf{Ruta Crítica (\textit{Critical Path}):} Secuencia de actividades que determina la duración mínima del proyecto; cualquier retraso en una actividad crítica genera retraso global.
+    \item \textbf{Día Laborable:} Período regular de 8 horas de trabajo efectivo según el calendario institucional.
+    \item \textbf{Paralelismo Concurrente:} Ejecución simultánea de tareas frontend y backend o tareas de especificación que no tienen precedencia bloqueante.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|>{\bfseries}p{3.5cm}|p{3.2cm}|X|}
+\hline
+\rowcolor{tableheader}
+Integrante & Rol en el Cronograma & Responsabilidad en la EDT \\
+\hline
+Steeven Toala & Líder / Arquitecto & Línea base del cronograma, parametrización de dependencias en MS Project y control de Ruta Crítica. \\
+\hline
+Heidy Villavicencio & Analista / UI-UX & Estimación de esfuerzo para levantamiento As-Is, SRS IEEE 830, wireframes Figma y manuales de usuario. \\
+\hline
+Nixon Hurtado & Backend / DBA & Estimación de tiempos de esquemas PostgreSQL 18, controladores Express v5 y migraciones. \\
+\hline
+Andrea Vasquez & Frontend / QA & Estimación de tiempos para cliente React + Vite, layouts Tailwind CSS, pruebas E2E y aseguramiento de calidad. \\
+\hline
+Ing. Paulo Torres & Docente Tutor / Asesor & Revisión de suficiencia metodológica, aprobación del cronograma maestro y firma en hitos de control. \\
+\hline
+\end{tabularx}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Guía del PMBOK (7ma Edición):} Dominios de Desempeño de Planificación, Entrega e Incertidumbre.
+    \item \textbf{ISO/IEC/IEEE 16326:2019:} \textit{Systems and software engineering -- Life cycle processes -- Project management}.
+    \item \textbf{Código del Trabajo de la República del Ecuador:} Art. 47 (Jornada máxima ordinaria de 8 horas diarias y 40 semanales) y Art. 65 (Descanso obligatorio en feriados nacionales).
+    \item \textbf{Reglamento de Régimen Académico de la UTA:} Disposiciones de titulación y proyectos de software.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+
+\subsection{Resumen de Fases y Horas del Proyecto SIGE}
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}p{4.2cm}|c|c|c|X|}
+\hline
+\rowcolor{tableheader}
+EDT & Fase del Proyecto & Fechas & Días & Horas & Hito Asociado \\
+\hline
+EDT 1.0 & FASE 1: Análisis y Planificación & 12 ago -- 24 ago & 9 d & 72 h & Hito 1: Aprobación Semana 1 \\
+\hline
+EDT 2.0 & FASE 2: Diseño Rápido y Arquitectura & 25 ago -- 04 sep & 9 d & 72 h & Hito 2: Aprobación Semana 2 \\
+\hline
+EDT 3.0 & FASE 3: Desarrollo Iterativo Core & 07 sep -- 09 oct & 25 d & 200 h & Hitos 3, 4 y 5 (Code Freeze) \\
+\hline
+EDT 4.0 & FASE 4: Pruebas QA e Integración & 12 oct -- 22 oct & 9 d & 72 h & Hito 6: Release Candidate \\
+\hline
+EDT 5.0 & FASE 5: Despliegue y Cierre & 23 oct -- 30 oct & 5 d & 40 h & Hito 7: Cierre del Proyecto \\
+\hline
+\rowcolor{lightgraybg}
+\multicolumn{2}{|c|}{\textbf{TOTAL PROYECTO COMPLETO}} & \textbf{12 ago -- 30 oct} & \textbf{57 d} & \textbf{456 h} & \textbf{7 Hitos Formales} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Desglose de Paquetes de Trabajo de la Fase 1}
+\begin{table}[h!]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}p{4.0cm}|c|c|c|c|X|}
+\hline
+\rowcolor{tableheader}
+EDT & Tarea en EDT / Trello & Resp. & Fechas & Días & Pred. & Entregable Asociado \\
+\hline
+EDT 1.1 & Levantamiento de información & HV & 12 ago - 14 ago & 3 d & - & \texttt{01\_Levantamiento...md} \\
+\hline
+EDT 1.2 & Identificación de actores & HV & 13 ago - 18 ago & 3 d & 1.1 (SS) & \texttt{02\_Identificacion...md} \\
+\hline
+EDT 1.3 & Definición de requisitos & HV, ST & 17 ago - 19 ago & 3 d & 1.1, 1.2 & \texttt{03\_Definicion\_Requisitos...md} \\
+\hline
+EDT 1.4 & Alcance y restricciones & ST & 19 ago - 21 ago & 3 d & 1.3 & \texttt{04\_Definicion\_Alcance...md} \\
+\hline
+EDT 1.5 & Reglas de negocio y gates & NH, ST & 19 ago - 21 ago & 3 d & 1.3 & \texttt{05\_Reglas\_Negocio...md} \\
+\hline
+EDT 1.6 & Caso de Negocio y ROI & NH & 20 ago - 24 ago & 3 d & 1.4, 1.5 & \texttt{06\_Caso\_de\_Negocio.md} \\
+\hline
+EDT 1.7 & Planificación y cronograma & ST & 20 ago - 24 ago & 3 d & 1.4 & \texttt{07\_Planificacion\_Proyecto...md} \\
+\hline
+EDT 1.8 & HITO 1: Aprobación Semana 1 & Equipo & 24 ago & 0 d & 1.6, 1.7 & \texttt{08\_Entregable\_General...md} \\
+\hline
+\end{tabularx}
+\end{table}
+
+\subsection{Tareas Concurrentes y Optimización del Cronograma}
+Se implementaron 14 instancias de paralelismo operativo en el proyecto SIGE para asegurar la fecha de entrega:
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{EDT 1.2 en paralelo con EDT 1.1:} Análisis de actores simultáneo al relevamiento de campo.
+    \item \textbf{EDT 1.5 en paralelo con EDT 1.4:} Validación lógica concurrente con la definición de alcance.
+    \item \textbf{EDT 1.7 en paralelo con EDT 1.6:} Estructuración de la EDT y cronograma maestro simultáneo al Caso de Negocio.
+    \item \textbf{EDT 2.2 en paralelo con EDT 2.1:} Arquitectura modular Express v5 simultánea al modelado de casos de uso.
+    \item \textbf{EDT 2.5 en paralelo con EDT 2.4:} Prototipado Figma UI/UX concurrente con el modelo relacional PostgreSQL 18.
+    \item \textbf{EDT 3.1, 3.2, 3.3 en paralelo con EDT 3.4:} Desarrollo backend en paralelo con el cliente base React + Vite.
+    \item \textbf{EDT 3.7 en paralelo con EDT 3.5, 3.6:} Endpoints RESTful simultáneos a las vistas del Wizard y editor TipTap.
+    \item \textbf{EDT 3.10 en paralelo con EDT 3.9:} Middlewares de validación concurrentes con la interfaz de matriz dinámica.
+\end{itemize}
+
+\section{Descripción de Actividades}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Recopilación de Artefactos (20/08/2026):} Revisión del SRS IEEE 830, catálogo de reglas de negocio y restricciones técnicas para desglosar el alcance en unidades de trabajo discretas.
+    \item \textbf{Diseño de la EDT Jerárquica (21/08/2026):} Formulación de los 49 paquetes de trabajo clasificados en 5 fases secuenciales con hitos de cierre medibles.
+    \item \textbf{Modelado en Microsoft Project (22/08/2026 - 24/08/2026):} Parametrización del calendario laboral de Ambato (57 días hábiles, 456 horas netas, jornada de 8h/día, feriado del 9-Oct protegido) y asignación de recursos balanceada.
+\end{enumerate}
+
+\section{Firmas de Responsabilidad}
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 24/08/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE REVISIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Creación formal del Plan de Gestión del Proyecto, EDT de 49 tareas, cronograma MS Project y sincronización con el tablero Trello. & Steeven Toala & 24/08/2026 \\
+    \hline
+\end{tabularx}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Anexo A:} Tablero interactivo de control visual \texttt{Tablero\_EDT\_Trello.html}.
+    \item \textbf{Anexo B:} Archivo de intercambio \texttt{EDT\_SIGE\_Calendario\_Ecuador.json} con el dataset íntegro de las 49 tareas.
+    \item \textbf{Anexo C:} Calendario de feriados nacionales del Ecuador emitido por el Ministerio de Turismo (feriado oficial del viernes 09 de octubre de 2026).
+\end{itemize}
+
+\end{document}

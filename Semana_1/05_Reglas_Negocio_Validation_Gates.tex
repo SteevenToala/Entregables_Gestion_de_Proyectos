@@ -111,22 +111,10 @@
 \section{Título}
 \textbf{Denominación del Entregable:} Catálogo de Reglas de Negocio Institucionales y Motor de Validation Gates (EDT 1.5)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
-    \item \textbf{Período de Ejecución:} Semana 1 (20/08/2026 al 22/08/2026)
-    \item \textbf{Responsables:} Steeven Toala (Líder / Arquitecto) y Nixon Hurtado (Backend / DBA)
-\end{itemize}
+
 
 \section{Introducción}
-La confiabilidad y rigor del sistema \textbf{SIGE} radica en su capacidad para garantizar el cumplimiento normativo institucional del Sistema de Gestión de la Calidad (SGC). En este documento se especifican formalmente las \textbf{Reglas de Negocio (RN)} y la arquitectura de compuertas secuenciales (\textbf{Validation Gates}) implementadas de forma determinista en cliente (React + Zod) y servidor (.NET 9 + FluentValidation) que impiden el avance, guardado o envío de documentos con inconsistencias aritméticas o documentales.
+La confiabilidad y rigor del sistema \textbf{SIGE} radica en su capacidad para garantizar el cumplimiento normativo institucional del Sistema de Gestión de la Calidad (SGC). En este documento se especifican formalmente las \textbf{Reglas de Negocio (RN)} y la arquitectura de compuertas secuenciales (\textbf{Validation Gates}) implementadas de forma determinista en cliente (React + Zod) y servidor (Node.js + Express v5 con middlewares modulares de validación y PostgreSQL 18) que impiden el avance, guardado o envío de documentos con inconsistencias aritméticas o documentales.
 
 \section{Objetivo}
 
@@ -135,7 +123,7 @@ Formalizar y parametrizar las reglas de negocio institucionales y compuertas de 
 
 \subsection{Objetivos Específicos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item Especificar las 9 reglas de negocio deterministas del SGC con sus formulaciones matemáticas y validaciones en C\# FluentValidation.
+    \item Especificar las 9 reglas de negocio deterministas del SGC con sus formulaciones matemáticas y validaciones en middlewares de Express (v5).
     \item Definir los 4 Validation Gates secuenciales: Gate 1 (Estructura), Gate 2 (Evidencias MinIO), Gate 3 (Ponderación 100\%) y Gate 4 (Firma Previa Válida).
     \item Modelar el diagrama de flujo determinista de compuertas lógicas.
 \end{enumerate}
@@ -145,7 +133,7 @@ Formalizar y parametrizar las reglas de negocio institucionales y compuertas de 
 \subsection{Límites de Aplicación (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Aplica a todos los documentos generados bajo los formatos P7-T1 (Plan de Trabajo) y P7-T2 (Informe de Cumplimiento) en la FISEI.
-    \item Validación reactiva en frontend (React + Zod) y validación estricta transaccional en backend (.NET 9 + FluentValidation).
+    \item Validación reactiva en frontend (React + Zod) y validación estricta transaccional en backend (Node.js + Express v5 y PostgreSQL 18).
 \end{itemize}
 
 \subsection{Exclusiones (Out-of-Scope)}
@@ -172,7 +160,7 @@ Formalizar y parametrizar las reglas de negocio institucionales y compuertas de 
     \hline
     Steeven Toala & Líder de Proyecto / Arquitecto & Diseño de compuertas lógicas y orquestación del flujo de validación. \\
     \hline
-    Nixon Hurtado & Backend / DBA & Implementación de las reglas en FluentValidation (.NET 9) y triggers de base de datos. \\
+    Nixon Hurtado & Backend / DBA & Implementación de las reglas en middlewares de Express (v5) y restricciones en PostgreSQL 18. \\
     \hline
     Ing. Paulo Torres & Docente Tutor & Validación de correspondencia normativa con los estándares del SGC de la UTA. \\
     \hline
@@ -239,26 +227,43 @@ Los \textbf{Validation Gates} (Compuertas de Validación Deterministas) evalúan
 \subsection{RN-04: Obligatoriedad de Medios de Verificación en MinIO S3}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
     \item \textbf{Descripción:} Ninguna actividad puede registrar un avance porcentual superior al $0\%$ si no tiene adjunto al menos un archivo de verificación cargado en el bucket de MinIO.
-    \item \textbf{Validación Backend (FluentValidation en C\#):}
+    \item \textbf{Validación Backend (Middleware Modular Express v5):}
 \end{itemize}
-\begin{lstlisting}[language={[Sharp]C}]
-RuleFor(a => a.Evidencias)
-    .NotEmpty()
-    .When(a => a.PorcentajeAvance > 0)
-    .WithMessage("Toda actividad con avance mayor a 0% requiere al menos una evidencia cargada en MinIO.");
+\begin{lstlisting}[language=Java]
+// backend/src/modules/reports/report.validation.js
+export const validateReportEvidences = (req, res, next) => {
+  const { actividades } = req.body;
+  for (const act of actividades) {
+    if (act.porcentajeAvance > 0 && (!act.evidencias || act.evidencias.length === 0)) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Toda actividad con avance mayor a 0% requiere evidencia cargada en MinIO.'
+      });
+    }
+  }
+  next();
+};
 \end{lstlisting}
 
 \subsection{RN-05: Justificación Obligatoria de Desvío ($< 100\%$)}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
     \item \textbf{Descripción:} Toda actividad cuyo avance no alcance el $100\%$ debe justificar la causa del retraso o reprogramación en el campo de observaciones.
-    \item \textbf{Validación Backend (FluentValidation en C\#):}
+    \item \textbf{Validación Backend (Middleware Modular Express v5):}
 \end{itemize}
-\begin{lstlisting}[language={[Sharp]C}]
-RuleFor(a => a.Observaciones)
-    .NotEmpty()
-    .MinimumLength(10)
-    .When(a => a.PorcentajeAvance < 100)
-    .WithMessage("Las actividades con avance menor al 100% deben incluir una justificacion de desvio de al menos 10 caracteres.");
+\begin{lstlisting}[language=Java]
+// backend/src/modules/reports/report.validation.js
+export const validateReportDeviations = (req, res, next) => {
+  const { actividades } = req.body;
+  for (const act of actividades) {
+    if (act.porcentajeAvance < 100 && (!act.observaciones || act.observaciones.trim().length < 10)) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Actividades con avance < 100% deben incluir justificacion de al menos 10 caracteres.'
+      });
+    }
+  }
+  next();
+};
 \end{lstlisting}
 
 \subsection{RN-06: Validación de Suma Ponderada Total ($100.0\%$)}
@@ -337,7 +342,7 @@ RuleFor(a => a.Observaciones)
 \vspace{0.4cm}
 
 \section{Anexos}
-\subsection*{Anexo 1: Pipeline Behaviors de MediatR para Validation Gates}
-Patrón de intercepción en ASP.NET Core que evalúa las reglas de validación en tiempo de compilación y ejecución antes de persistir los cambios en PostgreSQL.
+\subsection*{Anexo 1: Middlewares Modulares en Express (v5) para Validation Gates}
+Cadena de middlewares en Node.js + Express (v5) que intercepta las peticiones HTTP y evalúa de forma determinista las compuertas de validación de esquemas y reglas de negocio antes de la persistencia en PostgreSQL 18.
 
 \end{document}

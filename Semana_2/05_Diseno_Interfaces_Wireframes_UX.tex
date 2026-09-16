@@ -111,19 +111,7 @@
 \section{Título}
 \textbf{Denominación del Entregable:} Sistema de Diseño UI/UX, Wireframes de Alta Fidelidad y Usabilidad (EDT 2.5)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
-    \item \textbf{Período de Ejecución:} Semana 2 (01/09/2026 al 04/09/2026)
-    \item \textbf{Responsables:} Heidy Villavicencio (Analista / UI-UX) y Andrea Vasquez (Frontend / QA)
-\end{itemize}
+
 
 \section{Introducción}
 La interfaz gráfica del sistema \textbf{SIGE} ha sido concebida bajo principios de sobriedad institucional, accesibilidad web (WCAG 2.1 AA) y consistencia visual con la identidad de la Universidad Técnica de Ambato. Este entregable presenta el sistema de diseño basado en tonos azules y blancos, tokens de color, jerarquía tipográfica y wireframes de alta fidelidad para las vistas de Docente Elaborador, Comité de Revisión y Administrador SGC.
@@ -186,7 +174,7 @@ Diseñar las interfaces de usuario interactivas y wireframes de alta fidelidad p
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-El sistema de diseño adopta una paleta institucional sobria y limpia basada exclusivamente en tonos azules y blancos:
+El sistema de diseño adopta la paleta institucional oficial de la UTA/FISEI basada en el estándar visual institucional y tokens configurados en Tailwind CSS con animaciones fluidas mediante CSS Keyframes:
 
 \begin{figure}[htbp]
     \centering
@@ -197,12 +185,12 @@ El sistema de diseño adopta una paleta institucional sobria y limpia basada exc
 
 \subsection{Tokens Cromáticos Oficiales}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{\#0C2340 (Azul Noche UTA):} Barra de navegación superior (\textit{Navbar}), encabezados de primer nivel y tarjetas directivas.
-    \item \textbf{\#1A4480 (Azul Primario Institucional):} Botones principales de acción, pestañas activas del Wizard y bordes destacados.
-    \item \textbf{\#2563EB (Azul Interactivo):} Enlaces hipertextuales, badges de estado informativo e iconos de interacción.
+    \item \textbf{\#00345E (Azul Institucional UTA/FISEI):} Barra de navegación superior (\textit{Navbar}), encabezados principales, botones de acción y pantalla oficial de acceso (\texttt{LoginPage.jsx}).
+    \item \textbf{\#0C2340 (Azul Noche Oscuro):} Paneles laterales, menús desplegables y fondos de modales institucionales.
+    \item \textbf{\#2563EB (Azul Interactivo):} Enlaces hipertextuales, badges de estado informativo y anillos de enfoque (\textit{focus ring}).
     \item \textbf{\#FFFFFF (Blanco Puro):} Superficies de formulario, fondos de modales, inputs y contenedores de tablas.
     \item \textbf{\#F4F6F9 (Gris Claro Base):} Fondo general de la aplicación web y separación de paneles laterales.
-    \item \textbf{\#1E293B (Slate Oscuro):} Tipografía de cuerpo de texto de alto contraste para lectura prolongada.
+    \item \textbf{\#1E293B (Slate Oscuro):} Tipografía de cuerpo de texto de alto contraste para lectura prolongada según norma WCAG 2.1 AA.
 \end{itemize}
 
 \subsection{Tipografía y Espaciado}

@@ -101,19 +101,7 @@
 \section{Título}
 \textbf{Denominación del Entregable:} Caso de Negocio, Análisis Costo-Beneficio (ROI, Payback) y Matriz de Riesgos (EDT 1.6)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
-    \item \textbf{Período de Ejecución:} Semana 1 (21/08/2026 al 24/08/2026)
-    \item \textbf{Responsables:} Steeven Toala, Heidy Villavicencio, Nixon Hurtado, Andrea Vasquez
-\end{itemize}
+
 
 \section{Introducción}
 La viabilidad de una inversión en tecnologías de información requiere una justificación cuantitativa y estratégica rigurosa. En este documento se presenta el \textbf{Caso de Negocio} para la implantación del sistema \textbf{SIGE}, fundamentado en la reducción de costos operativos por eliminación de papel, optimización del tiempo de revisión docente y mitigación de riesgos de auditoría del Sistema de Gestión de Calidad (SGC).
@@ -202,7 +190,7 @@ El análisis financiero se estructura a partir de la cuantificación de horas ho
     \item \textbf{Reducción del 65\% en Tiempos de Gestión:} El tiempo promedio de elaboración y revisión pasa de 8 horas a menos de 2.8 horas por informe.
     \item \textbf{Ahorro Anual de 1,800 Horas Hombre:} Horas recuperadas que la planta docente reinvertirá en investigación científica, docencia y tutorías.
     \item \textbf{100\% de Trazabilidad y Evidencias Completas:} Eliminación total de informes aprobados con evidencias faltantes gracias a los \textit{Validation Gates}.
-    \item \textbf{Cero Costos de Licenciamiento Comercial:} Stack tecnológico basado 100\% en código abierto (.NET 9, React 19, PostgreSQL 16, MinIO, Docker, LanguageTool).
+    \item \textbf{Cero Costos de Licenciamiento Comercial:} Stack tecnológico basado 100\% en software open-source (Node.js + Express v5, React + Vite, PostgreSQL 18, MinIO, Docker, LanguageTool).
 \end{enumerate}
 
 \section{Descripción de actividades}
@@ -219,7 +207,7 @@ El análisis financiero se estructura a partir de la cuantificación de horas ho
     \hline
     Servidor VPS Cloud & 4 vCPUs, 8 GB RAM, 160 GB NVMe (Ubuntu 24.04) & 6 meses (\$28.00/mes) & \$168.00 \\
     \hline
-    Base de Datos PostgreSQL & PostgreSQL 16 gestionado con backups diarios & 6 meses (\$18.00/mes) & \$108.00 \\
+    Base de Datos PostgreSQL & PostgreSQL 18 gestionado con backups diarios & 6 meses (\$18.00/mes) & \$108.00 \\
     \hline
     Almacenamiento MinIO S3 & Repositorio de evidencias con redundancia local & 6 meses (\$12.00/mes) & \$72.00 \\
     \hline
@@ -288,7 +276,7 @@ El análisis financiero se estructura a partir de la cuantificación de horas ho
     \rowcolor{tableheader}
     Riesgo Identificado & Prob. & Imp. & Plan de Mitigación / Acción Preventiva \\
     \hline
-    R-01: Reglas de Bloqueo Estricto & Media & Alto & Batería de pruebas unitarias exhaustivas en backend (.NET 9) para evitar falsos positivos en el guardado. \\
+    R-01: Reglas de Bloqueo Estricto & Media & Alto & Batería de pruebas unitarias exhaustivas en backend (Node.js + Express v5) para evitar falsos positivos en el guardado. \\
     \hline
     R-02: Resistencia al Cambio de Docentes & Media & Alto & Diseño de interfaz intuitivo en pestañas, autoguardado y talleres prácticos de capacitación. \\
     \hline

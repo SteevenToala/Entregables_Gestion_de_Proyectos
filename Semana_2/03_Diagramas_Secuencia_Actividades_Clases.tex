@@ -101,18 +101,7 @@
 \section{Título}
 \textbf{Denominación del Entregable:} Modelado Dinámico y Estructural del Dominio en UML 2.5: Cascada de Firmas con FirmaEC, Ciclo de Vida Documental y Clases de Dominio.
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
-    \item \textbf{Período de Ejecución:} Semana 2 (27/08/2026 al 02/09/2026 -- EDT 2.3: 5 días hábiles, 40h)
-\end{itemize}
+
 
 \section{Introducción}
 El modelado dinámico y estructural formaliza la interacción temporal de objetos, el flujo de mensajes y la jerarquía de clases que sustentan la lógica del sistema \textbf{SIGE}. Este documento detalla los diagramas UML de **Secuencia** (destacando el subsistema criptográfico de firmas electrónicas multinivel con FirmaEC), **Actividades** (ciclo de vida del plan e informe SGC con habilitaciones extemporáneas) y **Clases del Dominio** (entidades, agregados y value objects).
@@ -133,7 +122,7 @@ Representar formalmente el flujo dinámico de mensajes, el circuito jerárquico 
 \section{Alcance}
 
 \subsection{Límites del Modelado}
-Modela las interacciones entre los actores del SGC (Docente Responsable, Coordinador de Área, Coordinador de Carrera, Administrador), el cliente frontend, la WebAPI en .NET 9, el validador determinista, el almacenamiento de objetos MinIO S3 y el motor criptográfico FirmaEC.
+Modela las interacciones entre los actores del SGC (Docente Responsable, Coordinador de Área, Coordinador de Carrera, Administrador), el cliente frontend (React + Vite), el backend REST en Node.js + Express (v5), el validador determinista, la base de datos PostgreSQL 18, el almacenamiento de objetos MinIO S3 y el motor criptográfico FirmaEC.
 
 \subsection{Exclusiones}
 No modela la comunicación interna de bajo nivel de los drivers criptográficos de tokens físicos ni pasarelas financieras ajenas a la UTA.
@@ -147,7 +136,7 @@ No modela la comunicación interna de bajo nivel de los drivers criptográficos 
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Steeven Toala (Líder / Arquitecto):} Modelado de diagramas de secuencia, protocolo de firmas y arquitectura limpia.
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} Modelado de diagramas de secuencia, protocolo de firmas y arquitectura modular.
     \item \textbf{Heidy Villavicencio (Analista / UI-UX):} Diagrama de actividades, reglas del formato SGC y verificación de usabilidad.
     \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión y validación técnica del apego a la normativa institucional.
 \end{itemize}
@@ -216,7 +205,7 @@ Representa las entidades centrales del dominio, tipos fuertemente tipados e inva
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item El modelado dinámico formaliza con rigor matemático el flujo de validación y la cascada inmutable de firmas con FirmaEC, impidiendo firmas desordenadas o adulteraciones.
     \item La estructura de clases y actividades garantiza la total fidelidad con los formatos oficiales \texttt{UTA-SGC-A-2-1-P7-T1} y \texttt{UTA-SGC-A-2-1-P7-T2}.
-    \item Implementar las precondiciones de cascada mediante validadores FluentValidation y constraints a nivel de base de datos relacional.
+    \item Implementar las precondiciones de cascada mediante middlewares modulares de validación en Express (v5) y constraints en PostgreSQL 18.
 \end{itemize}
 
 \vspace{0.3cm}

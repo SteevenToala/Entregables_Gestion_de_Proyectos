@@ -101,19 +101,7 @@
 \section{Título}
 \textbf{Denominación del Entregable:} Declaración del Alcance del Proyecto, Restricciones y Matriz de Trazabilidad (EDT 1.4)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
-    \item \textbf{Período de Ejecución:} Semana 1 (19/08/2026 al 21/08/2026)
-    \item \textbf{Responsables:} Steeven Toala (Líder / Arquitecto) y Heidy Villavicencio (Analista)
-\end{itemize}
+
 
 \section{Introducción}
 La delimitación precisa del alcance constituye un pilar esencial en la ingeniería de software para prevenir el desvío de objetivos (\textit{Scope Creep}). En este documento se formalizan los objetivos generales y específicos bajo criterios SMART, se establece la frontera operativa entre los componentes dentro y fuera del alcance (\textit{In-Scope vs. Out-of-Scope}) y se estructuran las restricciones presupuestarias, tecnológicas y temporales del proyecto \textbf{SIGE} para la FISEI UTA.
@@ -144,7 +132,7 @@ Planificar, delimitar y formalizar el alcance integral del sistema web SIGE, ase
     \item \textbf{Circuito Secuencial de Firmas Digitales:} Flujo jerárquico en cascada oficial (Docente Elaborador $\rightarrow$ Coordinador de Área $\rightarrow$ Coordinador de Carrera).
     \item \textbf{Asistente Ortográfico Local:} Contenedor Docker local con LanguageTool para corrección ortográfica y gramatical sin costos de red.
     \item \textbf{Asistencia Semántica Institucional:} Conectividad con Google Gemini API (Free Tier institucional) para síntesis de textos y sugerencias contextuales.
-    \item \textbf{Generación Oficial de Documentos:} Motor QuestPDF y OpenXML para exportación fidedigna a PDF y Word \texttt{.docx}.
+    \item \textbf{Generación Oficial de Documentos:} Motor de exportación fidedigna a formatos oficiales PDF y Word \texttt{.docx}.
     \item \textbf{Historial y Auditoría SHA-256:} Versionado autoincremental (\texttt{V01}, \texttt{V02}) y registro inmutable de transacciones.
 \end{itemize}
 
@@ -204,9 +192,9 @@ Se aplicó la descomposición estructurada del alcance basada en las especificac
 
 \subsection{Restricciones y Supuestos del Proyecto}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2.5pt]
-    \item \textbf{Restricción Presupuestaria:} El presupuesto de inversión directa está limitado a \textbf{\$630.30 USD} para infraestructura cloud (VPS, PostgreSQL gestionado, MinIO, dominio/SSL, SMTP y licencias de desarrollo). La mano de obra se valoriza en \textbf{\$0.00 USD} como aporte académico de los 4 estudiantes de ingeniería.
+    \item \textbf{Restricción Presupuestaria:} El presupuesto de inversión directa está limitado a \textbf{\$630.30 USD} para infraestructura cloud (VPS, PostgreSQL 18, MinIO, dominio/SSL, SMTP y herramientas de soporte). La mano de obra se valoriza en \textbf{\$0.00 USD} como aporte académico de los 4 estudiantes de ingeniería.
     \item \textbf{Restricción Temporal:} El cronograma contempla una duración fija de \textbf{80 días calendario (12/08/2026 -- 30/10/2026)} distribuido en 5 fases de ejecución ágil según la estructura de desglose del trabajo (EDT).
-    \item \textbf{Restricción Tecnológica:} El stack opera bajo un modelo de optimización de recursos: corrección sintáctica en contenedor Docker local (LanguageTool) y asistencia semántica mediante Google Gemini API sin suscripciones comerciales de pago.
+    \item \textbf{Restricción Tecnológica:} Stack tecnológico basado en Node.js + Express (v5), PostgreSQL 18, React + Vite con Tailwind CSS, Bcrypt.js, JWT y Helmet. Asistente ortográfico local en contenedor Docker (LanguageTool) y asistencia semántica mediante Google Gemini API sin costes de suscripción comercial.
     \item \textbf{Restricción Normativa:} Los documentos generados por el sistema deben mantener correspondencia estricta con las directrices de la Dirección de Aseguramiento de la Calidad de la UTA.
     \item \textbf{Supuestos Operativos:} Los docentes cuentan con certificados de firma electrónica vigentes emitidos por entidades certificadoras acreditadas en el país (FirmaEC, Security Data, Banco Central, etc.); el servidor VPS cuenta con mínimo 4 vCPUs y 8 GB RAM.
 \end{enumerate}
@@ -224,15 +212,15 @@ A continuación se detalla la vinculación formal entre los objetivos específic
     \hline
     \textbf{OE-01} & RF-01, RF-02, RF-04, RF-05, RF-06 & SRS IEEE 830 y Matriz de Casos de Uso & Aprobación formal del documento por el docente de la cátedra. \\
     \hline
-    \textbf{OE-02} & RF-07, RF-08, RF-09, RF-16 & Prototipos Figma y Componentes React 19 & Interfaz con navegación por pestañas funcional, sobria y accesible. \\
+    \textbf{OE-02} & RF-07, RF-08, RF-09, RF-16 & Prototipos Figma y Componentes React + Vite & Interfaz con navegación por pestañas funcional, sobria y accesible. \\
     \hline
-    \textbf{OE-03} & RF-10, RF-11, RF-12, RF-13, RF-14 & Middleware FluentValidation en .NET 9 & Bloqueo determinista de guardado si faltan evidencias o ponderaciones. \\
+    \textbf{OE-03} & RF-10, RF-11, RF-12, RF-13, RF-14 & Middlewares de Validación en Node.js + Express v5 & Bloqueo determinista de guardado si faltan evidencias o ponderaciones. \\
     \hline
     \textbf{OE-04} & RF-17, RF-18, RF-19, RF-20, RF-21 & Módulo de Comité y Circuito de Firmas & Flujo secuencial verificado sin omisión de firmas intermedias en cascada. \\
     \hline
     \textbf{OE-05} & RF-15 & Contenedor LanguageTool en Docker & Corrección ortográfica local funcional sin peticiones externas de pago. \\
     \hline
-    \textbf{OE-06} & RF-22, RF-23, RF-24 & Módulo QuestPDF, OpenXML y Logs SHA-256 & Documentos exportados idénticos a los formatos oficiales del SGC. \\
+    \textbf{OE-06} & RF-22, RF-23, RF-24 & Módulo Exportación PDF/Word y Logs SHA-256 & Documentos exportados idénticos a los formatos oficiales del SGC. \\
     \hline
 \end{tabularx}
 \caption{Matriz de Trazabilidad de Requerimientos (RTM) del Sistema SIGE.}

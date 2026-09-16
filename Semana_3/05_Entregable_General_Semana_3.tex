@@ -18,6 +18,16 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
 
 \graphicspath{{images/}{../images/}{../../images/}{./}}
 
@@ -60,7 +70,7 @@
 \definecolor{tableheader}{RGB}{232, 238, 246}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-S3-005}
-\newcommand{\docVersion}{1.0}
+\newcommand{\docVersion}{2.0}
 \newcommand{\docProceso}{GESTIÓN DE PROYECTOS / SPRINT 1 REVIEW Y CONTROL}
 \newcommand{\docElaboracion}{14/09/2026}
 \newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
@@ -73,7 +83,7 @@
     \noindent\makebox[\textwidth][c]{%
     \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
         \hline
-        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
         & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
         & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
         \cline{3-3}
@@ -98,76 +108,102 @@
 
 \begin{document}
 
+% =============================================================
+% 1. TÍTULO
+% =============================================================
 \section{Título}
-\textbf{Denominación del Entregable:} Informe Consolidado de Avance: Semana 3 / Sprint 1 (Infraestructura, Persistencia y Base Frontend)
+\textbf{Denominación del Entregable:} Informe Consolidado de Avance: Semana 3 / Sprint 1 (Infraestructura PostgreSQL 18, Backend Express v5 Modular, Seguridad Bcrypt/JWT/Helmet y Base Frontend React + Vite)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{Completado y Aprobado}}
-    \item \textbf{Período de Ejecución:} Semana 3 (07/09/2026 al 14/09/2026 -- Sprint 1 Completo: 128 horas equipo)
-\end{itemize}
 
+
+% =============================================================
+% 2. INTRODUCCIÓN
+% =============================================================
 \section{Introducción}
-La Semana 3 marcó el inicio formal de la **Fase 3: Desarrollo Iterativo Core** del proyecto SIGE, ejecutando el **Sprint 1 (Infraestructura, Persistencia y Base Frontend)**. Durante este ciclo de trabajo de 6 días laborables netos (07 al 14 de septiembre de 2026), el equipo cumplió con el 100\% de los objetivos planteados en el cronograma EDT: migraciones EF Core en PostgreSQL 16 (\texttt{EDT 3.1}), seeders institucionales SGC (\texttt{EDT 3.2}), autenticación JWT y roles RBAC (\texttt{EDT 3.3}), y cliente base en React 19 + Vite (\texttt{EDT 3.4}).
+La Semana 3 marcó el inicio formal de la \textbf{Fase 3: Desarrollo Iterativo Core} del proyecto SIGE, ejecutando el \textbf{Sprint 1 (Infraestructura, Persistencia, API REST y Base Frontend)} bajo la arquitectura monorepo canónica \texttt{SIGE/}. Durante este ciclo de desarrollo de 6 días laborables netos (07 al 14 de septiembre de 2026), el equipo cumplió con el 100\% de los objetivos planteados en la EDT:
+\begin{enumerate}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Creación del esquema relacional ACID en PostgreSQL 18 mediante scripts DDL canónicos (\texttt{schema.sql} y script de inicialización \texttt{init.js}) con pool \texttt{pg.Pool} (\texttt{EDT 3.1}).
+    \item Implementación de seeders institucionales \texttt{seed.sql} con usuarios semilla, roles FISEI y contraseñas hasheadas mediante Bcrypt.js (\texttt{EDT 3.2}).
+    \item Arquitectura de seguridad integral en Node.js + Express (v5) con Bcrypt.js (12 salt rounds), tokens JWT (Access de 15m y Refresh de 7d), blindaje defensivo con Helmet y control RBAC por middlewares (\texttt{EDT 3.3}).
+    \item Inicialización del cliente web SPA en React + Vite con Tailwind CSS, animaciones por GPU (CSS Keyframes), paleta institucional \texttt{\#00345E} y cliente Axios con auto-renovación silenciosa (\texttt{EDT 3.4}).
+\end{enumerate}
 
+Este informe consolida los resultados técnicos, métricas de esfuerzo y el incremento de software potencialmente desplegable del Sprint 1.
+
+% =============================================================
+% 3. OBJETIVO
+% =============================================================
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Consolidar y validar los resultados técnicos, métricas de esfuerzo y software operativo generados durante el Sprint 1 de la Fase 3, certificando la estabilidad de la base sobre la cual se implementará el Sprint 2.
+Consolidar y validar los resultados técnicos, procedimentales y artefactos de software generados durante el Sprint 1 de la Fase 3, certificando la operatividad de la infraestructura base (Node.js Express v5, PostgreSQL 18, React + Vite) para el inicio inmediato del Sprint 2 (Semana 4).
 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item Presentar el balance de horas ejecutadas vs. planificadas en el cronograma MS Project.
-    \item Validar la integración transversal entre React 19 y la WebAPI .NET 9 mediante JWT.
-    \item Formalizar la aprobación del incremento del Sprint 1.
+    \item Presentar el balance de horas ejecutadas vs. horas planificadas en el cronograma de Ambato.
+    \item Validar la integración transversal end-to-end entre el cliente React + Vite y el backend Express v5 mediante autenticación segura JWT y persistencia en PostgreSQL 18.
+    \item Registrar formalmente la revisión y cierre del Sprint 1 habilitando el paso a la Semana 4.
 \end{itemize}
 
+% =============================================================
+% 4. ALCANCE
+% =============================================================
 \section{Alcance}
 
 \subsection{Límites del Incremento (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
-    \item Abarca los 4 paquetes EDT del Sprint 1 (EDT 3.1 al EDT 3.4).
-    \item Balance de 128 horas de ingeniería ejecutadas por el equipo de 4 integrantes.
-    \item Integración transversal de persistencia en PostgreSQL 16, autenticación JWT y cliente base en React 19.
+    \item Abarca los 4 paquetes EDT del Sprint 1 (EDT 3.1 al EDT 3.4) consolidados en EDT 3.5.
+    \item Balance de 128 horas de ingeniería ejecutadas por los 4 integrantes del equipo.
+    \item Incremento funcional operativo en el monorepo \texttt{SIGE/} (directorios \texttt{backend/} y \texttt{frontend/}).
 \end{itemize}
 
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
-    \item No incluye los componentes de Wizard modular ni integración de firmas digitales (Semana 4).
+    \item No incluye los componentes de Wizard paso a paso para informes docentes ni los servicios de exportación institucional a PDF/Word (Semana 4).
 \end{itemize}
 
+% =============================================================
+% 5. DEFINICIONES
+% =============================================================
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Sprint Review:} Ceremonia ágil de inspección donde el equipo demuestra el incremento terminado.
-    \item \textbf{DoD (Definition of Done):} Criterios de aceptación técnica para dar por completada una historia de usuario.
+    \item \textbf{Sprint Review:} Ceremonia ágil de inspección donde el equipo demuestra el incremento funcional de software al tutor y revisores.
+    \item \textbf{Incremento de Software:} Versión operativa, probada e integrada del producto al cierre de un ciclo de desarrollo.
+    \item \textbf{Monorepo:} Estrategia arquitectónica donde el código backend y frontend reside en un único repositorio estructurado (\texttt{SIGE/}).
     \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Jerarquía desglosada de entregables del proyecto.
 \end{itemize}
 
+% =============================================================
+% 6. RESPONSABILIDADES
+% =============================================================
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Steeven Toala (Líder / Arquitecto):} 36 horas -- Coordinación del backlog y control de calidad.
-    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} 32 horas -- Validación de formatos SGC y diseño visual.
-    \item \textbf{Nixon Hurtado (Backend / DBA):} 40 horas -- Desarrollo de WebAPI, base de datos y JWT.
-    \item \textbf{Andrea Vasquez (Frontend / QA):} 40 horas -- Desarrollo de cliente React 19 y rutas protegidas.
-    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Evaluación de incremento y aprobación de cierre del Sprint 1.
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} 36 horas -- Coordinación de arquitectura monorepo, revisión GitFlow y directivas de seguridad.
+    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} 32 horas -- Maquetación en Tailwind CSS con paleta \texttt{\#00345E} y validación de catálogos SGC.
+    \item \textbf{Nixon Hurtado (Backend / DBA):} 40 horas -- Scripts DDL PostgreSQL 18, API REST Express v5 y seguridad JWT/Bcrypt/Helmet.
+    \item \textbf{Andrea Vasquez (Frontend / QA):} 40 horas -- Setup de React + Vite, cliente Axios con auto-renovación y rutas protegidas.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Evaluación del incremento funcional y aprobación formal de cierre del Sprint 1.
 \end{itemize}
 
+% =============================================================
+% 7. NORMATIVA LEGAL Y TÉCNICA
+% =============================================================
 \section{Normativa Legal y Técnica}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Estándar IEEE 1058:} Gestión y seguimiento de proyectos de software.
+    \item \textbf{Estándar IEEE 1058:} Standard for Software Project Management Plans.
     \item \textbf{Metodología Scrum:} Cumplimiento estricto de criterios de incremento potencialmente desplegable.
+    \item \textbf{ISO/IEC/IEEE 12207:} Procesos del ciclo de vida del software.
 \end{itemize}
 
+% =============================================================
+% 8. MÉTODO, POLÍTICAS Y CONTENIDOS
+% =============================================================
 \section{Método, Políticas y Contenidos}
-El flujo de trabajo del Sprint 1 se organizó en torno a entregables modulares integrados en GitFlow bajo ramas feature y releases controladas.
+El flujo de trabajo del Sprint 1 se organizó en torno a entregables modulares integrados en GitFlow bajo ramas feature y releases controladas en el repositorio monorepo institucional.
 
+% =============================================================
+% 9. DESCRIPCIÓN DE ACTIVIDADES
+% =============================================================
 \section{Descripción de actividades}
 
 \subsection{Resumen de Paquetes EDT Ejecutados en Sprint 1}
@@ -181,13 +217,13 @@ El flujo de trabajo del Sprint 1 se organizó en torno a entregables modulares i
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Tarea Ejecutada} & \textbf{Responsable} & \textbf{Horas} & \textbf{Estado} \\
 \hline
-EDT 3.1 & Migraciones EF Core en PostgreSQL 16 & Nixon Hurtado & 32h & 100\% Conforme \\
+EDT 3.1 & Scripts DDL Base de Datos PostgreSQL 18 & Nixon Hurtado & 32h & 100\% Conforme \\
 \hline
 EDT 3.2 & Seeders SGC y Catálogos Institucionales & N. Hurtado / H. Villavicencio & 24h & 100\% Conforme \\
 \hline
-EDT 3.3 & Autenticación JWT y Roles RBAC & N. Hurtado / S. Toala & 32h & 100\% Conforme \\
+EDT 3.3 & Seguridad Express v5 (JWT, Bcrypt, Helmet, RBAC) & N. Hurtado / S. Toala & 32h & 100\% Conforme \\
 \hline
-EDT 3.4 & Cliente Base React 19 + Vite + Tailwind & A. Vasquez / H. Villavicencio & 40h & 100\% Conforme \\
+EDT 3.4 & Cliente Base React + Vite + Tailwind CSS & A. Vasquez / H. Villavicencio & 40h & 100\% Conforme \\
 \hline
 \end{tabularx}
 \caption{Matriz de Control y Cumplimiento del Sprint 1.}
@@ -195,16 +231,16 @@ EDT 3.4 & Cliente Base React 19 + Vite + Tailwind & A. Vasquez / H. Villavicenci
 
 \subsection{Demostración del Incremento de Software}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Base de Datos Operativa:} Contenedor Docker \texttt{sige-postgres} con 13 tablas, llaves UUID e índices compuestos.
-    \item \textbf{WebAPI Funcional:} Contenedor \texttt{sige-webapi} en .NET 9 exponiendo Swagger con endpoints seguros de autenticación.
-    \item \textbf{Frontend React 19:} Aplicación web interactiva que permite inicio de sesión por roles y navegación a dashboard institucional.
+    \item \textbf{Base de Datos Operativa:} Instancia de PostgreSQL 18 corriendo en puerto 5432 con 13 tablas normalizadas en 3FN, llaves primarias UUID, índices compuestos y datos iniciales inyectados mediante \texttt{seed.sql}.
+    \item \textbf{Backend API REST Funcional:} Servidor Node.js + Express (v5) en puerto 5000 con arquitectura modular, blindaje de cabeceras HTTP Helmet, hashing Bcrypt.js (12 salt rounds) y endpoints \texttt{/api/auth/login}, \texttt{/api/auth/refresh}, \texttt{/api/auth/me}.
+    \item \textbf{Frontend React + Vite:} Interfaz SPA en puerto 5173 con diseño institucional \texttt{\#00345E}, gestión global con \texttt{AuthContext.jsx}, rutas protegidas y cliente Axios con auto-renovación silenciosa de tokens.
 \end{enumerate}
 
 \subsection{Conclusiones y Recomendaciones Técnicas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item El Sprint 1 concluyó de manera exitosa con el 100\% de entregables finalizados según el cronograma de Ambato.
-    \item La arquitectura de contenedores locales en Docker garantiza un entorno reproducible y estable para el inicio del Sprint 2.
-    \item Avanzar de forma prioritaria en el Sprint 2 con el editor TipTap y la integración criptográfica del API de firmas electrónicas (FirmaEC).
+    \item El Sprint 1 culminó con éxito en el plazo planificado (14 de septiembre de 2026), cumpliendo las 128 horas de esfuerzo conjunto programadas en la EDT.
+    \item El stack unificado en JavaScript moderno (Node.js en backend y React en frontend) aceleró el ciclo de desarrollo y simplificó los contratos de comunicación API REST.
+    \item Avanzar de forma prioritaria en el Sprint 2 (Semana 4) con los controladores de documentos, flujos de dictamen y exportación institucional de informes.
 \end{itemize}
 
 \vspace{0.3cm}
@@ -243,7 +279,9 @@ EDT 3.4 & Cliente Base React 19 + Vite + Tailwind & A. Vasquez / H. Villavicenci
     \rowcolor{gray!20}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Cierre formal y consolidación del Sprint 1 (Semana 3) para Séptimo Semestre "A" & Steeven Toala & 14/09/2026 \\
+    1.0 & Cierre formal y consolidación del Sprint 1 (Semana 3). & Steeven Toala & 14/09/2026 \\
+    \hline
+    2.0 & Actualización integral al stack oficial: Node.js + Express (v5), PostgreSQL 18, React + Vite, Tailwind CSS \#00345E, Bcrypt.js, JWT y Helmet. & Steeven Toala / Andrea Vasquez & 14/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -258,11 +296,10 @@ EDT 3.4 & Cliente Base React 19 + Vite + Tailwind & A. Vasquez / H. Villavicenci
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Project Management Institute. (2021). \textit{A Guide to the Project Management Body of Knowledge (PMBOK Guide)}.
     \item Schwaber, K., \& Sutherland, J. (2020). \textit{The Scrum Guide}.
+    \item Express.js Team. (2026). \textit{Express 5.x Documentation and Production Best Practices}.
 \end{itemize}
 
 \subsection*{Anexo 2: Acta de Cierre y Aceptación de Sprint 1}
-Se certifica la entrega formal del incremento de software correspondiente a la Semana 3, cumpliendo con el estándar de calidad y la línea base de la asignatura.
+Se certifica la entrega formal del incremento de software correspondiente a la Semana 3, probado de extremo a extremo y cumpliendo con la línea base de calidad de la Universidad Técnica de Ambato.
 
 \end{document}
-
-

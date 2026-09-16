@@ -18,6 +18,16 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
 
 \graphicspath{{images/}{../images/}{../../images/}{./}}
 
@@ -60,11 +70,11 @@
 \definecolor{tableheader}{RGB}{232, 238, 246}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-S4-002}
-\newcommand{\docVersion}{1.0}
+\newcommand{\docVersion}{2.0}
 \newcommand{\docProceso}{DESARROLLO FRONTEND / EDITOR ENRIQUECIDO Y PERSISTENCIA}
 \newcommand{\docElaboracion}{16/09/2026}
-\newcommand{\docRevision}{EN DESARROLLO}
-\newcommand{\docTitulo}{INTEGRACIÓN DEL EDITOR TIPTAP CON AUTOGUARDADO DEBOUNCE}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{INTEGRACIÓN DEL EDITOR TIPTAP CON AUTOGUARDADO DEBOUNCE (1.5s)}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -73,7 +83,7 @@
     \noindent\makebox[\textwidth][c]{%
     \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
         \hline
-        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
         & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
         & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
         \cline{3-3}
@@ -98,100 +108,138 @@
 
 \begin{document}
 
+% =============================================================
+% 1. TÍTULO
+% =============================================================
 \section{Título}
-\textbf{Denominación del Entregable:} Integración del Editor Enriquecido TipTap con Autoguardado Asíncrono Debounce (1.5s)
+\textbf{Denominación del Entregable:} Integración del Editor Enriquecido TipTap con Autoguardado Asíncrono Debounce (1.5s) en React + Vite hacia API REST Express v5
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Desarrollo / Semana 4 en Curso}}
-    \item \textbf{Período de Ejecución:} Semana 4 (15/09/2026 al 22/09/2026 -- EDT 3.6: 4 días laborables, 32h)
-\end{itemize}
 
+
+% =============================================================
+% 2. INTRODUCCIÓN
+% =============================================================
 \section{Introducción}
-En la elaboración de planes de trabajo e informes de cumplimiento, las secciones descriptivas (Antecedentes, Justificación, Metodología de Cátedra, Conclusiones y Recomendaciones) demandan redacción fluida con soporte para negritas, listas ordenadas, citas y tablas de texto. El uso de campos de texto convencionales degrada la legibilidad y no permite el formateo estructurado requerido por el SGC.
+En la elaboración de planes de trabajo e informes de cumplimiento, las secciones descriptivas (Antecedentes, Justificación, Metodología de Cátedra, Conclusiones y Recomendaciones) demandan una redacción fluida con soporte para negritas, listas ordenadas, viñetas y formato estructurado conforme a la norma ISO 9001:2015 del SGC. El empleo de cajas de texto planas (\texttt{textarea}) degrada la experiencia de usuario y no genera la semántica enriquecida requerida para la posterior exportación documental.
 
-Para subsanar esta limitación, se integró el motor de edición enriquecida **TipTap** (construido sobre *ProseMirror*). Para blindar al docente contra pérdida de datos ante cortes eléctricos o caídas de conexión, se diseñó un mecanismo de **autoguardado asíncrono en segundo plano mediante un hook \texttt{useDebounce} calibrado a 1500 ms**, informando en tiempo real el estado de sincronización con la base de datos PostgreSQL.
+Para subsanar esta limitación, se integró el motor de edición enriquecida \textbf{TipTap} (construido sobre el estándar \textit{ProseMirror}) en el cliente \textbf{React + Vite}. Para blindar al docente contra cualquier pérdida involuntaria de información por cortes de fluido eléctrico o intermitencias de red en el campus, se implementó un mecanismo de \textbf{autoguardado asíncrono en segundo plano mediante un Hook personalizado \texttt{useAutoSaveSection} con Debounce calibrado a 1500 ms}, informando en tiempo real el estado de sincronización hacia el backend Node.js + Express (v5) y la base de datos PostgreSQL (18).
 
+% =============================================================
+% 3. OBJETIVO
+% =============================================================
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Implementar el componente de edición enriquecida \texttt{RichTextEditor.tsx} en React 19 basado en TipTap, dotándolo de extensiones tipográficas y sincronización asíncrona automatizada con la WebAPI.
+Implementar el componente de edición enriquecida \texttt{RichTextEditor.jsx} en React y Vite basado en TipTap, dotándolo de herramientas de formato tipográfico institucional, sanitización XSS y sincronización asíncrona automatizada hacia la API REST de Express v5.
 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item Configurar TipTap con extensiones de texto: \texttt{StarterKit}, \texttt{Bold}, \texttt{Italic}, \texttt{BulletList}, \texttt{OrderedList}, \texttt{Heading} e \texttt{History}.
-    \item Diseñar el hook personalizado \texttt{useDebounce} para emitir solicitudes \texttt{PUT /api/documentos/\{id\}/secciones} tras 1.5s de inactividad.
-    \item Mostrar insignias reactivas de estado: \texttt{[Guardando...]}, \texttt{[Guardado]} o \texttt{[Error]}.
+    \item Configurar TipTap con extensiones esenciales: \texttt{StarterKit}, \texttt{Bold}, \texttt{Italic}, \texttt{BulletList}, \texttt{OrderedList}, \texttt{Heading} e \texttt{History (Undo/Redo)}.
+    \item Diseñar el Hook reactivo \texttt{useAutoSaveSection} para emitir solicitudes HTTP \texttt{PUT /api/documentos/:id/secciones} únicamente tras 1.5 segundos de inactividad del teclado, evitando sobrecarga innecesaria en el servidor.
+    \item Implementar badges visuales reactivos en la interfaz: \texttt{[Guardando...]}, \texttt{[Guardado en PostgreSQL]} o \texttt{[Error de red - Reintentando]}.
+    \item Sanitizar el contenido HTML generado mediante \texttt{DOMPurify} para neutralizar riesgos de inyección de código malicioso (XSS).
 \end{itemize}
 
+% =============================================================
+% 4. ALCANCE
+% =============================================================
 \section{Alcance}
 
 \subsection{Alcance Incluido}
-Componente \texttt{RichTextEditor.tsx} reutilizable para cualquier sección del expediente, sanitización de HTML con DOMPurify y persistencia asíncrona sin bloquear la escritura.
+Componente \texttt{RichTextEditor.jsx} modular y reutilizable para cualquier sección del expediente, Hook de autoguardado asíncrono con control de cancelación (\texttt{AbortController}), sanitización con DOMPurify y persistencia asíncrona sin bloquear la escritura en el cliente.
 
 \subsection{Límites y Exclusiones}
-El corrector de IA LanguageTool se integra en EDT 3.14.
+No incluye corrección gramatical asistida por IA ni edición colaborativa simultánea en tiempo real vía WebSockets.
 
+% =============================================================
+% 5. DEFINICIONES
+% =============================================================
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{TipTap:} Framework de edición enriquecida moderno desacoplado del DOM nativo.
-    \item \textbf{Debounce:} Técnica que retrasa la ejecución de una petición hasta que cesen las modificaciones durante un lapso fijado.
+    \item \textbf{TipTap:} Framework moderno de edición enriquecida desacoplado del DOM nativo y estructurado sobre ProseMirror.
+    \item \textbf{Debounce:} Técnica de optimización que posterga la ejecución de una rutina asíncrona costosa hasta que transcurre un período de inactividad.
+    \item \textbf{DOMPurify:} Biblioteca de sanitización de código HTML contra inyecciones XSS.
+    \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Descomposición jerárquica de entregables del proyecto.
 \end{itemize}
 
+% =============================================================
+% 6. RESPONSABILIDADES
+% =============================================================
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Andrea Vasquez (Frontend Developer):} Programación de componentes TipTap, barra de herramientas y hook debounce.
-    \item \textbf{Steeven Toala (Arquitecto de Software):} Optimización del payload HTTP y pruebas de rendimiento.
-    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión y validación del comportamiento de autoguardado.
+    \item \textbf{Andrea Vasquez (Frontend Developer / QA):} Programación de componentes TipTap, barra de herramientas y Hook debounce.
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} Optimización de contratos API REST, pruebas de rendimiento de guardado y sanitización XSS.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión técnica y validación del comportamiento de autoguardado en la experiencia docente.
 \end{itemize}
 
+% =============================================================
+% 7. NORMATIVA LEGAL Y TÉCNICA
+% =============================================================
 \section{Normativa Legal y Técnica}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{OWASP ASVS:} Prevención de Cross-Site Scripting (XSS) en editores web.
-    \item \textbf{ISO/IEC 25010:} Eficiencia de desempeño y confiabilidad.
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{OWASP ASVS 4.0 (Sección V5):} Validación, sanitización y codificación de entradas en editores WYSIWYG contra ataques XSS.
+    \item \textbf{ISO/IEC 25010:} Eficiencia de desempeño, tolerancia a fallos y confiabilidad de guardado.
+    \item \textbf{Manual de Procedimientos SGC FISEI UTA:} Estándares de presentación de informes de cumplimiento académico.
 \end{itemize}
 
+% =============================================================
+% 8. MÉTODO, POLÍTICAS Y CONTENIDOS
+% =============================================================
 \section{Método, Políticas y Contenidos}
-Implementación basada en Hooks de React 19 y el ciclo de vida de transacciones de ProseMirror. Se establecen políticas estrictas: las peticiones de autoguardado se ejecutan de manera asíncrona mediante Axios y se cancelan peticiones redundantes mediante \texttt{AbortController} al recibir nuevas entradas antes del timeout.
+Desarrollo basado en componentes funcionales de React con el cliente Axios institucional con auto-renovación silenciosa de tokens JWT. Se establecen políticas rigurosas:
+\begin{enumerate}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{Ventana de Debounce:} La solicitud de persistencia se dispara tras 1500 ms de pausa continua en la digitación.
+    \item \textbf{Cancelación Preventiva:} Si el usuario reanuda la escritura mientras existe una petición pendiente, se cancela vía \texttt{AbortController}.
+    \item \textbf{Respaldo Local:} En caso de corte prolongado, el texto se preserva en \texttt{localStorage} como contingencia.
+\end{enumerate}
 
+% =============================================================
+% 9. DESCRIPCIÓN DE ACTIVIDADES
+% =============================================================
 \section{Descripción de actividades}
 
-\subsection{Algoritmo del Hook de Autoguardado con Debounce}
+\subsection{Hook de Autoguardado Asíncrono con Debounce}
 Se programó el hook \texttt{useAutoSaveSection} que posterga la petición HTTP hasta que transcurran 1500 ms de inactividad:
-\begin{verbatim}
+
+\begin{lstlisting}[language=Java]
+// frontend/src/hooks/useAutoSaveSection.js
+import { useState, useEffect, useRef } from 'react';
+import api from '../api/client';
+
 export function useAutoSaveSection(docId, claveSeccion, contenido) {
   const [saveStatus, setSaveStatus] = useState('saved');
+  const abortRef = useRef(null);
+
   useEffect(() => {
+    if (!docId || !claveSeccion) return;
     setSaveStatus('saving');
+    if (abortRef.current) abortRef.current.abort();
+    abortRef.current = new AbortController();
+
     const timer = setTimeout(async () => {
       try {
         await api.put(`/documentos/${docId}/secciones`, {
           claveSeccion,
           contenidoTexto: contenido
-        });
+        }, { signal: abortRef.current.signal });
         setSaveStatus('saved');
       } catch (err) {
-        setSaveStatus('error');
+        if (err.name !== 'CanceledError') setSaveStatus('error');
       }
     }, 1500);
+
     return () => clearTimeout(timer);
   }, [contenido, docId, claveSeccion]);
+
   return { saveStatus };
 }
-\end{verbatim}
+\end{lstlisting}
 
 \subsection{Extensiones TipTap y Sanitización DOMPurify}
 Se configuró el conjunto de extensiones \texttt{StarterKit} para dar soporte a títulos jerárquicos, listas ordenadas y citas. Todo contenido generado pasa por un filtro estricto de sanitización con \texttt{DOMPurify} para neutralizar posibles vectores XSS.
 
 \subsection{Insignias Visuales de Estado}
-La interfaz refleja en tiempo real el ciclo de persistencia mediante badges accesibles: \texttt{[Guardando...]} en amarillo ámbar, \texttt{[Guardado]} en verde esmeralda y \texttt{[Error de red]} en rojo con reintento asistido.
+La interfaz refleja en tiempo real el ciclo de persistencia mediante badges accesibles: \texttt{[Guardando...]} en amarillo ámbar, \texttt{[Guardado en PostgreSQL]} en verde esmeralda institucional y \texttt{[Error de red]} en rojo con reintento asistido.
 
 \subsection{Conclusiones y Recomendaciones Técnicas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
@@ -236,7 +284,9 @@ La interfaz refleja en tiempo real el ciclo de persistencia mediante badges acce
     \rowcolor{gray!20}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Integración del editor TipTap y hook de autoguardado para Séptimo Semestre "A" & Andrea Vasquez & 16/09/2026 \\
+    1.0 & Integración inicial del editor TipTap y hook de autoguardado. & Andrea Vasquez & 16/09/2026 \\
+    \hline
+    2.0 & Actualización al stack oficial: React + Vite, Tailwind CSS \#00345E, cliente Axios con auto-renovación silenciosa y persistencia en backend Express v5 + PostgreSQL 18. & Andrea Vasquez / Steeven Toala & 16/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -251,11 +301,10 @@ La interfaz refleja en tiempo real el ciclo de persistencia mediante badges acce
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item TipTap Core Team. (2026). \textit{TipTap Documentation: Modern Rich Text Editing}.
     \item ProseMirror Guide. (2024). \textit{Document Model and State Transitions}.
+    \item OWASP Foundation. (2023). \textit{Cross-Site Scripting Prevention Cheat Sheet}.
 \end{itemize}
 
 \subsection*{Anexo 2: Manejo de Errores y Estrategia de Reintento}
-Mecanismo de respaldo local en caso de cortes de servicio web antes de la sincronización definitiva en PostgreSQL 16.
+Mecanismo de respaldo local en caso de cortes de servicio web antes de la sincronización definitiva en PostgreSQL 18.
 
 \end{document}
-
-

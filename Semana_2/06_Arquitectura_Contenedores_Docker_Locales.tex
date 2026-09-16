@@ -111,22 +111,10 @@
 \section{Título}
 \textbf{Denominación del Entregable:} Configuración de Infraestructura como Código (IaC), Contenedores y Docker Compose (EDT 2.6)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
-    \item \textbf{Período de Ejecución:} Semana 2 (02/09/2026 al 04/09/2026)
-    \item \textbf{Responsables:} Steeven Toala (Líder / Arquitecto) y Nixon Hurtado (Backend / DBA)
-\end{itemize}
+
 
 \section{Introducción}
-Para garantizar reproducibilidad en los entornos de desarrollo, pruebas y producción sin incurrir en costos de licencias comerciales ni saturar los recursos de hardware, el sistema \textbf{SIGE} implementa una arquitectura eficiente y desacoplada mediante \textbf{Docker Compose}: servicios locales contenerizados (PostgreSQL 16, MinIO, LanguageTool, Backend .NET 9, Frontend React 19) e inferencia semántica delegada a la \textbf{API de Google Gemini (Gemini 1.5 / 2.0 Flash)} a través de HTTPS sin costo de GPU local.
+Para garantizar reproducibilidad en los entornos de desarrollo, pruebas y producción sin incurrir en costos de licencias comerciales ni saturar los recursos de hardware, el sistema \textbf{SIGE} implementa una arquitectura eficiente y desacoplada mediante \textbf{Docker Compose}: servicios locales contenerizados (\textbf{PostgreSQL 18}, MinIO, LanguageTool, \textbf{Backend Node.js + Express v5}, \textbf{Frontend React + Vite}) e inferencia semántica delegada a la \textbf{API de Google Gemini (Gemini 2.5 Flash)} a través de HTTPS sin costo de GPU local.
 
 \section{Objetivo}
 
@@ -135,7 +123,7 @@ Diseñar, configurar y orquestar la arquitectura de contenedores Docker locales 
 
 \subsection{Objetivos Específicos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item Configurar los 6 servicios del \texttt{docker-compose.yml} (PostgreSQL, MinIO, MinIO-Init, LanguageTool, Backend y Frontend).
+    \item Configurar los 6 servicios del \texttt{docker-compose.yml} (PostgreSQL 18, MinIO, MinIO-Init, LanguageTool, Backend Node.js Express v5 y Frontend React + Vite).
     \item Establecer las redes virtuales internas y políticas de persistencia en volúmenes nombrados.
     \item Parametrizar las variables de entorno y definir los endpoints de Health Check.
 \end{enumerate}
@@ -170,7 +158,7 @@ Diseñar, configurar y orquestar la arquitectura de contenedores Docker locales 
     \hline
     Steeven Toala & Líder / Arquitecto & Diseño de Dockerfiles, archivo \texttt{docker-compose.yml} y configuración de redes. \\
     \hline
-    Nixon Hurtado & Backend / DBA & Configuración del contenedor de PostgreSQL 16 y persistencia de volúmenes. \\
+    Nixon Hurtado & Backend / DBA & Configuración del contenedor de PostgreSQL 18 y persistencia de volúmenes. \\
     \hline
     Ing. Paulo Torres & Docente Tutor & Validación y prueba del despliegue en un único comando. \\
     \hline
@@ -188,8 +176,8 @@ Diseñar, configurar y orquestar la arquitectura de contenedores Docker locales 
 La topología de servicios contenerizados conectados bajo la red puente \texttt{sige-network} se estructura de la siguiente manera:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Servicios Locales Contenerizados:} Base de datos relacional (\textbf{PostgreSQL 16}), almacenamiento de objetos S3 (\textbf{MinIO}), corrector ortográfico/gramatical local de alta velocidad (\textbf{LanguageTool}), backend (\textbf{ASP.NET Core .NET 9}) y cliente web (\textbf{React 19 + Nginx}).
-    \item \textbf{Asistencia Semántica de Inteligencia Artificial:} En lugar de ejecutar un contenedor local pesado de Ollama (que requeriría descargar modelos de varios gigabytes y consumir entre 8 y 16 GB de RAM con soporte GPU inviable en infraestructura económica), la inferencia semántica para redacción institucional se delega a la \textbf{API de Google Gemini (Gemini 1.5 / 2.0 Flash)} a través de peticiones seguras HTTPS (REST API), optimizando la infraestructura local a cero sobrecosto de hardware.
+    \item \textbf{Servicios Locales Contenerizados:} Base de datos relacional (\textbf{PostgreSQL 18}), almacenamiento de objetos S3 (\textbf{MinIO}), corrector ortográfico/gramatical local de alta velocidad (\textbf{LanguageTool}), backend REST (\textbf{Node.js + Express v5}) y cliente web (\textbf{React + Vite + Nginx}).
+    \item \textbf{Asistencia Semántica de Inteligencia Artificial:} La inferencia semántica para redacción institucional se delega a la \textbf{API de Google Gemini (Gemini 2.5 Flash)} a través de peticiones seguras HTTPS (REST API), optimizando la infraestructura local a cero sobrecosto de hardware.
 \end{itemize}
 
 \begin{figure}[htbp]
@@ -206,9 +194,9 @@ La topología de servicios contenerizados conectados bajo la red puente \texttt{
 version: '3.8'
 
 services:
-  # 1. Base de Datos Relacional PostgreSQL 16
+  # 1. Base de Datos Relacional PostgreSQL 18
   sige-postgres:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     container_name: sige-postgres
     restart: unless-stopped
     environment:
@@ -274,11 +262,11 @@ services:
     networks:
       - sige-network
 
-  # 5. Backend ASP.NET Core (.NET 9 Web API)
+  # 5. Backend REST API (Node.js + Express v5)
   sige-backend:
     build:
-      context: ./src
-      dockerfile: SIGE.WebAPI/Dockerfile
+      context: ./backend
+      dockerfile: Dockerfile
     container_name: sige-backend
     restart: unless-stopped
     depends_on:
@@ -289,25 +277,31 @@ services:
       sige-languagetool:
         condition: service_started
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=sige-postgres;Port=5432;Database=sige_db;Username=sige_admin;Password=SigeSecurePassword2026!;
-      - MinIO__Endpoint=sige-minio:9000
-      - MinIO__AccessKey=sige_minio_admin
-      - MinIO__SecretKey=SigeMinioSecretKey2026!
-      - MinIO__BucketName=sige-evidencias-bucket
-      - MinIO__UseSSL=false
-      - LanguageTool__BaseUrl=http://sige-languagetool:8010
-      - Gemini__ApiKey=${GEMINI_API_KEY}
-      - Gemini__Model=gemini-1.5-flash
+      - NODE_ENV=development
+      - PORT=5000
+      - DB_HOST=sige-postgres
+      - DB_PORT=5432
+      - DB_NAME=sige_db
+      - DB_USER=sige_admin
+      - DB_PASSWORD=SigeSecurePassword2026!
+      - MINIO_ENDPOINT=sige-minio
+      - MINIO_PORT=9000
+      - MINIO_ACCESS_KEY=sige_minio_admin
+      - MINIO_SECRET_KEY=SigeMinioSecretKey2026!
+      - MINIO_BUCKET=sige-evidencias-bucket
+      - LANGUAGETOOL_URL=http://sige-languagetool:8010
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - JWT_SECRET=SigeSuperSecretKeyForTokenSigning2026UTAFISEISoftwareEngineering!
+      - JWT_EXPIRES_IN=30m
     ports:
-      - "5000:8080"
+      - "5000:5000"
     networks:
       - sige-network
 
-  # 6. Frontend React 19 + Nginx
+  # 6. Frontend React + Vite (Servido con Nginx)
   sige-frontend:
     build:
-      context: ./src/SIGE.ClientApp
+      context: ./frontend
       dockerfile: Dockerfile
     container_name: sige-frontend
     restart: unless-stopped
@@ -346,7 +340,7 @@ docker compose ps
 \subsection{Endpoints de Verificación de Salud (Health Checks)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Frontend Web:} \texttt{http://localhost:80}
-    \item \textbf{Swagger Web API:} \texttt{http://localhost:5000/swagger}
+    \item \textbf{Backend REST API:} \texttt{http://localhost:5000/api/health}
     \item \textbf{Consola MinIO:} \texttt{http://localhost:9001} (User: \texttt{sige\_minio\_admin} / Pass: \texttt{SigeMinioSecretKey2026!})
     \item \textbf{API LanguageTool:} \texttt{http://localhost:8010/v2/check?text=Hola\%20mundo\&language=es}
     \item \textbf{Asistente Gemini AI:} Conectividad HTTPS directa con \texttt{https://generativelanguage.googleapis.com} (verificable vía \texttt{/api/ia/status} en backend con API Key institucional).

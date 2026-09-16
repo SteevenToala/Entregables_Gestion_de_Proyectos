@@ -109,29 +109,17 @@
 \begin{document}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Modelo Conceptual ER, Esquema Lógico Relacional y Diccionario de Datos PostgreSQL 16 (EDT 2.4)
+\textbf{Denominación del Entregable:} Modelo Conceptual ER, Esquema Lógico Relacional y Diccionario de Datos PostgreSQL 18 (EDT 2.4)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
-    \item \textbf{Período de Ejecución:} Semana 2 (31/08/2026 al 02/09/2026)
-    \item \textbf{Responsables:} Nixon Hurtado (Backend / DBA) y Steeven Toala (Líder / Arquitecto)
-\end{itemize}
+
 
 \section{Introducción}
-El modelo de datos relacional del sistema \textbf{SIGE} ha sido diseñado para operar en \textbf{PostgreSQL 16}, garantizando normalización en Tercera Forma Normal (3FN), integridad referencial estricta, control de aperturas extemporáneas por el Administrador, soporte para solicitudes de modificación de planes en ejecución, trazabilidad del estado por actividad y el registro secuencial del circuito de firmas en cascada institucional (Docente Responsable $\rightarrow$ Coordinador de Área $\rightarrow$ Coordinador de Carrera).
+El modelo de datos relacional del sistema \textbf{SIGE} ha sido diseñado para operar en \textbf{PostgreSQL (18)}, garantizando transaccionalidad ACID pura, normalización en Tercera Forma Normal (3FN), integridad referencial estricta, control de aperturas extemporáneas por el Administrador, soporte para solicitudes de modificación de planes en ejecución, trazabilidad del estado por actividad y el registro secuencial del circuito de firmas en cascada institucional (Docente Responsable $\rightarrow$ Coordinador de Área $\rightarrow$ Coordinador de Carrera).
 
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Diseñar y estructurar la base de datos relacional en PostgreSQL 16 para el sistema SIGE, asegurando integridad referencial, normalización en 3FN y trazabilidad auditada de cambios.
+Diseñar y estructurar la base de datos relacional en PostgreSQL 18 para el sistema SIGE, asegurando integridad referencial, normalización en 3FN y trazabilidad auditada de cambios para la arquitectura modular de Node.js + Express (v5).
 
 \subsection{Objetivos Específicos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
@@ -404,14 +392,14 @@ ON EVIDENCIAS_MINIO(actividad_id);
     \rowcolor{gray!20}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Diseño de base de datos relacional ERD, diccionario de datos y DDL PostgreSQL 16 / Pendiente de revisión & Nixon Hurtado & \textbf{\textcolor{gray!90}{Pendiente de Revisión}} \\
+    1.0 & Diseño de base de datos relacional ERD, diccionario de datos y DDL PostgreSQL 18 / Pendiente de revisión & Nixon Hurtado & \textbf{\textcolor{gray!90}{Pendiente de Revisión}} \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\subsection*{Anexo 1: Script DDL de Migraciones Iniciales de Entity Framework Core}
-Definición de clases de mapeo \texttt{EntityTypeConfiguration} para llaves compuestas, índices y cascadas controladas.
+\subsection*{Anexo 1: Scripts DDL de Inicialización PostgreSQL 18 y Pool de Conexiones}
+Estructura de \texttt{backend/src/database/schema.sql}, \texttt{seed.sql} y \texttt{init.js} para la inicialización determinista de la base de datos relacional y configuración del pool con la librería \texttt{pg}.
 
 \end{document}

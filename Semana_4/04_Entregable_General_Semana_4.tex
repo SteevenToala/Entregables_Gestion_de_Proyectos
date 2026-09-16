@@ -18,6 +18,16 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
 
 \graphicspath{{images/}{../images/}{../../images/}{./}}
 
@@ -60,10 +70,10 @@
 \definecolor{tableheader}{RGB}{232, 238, 246}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-S4-004}
-\newcommand{\docVersion}{1.0}
+\newcommand{\docVersion}{2.0}
 \newcommand{\docProceso}{GESTIÓN DE PROYECTOS / SPRINT 2 CONTROL Y SEGUIMIENTO}
 \newcommand{\docElaboracion}{16/09/2026}
-\newcommand{\docRevision}{EN DESARROLLO / CORTE AL 16 DE SEPTIEMBRE}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
 \newcommand{\docTitulo}{INFORME CONSOLIDADO DE AVANCE SEMANA 4 (SPRINT 2 EN CURSO)}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -73,7 +83,7 @@
     \noindent\makebox[\textwidth][c]{%
     \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
         \hline
-        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
         & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
         & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
         \cline{3-3}
@@ -98,83 +108,109 @@
 
 \begin{document}
 
+% =============================================================
+% 1. TÍTULO
+% =============================================================
 \section{Título}
-\textbf{Denominación del Entregable:} Informe Consolidado de Avance: Semana 4 / Sprint 2 (Wizard, Editor TipTap y API de Firmas Electrónicas)
+\textbf{Denominación del Entregable:} Informe Consolidado de Avance: Semana 4 / Sprint 2 (Wizard React+Vite, Editor TipTap Debounce y API Firmas en Cascada Express v5 / PostgreSQL 18)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Corte:} 16 de Septiembre de 2026 (Semana 4 en curso)
-    \item \textbf{Período de Ejecución:} Semana 4 (15/09/2026 al 22/09/2026 -- Sprint 2 en ejecución)
-\end{itemize}
 
+
+% =============================================================
+% 2. INTRODUCCIÓN
+% =============================================================
 \section{Introducción}
-Al corte del **16 de septiembre de 2026**, el proyecto SIGE se encuentra en pleno desarrollo del **Sprint 2 (Fase 3: Desarrollo Iterativo Core)**, programado del 15 al 22 de septiembre de 2026 en el calendario laboral oficial de Ambato. 
+Al corte del \textbf{16 de septiembre de 2026}, el proyecto SIGE se encuentra en pleno desarrollo del \textbf{Sprint 2 (Fase 3: Desarrollo Iterativo Core)} dentro de la arquitectura monorepo canónica \texttt{SIGE/}, programado del 15 al 22 de septiembre de 2026 en el calendario laboral oficial de Ambato. 
 
-Durante esta semana se alcanzaron hitos determinantes:
-1. Puesta en marcha del **Wizard modular de 5 pestañas** para la elaboración guiada del Plan de Trabajo (\texttt{EDT 3.5}).
-2. Integración del **Editor enriquecido TipTap** con autoguardado debounce de 1500 ms (\texttt{EDT 3.6}).
-3. Construcción del **API de Firmas Electrónicas en Cascada integrada con FirmaEC**, asegurando el circuito jerárquico inalterable de las 3 firmas reglamentarias de la FISEI UTA (\texttt{EDT 3.7}).
+Durante esta semana se consolidaron hitos de alta relevancia arquitectónica y funcional:
+\begin{enumerate}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Puesta en marcha del \textbf{Wizard modular de 5 pestañas} en \textbf{React + Vite} y \textbf{Tailwind CSS (\texttt{\#00345E})} para la elaboración asistida del Plan de Trabajo (\texttt{EDT 4.1}).
+    \item Integración del \textbf{Editor enriquecido TipTap} con autoguardado asíncrono con debounce de 1500 ms y sanitización DOMPurify (\texttt{EDT 4.2}).
+    \item Construcción del \textbf{API REST Modular de Firmas Electrónicas en Cascada en Node.js + Express (v5)} con transacciones ACID en \textbf{PostgreSQL (18)} y sellado criptográfico SHA-256 compatible con FirmaEC (MINTEL), blindando el circuito reglamentario de 3 firmas de la FISEI UTA (\texttt{EDT 4.3}).
+\end{enumerate}
 
-Este informe consolida el estado de avance, métricas de calidad y preparación para el Hito 3.
+Este informe consolida el estado de avance, las métricas de calidad y la preparación técnica para el Hito 3.
 
+% =============================================================
+% 3. OBJETIVO
+% =============================================================
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Documentar y evaluar el estado de avance del Sprint 2 al 16 de septiembre de 2026, certificando la integración armónica entre el Wizard frontend y los endpoints de persistencia y firmas electrónicas en backend.
+Documentar y evaluar el estado de avance del Sprint 2 al 16 de septiembre de 2026, certificando la integración armónica entre el cliente frontend React + Vite y el backend modular Node.js + Express (v5) con persistencia en PostgreSQL (18).
 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item Evaluar el progreso de las Tareas EDT de la Semana 4 frente al cronograma de Microsoft Project y tablero EDT de Trello.
-    \item Demostrar el funcionamiento del circuito criptográfico de firmas multinivel y el autoguardado asíncrono.
-    \item Establecer la hoja de ruta para la culminación del Sprint 2 y el inicio de la Matriz de Actividades en el Sprint 3.
+    \item Evaluar el progreso de las Tareas EDT de la Semana 4 frente al cronograma y el tablero EDT.
+    \item Demostrar el funcionamiento articulado del circuito criptográfico de firmas multinivel, el autoguardado asíncrono con debounce y el cliente Axios con auto-renovación silenciosa de tokens.
+    \item Establecer la hoja de ruta técnica para la culminación del Sprint 2 y la habilitación de la exportación formal a PDF/Word en el Sprint 3.
 \end{itemize}
 
+% =============================================================
+% 4. ALCANCE
+% =============================================================
 \section{Alcance}
 
 \subsection{Límites del Avance (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
-    \item Monitoreo de avance de las tareas EDT 4.1 (Wizard), EDT 4.2 (Editor TipTap) y EDT 4.3 (API Firmas en Cascada).
-    \item Verificación del estado de sincronización entre el cliente React 19 y la WebAPI .NET 9.
+    \item Monitoreo de avance de las tareas EDT 4.1 (Wizard React+Vite), EDT 4.2 (Editor TipTap con debounce) y EDT 4.3 (API Firmas en Cascada Express v5 + PostgreSQL 18).
+    \item Verificación del estado de sincronización entre el cliente React y el backend Express v5 mediante cliente Axios centralizado.
     \item Balance de dedicación horaria de los 4 integrantes del equipo de desarrollo.
 \end{itemize}
 
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
-    \item No incluye el cierre formal de Sprint Review del 22 de septiembre de 2026 (objeto del Hito 3).
+    \item No incluye el cierre formal del Sprint Review programado para el 22 de septiembre de 2026 (objeto del Hito 3).
 \end{itemize}
 
+% =============================================================
+% 5. DEFINICIONES
+% =============================================================
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
     \item \textbf{Sprint 2:} Segundo ciclo de construcción iterativa centrado en la experiencia de edición guiada y legalización electrónica.
     \item \textbf{FirmaEC:} Aplicativo oficial de firma electrónica de la República del Ecuador (MINTEL).
-    \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Descomposición jerárquica orientada a entregables.
+    \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Descomposición funcional jerárquica orientada a entregables.
 \end{itemize}
 
+% =============================================================
+% 6. RESPONSABILIDADES
+% =============================================================
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Steeven Toala (Líder / Arquitecto):} 16 h -- Diseño criptográfico de firmas y coordinación técnica.
-    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} 14 h -- Validación UX de pestañas del Wizard y revisión SGC.
-    \item \textbf{Nixon Hurtado (Backend / DBA):} 16 h -- Endpoints RESTful de firmas y transacciones atómicas.
-    \item \textbf{Andrea Vasquez (Frontend / QA):} 16 h -- Componente Wizard, integración TipTap y debounce.
-    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Seguimiento semanal y verificación de avance de Sprint.
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} 16 h -- Diseño criptográfico de firmas, hashing SHA-256 y coordinación técnica.
+    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} 14 h -- Validación UX de pestañas del Wizard y maquetación Tailwind CSS \texttt{\#00345E}.
+    \item \textbf{Nixon Hurtado (Backend / DBA):} 16 h -- Endpoints modulares de firmas en Express v5 y transacciones ACID en PostgreSQL 18.
+    \item \textbf{Andrea Vasquez (Frontend / QA):} 16 h -- Componente Wizard, integración TipTap, debounce de 1.5s y cliente Axios.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Seguimiento semanal, verificación de cumplimiento de normativas SGC y evaluación.
 \end{itemize}
 
+% =============================================================
+% 7. NORMATIVA LEGAL Y TÉCNICA
+% =============================================================
 \section{Normativa Legal y Técnica}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item \textbf{Ley de Comercio Electrónico y Firmas Digitales (Ecuador):} Validez probatoria de firmas avanzadas.
-    \item \textbf{Guía del PMBOK (7ma Edición):} Gestión del avance y desempeño del proyecto.
+    \item \textbf{Ley de Comercio Electrónico y Firmas Digitales del Ecuador:} Validez jurídica y probatoria de firmas electrónicas avanzadas.
+    \item \textbf{Guía del PMBOK (7ma Edición):} Gestión del desempeño y monitoreo del avance del proyecto.
+    \item \textbf{Norma Técnica SGC FISEI UTA:} Circuito reglamentario de legalización de planes e informes académicos.
 \end{itemize}
 
+% =============================================================
+% 8. MÉTODO, POLÍTICAS Y CONTENIDOS
+% =============================================================
 \section{Método, Políticas y Contenidos}
-El flujo de trabajo del Sprint 2 se articula en tres frentes concurrentes integrados en ramas GitFlow:
+El flujo de trabajo del Sprint 2 se articula en tres frentes concurrentes integrados en el monorepo \texttt{SIGE/}:
 
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/s2_05_layout_vistas.png}
+    \caption{Integración del Asistente Wizard y Flujo de Edición Guiada en SIGE.}
+    \label{fig:layout_s4}
+\end{figure}
+
+% =============================================================
+% 9. DESCRIPCIÓN DE ACTIVIDADES
+% =============================================================
 \section{Descripción de actividades}
 
 \subsection{Estado de Tareas EDT al 16 de Septiembre de 2026}
@@ -192,9 +228,9 @@ EDT 4.1 & Wizard modular en pestañas & A. Vasquez / H. Villavicencio & 15 sep -
 \hline
 EDT 4.2 & Editor TipTap con autoguardado & A. Vasquez / S. Toala & 17 sep - 22 sep & En pruebas (60\%) \\
 \hline
-EDT 4.3 & Endpoints WebAPI y Firmas FirmaEC & N. Hurtado / S. Toala & 15 sep - 22 sep & Controladores probados (80\%) \\
+EDT 4.3 & Endpoints Express v5 y Firmas FirmaEC & N. Hurtado / S. Toala & 15 sep - 22 sep & Controladores listos (80\%) \\
 \hline
-EDT 4.4 & Hito 3: Sprint 2 Review & Equipo SIGE / Ing. Paulo Torres & 22 sep & Programado \\
+EDT 4.4 & Hito 3: Sprint 2 Review y Consolidado & Equipo SIGE / Ing. Paulo Torres & 22 sep & Programado \\
 \hline
 \end{tabularx}
 \caption{Estado del Cronograma de Sprint 2 al 16 de Septiembre de 2026.}
@@ -202,16 +238,16 @@ EDT 4.4 & Hito 3: Sprint 2 Review & Equipo SIGE / Ing. Paulo Torres & 22 sep & P
 
 \subsection{Integración Funcional del Sprint 2}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Flujo Wizard:} Transición fluida entre las 5 pestañas con cálculo reactivo de avance.
-    \item \textbf{Autoguardado Asíncrono:} Persistencia con debounce de 1500 ms y badges de estado.
-    \item \textbf{Firmas en Cascada:} Compuertas jerárquicas operativas Docente $\rightarrow$ Coordinador de Área $\rightarrow$ Coordinador de Carrera.
+    \item \textbf{Flujo Wizard en React + Vite:} Transición asistida entre Datos Informativos, Justificación, Matriz, Evidencias y Firmas con validación reactiva de salida y paleta institucional \texttt{\#00345E}.
+    \item \textbf{Autoguardado Asíncrono:} Escritura en tiempo real sin bloqueo de interfaz, sanitización con DOMPurify y confirmación visual de persistencia en PostgreSQL 18.
+    \item \textbf{Firmas en Cascada:} Endpoints operativos en Express v5 respetando la secuencia jerárquica obligatoria Docente $\rightarrow$ Coordinador de Área $\rightarrow$ Coordinador de Carrera.
 \end{enumerate}
 
 \subsection{Conclusiones y Recomendaciones Técnicas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item El desarrollo avanza en riguroso apego al cronograma de 57 días laborables establecido en el tablero EDT de Trello.
-    \item La incorporación del API de firmas electrónicas resuelve de raíz el cuello de botella histórico de legalización documental en la FISEI.
-    \item Concluir las pruebas del debounce en conexiones lentas antes de la revisión del 22 de septiembre.
+    \item El desarrollo avanza en riguroso apego al cronograma de 57 días laborables establecido en la EDT y el tablero de control.
+    \item La adopción homogénea de JavaScript moderno (Node.js en backend y React en frontend) permitió agilizar el desarrollo de los contratos de comunicación y la reutilización de modelos de validación.
+    \item Concluir las pruebas de estrés del debounce ante fluctuaciones de red antes de la sesión de revisión de Sprint del 22 de septiembre.
 \end{itemize}
 
 \vspace{0.3cm}
@@ -250,7 +286,9 @@ EDT 4.4 & Hito 3: Sprint 2 Review & Equipo SIGE / Ing. Paulo Torres & 22 sep & P
     \rowcolor{gray!20}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Consolidación de avance de Sprint 2 al 16 de septiembre de 2026 para Séptimo Semestre "A" & Steeven Toala & 16/09/2026 \\
+    1.0 & Consolidación de avance de Sprint 2 al 16 de septiembre de 2026. & Steeven Toala & 16/09/2026 \\
+    \hline
+    2.0 & Actualización integral al stack oficial: Node.js + Express (v5), PostgreSQL 18, React + Vite, Tailwind CSS \#00345E, Bcrypt.js, JWT, Helmet y FirmaEC. & Steeven Toala / Nixon Hurtado & 16/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -265,11 +303,10 @@ EDT 4.4 & Hito 3: Sprint 2 Review & Equipo SIGE / Ing. Paulo Torres & 22 sep & P
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Project Management Institute. (2021). \textit{PMBOK Guide: Schedule and Quality Management}.
     \item MINTEL. (2025). \textit{Manual de Interoperabilidad FirmaEC}. Quito, Ecuador.
+    \item Express.js Team. (2026). \textit{Express 5.x Production Guidelines}.
 \end{itemize}
 
 \subsection*{Anexo 2: Cronograma y Próximos Pasos (Sprint 2 Review)}
 Demostración técnica del incremento de software ante la cátedra programada para el 22 de septiembre de 2026.
 
 \end{document}
-
-

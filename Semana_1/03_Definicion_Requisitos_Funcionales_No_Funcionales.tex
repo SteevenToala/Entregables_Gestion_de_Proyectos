@@ -1,4 +1,4 @@
-﻿\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-tabla]{babel}
 \usepackage{geometry}
@@ -101,18 +101,7 @@
 \section{Título}
 \textbf{Denominación del Entregable:} Especificación Formal de Requisitos del Sistema (SRS - IEEE 830)
 
-\vspace{0.15cm}
-\noindent
-\textbf{Ficha Técnica de Identificación:}
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
-    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
-    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
-    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
-    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
-    \item \textbf{Docente Tutor:} Ing. Paulo Torres
-    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
-    \item \textbf{Período de Ejecución:} Semana 1 (17/08/2026 al 19/08/2026)
-\end{itemize}
+
 
 \section{Introducción}
 El presente documento formaliza la totalidad de los requerimientos del sistema \textbf{SIGE} siguiendo las directrices del estándar internacional \textbf{IEEE 830 (Software Requirements Specification)}. La especificación abarca la totalidad de operaciones necesarias para garantizar la digitalización de los formatos oficiales SGC (\texttt{UTA-SGC-A-2-1-P7-T1} y \texttt{UTA-SGC-A-2-1-P7-T2}), la validación determinista de matrices, el almacenamiento en la nube privada MinIO y la asistencia mediante IA local.
@@ -132,7 +121,7 @@ Especificar de forma exhaustiva, verificable y no ambigua los 24 requisitos func
 \section{Alcance}
 
 \subsection{Límites de la Especificación}
-Define los requisitos de la aplicación web responsive (React/TypeScript) y de los microservicios backend (.NET 8/PostgreSQL/MinIO/LanguageTool y Google Gemini API).
+Define los requisitos de la aplicación web responsive SPA (React + Vite, Tailwind CSS Keyframes) y de la API REST modular backend (Node.js + Express v5, PostgreSQL 18, MinIO S3 y Google Gemini API).
 
 \subsection{Exclusiones}
 No incluye el desarrollo de aplicaciones nativas móviles (iOS/Android) durante la presente versión.
@@ -287,21 +276,21 @@ A continuación, se detalla el catálogo completo de los **24 Requisitos Funcion
     \rowcolor{tableheader}
     Código & Categoría & Requisito No Funcional & Métrica de Aceptación \\
     \hline
-    RNF-01 & Seguridad & Cifrado de contraseñas con BCrypt, protección contra inyecciones SQL y sanitización XSS. & Cumplimiento de estándares OWASP Top 10. \\
+    RNF-01 & Seguridad & Cifrado de contraseñas con Bcrypt.js, autenticación basada en JWT, cabeceras HTTP reforzadas con Helmet, protección contra inyecciones SQL y sanitización XSS. & Cumplimiento de estándares OWASP Top 10. \\
     \hline
-    RNF-02 & Rendimiento & Tiempo de respuesta de endpoints de consulta y guardado. & Menor a 500 ms bajo carga normal (50 usuarios concurrentes). \\
+    RNF-02 & Rendimiento & Tiempo de respuesta de endpoints de consulta y guardado en la API REST de Express (v5). & Menor a 500 ms bajo carga normal (50 usuarios concurrentes). \\
     \hline
     RNF-03 & Disponibilidad & Tiempo de actividad continuo del sistema en servidor VPS. & Disponibilidad mínima del $99.5\%$ en horario académico. \\
     \hline
-    RNF-04 & Usabilidad & Diseño sobrio en paleta Azul y Blanco institucional con navegación guiada por pestañas. & Cero saturación visual; reducción de errores de digitación en un $80\%$. \\
+    RNF-04 & Usabilidad & Diseño institucional en paleta \texttt{\#00345E} (Azul UTA / FISEI) con Tailwind CSS + CSS Keyframes para animaciones fluidas por GPU y navegación SPA en React + Vite. & Cero saturación visual; reducción de errores de digitación en un $80\%$. \\
     \hline
     RNF-05 & Privacidad y Eficiencia IA & El módulo de IA debe proteger la privacidad académica y operar sin suscripciones de pago. & Corrección ortográfica 100\% local en Docker (LanguageTool); sugerencias semánticas vía Google Gemini API. \\
     \hline
     RNF-06 & Compatibilidad & Soporte para navegadores modernos de escritorio y dispositivos móviles. & Chrome $\ge$ 110, Firefox $\ge$ 115, Edge $\ge$ 110 y Safari $\ge$ 16. \\
     \hline
-    RNF-07 & Mantenibilidad & Arquitectura limpia (Clean Architecture) con separación estricta en capas y pruebas unitarias. & Cobertura de pruebas unitarias $> 80\%$ en lógica de dominio. \\
+    RNF-07 & Mantenibilidad & Arquitectura modular en capas basada en Node.js + Express (v5) (\texttt{modules/auth}, \texttt{modules/users}, middlewares y controladores) con código limpio y pruebas automatizadas. & Cobertura de pruebas unitarias $> 80\%$ en lógica de negocio. \\
     \hline
-    RNF-08 & Integridad de Datos & Persistencia relacional ACID y respaldo periódico de la base de datos PostgreSQL y MinIO. & RPO $< 24$ horas, RTO $< 2$ horas ante fallos catastróficos. \\
+    RNF-08 & Integridad de Datos & Persistencia relacional ACID en PostgreSQL (18) mediante scripts DDL (\texttt{schema.sql}, \texttt{seed.sql}, \texttt{init.js}) y respaldo periódico de base de datos y MinIO. & RPO $< 24$ horas, RTO $< 2$ horas ante fallos catastróficos. \\
     \hline
 \end{tabularx}
 \caption{Catálogo de Requisitos No Funcionales (RNF-01 al RNF-08).}
