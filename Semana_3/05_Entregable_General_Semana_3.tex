@@ -1,0 +1,268 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S3-005}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{GESTIÓN DE PROYECTOS / SPRINT 1 REVIEW Y CONTROL}
+\newcommand{\docElaboracion}{14/09/2026}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{INFORME CONSOLIDADO DE AVANCE SEMANA 3 (SPRINT 1 REVIEW)}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Informe Consolidado de Avance: Semana 3 / Sprint 1 (Infraestructura, Persistencia y Base Frontend)
+
+\vspace{0.15cm}
+\noindent
+\textbf{Ficha Técnica de Identificación:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
+    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
+    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
+    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
+    \item \textbf{Docente Tutor:} Ing. Paulo Torres
+    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{Completado y Aprobado}}
+    \item \textbf{Período de Ejecución:} Semana 3 (07/09/2026 al 14/09/2026 -- Sprint 1 Completo: 128 horas equipo)
+\end{itemize}
+
+\section{Introducción}
+La Semana 3 marcó el inicio formal de la **Fase 3: Desarrollo Iterativo Core** del proyecto SIGE, ejecutando el **Sprint 1 (Infraestructura, Persistencia y Base Frontend)**. Durante este ciclo de trabajo de 6 días laborables netos (07 al 14 de septiembre de 2026), el equipo cumplió con el 100\% de los objetivos planteados en el cronograma EDT: migraciones EF Core en PostgreSQL 16 (\texttt{EDT 3.1}), seeders institucionales SGC (\texttt{EDT 3.2}), autenticación JWT y roles RBAC (\texttt{EDT 3.3}), y cliente base en React 19 + Vite (\texttt{EDT 3.4}).
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Consolidar y validar los resultados técnicos, métricas de esfuerzo y software operativo generados durante el Sprint 1 de la Fase 3, certificando la estabilidad de la base sobre la cual se implementará el Sprint 2.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item Presentar el balance de horas ejecutadas vs. planificadas en el cronograma MS Project.
+    \item Validar la integración transversal entre React 19 y la WebAPI .NET 9 mediante JWT.
+    \item Formalizar la aprobación del incremento del Sprint 1.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Límites del Incremento (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Abarca los 4 paquetes EDT del Sprint 1 (EDT 3.1 al EDT 3.4).
+    \item Balance de 128 horas de ingeniería ejecutadas por el equipo de 4 integrantes.
+    \item Integración transversal de persistencia en PostgreSQL 16, autenticación JWT y cliente base en React 19.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item No incluye los componentes de Wizard modular ni integración de firmas digitales (Semana 4).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Sprint Review:} Ceremonia ágil de inspección donde el equipo demuestra el incremento terminado.
+    \item \textbf{DoD (Definition of Done):} Criterios de aceptación técnica para dar por completada una historia de usuario.
+    \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Jerarquía desglosada de entregables del proyecto.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} 36 horas -- Coordinación del backlog y control de calidad.
+    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} 32 horas -- Validación de formatos SGC y diseño visual.
+    \item \textbf{Nixon Hurtado (Backend / DBA):} 40 horas -- Desarrollo de WebAPI, base de datos y JWT.
+    \item \textbf{Andrea Vasquez (Frontend / QA):} 40 horas -- Desarrollo de cliente React 19 y rutas protegidas.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Evaluación de incremento y aprobación de cierre del Sprint 1.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Estándar IEEE 1058:} Gestión y seguimiento de proyectos de software.
+    \item \textbf{Metodología Scrum:} Cumplimiento estricto de criterios de incremento potencialmente desplegable.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+El flujo de trabajo del Sprint 1 se organizó en torno a entregables modulares integrados en GitFlow bajo ramas feature y releases controladas.
+
+\section{Descripción de actividades}
+
+\subsection{Resumen de Paquetes EDT Ejecutados en Sprint 1}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|l|X|l|l|l|}
+\hline
+\rowcolor{tableheader}
+\textbf{Código} & \textbf{Tarea Ejecutada} & \textbf{Responsable} & \textbf{Horas} & \textbf{Estado} \\
+\hline
+EDT 3.1 & Migraciones EF Core en PostgreSQL 16 & Nixon Hurtado & 32h & 100\% Conforme \\
+\hline
+EDT 3.2 & Seeders SGC y Catálogos Institucionales & N. Hurtado / H. Villavicencio & 24h & 100\% Conforme \\
+\hline
+EDT 3.3 & Autenticación JWT y Roles RBAC & N. Hurtado / S. Toala & 32h & 100\% Conforme \\
+\hline
+EDT 3.4 & Cliente Base React 19 + Vite + Tailwind & A. Vasquez / H. Villavicencio & 40h & 100\% Conforme \\
+\hline
+\end{tabularx}
+\caption{Matriz de Control y Cumplimiento del Sprint 1.}
+\end{table}
+
+\subsection{Demostración del Incremento de Software}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Base de Datos Operativa:} Contenedor Docker \texttt{sige-postgres} con 13 tablas, llaves UUID e índices compuestos.
+    \item \textbf{WebAPI Funcional:} Contenedor \texttt{sige-webapi} en .NET 9 exponiendo Swagger con endpoints seguros de autenticación.
+    \item \textbf{Frontend React 19:} Aplicación web interactiva que permite inicio de sesión por roles y navegación a dashboard institucional.
+\end{enumerate}
+
+\subsection{Conclusiones y Recomendaciones Técnicas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item El Sprint 1 concluyó de manera exitosa con el 100\% de entregables finalizados según el cronograma de Ambato.
+    \item La arquitectura de contenedores locales en Docker garantiza un entorno reproducible y estable para el inicio del Sprint 2.
+    \item Avanzar de forma prioritaria en el Sprint 2 con el editor TipTap y la integración criptográfica del API de firmas electrónicas (FirmaEC).
+\end{itemize}
+
+\vspace{0.3cm}
+
+% =============================================================
+% 10. FIRMAS DE RESPONSABILIDAD
+% =============================================================
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 14/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Andrea Vasquez\newline \textit{Frontend Developer / QA Tester} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{blue!80}{\scriptsize [ FIRMADO DIGITALMENTE ]}}\vspace{10pt}} & 14/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 11. CONTROL DE CAMBIOS
+% =============================================================
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Cierre formal y consolidación del Sprint 1 (Semana 3) para Séptimo Semestre "A" & Steeven Toala & 14/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 12. ANEXOS
+% =============================================================
+\section{Anexos}
+
+\subsection*{Anexo 1: Referencias Bibliográficas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Project Management Institute. (2021). \textit{A Guide to the Project Management Body of Knowledge (PMBOK Guide)}.
+    \item Schwaber, K., \& Sutherland, J. (2020). \textit{The Scrum Guide}.
+\end{itemize}
+
+\subsection*{Anexo 2: Acta de Cierre y Aceptación de Sprint 1}
+Se certifica la entrega formal del incremento de software correspondiente a la Semana 3, cumpliendo con el estándar de calidad y la línea base de la asignatura.
+
+\end{document}
+
+

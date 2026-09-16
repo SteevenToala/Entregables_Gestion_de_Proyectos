@@ -1,0 +1,260 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S3-003}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO DE SOFTWARE / CIBERSEGURIDAD Y CONTROL DE ACCESO}
+\newcommand{\docElaboracion}{14/09/2026}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{SEGURIDAD, AUTENTICACIÓN Y AUTORIZACIÓN (JWT \& RBAC EN WEBAPI)}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Módulo de Seguridad: Autenticación Basada en Tokens JWT y Control de Acceso RBAC (.NET 9 WebAPI)
+
+\vspace{0.15cm}
+\noindent
+\textbf{Ficha Técnica de Identificación:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
+    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
+    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
+    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
+    \item \textbf{Docente Tutor:} Ing. Paulo Torres
+    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{Completado / En Auditoría}}
+    \item \textbf{Período de Ejecución:} Semana 3 (09/09/2026 al 14/09/2026 -- EDT 3.3: 4 días laborables, 32h)
+\end{itemize}
+
+\section{Introducción}
+La confidencialidad, trazabilidad y control de privilegios en el sistema \textbf{SIGE} exigen una arquitectura de seguridad robusta y sin estado (*stateless*). Dado que los docentes redactan información sensible y las autoridades emiten dictámenes oficiales con valor legal, la autenticación debe impedir accesos indebidos y garantizar el no repudio.
+
+El estándar **JSON Web Tokens (JWT)** junto con el modelo de **Control de Acceso Basado en Roles (RBAC)** implementado en ASP.NET Core 9 permite autenticar solicitudes HTTP, transportar claims seguros (identificador de usuario, rol institucional y carrera asignada) y autorizar endpoints mediante políticas estrictas y atributos \texttt{[Authorize(Roles = "...")]}.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Desarrollar el módulo de autenticación y autorización en la capa WebAPI de SIGE utilizando JWT y RBAC, blindando los endpoints contra accesos no autorizados y asegurando la segregación de funciones según los roles de la FISEI.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item Configurar el middleware de autenticación \texttt{JwtBearer} con firma simétrica HMAC-SHA256 y validación estricta de emisor (*Issuer*), audiencia (*Audience*) y tiempo de vida (*Lifetime*).
+    \item Implementar el controlador \texttt{AuthController} con endpoints para inicio de sesión (\texttt{/api/auth/login}) y perfil de usuario autenticado (\texttt{/api/auth/me}).
+    \item Definir políticas de autorización RBAC para restringir acciones críticas (dictámenes, habilitación extemporánea y circuito de firmas).
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Alcance Incluido}
+Generación de token JWT firmado con expiración de 120 minutos, claims de identidad (\texttt{sub}, \texttt{email}, \texttt{role}, \texttt{carrera\_id}, \texttt{nombre\_completo}), middleware global de captura de token en cabecera \texttt{Authorization: Bearer <token>} y pruebas de seguridad.
+
+\subsection{Límites y Exclusiones}
+No incluye autenticación federada externa con OAuth2 de Google Workspace en esta iteración.
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{JWT (JSON Web Token):} Estándar abierto (RFC 7519) para transmitir información segura entre partes en formato JSON.
+    \item \textbf{RBAC (Role-Based Access Control):} Mecanismo de restricción de accesos basado en las responsabilidades institucionales.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Nixon Hurtado (Backend / DBA):} Implementación de \texttt{TokenService.cs} y configuración de \texttt{JwtBearer}.
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} Definición de matrices de permisos y revisión de directivas de seguridad.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión y validación del cumplimiento de directivas de seguridad.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (Ecuador):} Confidencialidad y seguridad de información institucional.
+    \item \textbf{OWASP Top 10 API Security Risks:} Mitigación de fallos de autenticación (API2) y autorización a nivel de objeto (API1).
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Implementación basada en Microsoft ASP.NET Core Identity y Microsoft.AspNetCore.Authentication.JwtBearer. Se establecen políticas rigurosas de seguridad: se prohíbe transportar credenciales o hashes dentro del token JWT, se exige clave simétrica de 256 bits y se devuelven códigos HTTP 401 Unauthorized o 403 Forbidden según corresponda para peticiones no válidas.
+
+\section{Descripción de actividades}
+
+\subsection{Estructura del Payload JWT Generado}
+Los tokens emitidos tras la autenticación exitosa contienen las declaraciones necesarias para la toma de decisiones descentralizada:
+\begin{verbatim}
+{
+  "sub": "b1eebc99-9c0b-4ef8-bb6d-6bb9bd380b22",
+  "email": "docente.software@uta.edu.ec",
+  "role": "DOCENTE_RESPONSABLE",
+  "carrera_id": "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11",
+  "nbf": 1726315200,
+  "exp": 1726322400,
+  "iss": "SIGE-UTA-AuthServer",
+  "aud": "SIGE-ClientApp"
+}
+\end{verbatim}
+
+\subsection{Endpoint /api/auth/login y Control de Acceso RBAC}
+Se implementó el controlador \texttt{AuthController} validando contraseñas mediante hash con sal y protegiendo las rutas con el atributo \texttt{[Authorize(Roles = "...")]}.
+
+\subsection{Matriz de Autorización RBAC en Endpoints}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{POST /api/documentos}: Restringido a \texttt{DOCENTE\_RESPONSABLE}.
+    \item \texttt{POST /api/revisiones/dictamen}: Restringido a autoridades evaluadoras.
+    \item \texttt{POST /api/administracion/habilitaciones}: Exclusivo para \texttt{ADMINISTRADOR}.
+\end{itemize}
+
+\subsection{Conclusiones y Recomendaciones Técnicas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item El esquema JWT + RBAC otorga desacoplamiento total entre el cliente frontend y la WebAPI, garantizando transacciones seguras y trazables.
+    \item Los roles modelados corresponden de forma unívoca a la estructura académica del SGC de la FISEI UTA.
+    \item Configurar HTTPS estricto con certificados SSL en ambientes de producción para evitar la intercepción del token en tránsito.
+\end{itemize}
+
+\vspace{0.3cm}
+
+% =============================================================
+% 10. FIRMAS DE RESPONSABILIDAD
+% =============================================================
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Nixon Hurtado\newline \textit{Backend Developer / DBA} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{blue!80}{\scriptsize [ FIRMADO DIGITALMENTE ]}}\vspace{10pt}} & 14/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 14/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 11. CONTROL DE CAMBIOS
+% =============================================================
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Implementación de seguridad JWT y RBAC para Séptimo Semestre "A" & Nixon Hurtado & 14/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 12. ANEXOS
+% =============================================================
+\section{Anexos}
+
+\subsection*{Anexo 1: Referencias Bibliográficas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Internet Engineering Task Force (IETF). (2015). \textit{RFC 7519: JSON Web Token (JWT)}.
+    \item Microsoft Docs. (2026). \textit{Authentication and authorization in ASP.NET Core Web APIs}.
+\end{itemize}
+
+\subsection*{Anexo 2: Matriz de Códigos de Retorno HTTP de Seguridad}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{200 OK}: Autenticación exitosa y emisión de token JWT.
+    \item \texttt{401 Unauthorized}: Token ausente, firma inválida o expirado.
+    \item \texttt{403 Forbidden}: Token válido pero rol insuficiente para la operación solicitada.
+\end{itemize}
+
+\end{document}
+
+

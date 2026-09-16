@@ -1,0 +1,265 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S3-001}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO DE SOFTWARE / PERSISTENCIA E INFRAESTRUCTURA}
+\newcommand{\docElaboracion}{10/09/2026}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{IMPLEMENTACIÓN DE TABLAS, ÍNDICES Y MIGRACIONES EF CORE EN POSTGRESQL 16}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Implementación de Tablas, Índices y Migraciones en Entity Framework Core (.NET 9 / PostgreSQL 16)
+
+\vspace{0.15cm}
+\noindent
+\textbf{Ficha Técnica de Identificación:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
+    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
+    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
+    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
+    \item \textbf{Docente Tutor:} Ing. Paulo Torres
+    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{Completado / En Auditoría}}
+    \item \textbf{Período de Ejecución:} Semana 3 (07/09/2026 al 10/09/2026 -- EDT 3.1: 4 días laborables, 32h)
+\end{itemize}
+
+\section{Introducción}
+En la transición del diseño relacional a la fase de construcción del sistema \textbf{SIGE}, la capa de infraestructura requiere materializar el modelo lógico en el motor de base de datos relacional **PostgreSQL 16**. El uso de **Entity Framework Core 9 (EF Core)** bajo el enfoque *Code-First* garantiza el mapeo fuertemente tipado de las entidades del dominio hacia el esquema físico, el control riguroso de migraciones versionadas y la definición imperativa de restricciones de integridad, índices únicos y reglas de cascada mediante la API fluida (*Fluent API*).
+
+Este documento detalla la implementación técnica de las migraciones iniciales en el ensamblado \texttt{SIGE.Infrastructure}, el mapeo de las 13 entidades transaccionales (con especial énfasis en \texttt{DOCUMENTOS}, \texttt{ACTIVIDADES\_MATRIZ} y \texttt{FIRMAS\_LEGALIZACION}) y las pruebas de consistencia relacional ejecutadas.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Implementar el modelo relacional físico en PostgreSQL 16 mediante Entity Framework Core 9 en la solución .NET 9, estableciendo esquemas normalizados, índices de rendimiento y restricciones de integridad para el ciclo de vida documental del SGC.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item Configurar el contexto de persistencia \texttt{ApplicationDbContext} con *Fluent API* para mapear las 13 entidades del dominio.
+    \item Generar y aplicar las migraciones iniciales garantizando tipos nativos UUID (\texttt{uuid-ossp}), timestamps con zona horaria e integridad referencial estricta.
+    \item Implementar índices compuestos únicos para la auditoría, control extemporáneo y el circuito secuencial de firmas.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Alcance Incluido}
+Mapeo de entidades: \texttt{CarreraUnidad}, \texttt{Usuario}, \texttt{CatalogoActividad}, \texttt{Documento}, \texttt{SeccionDocumento}, \texttt{HabilitacionExtemporanea}, \texttt{SolicitudModificacionPlan}, \texttt{ActividadMatriz}, \texttt{EvidenciaMinio}, \texttt{FirmaLegalizacion}, \texttt{ObservacionComite}, \texttt{HistorialCambio} y \texttt{LogAuditoria}. Restricciones \texttt{CHECK} para ponderaciones y orden de firmas.
+
+\subsection{Límites y Exclusiones}
+No incluye el servicio de almacenamiento de blobs binarios (delegado a MinIO en EDT 3.11).
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Code-First:} Enfoque de ORM donde las clases de entidad en C\# definen la estructura de la base de datos relacional.
+    \item \textbf{Fluent API:} Mecanismo programático en EF Core para configurar mapeos que sobrepasan las anotaciones de datos simples.
+    \item \textbf{Migración:} Script de evolución incremental de esquema que permite versionar y replicar cambios en entornos de desarrollo y producción.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Nixon Hurtado (Backend / DBA):} Escritura de configuraciones \texttt{IEntityTypeConfiguration}, ejecución de migraciones e índices.
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} Revisión de Clean Architecture y validación de invariantes de dominio.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión técnica y aprobación de la consistencia del esquema.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{ISO/IEC 25010:} Atributos de fiabilidad e integridad de datos.
+    \item \textbf{Reglamento del SGC - FISEI UTA:} Obligatoriedad de conservación íntegra de expedientes académicos.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Desarrollo iterativo guiado por el backlog del Sprint 1, empleando comandos \texttt{dotnet-ef CLI} contra la instancia PostgreSQL 16 en contenedor local. Se definen políticas estrictas: toda tabla incluye columna \texttt{created\_at} con zona horaria e identificador único UUIDv4 generado en base de datos. Las auditorías y registros de firmas son inmutables.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/s2_04_erd_postgresql.png}
+    \caption{Esquema Físico Relacional Mapeado con EF Core 9 en PostgreSQL 16.}
+    \label{fig:erd_postgres}
+\end{figure}
+
+\section{Descripción de actividades}
+
+\subsection{Configuración de Fluent API en ApplicationDbContext}
+Se implementó el mapeo estricto de las 13 entidades en el ensamblado \texttt{SIGE.Infrastructure}. A nivel de base de datos se aseguró que ninguna firma pueda duplicarse para la misma fase y posición de orden jerárquico mediante la restricción única:
+\begin{verbatim}
+builder.Entity<FirmaLegalizacion>(entity =>
+{
+    entity.ToTable("FIRMAS_LEGALIZACION");
+    entity.HasKey(e => e.Id);
+    entity.Property(e => e.Id).HasDefaultValueSql("gen_random_uuid()");
+    entity.Property(e => e.FaseDocumento).HasMaxLength(30).IsRequired();
+    entity.Property(e => e.OrdenCascada).IsRequired();
+    entity.HasIndex(e => new { e.DocumentoId, e.FaseDocumento, e.OrdenCascada })
+          .IsUnique()
+          .HasDatabaseName("uq_firmas_documento_fase_orden");
+});
+\end{verbatim}
+
+\subsection{Generación y Ejecución de la Migración}
+Se ejecutaron satisfactoriamente los comandos de migración sin inconsistencias:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \texttt{dotnet ef migrations add InitialCreate\_Postgres16 --project src/SIGE.Infrastructure --startup-project src/SIGE.WebAPI}
+    \item \texttt{dotnet ef database update --project src/SIGE.Infrastructure --startup-project src/SIGE.WebAPI}
+\end{enumerate}
+
+\subsection{Verificación de Integridad Relacional y Restricciones}
+Se ejecutó un set de pruebas de inserción y transacciones concurrentes demostrando el cumplimiento de las restricciones \texttt{CHECK} de ponderaciones ($0.00 \leq \text{ponderacion} \leq 100.00$) y el bloqueo de firmas duplicadas para el mismo escalón jerárquico.
+
+\subsection{Conclusiones y Recomendaciones Técnicas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item La persistencia en PostgreSQL 16 vía EF Core 9 provee tipado estricto y total desacoplamiento entre el modelo de dominio y la base de datos física.
+    \item Los índices únicos garantizan la estricta integridad de la máquina de estados y del circuito de firmas sin depender exclusivamente de la capa de aplicación.
+    \item Mantener la ejecución estricta de migraciones en entornos CI/CD sin modificaciones manuales directas al esquema SQL.
+\end{itemize}
+
+\vspace{0.3cm}
+
+% =============================================================
+% 10. FIRMAS DE RESPONSABILIDAD
+% =============================================================
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Nixon Hurtado\newline \textit{Backend Developer / DBA} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{blue!80}{\scriptsize [ FIRMADO DIGITALMENTE ]}}\vspace{10pt}} & 10/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 10/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 11. CONTROL DE CAMBIOS
+% =============================================================
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Mapeo de tablas, índices y migraciones EF Core en PostgreSQL 16 para Séptimo Semestre "A" & Nixon Hurtado & 10/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 12. ANEXOS
+% =============================================================
+\section{Anexos}
+
+\subsection*{Anexo 1: Referencias Bibliográficas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Microsoft Docs. (2026). \textit{Entity Framework Core 9 Documentation: Relational Database Providers}.
+    \item PostgreSQL Global Development Group. (2026). \textit{PostgreSQL 16.2 Documentation}.
+\end{itemize}
+
+\subsection*{Anexo 2: Resumen de Entidades Mapeadas en Migración Inicial}
+Se aplicaron 13 tablas relacionales en el esquema público de PostgreSQL 16, incluyendo extensiones \texttt{uuid-ossp} y 18 índices relacionales y compuestos.
+
+\end{document}
+
+

@@ -1,0 +1,248 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false
+}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S2-002}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DISEÑO DE SOFTWARE / ARQUITECTURA}
+\newcommand{\docElaboracion}{28/08/2026}
+\newcommand{\docRevision}{PENDIENTE DE REVISIÓN}
+\newcommand{\docTitulo}{DISEÑO DE ARQUITECTURA DE SOFTWARE, MODELO C4 Y CLEAN ARCHITECTURE}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Documento de Arquitectura de Software (SAD), Modelo C4 y Patrones de Diseño (EDT 2.2)
+
+\vspace{0.15cm}
+\noindent
+\textbf{Ficha Técnica de Identificación:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
+    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
+    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
+    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
+    \item \textbf{Docente Tutor:} Ing. Paulo Torres
+    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Elaboración / Pendiente de Revisión}}
+    \item \textbf{Período de Ejecución:} Semana 2 (27/08/2026 al 29/08/2026)
+    \item \textbf{Responsable:} Steeven Toala (Líder de Proyecto / Arquitecto de Software)
+\end{itemize}
+
+\section{Patrón Arquitectónico: Clean Architecture (.NET 9)}
+Para asegurar alta mantenibilidad, independencia de frameworks, bajo acoplamiento y testabilidad rigurosa, el backend de \textbf{SIGE} se estructura bajo el patrón \textbf{Clean Architecture (Arquitectura Limpia)} en .NET 9:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Capa de Dominio (\texttt{SIGE.Domain}):} Entidades nucleares (\texttt{Documento}, \texttt{ActividadMatriz}, \texttt{FirmaLegalizacion}, \texttt{EvidenciaMinio}), Value Objects, Enums institucionales (\texttt{EstadoDocumento}, \texttt{TipoInforme}) y Domain Events.
+    \item \textbf{Capa de Aplicación (\texttt{SIGE.Application}):} Casos de uso estructurados mediante CQRS (Commands/Queries con MediatR), DTOs, contratos de interfaces y validadores deterministas con FluentValidation.
+    \item \textbf{Capa de Infraestructura (\texttt{SIGE.Infrastructure}):} DbContext de Entity Framework Core para PostgreSQL 16, repositorio cliente de MinIO S3, cliente HTTP para LanguageTool y motor QuestPDF / OpenXML.
+    \item \textbf{Capa de Presentación / WebAPI (\texttt{SIGE.WebAPI}):} Controladores RESTful, middlewares de autenticación JWT y RBAC, Swagger OpenAPI y configuración de arranque (\texttt{Program.cs}).
+\end{enumerate}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.80\textwidth,height=5.5cm,keepaspectratio]{images/s2_02_clean_architecture.png}
+    \caption{Capas Concéntricas de Clean Architecture en .NET 9.}
+    \label{fig:s2_02_clean}
+\end{figure}
+
+\subsection{Estructura de Proyectos en la Solución .NET 9}
+\begin{lstlisting}
+SIGE.Solution/
+|-- src/
+|   |-- SIGE.Domain/          # Entidades, Enums (EstadoDocumento, TipoInforme), Reglas
+|   |-- SIGE.Application/     # Casos de uso (Commands/Queries), Validadores FluentValidation
+|   |-- SIGE.Infrastructure/  # DbContext EF Core, MinIO S3 Repository, QuestPDF, LanguageTool API
+|   |-- SIGE.WebAPI/          # Controladores REST, JWT Middleware, Swagger, Program.cs
+|   `-- SIGE.ClientApp/       # Frontend React 19 + TypeScript + Vite + Tailwind CSS
+`-- tests/
+    |-- SIGE.UnitTests/       # Pruebas unitarias de Domain y Validation Gates (xUnit, Moq)
+    `-- SIGE.IntegrationTests/# Pruebas de integracion de Endpoints WebAPI
+\end{lstlisting}
+
+\section{Diagrama de Contenedores C4 de la Solución}
+El modelo C4 articula la interacción entre el cliente SPA y los microservicios locales On-Premise y en la nube:
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth,height=5.2cm,keepaspectratio]{images/s2_02_contenedores_c4.png}
+    \caption{Diagrama de Contenedores del Modelo C4 para el Ecosistema SIGE.}
+    \label{fig:s2_02_c4}
+\end{figure}
+
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Frontend SPA:} React 19 + TypeScript + Vite servido en Nginx (puertos 80/443).
+    \item \textbf{Backend Web API:} ASP.NET Core .NET 9 (puerto 5000) autenticado con Bearer JWT.
+    \item \textbf{Base de Datos Relacional:} PostgreSQL 16 (puerto 5432) con persistencia en volumen.
+    \item \textbf{Almacenamiento de Evidencias:} MinIO S3 (puertos 9000 API y 9001 Consola Web).
+    \item \textbf{Servicio de Corrección Sintáctica:} LanguageTool local en contenedor Docker (puerto 8010).
+    \item \textbf{Asistente Semántico IA:} Inferencia delegada a Google Gemini API (Gemini 2.5 Flash / Google AI) mediante peticiones seguras HTTPS sin costos de suscripción ni sobrecarga de GPU local.
+    \item \textbf{Motor de Documentos:} QuestPDF y OpenXML para renderizado fidedigno de PDF y Word \texttt{.docx}.
+\end{itemize}
+
+\section{Patrones de Diseño Implementados}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2.5pt]
+    \item \textbf{Repository \& Unit of Work:} Desacopla la persistencia de datos y garantiza transacciones ACID en operaciones complejas (ej. cambio de estado + registro de auditoría + incremento de versión).
+    \item \textbf{CQRS con MediatR:} Separa las operaciones de lectura (\textit{Queries}) de las operaciones de escritura/mutación (\textit{Commands}).
+    \item \textbf{Pipeline Behaviors (Validation Gate):} Middleware de MediatR que intercepta cada \textit{Command} y ejecuta automáticamente las reglas de FluentValidation antes de llegar a la capa de datos.
+    \item \textbf{Adapter Pattern para MinIO:} Interfaz \texttt{IObjectStorageService} que aísla la lógica del SDK de MinIO/S3.
+    \item \textbf{Factory Pattern para Exportación:} Generador dinámico que decide si renderizar en formato PDF (QuestPDF) o formato Word (OpenXML) según la solicitud institucional.
+\end{enumerate}
+
+\section{Especificación de Seguridad y Token JWT}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Algoritmo de Firma Criptográfica:} HMAC-SHA256 con clave simétrica de 512 bits almacenada en variables de entorno seguras.
+    \item \textbf{Tiempo de Expiración:} Access Token de corta duración (30 minutos) junto a un Refresh Token seguro de 7 días almacenado en base de datos con revocación automática.
+    \item \textbf{Claims Oficiales en el Token:}
+    \begin{itemize}[leftmargin=1.2em, itemsep=1pt]
+        \item \texttt{sub (UserId):} Identificador único universal del usuario (UUID).
+        \item \texttt{email:} Correo electrónico institucional (\texttt{@uta.edu.ec}).
+        \item \texttt{fullName:} Nombre completo del docente o directivo.
+        \item \texttt{role:} Rol RBAC (\texttt{DocenteElaborador}, \texttt{CoordArea}, \texttt{CoordCarrera}, \texttt{Admin}).
+        \item \texttt{facultadId} y \texttt{carreraId:} Pertenencia institucional a la FISEI e Ingeniería de Software.
+    \end{itemize}
+\end{itemize}
+
+\vspace{0.3cm}
+
+% =============================================================
+% FIRMAS DE RESPONSABILIDAD
+% =============================================================
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 28/08/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE REVISIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% CONTROL DE CAMBIOS
+% =============================================================
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Diseño de arquitectura Clean Architecture en .NET 9, modelo C4 y especificación JWT / Pendiente de revisión & Steeven Toala & \textbf{\textcolor{gray!90}{Pendiente de Revisión}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\subsection*{Anexo 1: Configuración de Dependencias en el Program.cs}
+Registro de servicios de inyección de dependencias para MediatR, DbContext, MinIO Client y Authentication JWT.
+
+\end{document}

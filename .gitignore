@@ -1,0 +1,102 @@
+# =========================================================================
+# GITIGNORE PARA PROYECTO LATEX - FISEI / GESTIÓN DE PROYECTOS
+# =========================================================================
+
+# -------------------------------------------------------------------------
+# 1. ARCHIVOS AUXILIARES Y TEMPORALES DE COMPILACIÓN LATEX
+# (Causan conflictos constantes en Git si se suben)
+# -------------------------------------------------------------------------
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.glg
+*.glo
+*.gls
+*.idx
+*.ilg
+*.ind
+*.ist
+*.loa
+*.lof
+*.lot
+*.nav
+*.nlo
+*.nls
+*.out
+*.run.xml
+*.snm
+*.synctex
+*.synctex.gz
+*.synctex(busy)
+*.toc
+*.vrb
+*.upa
+*.upb
+
+# Logs de compilación
+*.log
+texput.log
+texput.aux
+
+# Directorios de salida de herramientas LaTeX (latexmk, tikz, cache)
+_minted-*
+*.maf
+*.mtc*
+.aux/
+auxdir/
+build/
+dist/
+
+# -------------------------------------------------------------------------
+# 2. ARCHIVOS PDF (DOCUMENTOS COMPILADOS)
+# -------------------------------------------------------------------------
+# NOTA PARA TRABAJO COLABORATIVO:
+# Si el equipo desea que los PDFs finales se puedan descargar directamente
+# desde GitHub, mantén comentada la siguiente línea (# *.pdf).
+# Si prefieren que cada integrante compile su propio PDF y NO subir binarios:
+# descomenta '*.pdf'.
+# *.pdf
+
+# -------------------------------------------------------------------------
+# 3. EDITOR VS CODE Y LIVE SHARE
+# -------------------------------------------------------------------------
+.vscode/*
+# Permitir settings y extensions compartidas si el equipo las define:
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Live Share (archivos temporales y de sesión)
+.vsls/
+*.vsls
+
+# Archivos de espacio de trabajo de VS Code
+*.code-workspace
+
+# -------------------------------------------------------------------------
+# 4. SISTEMAS OPERATIVOS (WINDOWS, MACOS, LINUX)
+# -------------------------------------------------------------------------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux / Copias de seguridad de editores
+*~
+*.swp
+*.swo

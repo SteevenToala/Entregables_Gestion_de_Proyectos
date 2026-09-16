@@ -1,0 +1,279 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S3-002}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO DE SOFTWARE / POBLAMIENTO INSTITUCIONAL}
+\newcommand{\docElaboracion}{14/09/2026}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{DATOS INICIALES Y CATÁLOGOS INSTITUCIONALES (SEEDERS SGC)}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Datos Iniciales y Catálogos Institucionales SGC (Seeders en .NET 9 / EF Core)
+
+\vspace{0.15cm}
+\noindent
+\textbf{Ficha Técnica de Identificación:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
+    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
+    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
+    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
+    \item \textbf{Docente Tutor:} Ing. Paulo Torres
+    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{Completado / En Auditoría}}
+    \item \textbf{Período de Ejecución:} Semana 3 (10/09/2026 al 14/09/2026 -- EDT 3.2: 3 días laborables, 24h)
+\end{itemize}
+
+\section{Introducción}
+Para que el sistema \textbf{SIGE} opere en conformidad con la estructura organizativa de la FISEI UTA, la base de datos debe inicializarse de manera idempotente con los catálogos maestros y los usuarios institucionales representativos de cada escalón decisorio. Los procesos de poblamiento automático (*Data Seeding*) garantizan que al desplegar un nuevo contenedor o ambiente de pruebas, la aplicación cuente con las carreras activas, los roles del SGC, los usuarios semilla y el catálogo estandarizado de actividades de docencia, APE y tutorías.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Poblar de forma automatizada e idempotente los datos semilla institucionales en PostgreSQL 16 mediante un servicio \texttt{DbInitializer} en .NET 9, garantizando la disponibilidad inmediata de carreras, roles y usuarios acreditados para pruebas y auditoría.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item Configurar la entidad \texttt{CarrerasUnidades} con la Carrera de Ingeniería de Software de la FISEI.
+    \item Crear usuarios semilla para los 5 roles del SGC (\texttt{DOCENTE\_RESPONSABLE}, \texttt{COORD\_AREA\_CONOCIMIENTO}, \texttt{COORD\_CARRERA}, \texttt{ADMINISTRADOR}, \texttt{SUBDECANO}) con credenciales seguras.
+    \item Inyectar el catálogo maestro de actividades SGC para facilitar el autocompletado en la Matriz de Trabajo.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Alcance Incluido}
+Implementación de \texttt{DbInitializer.cs} con invocación en \texttt{Program.cs}, registro de la carrera \texttt{SOFT-FISEI} ("Carrera de Ingeniería de Software"), carga de los 5 usuarios clave del equipo y docentes acreditados, y catálogo de 15 actividades tipo SGC.
+
+\subsection{Límites y Exclusiones}
+No reemplaza la sincronización futura con el directorio activo institucional LDAP.
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Data Seeding:} Inserción controlada de datos estáticos o predeterminados necesarios para el arranque operativo del sistema.
+    \item \textbf{Idempotencia:} Propiedad por la cual una operación produce el mismo resultado sin importar cuántas veces se ejecute (\texttt{ON CONFLICT DO NOTHING}).
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Nixon Hurtado (Backend / DBA):} Implementación del servicio \texttt{DbInitializer} y lógica de hash de contraseñas.
+    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} Validación del catálogo de actividades conforme a los formatos SGC P7-T1 y P7-T2.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Validación de roles y directrices de poblamiento institucional.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Reglamento de Régimen Académico UTA:} Estructura de distribución de carga horaria docente.
+    \item \textbf{Norma Técnica de Seguridad de la Información (MINTEL):} Almacenamiento seguro de credenciales con algoritmos robustos.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Invocación en el ciclo de vida de la aplicación WebAPI mediante \texttt{IServiceScope} al iniciar el contenedor. Se definen políticas estrictas: ninguna contraseña semilla se almacena en texto plano, implementando hashing criptográfico seguro (BCrypt/PBKDF2 con sal). La ejecución es estrictamente idempotente mediante cláusulas condicionales de existencia previa.
+
+\section{Descripción de actividades}
+
+\subsection{Usuarios Seeders y Roles Oficiales FISEI}
+Se inyectaron los usuarios institucionales autorizados para el circuito de pruebas y evaluación:
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Email Institucional} & \textbf{Nombre y Apellido} & \textbf{Rol Oficial SGC} \\
+\hline
+docente.software@uta.edu.ec & Steeven Toala & DOCENTE\_RESPONSABLE \\
+\hline
+coord.area@uta.edu.ec & Paulo Torres & COORD\_AREA\_CONOCIMIENTO \\
+\hline
+coord.carrera@uta.edu.ec & Nixon Hurtado & COORD\_CARRERA \\
+\hline
+admin.sgc@uta.edu.ec & Andrea Vasquez & ADMINISTRADOR \\
+\hline
+subdecano.fisei@uta.edu.ec & Heidy Villavicencio & SUBDECANO \\
+\hline
+\end{tabularx}
+\caption{Usuarios Institucionales Semilla Inyectados en Base de Datos.}
+\end{table}
+
+\subsection{Estructura del Seeder Idempotente en .NET 9}
+El método \texttt{SeedAsync} verifica la no existencia previa de registros antes de insertar para garantizar idempotencia absoluta en reinicios del contenedor Docker:
+\begin{verbatim}
+public static async Task SeedAsync(ApplicationDbContext context)
+{
+    if (!await context.CarrerasUnidades.AnyAsync())
+    {
+        var carrera = new CarreraUnidad
+        {
+            Id = Guid.Parse("a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11"),
+            Codigo = "SOFT-FISEI",
+            Nombre = "Carrera de Ingeniería de Software",
+            Facultad = "Facultad de Ingeniería en Sistemas...",
+            Activo = true
+        };
+        context.CarrerasUnidades.Add(carrera);
+        await context.SaveChangesAsync();
+    }
+}
+\end{verbatim}
+
+\subsection{Catálogo Maestro de Actividades SGC}
+Se sembraron 15 actividades tipificadas organizadas en Docencia, Prácticas APE, Tutorías y Gestión de Calidad, facilitando el autocompletado en los formularios P7-T1 y P7-T2.
+
+\subsection{Conclusiones y Recomendaciones Técnicas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item El mecanismo de seeders garantiza que cualquier desarrollador o auditor cuente con una base operativa inmediata al ejecutar \texttt{docker compose up}.
+    \item Se asegura la estandarización de roles institucionales conforme al organigrama de la FISEI.
+    \item Mantener las contraseñas semilla exclusivas para entornos locales de desarrollo y parametrizar los secretos en producción mediante variables de entorno.
+\end{itemize}
+
+\vspace{0.3cm}
+
+% =============================================================
+% 10. FIRMAS DE RESPONSABILIDAD
+% =============================================================
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Nixon Hurtado\newline \textit{Backend Developer / DBA} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{blue!80}{\scriptsize [ FIRMADO DIGITALMENTE ]}}\vspace{10pt}} & 14/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Heidy Villavicencio\newline \textit{Analista de Requerimientos / UI-UX} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 14/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 11. CONTROL DE CAMBIOS
+% =============================================================
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Creación del inicializador de datos semilla institucionales para Séptimo Semestre "A" & Nixon Hurtado & 14/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 12. ANEXOS
+% =============================================================
+\section{Anexos}
+
+\subsection*{Anexo 1: Referencias Bibliográficas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Universidad Técnica de Ambato. (2025). \textit{Estatuto Orgánico de la Universidad Técnica de Ambato}.
+    \item Microsoft Docs. (2026). \textit{Data Seeding in Entity Framework Core}.
+\end{itemize}
+
+\subsection*{Anexo 2: Credenciales Semilla para Entornos de Pruebas}
+Las credenciales de acceso inicial fueron generadas con entropía alta y hash seguro para su distribución exclusiva al equipo evaluador de la cátedra.
+
+\end{document}
+
+

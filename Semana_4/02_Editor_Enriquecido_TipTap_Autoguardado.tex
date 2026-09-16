@@ -1,0 +1,261 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S4-002}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO FRONTEND / EDITOR ENRIQUECIDO Y PERSISTENCIA}
+\newcommand{\docElaboracion}{16/09/2026}
+\newcommand{\docRevision}{EN DESARROLLO}
+\newcommand{\docTitulo}{INTEGRACIÓN DEL EDITOR TIPTAP CON AUTOGUARDADO DEBOUNCE}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Integración del Editor Enriquecido TipTap con Autoguardado Asíncrono Debounce (1.5s)
+
+\vspace{0.15cm}
+\noindent
+\textbf{Ficha Técnica de Identificación:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
+    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
+    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
+    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
+    \item \textbf{Docente Tutor:} Ing. Paulo Torres
+    \item \textbf{Fecha de Elaboración:} \docElaboracion \quad | \quad \textbf{Estado:} \textbf{\textcolor{darkred}{En Desarrollo / Semana 4 en Curso}}
+    \item \textbf{Período de Ejecución:} Semana 4 (15/09/2026 al 22/09/2026 -- EDT 3.6: 4 días laborables, 32h)
+\end{itemize}
+
+\section{Introducción}
+En la elaboración de planes de trabajo e informes de cumplimiento, las secciones descriptivas (Antecedentes, Justificación, Metodología de Cátedra, Conclusiones y Recomendaciones) demandan redacción fluida con soporte para negritas, listas ordenadas, citas y tablas de texto. El uso de campos de texto convencionales degrada la legibilidad y no permite el formateo estructurado requerido por el SGC.
+
+Para subsanar esta limitación, se integró el motor de edición enriquecida **TipTap** (construido sobre *ProseMirror*). Para blindar al docente contra pérdida de datos ante cortes eléctricos o caídas de conexión, se diseñó un mecanismo de **autoguardado asíncrono en segundo plano mediante un hook \texttt{useDebounce} calibrado a 1500 ms**, informando en tiempo real el estado de sincronización con la base de datos PostgreSQL.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Implementar el componente de edición enriquecida \texttt{RichTextEditor.tsx} en React 19 basado en TipTap, dotándolo de extensiones tipográficas y sincronización asíncrona automatizada con la WebAPI.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item Configurar TipTap con extensiones de texto: \texttt{StarterKit}, \texttt{Bold}, \texttt{Italic}, \texttt{BulletList}, \texttt{OrderedList}, \texttt{Heading} e \texttt{History}.
+    \item Diseñar el hook personalizado \texttt{useDebounce} para emitir solicitudes \texttt{PUT /api/documentos/\{id\}/secciones} tras 1.5s de inactividad.
+    \item Mostrar insignias reactivas de estado: \texttt{[Guardando...]}, \texttt{[Guardado]} o \texttt{[Error]}.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Alcance Incluido}
+Componente \texttt{RichTextEditor.tsx} reutilizable para cualquier sección del expediente, sanitización de HTML con DOMPurify y persistencia asíncrona sin bloquear la escritura.
+
+\subsection{Límites y Exclusiones}
+El corrector de IA LanguageTool se integra en EDT 3.14.
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{TipTap:} Framework de edición enriquecida moderno desacoplado del DOM nativo.
+    \item \textbf{Debounce:} Técnica que retrasa la ejecución de una petición hasta que cesen las modificaciones durante un lapso fijado.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Andrea Vasquez (Frontend Developer):} Programación de componentes TipTap, barra de herramientas y hook debounce.
+    \item \textbf{Steeven Toala (Arquitecto de Software):} Optimización del payload HTTP y pruebas de rendimiento.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Supervisión y validación del comportamiento de autoguardado.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{OWASP ASVS:} Prevención de Cross-Site Scripting (XSS) en editores web.
+    \item \textbf{ISO/IEC 25010:} Eficiencia de desempeño y confiabilidad.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Implementación basada en Hooks de React 19 y el ciclo de vida de transacciones de ProseMirror. Se establecen políticas estrictas: las peticiones de autoguardado se ejecutan de manera asíncrona mediante Axios y se cancelan peticiones redundantes mediante \texttt{AbortController} al recibir nuevas entradas antes del timeout.
+
+\section{Descripción de actividades}
+
+\subsection{Algoritmo del Hook de Autoguardado con Debounce}
+Se programó el hook \texttt{useAutoSaveSection} que posterga la petición HTTP hasta que transcurran 1500 ms de inactividad:
+\begin{verbatim}
+export function useAutoSaveSection(docId, claveSeccion, contenido) {
+  const [saveStatus, setSaveStatus] = useState('saved');
+  useEffect(() => {
+    setSaveStatus('saving');
+    const timer = setTimeout(async () => {
+      try {
+        await api.put(`/documentos/${docId}/secciones`, {
+          claveSeccion,
+          contenidoTexto: contenido
+        });
+        setSaveStatus('saved');
+      } catch (err) {
+        setSaveStatus('error');
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [contenido, docId, claveSeccion]);
+  return { saveStatus };
+}
+\end{verbatim}
+
+\subsection{Extensiones TipTap y Sanitización DOMPurify}
+Se configuró el conjunto de extensiones \texttt{StarterKit} para dar soporte a títulos jerárquicos, listas ordenadas y citas. Todo contenido generado pasa por un filtro estricto de sanitización con \texttt{DOMPurify} para neutralizar posibles vectores XSS.
+
+\subsection{Insignias Visuales de Estado}
+La interfaz refleja en tiempo real el ciclo de persistencia mediante badges accesibles: \texttt{[Guardando...]} en amarillo ámbar, \texttt{[Guardado]} en verde esmeralda y \texttt{[Error de red]} en rojo con reintento asistido.
+
+\subsection{Conclusiones y Recomendaciones Técnicas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item La integración de TipTap con debounce de 1.5s garantiza que el docente nunca pierda su trabajo por descuidos de guardado manual.
+    \item El formateo semántico generado es limpio y compatible con los motores de renderizado PDF/Word.
+    \item Mantener el almacenamiento de copias locales en \texttt{localStorage} como respaldo de contingencia ante caídas de conexión prolongadas.
+\end{itemize}
+
+\vspace{0.3cm}
+
+% =============================================================
+% 10. FIRMAS DE RESPONSABILIDAD
+% =============================================================
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Andrea Vasquez\newline \textit{Frontend Developer / QA} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{blue!80}{\scriptsize [ FIRMADO DIGITALMENTE ]}}\vspace{10pt}} & 16/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 16/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 11. CONTROL DE CAMBIOS
+% =============================================================
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Integración del editor TipTap y hook de autoguardado para Séptimo Semestre "A" & Andrea Vasquez & 16/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 12. ANEXOS
+% =============================================================
+\section{Anexos}
+
+\subsection*{Anexo 1: Referencias Bibliográficas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item TipTap Core Team. (2026). \textit{TipTap Documentation: Modern Rich Text Editing}.
+    \item ProseMirror Guide. (2024). \textit{Document Model and State Transitions}.
+\end{itemize}
+
+\subsection*{Anexo 2: Manejo de Errores y Estrategia de Reintento}
+Mecanismo de respaldo local en caso de cortes de servicio web antes de la sincronización definitiva en PostgreSQL 16.
+
+\end{document}
+
+

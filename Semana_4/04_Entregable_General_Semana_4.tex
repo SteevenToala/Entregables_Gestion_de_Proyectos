@@ -1,0 +1,275 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S4-004}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{GESTIÓN DE PROYECTOS / SPRINT 2 CONTROL Y SEGUIMIENTO}
+\newcommand{\docElaboracion}{16/09/2026}
+\newcommand{\docRevision}{EN DESARROLLO / CORTE AL 16 DE SEPTIEMBRE}
+\newcommand{\docTitulo}{INFORME CONSOLIDADO DE AVANCE SEMANA 4 (SPRINT 2 EN CURSO)}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Informe Consolidado de Avance: Semana 4 / Sprint 2 (Wizard, Editor TipTap y API de Firmas Electrónicas)
+
+\vspace{0.15cm}
+\noindent
+\textbf{Ficha Técnica de Identificación:}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item \textbf{Código Documental:} \docCodigo \quad | \quad \textbf{Versión:} \docVersion
+    \item \textbf{Institución:} Universidad Técnica de Ambato (UTA) -- FISEI
+    \item \textbf{Carrera:} Ingeniería de Software (Séptimo Semestre "A")
+    \item \textbf{Módulo Académico:} Gestión de Proyectos de Software
+    \item \textbf{Docente Tutor:} Ing. Paulo Torres
+    \item \textbf{Fecha de Corte:} 16 de Septiembre de 2026 (Semana 4 en curso)
+    \item \textbf{Período de Ejecución:} Semana 4 (15/09/2026 al 22/09/2026 -- Sprint 2 en ejecución)
+\end{itemize}
+
+\section{Introducción}
+Al corte del **16 de septiembre de 2026**, el proyecto SIGE se encuentra en pleno desarrollo del **Sprint 2 (Fase 3: Desarrollo Iterativo Core)**, programado del 15 al 22 de septiembre de 2026 en el calendario laboral oficial de Ambato. 
+
+Durante esta semana se alcanzaron hitos determinantes:
+1. Puesta en marcha del **Wizard modular de 5 pestañas** para la elaboración guiada del Plan de Trabajo (\texttt{EDT 3.5}).
+2. Integración del **Editor enriquecido TipTap** con autoguardado debounce de 1500 ms (\texttt{EDT 3.6}).
+3. Construcción del **API de Firmas Electrónicas en Cascada integrada con FirmaEC**, asegurando el circuito jerárquico inalterable de las 3 firmas reglamentarias de la FISEI UTA (\texttt{EDT 3.7}).
+
+Este informe consolida el estado de avance, métricas de calidad y preparación para el Hito 3.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Documentar y evaluar el estado de avance del Sprint 2 al 16 de septiembre de 2026, certificando la integración armónica entre el Wizard frontend y los endpoints de persistencia y firmas electrónicas en backend.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt, topsep=1.5pt]
+    \item Evaluar el progreso de las Tareas EDT de la Semana 4 frente al cronograma de Microsoft Project y tablero EDT de Trello.
+    \item Demostrar el funcionamiento del circuito criptográfico de firmas multinivel y el autoguardado asíncrono.
+    \item Establecer la hoja de ruta para la culminación del Sprint 2 y el inicio de la Matriz de Actividades en el Sprint 3.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Límites del Avance (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Monitoreo de avance de las tareas EDT 4.1 (Wizard), EDT 4.2 (Editor TipTap) y EDT 4.3 (API Firmas en Cascada).
+    \item Verificación del estado de sincronización entre el cliente React 19 y la WebAPI .NET 9.
+    \item Balance de dedicación horaria de los 4 integrantes del equipo de desarrollo.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item No incluye el cierre formal de Sprint Review del 22 de septiembre de 2026 (objeto del Hito 3).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Sprint 2:} Segundo ciclo de construcción iterativa centrado en la experiencia de edición guiada y legalización electrónica.
+    \item \textbf{FirmaEC:} Aplicativo oficial de firma electrónica de la República del Ecuador (MINTEL).
+    \item \textbf{EDT (\textit{Estructura de Desglose del Trabajo}):} Descomposición jerárquica orientada a entregables.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Steeven Toala (Líder / Arquitecto):} 16 h -- Diseño criptográfico de firmas y coordinación técnica.
+    \item \textbf{Heidy Villavicencio (Analista / UI-UX):} 14 h -- Validación UX de pestañas del Wizard y revisión SGC.
+    \item \textbf{Nixon Hurtado (Backend / DBA):} 16 h -- Endpoints RESTful de firmas y transacciones atómicas.
+    \item \textbf{Andrea Vasquez (Frontend / QA):} 16 h -- Componente Wizard, integración TipTap y debounce.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor):} Seguimiento semanal y verificación de avance de Sprint.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item \textbf{Ley de Comercio Electrónico y Firmas Digitales (Ecuador):} Validez probatoria de firmas avanzadas.
+    \item \textbf{Guía del PMBOK (7ma Edición):} Gestión del avance y desempeño del proyecto.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+El flujo de trabajo del Sprint 2 se articula en tres frentes concurrentes integrados en ramas GitFlow:
+
+\section{Descripción de actividades}
+
+\subsection{Estado de Tareas EDT al 16 de Septiembre de 2026}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|l|X|l|l|l|}
+\hline
+\rowcolor{tableheader}
+\textbf{Código} & \textbf{Tarea EDT} & \textbf{Responsable} & \textbf{Fechas} & \textbf{Estado al 16/09/2026} \\
+\hline
+EDT 4.1 & Wizard modular en pestañas & A. Vasquez / H. Villavicencio & 15 sep - 18 sep & En progreso (75\%) \\
+\hline
+EDT 4.2 & Editor TipTap con autoguardado & A. Vasquez / S. Toala & 17 sep - 22 sep & En pruebas (60\%) \\
+\hline
+EDT 4.3 & Endpoints WebAPI y Firmas FirmaEC & N. Hurtado / S. Toala & 15 sep - 22 sep & Controladores probados (80\%) \\
+\hline
+EDT 4.4 & Hito 3: Sprint 2 Review & Equipo SIGE / Ing. Paulo Torres & 22 sep & Programado \\
+\hline
+\end{tabularx}
+\caption{Estado del Cronograma de Sprint 2 al 16 de Septiembre de 2026.}
+\end{table}
+
+\subsection{Integración Funcional del Sprint 2}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Flujo Wizard:} Transición fluida entre las 5 pestañas con cálculo reactivo de avance.
+    \item \textbf{Autoguardado Asíncrono:} Persistencia con debounce de 1500 ms y badges de estado.
+    \item \textbf{Firmas en Cascada:} Compuertas jerárquicas operativas Docente $\rightarrow$ Coordinador de Área $\rightarrow$ Coordinador de Carrera.
+\end{enumerate}
+
+\subsection{Conclusiones y Recomendaciones Técnicas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item El desarrollo avanza en riguroso apego al cronograma de 57 días laborables establecido en el tablero EDT de Trello.
+    \item La incorporación del API de firmas electrónicas resuelve de raíz el cuello de botella histórico de legalización documental en la FISEI.
+    \item Concluir las pruebas del debounce en conexiones lentas antes de la revisión del 22 de septiembre.
+\end{itemize}
+
+\vspace{0.3cm}
+
+% =============================================================
+% 10. FIRMAS DE RESPONSABILIDAD
+% =============================================================
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 16/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Nixon Hurtado\newline \textit{Backend Developer / DBA} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{blue!80}{\scriptsize [ FIRMADO DIGITALMENTE ]}}\vspace{10pt}} & 16/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 11. CONTROL DE CAMBIOS
+% =============================================================
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Consolidación de avance de Sprint 2 al 16 de septiembre de 2026 para Séptimo Semestre "A" & Steeven Toala & 16/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+% =============================================================
+% 12. ANEXOS
+% =============================================================
+\section{Anexos}
+
+\subsection*{Anexo 1: Referencias Bibliográficas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Project Management Institute. (2021). \textit{PMBOK Guide: Schedule and Quality Management}.
+    \item MINTEL. (2025). \textit{Manual de Interoperabilidad FirmaEC}. Quito, Ecuador.
+\end{itemize}
+
+\subsection*{Anexo 2: Cronograma y Próximos Pasos (Sprint 2 Review)}
+Demostración técnica del incremento de software ante la cátedra programada para el 22 de septiembre de 2026.
+
+\end{document}
+
+
