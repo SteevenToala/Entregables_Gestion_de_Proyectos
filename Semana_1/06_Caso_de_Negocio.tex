@@ -115,22 +115,82 @@
     \item \textbf{Responsables:} Steeven Toala, Heidy Villavicencio, Nixon Hurtado, Andrea Vasquez
 \end{itemize}
 
-\section{Descripción del Problema y Oportunidad}
+\section{Introducción}
+La viabilidad de una inversión en tecnologías de información requiere una justificación cuantitativa y estratégica rigurosa. En este documento se presenta el \textbf{Caso de Negocio} para la implantación del sistema \textbf{SIGE}, fundamentado en la reducción de costos operativos por eliminación de papel, optimización del tiempo de revisión docente y mitigación de riesgos de auditoría del Sistema de Gestión de Calidad (SGC).
 
 \subsection{Situación Actual (As-Is)}
-Actualmente, la planificación y rendición de cuentas de la planta docente de la FISEI se realiza mediante documentos de texto estáticos y hojas de cálculo independientes. Este proceso manual genera:
-\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
-    \item Dispersión documental en múltiples cuentas de correo electrónico institucional.
-    \item Extravío de evidencias y enlaces rotos a repositorios personales de almacenamiento en la nube.
-    \item Errores de cálculo aritmético en matrices de actividades y ponderaciones.
-    \item Pérdida de trazabilidad sobre las observaciones emitidas por los comités de revisión.
-    \item Sobrecarga de tiempo administrativo que consume en promedio \textbf{8 horas de trabajo por informe}.
-\end{itemize}
+Actualmente, la planificación y rendición de cuentas de la planta docente de la FISEI se realiza mediante documentos de texto estáticos y hojas de cálculo independientes. Este proceso manual genera dispersión documental en correos institucionales, extravío de evidencias probatorias, errores aritméticos en matrices de actividades y sobrecarga administrativa que consume en promedio \textbf{8 horas de trabajo por informe}.
 
 \subsection{Oportunidad de Innovación}
 La implantación de la plataforma web \textbf{SIGE} transformará este proceso en un flujo digital, estructurado, transparente e inteligente, estandarizando los formatos oficiales vigentes de planes e informes del SGC, automatizando el control de evidencias mediante \textbf{MinIO S3} y asistiendo al docente con \textbf{IA híbrida (corrector LanguageTool en Docker local y asistencia semántica con Google Gemini API)}.
 
-\section{Beneficios Esperados}
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Demostrar la viabilidad financiera, técnica, operativa y legal del desarrollo e implantación de SIGE en la FISEI mediante indicadores cuantitativos formalizados (ROI, Payback, Ahorro Anual de Horas).
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item Cuantificar la inversión directa en infraestructura cloud requerida (\$630.30 USD).
+    \item Proyectar los ahorros operacionales anuales por recuperación de tiempo docente (\$22,500.00 USD) y eliminación de impresiones (\$1,200.00 USD).
+    \item Evaluar el Retorno de Inversión (+3,660.0\%) y el período de recuperación (9.7 días).
+    \item Construir la matriz de mitigación para los 5 riesgos clave del proyecto.
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Límites del Análisis (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Evaluación económica sobre una población estimada de 120 docentes de la facultad durante 2 ciclos académicos anuales.
+    \item Costos de infraestructura computacional (servidor VPS, PostgreSQL gestionado, MinIO S3, dominio, SSL, SMTP).
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item No monetiza beneficios intangibles como el incremento en la reputación institucional en procesos de acreditación nacional (CACES).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ROI (\textit{Return on Investment}):} Indicador porcentual que mide la rentabilidad del proyecto frente a la inversión inicial.
+    \item \textbf{Payback:} Período temporal necesario para recuperar el capital invertido mediante los ahorros netos generados.
+    \item \textbf{CAPEX (\textit{Capital Expenditure}):} Gastos de capital asociados a la inversión directa inicial.
+    \item \textbf{OPEX (\textit{Operational Expenditure}):} Costos recurrentes de operación y mantenimiento de la infraestructura.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\bfseries}X|>{\hsize=0.9\hsize}X|>{\hsize=1.5\hsize}X|}
+    \hline
+    \rowcolor{tableheader}
+    Integrante & Rol en el Entregable & Responsabilidad Específica \\
+    \hline
+    Andrea Vasquez & Frontend / QA & Proyección de ahorros en tiempo de usuario y análisis comparativo de costos. \\
+    \hline
+    Steeven Toala & Líder de Proyecto / Arquitecto & Costeo de infraestructura cloud, fórmulas de ROI y matriz de riesgos. \\
+    \hline
+    Heidy Villavicencio & Analista de Requerimientos & Evaluación del impacto organizacional en docentes y comisiones. \\
+    \hline
+    Nixon Hurtado & Backend / DBA & Estimación de consumo de base de datos y almacenamiento S3. \\
+    \hline
+    Ing. Paulo Torres & Docente Tutor & Validación y aprobación del modelo financiero y supuestos económicos. \\
+    \hline
+\end{tabularx}
+\caption{Matriz de Responsabilidades del Entregable EDT 1.6.}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Metodología de Evaluación de Proyectos de Inversión (CEPAL/BID):} Criterios de evaluación costo-beneficio.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES):} Principio de eficiencia y optimización de recursos públicos.
+    \item \textbf{Manual de Calidad SGC UTA:} Directrices de rendición de cuentas institucional.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+El análisis financiero se estructura a partir de la cuantificación de horas hombre ahorradas y la eliminación de suministros físicos:
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.72\textwidth,height=5.2cm,keepaspectratio]{images/s1_06_beneficios_pie.png}
@@ -145,7 +205,7 @@ La implantación de la plataforma web \textbf{SIGE} transformará este proceso e
     \item \textbf{Cero Costos de Licenciamiento Comercial:} Stack tecnológico basado 100\% en código abierto (.NET 9, React 19, PostgreSQL 16, MinIO, Docker, LanguageTool).
 \end{enumerate}
 
-\section{Análisis de Costos, Retorno de Inversión (ROI) y Payback}
+\section{Descripción de actividades}
 
 \subsection{Presupuesto de Inversión Directa Requerida}
 
@@ -197,7 +257,7 @@ La implantación de la plataforma web \textbf{SIGE} transformará este proceso e
 \text{Período de Recuperación (Payback)} = \frac{\$630.30}{\$23,700.00 / 365\text{ días}} \approx \mathbf{9.7\text{ días calendarios (aprox. 8 días laborables)}}.
 \]
 
-\section{Impacto Organizacional}
+\subsection{Impacto Organizacional}
 \begin{table}[htbp]
 \centering
 \small
@@ -219,7 +279,7 @@ La implantación de la plataforma web \textbf{SIGE} transformará este proceso e
 \label{tab:s1_06_impacto}
 \end{table}
 
-\section{Evaluación y Matriz de Riesgos}
+\subsection{Evaluación y Matriz de Riesgos}
 \begin{table}[htbp]
 \centering
 \small

@@ -128,7 +128,66 @@
 \section{Introducción}
 La confiabilidad y rigor del sistema \textbf{SIGE} radica en su capacidad para garantizar el cumplimiento normativo institucional del Sistema de Gestión de la Calidad (SGC). En este documento se especifican formalmente las \textbf{Reglas de Negocio (RN)} y la arquitectura de compuertas secuenciales (\textbf{Validation Gates}) implementadas de forma determinista en cliente (React + Zod) y servidor (.NET 9 + FluentValidation) que impiden el avance, guardado o envío de documentos con inconsistencias aritméticas o documentales.
 
-\section{Concepto y Arquitectura de Validation Gates}
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Formalizar y parametrizar las reglas de negocio institucionales y compuertas de validación deterministas que rigen los flujos de estado, cálculo de ponderaciones, carga obligatoria de evidencias y firmas digitales en SIGE.
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item Especificar las 9 reglas de negocio deterministas del SGC con sus formulaciones matemáticas y validaciones en C\# FluentValidation.
+    \item Definir los 4 Validation Gates secuenciales: Gate 1 (Estructura), Gate 2 (Evidencias MinIO), Gate 3 (Ponderación 100\%) y Gate 4 (Firma Previa Válida).
+    \item Modelar el diagrama de flujo determinista de compuertas lógicas.
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Límites de Aplicación (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Aplica a todos los documentos generados bajo los formatos P7-T1 (Plan de Trabajo) y P7-T2 (Informe de Cumplimiento) en la FISEI.
+    \item Validación reactiva en frontend (React + Zod) y validación estricta transaccional en backend (.NET 9 + FluentValidation).
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item No aplica a resoluciones disciplinarias o trámites ajenos a planes e informes académicos.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Validation Gate (VG):} Compuerta lógica evaluada por el backend que bloquea el cambio de estado si alguna precondición falla.
+    \item \textbf{Regla de Negocio (RN):} Restricción imperativa que condiciona la estructura, cálculos o transiciones de datos del sistema.
+    \item \textbf{Payload Tampering Protection:} Mecanismo de seguridad que rechaza valores enviados por el cliente para campos que deben ser generados exclusivamente por el servidor.
+    \item \textbf{Inmutabilidad:} Condición de un registro que impide cualquier modificación posterior una vez legalizado.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\bfseries}X|>{\hsize=0.9\hsize}X|>{\hsize=1.5\hsize}X|}
+    \hline
+    \rowcolor{tableheader}
+    Integrante & Rol en el Entregable & Responsabilidad Específica \\
+    \hline
+    Steeven Toala & Líder de Proyecto / Arquitecto & Diseño de compuertas lógicas y orquestación del flujo de validación. \\
+    \hline
+    Nixon Hurtado & Backend / DBA & Implementación de las reglas en FluentValidation (.NET 9) y triggers de base de datos. \\
+    \hline
+    Ing. Paulo Torres & Docente Tutor & Validación de correspondencia normativa con los estándares del SGC de la UTA. \\
+    \hline
+\end{tabularx}
+\caption{Matriz de Responsabilidades del Entregable EDT 1.5.}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Reglamento de Régimen Académico CES:} Parámetros de dedicación horaria y cumplimiento de actividades docentes.
+    \item \textbf{Norma ISO 9001:2015:} Cláusula 8.5.1 (Control de la producción y de la provisión del servicio).
+    \item \textbf{Manual del SGC - FISEI UTA:} Criterios de evaluación y ponderación de matrices de trabajo.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
 Los \textbf{Validation Gates} (Compuertas de Validación Deterministas) evalúan precondiciones y postcondiciones en cada transición de estado:
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Gate 1 (Matriz Completa):} Comprueba que cada fila de la matriz de actividades contenga todos los campos obligatorios antes de permitir la adición de una nueva fila o el avance de fase.
@@ -144,7 +203,7 @@ Los \textbf{Validation Gates} (Compuertas de Validación Deterministas) evalúan
     \label{fig:s1_05_vg}
 \end{figure}
 
-\section{Especificación Detallada de Reglas de Negocio}
+\section{Descripción de actividades}
 
 \subsection{RN-01: Fechas Autogeneradas e Inmutables}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
@@ -199,7 +258,7 @@ RuleFor(a => a.Observaciones)
     .NotEmpty()
     .MinimumLength(10)
     .When(a => a.PorcentajeAvance < 100)
-    .WithMessage("Las actividades con avance menor al 100% deben incluir una justificación de desvío de al menos 10 caracteres.");
+    .WithMessage("Las actividades con avance menor al 100% deben incluir una justificacion de desvio de al menos 10 caracteres.");
 \end{lstlisting}
 
 \subsection{RN-06: Validación de Suma Ponderada Total ($100.0\%$)}

@@ -126,10 +126,66 @@
 \end{itemize}
 
 \section{Introducción}
-El modelo de datos relacional del sistema \textbf{SIGE} ha sido diseñado para operar en **PostgreSQL 16**, garantizando normalización en Tercera Forma Normal (3FN), integridad referencial estricta, control de aperturas extemporáneas por el Administrador, soporte para solicitudes de modificación de planes en ejecución, trazabilidad del estado por actividad y el registro secuencial del circuito de firmas en cascada institucional (Docente Responsable $\rightarrow$ Coordinador de Área $\rightarrow$ Coordinador de Carrera).
+El modelo de datos relacional del sistema \textbf{SIGE} ha sido diseñado para operar en \textbf{PostgreSQL 16}, garantizando normalización en Tercera Forma Normal (3FN), integridad referencial estricta, control de aperturas extemporáneas por el Administrador, soporte para solicitudes de modificación de planes en ejecución, trazabilidad del estado por actividad y el registro secuencial del circuito de firmas en cascada institucional (Docente Responsable $\rightarrow$ Coordinador de Área $\rightarrow$ Coordinador de Carrera).
 
-\section{Diagrama Entidad-Relación (ERD)}
-El modelo integra las 9 entidades transaccionales del núcleo de gestión de calidad:
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Diseñar y estructurar la base de datos relacional en PostgreSQL 16 para el sistema SIGE, asegurando integridad referencial, normalización en 3FN y trazabilidad auditada de cambios.
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item Construir el diagrama Entidad-Relación (ERD) con las 9 entidades del modelo de gestión de calidad.
+    \item Elaborar el diccionario de datos exhaustivo para las tablas maestras y de detalle.
+    \item Crear los índices de rendimiento y restricciones de unicidad para firmas en cascada y semáforos de actividades.
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Límites de Persistencia (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Tablas para documentos, actividades, evidencias, firmas en cascada, solicitudes de cambio, habilitaciones extemporáneas y auditoría.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Los archivos físicos (PDFs) no se almacenan como blobs en PostgreSQL, sino como objetos en MinIO con URI y SHA-256 en base de datos.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{3FN (Tercera Forma Normal):} Estado en el que no existen dependencias funcionales transitivas entre atributos no clave.
+    \item \textbf{UUID v4:} Identificador único universal de 128 bits empleado como clave primaria no secuencial.
+    \item \textbf{Índice Compuesto:} Estructura B-Tree sobre múltiples columnas para acelerar consultas complejas de ordenamiento o filtrado.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\hsize=0.65\hsize\bfseries}X|>{\hsize=0.85\hsize}X|>{\hsize=1.5\hsize}X|}
+    \hline
+    \rowcolor{tableheader}
+    Integrante & Rol en el Entregable & Responsabilidad Específica \\
+    \hline
+    Nixon Hurtado & Backend / DBA & Modelado ER, diseño de esquemas DDL, diccionario de datos y optimización de índices. \\
+    \hline
+    Steeven Toala & Líder / Arquitecto & Verificación de coherencia con las reglas de negocio y Clean Architecture. \\
+    \hline
+    Ing. Paulo Torres & Docente Tutor & Revisión y aprobación del modelo relacional institucional. \\
+    \hline
+\end{tabularx}
+\caption{Matriz de Responsabilidades del Entregable EDT 2.4.}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ANSI/ISO/IEC 9075:2023:} Database Language SQL standard.
+    \item \textbf{ISO/IEC 27001:2022:} Control de integridad y almacenamiento seguro de datos.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+El modelo ERD se normalizó en 3FN con claves foráneas protegidas ante borrados accidentales:
 
 \begin{figure}[htbp]
     \centering
@@ -138,7 +194,9 @@ El modelo integra las 9 entidades transaccionales del núcleo de gestión de cal
     \label{fig:s2_04_erd}
 \end{figure}
 
-\section{Diccionario de Datos Lógico de Tablas Principales}
+\section{Descripción de actividades}
+
+\subsection{Diccionario de Datos Lógico de Tablas Principales}
 
 \subsection{Tabla: \texttt{DOCUMENTOS}}
 Almacena el ciclo de vida de Planes de Trabajo e Informes de Cumplimiento.
@@ -283,7 +341,7 @@ Controla el orden jerárquico estricto en cascada oficial de la FISEI:
 \label{tab:s2_04_firmas}
 \end{table}
 
-\section{Índices de Rendimiento y Control de Integridad DDL}
+\subsection{Índices de Rendimiento y Control de Integridad DDL}
 \begin{lstlisting}[language=SQL]
 -- Indice unico: Garantiza que no existan firmas duplicadas en el mismo orden de cascada
 CREATE UNIQUE INDEX uq_firmas_documento_fase_orden 

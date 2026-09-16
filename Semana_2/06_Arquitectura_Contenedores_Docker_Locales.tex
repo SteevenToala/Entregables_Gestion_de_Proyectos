@@ -125,8 +125,67 @@
     \item \textbf{Responsables:} Steeven Toala (Líder / Arquitecto) y Nixon Hurtado (Backend / DBA)
 \end{itemize}
 
-\section{Introducción y Estrategia de Contenedores}
-Para garantizar reproducibilidad en los entornos de desarrollo, pruebas y producción sin incurrir en costos de licencias comerciales ni saturar los recursos de hardware, el sistema \textbf{SIGE} implementa una arquitectura eficiente y desacoplada mediante \textbf{Docker Compose}:
+\section{Introducción}
+Para garantizar reproducibilidad en los entornos de desarrollo, pruebas y producción sin incurrir en costos de licencias comerciales ni saturar los recursos de hardware, el sistema \textbf{SIGE} implementa una arquitectura eficiente y desacoplada mediante \textbf{Docker Compose}: servicios locales contenerizados (PostgreSQL 16, MinIO, LanguageTool, Backend .NET 9, Frontend React 19) e inferencia semántica delegada a la \textbf{API de Google Gemini (Gemini 1.5 / 2.0 Flash)} a través de HTTPS sin costo de GPU local.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Diseñar, configurar y orquestar la arquitectura de contenedores Docker locales para el ecosistema completo de SIGE, asegurando reproducibilidad y despliegue automatizado en la FISEI UTA.
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item Configurar los 6 servicios del \texttt{docker-compose.yml} (PostgreSQL, MinIO, MinIO-Init, LanguageTool, Backend y Frontend).
+    \item Establecer las redes virtuales internas y políticas de persistencia en volúmenes nombrados.
+    \item Parametrizar las variables de entorno y definir los endpoints de Health Check.
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Límites del Despliegue (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Orquestación local para desarrollo y producción On-Premise en un host con Docker Engine 24+.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Clústeres Kubernetes distribuidos en múltiples nodos de nubes comerciales de pago.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Docker Compose:} Herramienta para definir y ejecutar aplicaciones multi-contenedor mediante archivos YAML.
+    \item \textbf{Named Volume:} Mecanismo de persistencia de datos gestionado por Docker independiente del ciclo de vida del contenedor.
+    \item \textbf{Healthcheck:} Instrucción que comprueba periódicamente el estado operativo interno de un servicio.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\hsize=0.65\hsize\bfseries}X|>{\hsize=0.85\hsize}X|>{\hsize=1.5\hsize}X|}
+    \hline
+    \rowcolor{tableheader}
+    Integrante & Rol en el Entregable & Responsabilidad Específica \\
+    \hline
+    Steeven Toala & Líder / Arquitecto & Diseño de Dockerfiles, archivo \texttt{docker-compose.yml} y configuración de redes. \\
+    \hline
+    Nixon Hurtado & Backend / DBA & Configuración del contenedor de PostgreSQL 16 y persistencia de volúmenes. \\
+    \hline
+    Ing. Paulo Torres & Docente Tutor & Validación y prueba del despliegue en un único comando. \\
+    \hline
+\end{tabularx}
+\caption{Matriz de Responsabilidades del Entregable EDT 2.6.}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Open Container Initiative (OCI) Image Specification v1.1.}
+    \item \textbf{CIS Docker Benchmark v1.6.0:} Guía de endurecimiento de seguridad en contenedores.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+La topología de servicios contenerizados conectados bajo la red puente \texttt{sige-network} se estructura de la siguiente manera:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Servicios Locales Contenerizados:} Base de datos relacional (\textbf{PostgreSQL 16}), almacenamiento de objetos S3 (\textbf{MinIO}), corrector ortográfico/gramatical local de alta velocidad (\textbf{LanguageTool}), backend (\textbf{ASP.NET Core .NET 9}) y cliente web (\textbf{React 19 + Nginx}).
@@ -140,7 +199,9 @@ Para garantizar reproducibilidad en los entornos de desarrollo, pruebas y produc
     \label{fig:s2_06_docker}
 \end{figure}
 
-\section{Especificación del Archivo \texttt{docker-compose.yml}}
+\section{Descripción de actividades}
+
+\subsection{Especificación del Archivo \texttt{docker-compose.yml}}
 \begin{lstlisting}[language=XML]
 version: '3.8'
 
@@ -268,7 +329,7 @@ volumes:
     driver: local
 \end{lstlisting}
 
-\section{Comandos de Despliegue y Verificación Local}
+\subsection{Comandos de Despliegue y Verificación Local}
 
 \subsection{Inicio de Servicios}
 \begin{lstlisting}[language=bash]

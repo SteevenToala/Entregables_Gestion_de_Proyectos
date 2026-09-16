@@ -125,7 +125,72 @@
     \item \textbf{Responsable:} Steeven Toala (Líder de Proyecto / Arquitecto de Software)
 \end{itemize}
 
-\section{Patrón Arquitectónico: Clean Architecture (.NET 9)}
+\section{Introducción}
+La arquitectura de software del sistema \textbf{SIGE} se concibe bajo principios de alta cohesión, bajo acoplamiento, escalabilidad e independencia de frameworks. Se implementa una \textbf{Arquitectura Limpia (Clean Architecture)} en capas concéntricas sobre \textbf{.NET 9}, complementada con el \textbf{Modelo C4} para la visualización estructural del sistema y especificaciones rigurosas de seguridad basadas en JSON Web Tokens (JWT) y Control de Acceso Basado en Roles (RBAC).
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Diseñar y formalizar la arquitectura de software del sistema SIGE mediante Clean Architecture y el Modelo C4, asegurando mantenibilidad, testabilidad y privacidad de datos.
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item Estructurar las 4 capas concéntricas de Clean Architecture (.NET 9 WebAPI).
+    \item Modelar el Diagrama de Contenedores C4 que articula Frontend, Backend, PostgreSQL 16, MinIO, LanguageTool y Google Gemini API.
+    \item Especificar los patrones de diseño aplicados (Repository, CQRS, Validation Gates, Adapter y Factory).
+    \item Formalizar los mecanismos de seguridad criptográfica del token JWT.
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Límites Arquitecturales (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Estructura de capas de la solución .NET 9 (\texttt{Domain}, \texttt{Application}, \texttt{Infrastructure}, \texttt{WebAPI}).
+    \item Comunicación entre el cliente SPA React 19 y los microservicios locales vía RESTful APIs.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Despliegue en clústeres multi-región o balanceadores de carga globales de pago.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Clean Architecture:} Enfoque arquitectónico que prioriza la lógica de dominio sobre los frameworks y bases de datos.
+    \item \textbf{Modelo C4:} Marco de trabajo para la diagramación de arquitectura en cuatro niveles jerárquicos (Contexto, Contenedores, Componentes, Código).
+    \item \textbf{CQRS:} Patrón de segregación de responsabilidades de comandos (escritura) y consultas (lectura).
+    \item \textbf{JWT (\textit{JSON Web Token}):} Estándar abierto (RFC 7519) para transmitir información de identidad de forma segura.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\hsize=0.65\hsize\bfseries}X|>{\hsize=0.85\hsize}X|>{\hsize=1.5\hsize}X|}
+    \hline
+    \rowcolor{tableheader}
+    Integrante & Rol en el Entregable & Responsabilidad Específica \\
+    \hline
+    Steeven Toala & Líder / Arquitecto & Diseño de capas, diagramación C4, especificación de patrones y seguridad JWT. \\
+    \hline
+    Nixon Hurtado & Backend / DBA & Aislamiento de la capa de persistencia e infraestructura EF Core. \\
+    \hline
+    Ing. Paulo Torres & Docente Tutor & Revisión y aprobación del documento de arquitectura de software. \\
+    \hline
+\end{tabularx}
+\caption{Matriz de Responsabilidades del Entregable EDT 2.2.}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{IEEE Std 1471-2000 / ISO/IEC 42010:2011:} Systems and software engineering -- Architecture description.
+    \item \textbf{OpenAPI Specification 3.0 (OAS):} Estándar para documentación de contratos REST.
+    \item \textbf{RFC 7519:} JSON Web Token (JWT) Standard.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+
+\subsection{Capas de Clean Architecture (.NET 9)}
 Para asegurar alta mantenibilidad, independencia de frameworks, bajo acoplamiento y testabilidad rigurosa, el backend de \textbf{SIGE} se estructura bajo el patrón \textbf{Clean Architecture (Arquitectura Limpia)} en .NET 9:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -142,21 +207,7 @@ Para asegurar alta mantenibilidad, independencia de frameworks, bajo acoplamient
     \label{fig:s2_02_clean}
 \end{figure}
 
-\subsection{Estructura de Proyectos en la Solución .NET 9}
-\begin{lstlisting}
-SIGE.Solution/
-|-- src/
-|   |-- SIGE.Domain/          # Entidades, Enums (EstadoDocumento, TipoInforme), Reglas
-|   |-- SIGE.Application/     # Casos de uso (Commands/Queries), Validadores FluentValidation
-|   |-- SIGE.Infrastructure/  # DbContext EF Core, MinIO S3 Repository, QuestPDF, LanguageTool API
-|   |-- SIGE.WebAPI/          # Controladores REST, JWT Middleware, Swagger, Program.cs
-|   `-- SIGE.ClientApp/       # Frontend React 19 + TypeScript + Vite + Tailwind CSS
-`-- tests/
-    |-- SIGE.UnitTests/       # Pruebas unitarias de Domain y Validation Gates (xUnit, Moq)
-    `-- SIGE.IntegrationTests/# Pruebas de integracion de Endpoints WebAPI
-\end{lstlisting}
-
-\section{Diagrama de Contenedores C4 de la Solución}
+\subsection{Diagrama de Contenedores C4 de la Solución}
 El modelo C4 articula la interacción entre el cliente SPA y los microservicios locales On-Premise y en la nube:
 
 \begin{figure}[htbp]
@@ -176,7 +227,23 @@ El modelo C4 articula la interacción entre el cliente SPA y los microservicios 
     \item \textbf{Motor de Documentos:} QuestPDF y OpenXML para renderizado fidedigno de PDF y Word \texttt{.docx}.
 \end{itemize}
 
-\section{Patrones de Diseño Implementados}
+\section{Descripción de actividades}
+
+\subsection{Estructura de Proyectos en la Solución .NET 9}
+\begin{lstlisting}
+SIGE.Solution/
+|-- src/
+|   |-- SIGE.Domain/          # Entidades, Enums (EstadoDocumento, TipoInforme), Reglas
+|   |-- SIGE.Application/     # Casos de uso (Commands/Queries), Validadores FluentValidation
+|   |-- SIGE.Infrastructure/  # DbContext EF Core, MinIO S3 Repository, QuestPDF, LanguageTool API
+|   |-- SIGE.WebAPI/          # Controladores REST, JWT Middleware, Swagger, Program.cs
+|   `-- SIGE.ClientApp/       # Frontend React 19 + TypeScript + Vite + Tailwind CSS
+`-- tests/
+    |-- SIGE.UnitTests/       # Pruebas unitarias de Domain y Validation Gates (xUnit, Moq)
+    `-- SIGE.IntegrationTests/# Pruebas de integracion de Endpoints WebAPI
+\end{lstlisting}
+
+\subsection{Patrones de Diseño Implementados}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2.5pt]
     \item \textbf{Repository \& Unit of Work:} Desacopla la persistencia de datos y garantiza transacciones ACID en operaciones complejas (ej. cambio de estado + registro de auditoría + incremento de versión).
     \item \textbf{CQRS con MediatR:} Separa las operaciones de lectura (\textit{Queries}) de las operaciones de escritura/mutación (\textit{Commands}).
@@ -185,7 +252,7 @@ El modelo C4 articula la interacción entre el cliente SPA y los microservicios 
     \item \textbf{Factory Pattern para Exportación:} Generador dinámico que decide si renderizar en formato PDF (QuestPDF) o formato Word (OpenXML) según la solicitud institucional.
 \end{enumerate}
 
-\section{Especificación de Seguridad y Token JWT}
+\subsection{Especificación de Seguridad y Token JWT}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Algoritmo de Firma Criptográfica:} HMAC-SHA256 con clave simétrica de 512 bits almacenada en variables de entorno seguras.
     \item \textbf{Tiempo de Expiración:} Access Token de corta duración (30 minutos) junto a un Refresh Token seguro de 7 días almacenado en base de datos con revocación automática.

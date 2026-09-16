@@ -1,4 +1,4 @@
-﻿\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish,es-tabla]{babel}
 \usepackage{geometry}
@@ -192,7 +192,7 @@ El diagrama formaliza el flujo de extremo a extremo, incluyendo la habilitación
     \label{fig:s2_03_act}
 \end{figure}
 
-\section{Descripción de actividades y Modelado Estático}
+\section{Descripción de actividades}
 
 \subsection{Diagrama de Clases del Núcleo de Dominio}
 Representa las entidades centrales del dominio, tipos fuertemente tipados e invariantes de negocio:
@@ -212,25 +212,17 @@ Representa las entidades centrales del dominio, tipos fuertemente tipados e inva
     \item \textbf{EvidenciaMinIO:} Representa los medios probatorios almacenados de forma segura con hash SHA-256 inmutable.
 \end{itemize}
 
-\section{Conclusiones}
+\subsection{Conclusiones y Recomendaciones Técnicas}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item El modelado dinámico formaliza con rigor matemático el flujo de validación y la cascada inmutable de firmas con FirmaEC, impidiendo firmas desordenadas o adulteraciones.
     \item La estructura de clases y actividades garantiza la total fidelidad con los formatos oficiales \texttt{UTA-SGC-A-2-1-P7-T1} y \texttt{UTA-SGC-A-2-1-P7-T2}.
-\end{itemize}
-
-\section{Recomendaciones}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Implementar las precondiciones de cascada mediante validadores FluentValidation y constraints a nivel de base de datos relacional.
 \end{itemize}
 
-\section{Referencias Bibliográficas}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Booch, G., Rumbaugh, J., \& Jacobson, I. (2005). \textit{The Unified Modeling Language User Guide}. Addison-Wesley.
-    \item MINTEL. (2025). \textit{Manual Técnico de Integración FirmaEC}. Quito, Ecuador.
-\end{itemize}
+\vspace{0.3cm}
 
 % =============================================================
-% FIRMAS DE RESPONSABILIDAD
+% 10. FIRMAS DE RESPONSABILIDAD
 % =============================================================
 \section{Firmas de Responsabilidad}
 
@@ -241,9 +233,9 @@ Representa las entidades centrales del dominio, tipos fuertemente tipados e inva
     \rowcolor{headerred}
     \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
     \hline
-    \textbf{Elaborado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 01/09/2026 \\
+    \textbf{Elaborado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 02/09/2026 \\
     \hline
-    \textbf{Revisado por:} & Heidy Villavicencio\newline \textit{Analista de Requerimientos / UI-UX} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 01/09/2026 \\
+    \textbf{Revisado por:} & Heidy Villavicencio\newline \textit{Analista de Requerimientos / UI-UX} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 02/09/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -252,7 +244,7 @@ Representa las entidades centrales del dominio, tipos fuertemente tipados e inva
 \vspace{0.4cm}
 
 % =============================================================
-% CONTROL DE CAMBIOS
+% 11. CONTROL DE CAMBIOS
 % =============================================================
 \section{Control de Cambios}
 
@@ -263,10 +255,24 @@ Representa las entidades centrales del dominio, tipos fuertemente tipados e inva
     \rowcolor{gray!20}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Modelado completo de secuencia con FirmaEC, actividades y clases de dominio para Séptimo Semestre "A" & Steeven Toala & 01/09/2026 \\
+    1.0 & Modelado formal de diagramas de secuencia con FirmaEC, actividades y clases UML para Séptimo Semestre "A" & Steeven Toala & 02/09/2026 \\
     \hline
 \end{tabularx}
 
+\vspace{0.4cm}
+
+% =============================================================
+% 12. ANEXOS
+% =============================================================
+\section{Anexos}
+
+\subsection*{Anexo 1: Especificación de Algoritmos Criptográficos para FirmaEC}
+Parámetros de conexión local al agente FirmaEC vía WebSocket/Loopback y validación de listas de revocación CRL / OCSP.
+
+\subsection*{Anexo 2: Referencias Bibliográficas}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Booch, G., Rumbaugh, J., \& Jacobson, I. (2005). \textit{The Unified Modeling Language User Guide}. Addison-Wesley.
+    \item MINTEL. (2025). \textit{Manual Técnico de Integración FirmaEC}. Quito, Ecuador.
+\end{itemize}
+
 \end{document}
-
-

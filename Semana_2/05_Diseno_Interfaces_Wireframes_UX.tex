@@ -125,8 +125,68 @@
     \item \textbf{Responsables:} Heidy Villavicencio (Analista / UI-UX) y Andrea Vasquez (Frontend / QA)
 \end{itemize}
 
-\section{Sistema de Diseño Institucional (Azul y Blanco)}
-Para evitar sobrecarga cognitiva en los docentes y comités evaluadores, el sistema \textbf{SIGE} adopta una paleta de colores institucional sobria, limpia y de alto contraste basada exclusivamente en \textbf{tonos azules y blancos}:
+\section{Introducción}
+La interfaz gráfica del sistema \textbf{SIGE} ha sido concebida bajo principios de sobriedad institucional, accesibilidad web (WCAG 2.1 AA) y consistencia visual con la identidad de la Universidad Técnica de Ambato. Este entregable presenta el sistema de diseño basado en tonos azules y blancos, tokens de color, jerarquía tipográfica y wireframes de alta fidelidad para las vistas de Docente Elaborador, Comité de Revisión y Administrador SGC.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Diseñar las interfaces de usuario interactivas y wireframes de alta fidelidad para el sistema SIGE, optimizando la experiencia de usuario, la navegación por pestañas y el cumplimiento de accesibilidad en la FISEI UTA.
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item Establecer el Design System institucional basado exclusivamente en la paleta Azul y Blanco.
+    \item Elaborar los wireframes de navegación para las 3 vistas por rol (Docente, Comité y Administrador).
+    \item Validar el ratio de contraste cromático bajo los estándares WCAG 2.1 AA.
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Límites del Diseño (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Interfaces de usuario para dispositivos de escritorio y portátiles (1366x768 a 1920x1080) y prototipado responsive.
+    \item Prototipo funcional validado en \texttt{Prototipo\_SIGE/index.html}.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Animaciones 3D pesadas o interfaces para smartwatches.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Wireframe:} Representación esquemática visual de la disposición de elementos en pantalla.
+    \item \textbf{Design System:} Conjunto de reglas, componentes y tokens de diseño reutilizables.
+    \item \textbf{WCAG 2.1 AA:} Pautas de accesibilidad web del W3C para asegurar contraste visual y navegación accesible.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\hsize=0.65\hsize\bfseries}X|>{\hsize=0.85\hsize}X|>{\hsize=1.5\hsize}X|}
+    \hline
+    \rowcolor{tableheader}
+    Integrante & Rol en el Entregable & Responsabilidad Específica \\
+    \hline
+    Heidy Villavicencio & Analista / UI-UX & Diseño de componentes visuales en Figma, wireframes y tokens de color. \\
+    \hline
+    Andrea Vasquez & Frontend / QA & Implementación del prototipo HTML interactivo y pruebas de contraste WCAG. \\
+    \hline
+    Ing. Paulo Torres & Docente Tutor & Validación de usabilidad y adecuación a la dinámica académica docente. \\
+    \hline
+\end{tabularx}
+\caption{Matriz de Responsabilidades del Entregable EDT 2.5.}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{W3C Web Content Accessibility Guidelines (WCAG) 2.1 (Nivel AA).}
+    \item \textbf{Manual de Identidad Visual Corporativa UTA (2024).}
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+El sistema de diseño adopta una paleta institucional sobria y limpia basada exclusivamente en tonos azules y blancos:
 
 \begin{figure}[htbp]
     \centering
@@ -154,7 +214,9 @@ Para evitar sobrecarga cognitiva en los docentes y comités evaluadores, el sist
     \item \textbf{Metadatos y Badges:} $10\text{ px} - 11\text{ px}$ (\texttt{font-semibold}).
 \end{itemize}
 
-\section{Arquitectura de Información y Wireframes por Rol}
+\section{Descripción de actividades}
+
+\subsection{Arquitectura de Información y Wireframes por Rol}
 El sistema implementa vistas dedicadas según el rol institucional:
 
 \begin{figure}[htbp]
@@ -226,7 +288,7 @@ El sistema implementa vistas dedicadas según el rol institucional:
 +----------------------------------------------------------------------------------------------------+
 \end{lstlisting}
 
-\section{Accesibilidad y Usabilidad (WCAG 2.1 AA)}
+\subsection{Accesibilidad y Usabilidad (WCAG 2.1 AA)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Contraste Cromático:} Relación de contraste mínima de $4.5:1$ en texto normal y $7:1$ en títulos institucionales sobre fondos blancos y grises.
     \item \textbf{Navegación por Teclado:} Soporte completo mediante tabulación (\texttt{Tab}, \texttt{Shift+Tab}, \texttt{Enter}).

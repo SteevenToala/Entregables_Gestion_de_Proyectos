@@ -119,7 +119,65 @@
 \section{Introducción}
 En esta etapa de diseño, se formaliza el comportamiento funcional del sistema \textbf{SIGE} a través del modelado de \textbf{Casos de Uso UML}. Se modelan las interacciones de los actores oficiales de la FISEI con los módulos de Planificación en el \textbf{SI UTA} (con la \textbf{Cascada de Firmas al Inicio} que autoriza el paso a ejecución), la gestión continua de la \textbf{Matriz de Actividades} (subida de evidencias oportunas y reprogramación de matriz), y la rendición de cuentas final mediante los formatos institucionales del Sistema de Gestión de Calidad (SGC).
 
-\section{Diagrama General de Casos de Uso (Sistema Completo)}
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Modelar formalmente el diagrama general de casos de uso UML y la especificación detallada de los casos de uso críticos para la gestión, seguimiento y aprobación multinivel de planes e informes institucionales del SGC en la FISEI UTA.
+
+\subsection{Objetivos Específicos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
+    \item Construir el diagrama general de casos de uso agrupando los 4 módulos operativos (Planificación, Ejecución, Rendición de Cuentas y Administración).
+    \item Especificar detalladamente el flujo de la Cascada de 3 Firmas al Inicio (CU-03A, CU-03B, CU-03C) que autoriza el paso a estado \texttt{EN\_EJECUCION}.
+    \item Detallar el flujo de subida de evidencias por actividad de la matriz (CU-04) y la solicitud de modificación de matriz (CU-18).
+\end{enumerate}
+
+\section{Alcance}
+
+\subsection{Límites del Modelado (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Comprende los 16 casos de uso parametrizados para los roles oficiales: Docente Responsable, Coordinador de Área, Coordinador de Carrera y Administrador SGC.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item No abarca diagramas de infraestructura física de telecomunicaciones ni cableado estructurado.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Caso de Uso (CU):} Técnica de modelado para describir el comportamiento de un sistema desde el punto de vista del usuario.
+    \item \textbf{Actor:} Rol o entidad externa que interactúa directamente con el sistema de software.
+    \item \textbf{Cascada de Firmas:} Procedimiento secuencial donde cada firma previa es requisito habilitante de la siguiente instancia jerárquica.
+    \item \textbf{Precondición / Postcondición:} Estado del sistema antes y después de ejecutar exitosamente el caso de uso.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\hsize=0.65\hsize\bfseries}X|>{\hsize=0.85\hsize}X|>{\hsize=1.5\hsize}X|}
+    \hline
+    \rowcolor{tableheader}
+    Integrante & Rol en el Entregable & Responsabilidad Específica \\
+    \hline
+    Heidy Villavicencio & Analista / UI-UX & Elaboración del diagrama general de casos de uso y especificación de flujos de interacción. \\
+    \hline
+    Steeven Toala & Líder / Arquitecto & Validación de coherencia con el SRS IEEE 830 y modelado de la cascada de firmas. \\
+    \hline
+    Ing. Paulo Torres & Docente Tutor & Revisión y aprobación de la correspondencia con los procesos académicos de la facultad. \\
+    \hline
+\end{tabularx}
+\caption{Matriz de Responsabilidades del Entregable EDT 2.1.}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{OMG Unified Modeling Language (UML) Superstructure v2.5.1:} Estándar internacional para diagramas de casos de uso.
+    \item \textbf{Ley de Comercio Electrónico y Firmas Electrónicas:} Validez de la firma digital en actos académicos.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+El sistema organiza sus casos de uso en 4 módulos operativos coordinados con los roles institucionales:
 
 \begin{figure}[htbp]
     \centering
@@ -163,7 +221,7 @@ El sistema estructura sus casos de uso en 4 módulos operativos principales:
     \end{itemize}
 \end{enumerate}
 
-\section{Especificación Detallada de Casos de Uso Principales}
+\section{Descripción de actividades}
 
 \subsection{CU-03A, CU-03B y CU-03C: Cascada de Firmas al Inicio (FISEI - UTA)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]

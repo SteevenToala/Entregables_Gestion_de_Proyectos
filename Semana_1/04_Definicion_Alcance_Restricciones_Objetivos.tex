@@ -118,10 +118,10 @@
 \section{Introducción}
 La delimitación precisa del alcance constituye un pilar esencial en la ingeniería de software para prevenir el desvío de objetivos (\textit{Scope Creep}). En este documento se formalizan los objetivos generales y específicos bajo criterios SMART, se establece la frontera operativa entre los componentes dentro y fuera del alcance (\textit{In-Scope vs. Out-of-Scope}) y se estructuran las restricciones presupuestarias, tecnológicas y temporales del proyecto \textbf{SIGE} para la FISEI UTA.
 
-\section{Objetivos del Proyecto}
+\section{Objetivo}
 
 \subsection{Objetivo General}
-Planificar, diseñar e implementar el sistema web institucional \textbf{SIGE}, automatizando la elaboración, seguimiento de matrices de actividades, revisión con observaciones granulares y aprobación multinivel de los planes de trabajo e informes institucionales basados en el Sistema de Gestión de Calidad (SGC), integrando una capa de asistencia mediante Inteligencia Artificial gratuita y local.
+Planificar, delimitar y formalizar el alcance integral del sistema web SIGE, asegurando la correspondencia entre los objetivos estratégicos institucionales y los requerimientos técnicos mediante la Matriz de Trazabilidad (RTM).
 
 \subsection{Objetivos Específicos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
@@ -133,9 +133,9 @@ Planificar, diseñar e implementar el sistema web institucional \textbf{SIGE}, a
     \item \textbf{OE-06:} Desarrollar el motor de exportación a formatos oficiales Word/PDF y el registro inmutable de auditoría con firmado criptográfico SHA-256.
 \end{enumerate}
 
-\section{Declaración del Alcance (In-Scope vs. Out-of-Scope)}
+\section{Alcance}
 
-\subsection{Dentro del Alcance (In-Scope)}
+\subsection{Límites del Sistema (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Formatos Oficiales SGC:} Digitalización determinista del Plan de Trabajo (\texttt{UTA-SGC-A-2-1-P7-T1}) y del Informe de Cumplimiento (\texttt{UTA-SGC-A-2-1-P7-T2}).
     \item \textbf{Editor Wizard Modular:} Interfaz de redacción estructurada en 6--7 pestañas ordenadas lógicamente con autoguardado asíncrono.
@@ -148,13 +148,50 @@ Planificar, diseñar e implementar el sistema web institucional \textbf{SIGE}, a
     \item \textbf{Historial y Auditoría SHA-256:} Versionado autoincremental (\texttt{V01}, \texttt{V02}) y registro inmutable de transacciones.
 \end{itemize}
 
-\subsection{Fuera del Alcance (Out-of-Scope)}
+\subsection{Exclusiones Explícitas (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Módulo de nómina, cálculo de salarios o pago financiero de horas docentes.
     \item Control biométrico de asistencia física a aulas o laboratorios.
     \item Gestión de matrículas, actas de notas y calificaciones de estudiantes (mantenido por el SGA central).
     \item Suscripciones comerciales de pago por usuario o modelos LLM comerciales de alto costo (OpenAI, Claude).
 \end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{In-Scope:} Funcionalidades, módulos y artefactos contractuales que serán desarrollados y entregados.
+    \item \textbf{Out-of-Scope:} Límites y exclusiones que no forman parte del esfuerzo de desarrollo del presente proyecto.
+    \item \textbf{RTM (\textit{Requirements Traceability Matrix}):} Matriz que vincula cada objetivo con sus requerimientos funcionales y criterios de aceptación.
+    \item \textbf{Scope Creep:} Incremento no controlado del alcance sin ajuste de tiempo o recursos.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\bfseries}X|>{\hsize=0.9\hsize}X|>{\hsize=1.5\hsize}X|}
+    \hline
+    \rowcolor{tableheader}
+    Integrante & Rol en el Entregable & Responsabilidad Específica \\
+    \hline
+    Steeven Toala & Líder de Proyecto / Arquitecto & Delimitación del alcance técnico, control de restricciones y matriz RTM. \\
+    \hline
+    Heidy Villavicencio & Analista de Requerimientos & Formulación de objetivos SMART y mapeo de supuestos operativos. \\
+    \hline
+    Ing. Paulo Torres & Docente Tutor & Validación y aprobación de los límites del alcance institucional. \\
+    \hline
+\end{tabularx}
+\caption{Matriz de Responsabilidades del Entregable EDT 1.4.}
+\end{table}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{PMBOK Guide 7th Edition:} Estándar de Gestión del Alcance y Creación de la EDT.
+    \item \textbf{ISO/IEC/IEEE 12207:2017:} Procesos del ciclo de vida del software -- Proceso de Definición del Alcance.
+    \item \textbf{Estatuto Orgánico UTA:} Lineamientos de gestión documental universitaria.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se aplicó la descomposición estructurada del alcance basada en las especificaciones del Sistema de Gestión de Calidad (SGC) institucional:
 
 \begin{figure}[htbp]
     \centering
@@ -163,24 +200,18 @@ Planificar, diseñar e implementar el sistema web institucional \textbf{SIGE}, a
     \label{fig:s1_04_scope}
 \end{figure}
 
-\section{Restricciones y Supuestos del Proyecto}
+\section{Descripción de actividades}
 
-\subsection{Restricciones del Proyecto}
+\subsection{Restricciones y Supuestos del Proyecto}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2.5pt]
     \item \textbf{Restricción Presupuestaria:} El presupuesto de inversión directa está limitado a \textbf{\$630.30 USD} para infraestructura cloud (VPS, PostgreSQL gestionado, MinIO, dominio/SSL, SMTP y licencias de desarrollo). La mano de obra se valoriza en \textbf{\$0.00 USD} como aporte académico de los 4 estudiantes de ingeniería.
     \item \textbf{Restricción Temporal:} El cronograma contempla una duración fija de \textbf{80 días calendario (12/08/2026 -- 30/10/2026)} distribuido en 5 fases de ejecución ágil según la estructura de desglose del trabajo (EDT).
     \item \textbf{Restricción Tecnológica:} El stack opera bajo un modelo de optimización de recursos: corrección sintáctica en contenedor Docker local (LanguageTool) y asistencia semántica mediante Google Gemini API sin suscripciones comerciales de pago.
     \item \textbf{Restricción Normativa:} Los documentos generados por el sistema deben mantener correspondencia estricta con las directrices de la Dirección de Aseguramiento de la Calidad de la UTA.
+    \item \textbf{Supuestos Operativos:} Los docentes cuentan con certificados de firma electrónica vigentes emitidos por entidades certificadoras acreditadas en el país (FirmaEC, Security Data, Banco Central, etc.); el servidor VPS cuenta con mínimo 4 vCPUs y 8 GB RAM.
 \end{enumerate}
 
-\subsection{Supuestos del Proyecto}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Los docentes y autoridades cuentan con certificados de firma electrónica vigentes emitidos por entidades certificadoras acreditadas en el país (FirmaEC, Security Data, Banco Central, etc.).
-    \item El servidor VPS provisto cuenta con capacidades mínimas de 4 vCPUs y 8 GB RAM para soportar los contenedores de PostgreSQL, MinIO y LanguageTool.
-    \item Las autoridades de la facultad facilitarán oportunamente las sesiones de validación y pruebas de aceptación de usuario.
-\end{itemize}
-
-\section{Matriz de Trazabilidad de Requerimientos (RTM)}
+\subsection{Matriz de Trazabilidad de Requerimientos (RTM)}
 A continuación se detalla la vinculación formal entre los objetivos específicos del proyecto y los requerimientos funcionales aprobados:
 
 \begin{table}[htbp]
