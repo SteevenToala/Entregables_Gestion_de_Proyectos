@@ -1,0 +1,265 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S5-002}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{INGENIERÍA DE SOFTWARE / LÓGICA DE NEGOCIO Y REGLAS SGC}
+\newcommand{\docElaboracion}{29/09/2026}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{REGLAS DE NEGOCIO Y VALIDATION GATES EN BACKEND Y FRONTEND (EDT 3.10)}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Especificación e Implementación de Reglas de Negocio y Validation Gates Institucionales (EDT 3.10)
+
+\section{Introducción}
+En los sistemas de gestión académica, la integridad y validez jurídica de los documentos depende de la rigurosidad con la que se aplican las reglas institucionales. Un informe de calidad docente no puede ser avalado ni legalizado si contiene inconsistencias como sumatorias de avance erróneas, desvíos no justificados o ausencia de evidencias que respalden las actividades declaradas.
+
+Para garantizar que ningún documento sea remitido a las autoridades con fallas de calidad, en este ciclo de desarrollo se formalizó la arquitectura de \textbf{Validation Gates}. Estos puntos de control lógico actúan como barreras infranqueables tanto en la interfaz de usuario (validación preventiva) como en la API backend (validación definitiva con códigos HTTP 422), asegurando el estricto cumplimiento de los estándares del SGC de la Universidad Técnica de Ambato.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Diseñar e implementar el motor de reglas de negocio y los Validation Gates en el sistema SIGE, blindando el flujo de elaboración, revisión y firma institucional contra omisiones, datos incompletos y desvíos documentales no sustentados.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Formalizar las reglas de negocio de los formatos P7-T1 y P7-T2 en el middleware de backend (\texttt{validationGates.js}).
+    \item Implementar las compuertas de control (\textit{Gates}) para la totalización de ponderaciones (100\%) y cronogramas semestrales válidos.
+    \item Establecer la regla de auditoría que exige justificación obligatoria ante cualquier desvío de cumplimiento reportado ($Avance < Meta$).
+    \item Sincronizar las alertas visuales en el frontend para retroalimentar al docente de forma inmediata antes de intentar el envío formal.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Alcance Incluido}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Middleware de validación en Express (\texttt{backend/src/middlewares/validationGates.js}).
+    \item Regla de bloqueo de envío en modo Borrador a En Revisión si faltan campos obligatorios.
+    \item Validación de orden de firmas en cascada: Elaborador (Paso 1) $\rightarrow$ Coordinador (Paso 2) $\rightarrow$ Decanato/HCD (Paso 3).
+    \item Notificaciones modales institucionales ante intentos de guardado incompleto.
+\end{itemize}
+
+\subsection{Exclusiones}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Validación criptográfica de certificados de firma digital (gestionada por componente FirmaEC/OpenSSL en fases posteriores).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Validation Gate:} Mecanismo de compuerta lógica que evalúa un conjunto de precondiciones booleanas antes de permitir la transición de estado de una entidad.
+    \item \textbf{Desvío de Cumplimiento:} Situación en la cual el avance real reportado por el docente es estrictamente menor a la meta planificada originalmente.
+    \item \textbf{Firma en Cascada:} Flujo secuencial y jerárquico donde cada autoridad solo puede estampar su aval si el nivel inferior previo ya ha firmado válidamente.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Desarrollador Backend / DBA (Nixon Hurtado):} Programación del middleware de validación, manejo de códigos de error y respuestas 422 Unprocessable Entity.
+    \item \textbf{Líder de Proyecto / Arquitecto (Steeven Toala):} Formalización lógica de los algoritmos de Validation Gate y diseño de pruebas de integración.
+    \item \textbf{Desarrolladora Frontend (Andrea Vásquez):} Captura de errores de validación y renderizado de alertas descriptivas en la interfaz.
+    \item \textbf{Docente Tutor (Ing. Paulo Torres):} Verificación de correspondencia con la normativa oficial universitaria.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{Norma ISO/IEC 25010:} Subcaracterística de exactitud funcional e integridad de datos.
+    \item \textbf{Reglamento de Calidad Académica de la UTA:} Disposiciones sobre archivo y justificación de actividades no ejecutadas.
+    \item \textbf{Estándar RFC 7807 (Problem Details for HTTP APIs):} Estandarización de respuestas de error de validación en APIs REST.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+La implementación de las reglas se estructura en dos capas complementarias:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Capa Preventiva (Frontend):} Mediante el estado reactivo, la interfaz desactiva los botones de firma y muestra advertencias en tiempo real cuando un campo obligatorio está vacío.
+    \item \textbf{Capa Determinista (Backend):} El middleware intercepta las peticiones \texttt{POST} y \texttt{PUT}, evaluando las condiciones lógicas de manera aislada antes de tocar la base de datos.
+\end{enumerate}
+
+\section{Descripción de actividades}
+
+\subsection{Matriz de Validation Gates Implementados}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Gate} & \textbf{Condición Evaluada} & \textbf{Acción en Caso de Incumplimiento} & \textbf{Estado} \\
+\hline
+\textbf{VG-01} & Ponderación Total = 100\% & Bloquea el envío a Coordinación; alerta porcentaje faltante o excedente. & Operativo \\
+\hline
+\textbf{VG-02} & Fechas en Semestre Vigente & Rechaza fechas anteriores a la matrícula o posteriores al cierre de ciclo. & Operativo \\
+\hline
+\textbf{VG-03} & Justificación de Desvíos & Exige redacción de al menos 10 caracteres si $Avance < Meta$. & Operativo \\
+\hline
+\textbf{VG-04} & Evidencias Obligatorias & Exige al menos un medio de verificación adjunto si se reporta avance $> 0$. & Operativo \\
+\hline
+\textbf{VG-05} & Cascada de Firmas & Impide la firma de Decanato si la Coordinación no ha emitido el visto bueno. & Operativo \\
+\hline
+\end{tabularx}
+\caption{Especificación de los Validation Gates del Sistema SIGE.}
+\end{table}
+
+\subsection{Fragmento del Middleware Backend}
+\begin{lstlisting}[language=JavaScript, caption={Fragmento de código del middleware validationGates.js}]
+const validateInformeCumplimientoGate = (req, res, next) => {
+  const { data, estado } = req.body;
+  const errors = [];
+  if (estado === 'En Revision' || estado === 'Revisado') {
+    const matriz = data?.matrizCumplimiento || [];
+    matriz.forEach((act, idx) => {
+      const meta = parseFloat(act.metaPlanificada) || 100;
+      const real = parseFloat(act.avanceReal) || 0;
+      if (real < meta && (!act.justificacionDesvio || act.justificacionDesvio.trim().length < 10)) {
+        errors.push(`Actividad #${idx + 1}: Justificacion de desvio obligatoria.`);
+      }
+    });
+  }
+  if (errors.length > 0) {
+    return res.status(422).json({ success: false, gate: 'VG-03', errors });
+  }
+  next();
+};
+\end{lstlisting}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Nixon Hurtado\newline \textit{Desarrollador Backend / DBA} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 29/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 29/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Formalización y codificación de los Validation Gates VG-01 al VG-05 en API backend y frontend. & Nixon Hurtado / Steeven Toala & 29/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\subsection*{Anexo 1: Código del Middleware}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Archivo fuente: \texttt{backend/src/middlewares/validationGates.js}
+\end{itemize}
+
+\end{document}

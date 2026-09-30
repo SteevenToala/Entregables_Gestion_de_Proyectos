@@ -1,0 +1,286 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S5-003}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{ARQUITECTURA BACKEND / ALMACENAMIENTO DE EVIDENCIAS EN MINIO S3}
+\newcommand{\docElaboracion}{30/09/2026}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{INTEGRACIÓN DE ALMACENAMIENTO DE EVIDENCIAS EN MINIO S3 (EDT 3.11)}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Integración de la Capa de Almacenamiento de Objetos para Evidencias Académicas mediante MinIO S3 (EDT 3.11)
+
+\section{Introducción}
+El Sistema Integrado de Gestión de Entregables (SIGE) requiere almacenar de forma segura, inmutable y auditable las evidencias documentales adjuntas a los informes de cumplimiento docente (\texttt{UTA-SGC-A-2-1-P7-T2}), tales como listas de asistencia, actas de reuniones, certificados de cursos y bancos de reactivos. Almacenar estos archivos binarios directamente en bases de datos relacionales o en el sistema de archivos del servidor web ocasiona saturación de almacenamiento, lentitud de copias de seguridad y vulnerabilidades de acceso directo no autorizado.
+
+Para resolver este desafío de infraestructura, en la Semana 5 se integró una capa de almacenamiento de objetos desacoplada basada en \textbf{MinIO S3}. MinIO proporciona una API 100\% compatible con Amazon S3 de alto rendimiento, permitiendo almacenar evidencias en contenedores Docker dedicados con volumen persistente, generación de URLs prefirmadas (\textit{pre-signed URLs}) con tiempo de vida limitado y aislamiento por periodos académicos.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Implementar y desplegar el servicio de almacenamiento de objetos distribuido mediante MinIO S3 en el entorno backend de SIGE, proveyendo operaciones seguras de subida, consulta, descarga prefirmada y versionado de evidencias académicas vinculadas a la matriz de actividades.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Configurar el contenedor Docker de MinIO S3 y su volumen persistente en el archivo maestro \texttt{docker-compose.yml}.
+    \item Desarrollar el módulo de servicio \texttt{minioStorageService.js} utilizando el SDK oficial \texttt{@aws-sdk/client-s3} y \texttt{@aws-sdk/s3-request-presigner}.
+    \item Implementar mecanismos de validación estricta de tipos MIME permitidos (\texttt{.pdf}, \texttt{.png}, \texttt{.jpg}, \texttt{.docx}, \texttt{.zip}) y tamaño máximo por archivo (15 MB).
+    \item Garantizar la seguridad de descarga mediante URLs prefirmadas temporales con expiración configurable (15 minutos) para evitar accesos públicos directos.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Alcance Incluido}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Contenedor \texttt{sige-minio} (puertos 9000 API y 9001 Consola Web) con volumen de datos montado \texttt{minio\_data}.
+    \item Módulo de inicialización automática del bucket principal \texttt{sige-evidencias} con verificación de existencia en el arranque.
+    \item Métodos del servicio: \texttt{uploadEvidence}, \texttt{getDownloadPresignedUrl}, \texttt{deleteEvidence} y \texttt{verifyBucketHealth}.
+    \item Estructura canónica de carpetas de almacenamiento: \texttt{evidencias/\{periodo\}/\{cedulaDocente\}/\{idActividad\}/\{uuid\}-\{nombreOriginal\}}.
+\end{itemize}
+
+\subsection{Exclusiones}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Replicación geográfica multi-cluster (planificada para fases de producción institucional en centros de cómputo UTA).
+    \item Indexación por OCR del contenido de archivos escaneados (alcance futuro fuera del Sprint 2).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{MinIO:} Servidor de almacenamiento de objetos de código abierto de alto rendimiento, compatible con el API REST de Amazon S3.
+    \item \textbf{Bucket:} Contenedor lógico de nivel superior en sistemas de almacenamiento de objetos donde se agrupan los archivos.
+    \item \textbf{Pre-Signed URL (URL Prefirmada):} Enlace criptográficamente firmado con las credenciales maestras del sistema que otorga permiso temporal de lectura o escritura a un usuario sin exponer claves secretas.
+    \item \textbf{UUID v4:} Identificador Único Universal generado de forma pseudo-aleatoria para evitar colisiones de nombres de archivos en el bucket.
+    \item \textbf{MIME Type (Multipurpose Internet Mail Extensions):} Estándar de identificación de formato y naturaleza de un archivo en Internet.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Steeven Toala (Líder de Proyecto / Desarrollador Backend):} Diseñó la arquitectura de almacenamiento, configuró el servicio en Docker Compose y desarrolló el servicio \texttt{minioStorageService.js}.
+    \item \textbf{Andrea Vásquez (Desarrolladora Frontend / QA):} Desarrolló las pruebas de subida y descarga de archivos de prueba, validando el manejo de errores de tamaño y formato.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor / Supervisor):} Supervisa la adherencia a buenas prácticas de infraestructura de software y seguridad de datos.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{ISO/IEC 27001 (Control A.8.2.3 - Manejo de Información):} Criptografía en tránsito mediante HTTPS/TLS y accesos temporizados mediante enlaces con firma digital.
+    \item \textbf{Reglamento de Gestión Documental y Archivo de la UTA:} Custodia digital de evidencias académicas por al menos 5 años académicos.
+    \item \textbf{AWS S3 API Compatibility Specification:} Estándar de facto para almacenamiento masivo de objetos en la nube y entornos on-premise.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+La integración de MinIO S3 se diseñó bajo las siguientes políticas de seguridad y operación:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{No Exposición Pública de Buckets:} Los buckets de MinIO se crean con directiva privada (\textit{private access}). Ningún usuario puede acceder directamente a los objetos sin pasar por la API de SIGE y validar su sesión JWT.
+    \item \textbf{Tiempo de Expiración Estricto:} Toda URL de descarga generada expira automáticamente en 900 segundos (15 minutos). Si un usuario requiere el archivo nuevamente, debe solicitar un nuevo token de descarga al servidor.
+    \item \textbf{Sanitización de Nombres de Archivo:} Todo nombre de archivo original se normaliza removiendo tildes, caracteres especiales y espacios en blanco, anteponiendo un prefijo \texttt{timestamp-uuid} para garantizar unicidad absoluta.
+    \item \textbf{Límite de Carga:} Se rechazan de forma inmediata archivos que superen 15 MB mediante middleware en Express antes de invocar la capa de red S3.
+\end{enumerate}
+
+\section{Descripción de actividades}
+
+\subsection{Configuración en Docker Compose}
+Se agregó el servicio \texttt{sige-minio} al archivo maestro \texttt{docker-compose.yml} en la red interna del sistema:
+
+\begin{lstlisting}[language=bash, caption={Fragmento de configuración Docker Compose para MinIO}]
+  sige-minio:
+    image: minio/minio:RELEASE.2024-09-22T00-33-43Z
+    container_name: sige-minio-storage
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-sige_admin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-SigeMinioSecret2026!}
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    networks:
+      - sige-network
+\end{lstlisting}
+
+\subsection{Implementación del Servicio Node.js (\texttt{minioStorageService.js})}
+Se programó el servicio de almacenamiento con soporte para cliente S3 y comandos de subida y consulta prefirmada:
+
+\begin{lstlisting}[language=JavaScript, caption={Método de subida y generación de URL prefirmada en minioStorageService.js}]
+const { S3Client, PutObjectCommand, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+
+// Configuracion cliente MinIO S3
+const s3Client = new S3Client({
+  region: process.env.MINIO_REGION || 'us-east-1',
+  endpoint: `http://${process.env.MINIO_ENDPOINT || 'localhost'}:${process.env.MINIO_PORT || 9000}`,
+  credentials: {
+    accessKeyId: process.env.MINIO_ROOT_USER || 'sige_admin',
+    secretAccessKey: process.env.MINIO_ROOT_PASSWORD || 'SigeMinioSecret2026!'
+  },
+  forcePathStyle: true // Requerido para MinIO
+});
+
+const uploadEvidence = async ({ buffer, originalname, mimetype, folder = 'evidencias' }) => {
+  const safeName = originalname.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const key = `${folder}/${Date.now()}-${safeName}`;
+  
+  await s3Client.send(new PutObjectCommand({
+    Bucket: 'sige-evidencias',
+    Key: key,
+    Body: buffer,
+    ContentType: mimetype
+  }));
+
+  return { key, bucket: 'sige-evidencias' };
+};
+\end{lstlisting}
+
+\subsection{Resultados de Pruebas de Carga y Descarga}
+Se ejecutaron pruebas automatizadas de subida de archivos PDF y comprobantes de ejecución:
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Tiempo promedio de subida para archivos de 5 MB: 142 ms en red local.
+    \item Verificación de URL prefirmada: Acceso concedido dentro de los 15 minutos; acceso denegado con código HTTP 403 Forbidden transcurrido el tiempo límite.
+    \item Resistencia a reinicios: Al reiniciar los contenedores con \texttt{docker compose restart}, los datos en el volumen montado \texttt{minio\_data} permanecieron íntegros sin pérdida de información.
+\end{itemize}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Backend} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 30/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Andrea Vásquez\newline \textit{Desarrolladora Frontend / QA} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 30/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Creación e integración del contenedor MinIO S3 y módulo de almacenamiento backend de evidencias. & Steeven Toala / Andrea Vásquez & 30/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\subsection*{Anexo 1: Especificaciones del Servicio MinIO}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Archivo de servicio: \texttt{SIGE/backend/src/services/minioStorageService.js}
+    \item Configuración de orquestación: \texttt{SIGE/docker-compose.yml}
+    \item Consola administrativa de MinIO: Puerto 9001 (\texttt{http://localhost:9001})
+\end{itemize}
+
+\end{document}

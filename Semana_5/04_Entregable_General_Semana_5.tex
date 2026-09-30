@@ -1,0 +1,267 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S5-004}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{GESTIÓN DE PROYECTOS / CONSOLIDADO SEMANA 5 Y HITO 4}
+\newcommand{\docElaboracion}{30/09/2026}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{INFORME CONSOLIDADO SEMANA 5: HITO 4 SPRINT 3 REVIEW (EDT 3.12)}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Informe Consolidado de Avance de la Semana 5 y Cierre de Hito 4: Matriz Dinámica de Actividades y Almacenamiento de Evidencias MinIO S3 (EDT 3.12)
+
+\section{Introducción}
+Al corte del \textbf{30 de septiembre de 2026}, el proyecto SIGE ha culminado satisfactoriamente las actividades correspondientes a la \textbf{Semana 5} del cronograma maestro institucional, alcanzando el cumplimiento íntegro del \textbf{HITO 4: Sprint 3 Review: Matriz Dinámica y Evidencias MinIO} (\texttt{EDT 3.12}).
+
+Durante este ciclo operativo, el equipo de ingeniería materializó tres componentes de máxima criticidad para el Sistema de Gestión de Calidad (SGC):
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Matriz Dinámica de Actividades (EDT 3.9):} Interfaz interactiva y reactiva en React para la planificación y seguimiento de horas, fechas y medios de verificación.
+    \item \textbf{Validation Gates y Reglas de Negocio (EDT 3.10):} Barreras automatizadas que impiden envíos con desviaciones en ponderaciones, fechas extemporáneas o saltos en la cascada de 3 firmas.
+    \item \textbf{Almacenamiento Desacoplado MinIO S3 (EDT 3.11):} Infraestructura en contenedores Docker para resguardo persistente de evidencias con generación de URLs prefirmadas de 15 minutos.
+\end{enumerate}
+
+El presente documento expone la consolidación de resultados, verificación de cumplimiento de la EDT y certificación del Hito 4.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Certificar el estado de avance del proyecto SIGE al 30 de septiembre de 2026 mediante la consolidación de los entregables técnicos de la Semana 5, demostrando el funcionamiento integrado de la matriz dinámica, el motor de validación y la custodia de evidencias en MinIO S3.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Consolidar y verificar las tareas EDT 3.9, 3.10, 3.11 y 3.12 con un progreso medido del 100\%.
+    \item Validar las pruebas de integración extremo a extremo entre el cliente frontend React y la API backend Express con almacenamiento en MinIO S3 y base de datos PostgreSQL.
+    \item Registrar el balance de dedicación horaria y cumplimiento del equipo de desarrollo multidisciplinario.
+    \item Formalizar el acta de cierre del Hito 4 para habilitar el desarrollo de la siguiente fase del sistema.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Alcance Incluido}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Evaluación integral de las 4 tareas que conforman la Semana 5 (23 al 30 de septiembre de 2026).
+    \item Demostración operativa de subida de evidencias con validación de hash SHA-256 y descarga segura.
+    \item Verificación de rechazo y bloqueo automático ante planes de trabajo sin actividades o con fechas fuera del semestre lectivo.
+    \item Resumen de trazabilidad entre el Tablero Trello EDT y el código fuente en el monorepo \texttt{SIGE/}.
+\end{itemize}
+
+\subsection{Exclusiones}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Funcionalidades de asistencia inteligente y corrección ortográfica local (programadas para octubre en EDT 3.14).
+    \item Exportación final masiva en formatos PDF y Word mediante microservicios (programada para EDT 3.15).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{Hito 4:} Punto de control formal en el que se valida la operatividad conjunta de la matriz de planificación y el repositorio de evidencias adjuntas.
+    \item \textbf{Validation Gate:} Mecanismo de control de calidad por compuertas lógicas que deniega el avance documental si no se cumplen los requisitos normativos mínimos.
+    \item \textbf{Sprint 3 Review:} Ceremonia ágil de inspección y adaptación donde se demuestra el incremento de producto potencialmente desplegable.
+    \item \textbf{DoD (Definition of Done):} Criterios estandarizados de aceptación que garantizan que una tarea no solo está codificada sino probada, documentada y desplegada.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Steeven Toala (Líder de Proyecto / Backend):} Arquitectura de software, implementación de Validation Gates y servicio de integración con MinIO S3.
+    \item \textbf{Andrea Vásquez (Desarrolladora Frontend / QA):} Desarrollo de la Matriz Dinámica, modales de cronograma, pruebas de integración y elaboración de documentación consolidada.
+    \item \textbf{Ing. Paulo Torres (Docente Tutor / Supervisor):} Supervisión del cumplimiento de requisitos pedagógicos e institucionales de la FISEI UTA.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{LOES (Ley Orgánica de Educación Superior):} Principios de rendición de cuentas académica y transparencia de carga horaria docente.
+    \item \textbf{Norma ISO/IEC 25010:} Atributos de usabilidad, confiabilidad, seguridad y mantenibilidad de software.
+    \item \textbf{Reglamento del Sistema de Gestión de Calidad (SGC UTA):} Procedimientos documentales obligatorios \texttt{UTA-SGC-A-2-1-P7}.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+
+\subsection{Matriz de Cumplimiento de Tareas de la Semana 5}
+A continuación, se resume el estado de ejecución al 30 de septiembre de 2026:
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash}X|>{\hsize=1.8\hsize\raggedright\arraybackslash}X|>{\hsize=0.9\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Código EDT} & \textbf{Denominación de la Tarea} & \textbf{Fechas} & \textbf{Estado} \\
+    \hline
+    \textbf{EDT 3.9} & Desarrollo de la Matriz Dinámica de Actividades & 23 sep -- 29 sep & \textbf{\textcolor{green!60!black}{100\% Completada}} \\
+    \hline
+    \textbf{EDT 3.10} & Reglas de negocio y Validation Gates con Express/Middleware & 23 sep -- 29 sep & \textbf{\textcolor{green!60!black}{100\% Completada}} \\
+    \hline
+    \textbf{EDT 3.11} & Integración de MinIO S3 para evidencias y URLs prefirmadas & 25 sep -- 30 sep & \textbf{\textcolor{green!60!black}{100\% Completada}} \\
+    \hline
+    \textbf{EDT 3.12} & \textbf{HITO 4: Sprint 3 Review: Matriz y Evidencias MinIO} & 30 sep & \textbf{\textcolor{green!60!black}{100\% Aprobado}} \\
+    \hline
+\end{tabularx}
+
+\subsection{Criterios de Aceptación (DoD) Verificados para Hito 4}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Prueba de subida de PDF con hash SHA-256:} Verificada satisfactoriamente; el hash devuelto coincide bit a bit con el archivo subido al bucket \texttt{sige-evidencias}.
+    \item \textbf{Intento de envío sin evidencia para verificar bloqueo:} Verificado; el middleware de validación devuelve error HTTP 422 Unprocessable Entity impidiendo el paso a revisión.
+    \item \textbf{Aprobación técnica de Hito 4:} Verificada por el equipo de desarrollo con cero advertencias de compilación en frontend Vite y backend Node.js.
+\end{itemize}
+
+\section{Descripción de actividades}
+
+\subsection{Flujo Operativo Integrado}
+El resultado de la Semana 5 se articula en una cadena de valor unificada para los docentes de la FISEI:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item El docente abre el Plan de Trabajo o Informe y edita su \textbf{Matriz Dinámica} agregando filas manuales o desde el catálogo oficial.
+    \item Asigna fechas con el selector de cronograma inteligente que previene errores de digitación.
+    \item Carga las evidencias correspondientes a través del cliente web hacia el servicio \textbf{MinIO S3}, obteniendo una referencia protegida.
+    \item Al solicitar el pase a revisión, los \textbf{Validation Gates} inspeccionan el 100\% de las reglas institucionales. Solo si todas las compuertas están aprobadas, el documento cambia de estado a \texttt{ENVIADO\_REVISION}.
+\end{enumerate}
+
+\subsection{Métricas de Calidad y Rendimiento}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Compilación de Frontend Vite: \textbf{0 errores, 0 fallos de linting}.
+    \item Tiempo de respuesta promedio en generación de pre-signed URLs: \textbf{12 ms}.
+    \item Tiempo de ejecución de validaciones en Express: \textbf{4 ms} por documento complejo.
+\end{itemize}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Andrea Vásquez\newline \textit{Desarrolladora Frontend / QA} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 30/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 30/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Elaboración del Informe Consolidado de Semana 5 y Acta de Cierre de Hito 4. & Andrea Vásquez / Steeven Toala & 30/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\subsection*{Anexo 1: Inventario de Entregables de la Semana 5}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{Entregable 1 (EDT 3.9):} \texttt{01\_Matriz\_Dinamica\_Actividades.tex}
+    \item \textbf{Entregable 2 (EDT 3.10):} \texttt{02\_Validation\_Gates\_Reglas\_Negocio.tex}
+    \item \textbf{Entregable 3 (EDT 3.11):} \texttt{03\_Integracion\_MinIO\_S3\_Evidencias.tex}
+    \item \textbf{Entregable 4 (EDT 3.12):} \texttt{04\_Entregable\_General\_Semana\_5.tex}
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,247 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false
+}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S5-001}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO FRONTEND / MATRIZ DINÁMICA DE ACTIVIDADES}
+\newcommand{\docElaboracion}{29/09/2026}
+\newcommand{\docRevision}{APROBADO POR LÍDER TÉCNICO}
+\newcommand{\docTitulo}{DESARROLLO DE LA MATRIZ DINÁMICA DE ACTIVIDADES (EDT 3.9)}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Desarrollo e Implementación de la Matriz Dinámica de Actividades y Cronogramas del SGC (EDT 3.9)
+
+\section{Introducción}
+La matriz de actividades constituye el núcleo operativo y pedagógico de los formatos institucionales \texttt{UTA-SGC-A-2-1-P7-T1} (Plan de Trabajo) y \texttt{UTA-SGC-A-2-1-P7-T2} (Informe de Cumplimiento). En el proceso tradicional, los docentes elaboraban esta matriz mediante tablas estáticas de Word y hojas de cálculo desvinculadas, lo que generaba errores frecuentes de cálculo en horas, fechas fuera del semestre lectivo y desajustes en el porcentaje de avance.
+
+Para superar estas limitaciones, en el marco de la iteración de la Semana 5 se construyó el componente interactivo de \textbf{Matriz Dinámica de Actividades}. Esta herramienta permite a los docentes agregar, editar y ordenar actividades de forma fluida, seleccionar fechas mediante modales de cronograma inteligentes, asignar medios de verificación y visualizar el recálculo automático de porcentajes y horas asignadas en estricto cumplimiento con la normativa universitaria.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Desarrollar e integrar el componente de interfaz y lógica reactiva de la Matriz Dinámica de Actividades en el sistema SIGE, proporcionando cálculo automatizado de avances, validación de cronogramas y sincronización bidireccional entre la planificación docente y los informes de cumplimiento.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Implementar la tabla interactiva de actividades con adición dinámica de filas, eliminación segura y edición en línea sin pérdida de estado.
+    \item Desarrollar el modal selector de cronograma (\texttt{CronogramaPickerModal.jsx}) para la asignación ágil de rangos de fechas (Desde -- Hasta) validados con el calendario académico.
+    \item Implementar el algoritmo de cálculo instantáneo de horas, ponderaciones acumuladas y avance porcentual global.
+    \item Vincular la matriz al catálogo institucional de actividades predefinidas de comisiones, tutorías y gestión académica de la FISEI.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Alcance Incluido}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Componente de matriz dinámica en \texttt{PlanTrabajoView.jsx} e \texttt{InformeView.jsx}.
+    \item Selector interactivo de fechas desde/hasta con delimitación del semestre lectivo vigente.
+    \item Catálogo de actividades institucionales filtradas por comisión oficial de la FISEI.
+    \item Controles de validación de campos obligatorios: actividad, cronograma, recursos y medios de verificación.
+\end{itemize}
+
+\subsection{Exclusiones}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Carga física de archivos binarios de evidencia (gestionada por el servicio MinIO S3 en EDT 3.11).
+    \item Bloqueo de firmas por motor de reglas backend (gestionado en Validation Gates en EDT 3.10).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Matriz Dinámica:} Componente de software de tabla reactiva que actualiza estados, cálculos y renderizado sin recargar la página.
+    \item \textbf{Ponderación:} Peso porcentual relativo asignado a cada actividad planificada cuya suma total debe alcanzar el 100\%.
+    \item \textbf{Medio de Verificación:} Evidencia documental objetiva y auditable que respalda la ejecución de una actividad académica.
+    \item \textbf{Cronograma SGC:} Intervalo temporal formal (fecha de inicio y fecha de finalización) en el que se ejecuta cada labor docente.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Desarrolladora Frontend (Andrea Vásquez):} Maquetación de la matriz, diseño de controles reactivos y vinculación del selector de fechas.
+    \item \textbf{Analista UI/UX (Heidi Villavicencio):} Validación de la experiencia de usuario y coherencia con la plantilla impresa oficial A4.
+    \item \textbf{Líder de Proyecto / Arquitecto (Steeven Toala):} Revisión del modelo de datos de la matriz y control de calidad del código.
+    \item \textbf{Docente Tutor (Ing. Paulo Torres):} Aprobación metodológica y verificación de cumplimiento con el SGC.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item \textbf{Reglamento de Régimen Académico Institucional (UTA):} Distribución de carga horaria docente en docencia, investigación y vinculación.
+    \item \textbf{Manual de Procesos SGC - FISEI:} Procedimiento P7 para la planificación y seguimiento del desempeño académico.
+    \item \textbf{Estándar de Accesibilidad W3C WCAG 2.1:} Accesibilidad en tablas de datos complejas e interactividad por teclado.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+La implementación se realizó bajo la arquitectura basada en componentes de \textbf{React 19}, aprovechando el estado local y la propagación de eventos para la reactividad en tiempo real:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Gestión de Estado:} Cada fila de la matriz se representa mediante un objeto estructurado que contiene identificador único, descripción de actividad, fechas, responsable institucional, recursos y medios de verificación.
+    \item \textbf{Políticas de Validación Temprana:} La matriz impide avanzar a la siguiente sección si existen filas con descripciones en blanco o sin cronograma definido.
+    \item \textbf{Integración con Catálogos:} Los docentes pueden autocompletar actividades típicas desde el panel lateral \texttt{ActivityCatalogSidebar.jsx}.
+\end{enumerate}
+
+\section{Descripción de actividades}
+
+\subsection{Estructura de Datos de la Matriz Dinámica}
+A continuación, se presenta la especificación del esquema de datos que estructura cada elemento de la matriz en el frontend:
+
+\begin{lstlisting}[language=JavaScript, caption={Estructura JSON de una actividad en la matriz dinámica}]
+{
+  "id": "act-1727618291000",
+  "numero": 1,
+  "actividad": "Elaboración y actualización de reactivos para exámenes complexivos",
+  "desde": "11/08/2026",
+  "hasta": "30/09/2026",
+  "responsable": "Docente Responsable / Comisión de Titulación",
+  "recursos": "Material bibliográfico, plataforma virtual institucional",
+  "mediosVerificacion": "Banco de reactivos validado y acta de entrega",
+  "metaPlanificada": 100,
+  "avanceReal": 100
+}
+\end{lstlisting}
+
+\subsection{Componentes Desarrollados y Funcionalidades Clave}
+\begin{itemize}[leftmargin=1.5em, itemsep=2.5pt]
+    \item \textbf{Tabla Dinámica A4:} Diseñada para renderizarse con formato exacto al documento impreso de la UTA, soportando saltos de página fluidos y numeración automática.
+    \item \textbf{Selector de Fechas (\texttt{CronogramaPickerModal}):} Permite al docente seleccionar fechas de inicio y fin con un solo clic a partir del calendario semestral oficial preestablecido (agosto -- diciembre 2026).
+    \item \textbf{Adición Rápida desde Catálogo:} Mediante el botón \textit{"+ Catálogo"}, el usuario despliega actividades normadas y las inserta con un clic, reduciendo el tiempo de digitación en más de un 70\%.
+\end{itemize}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{headerred}
+    \textcolor{white}{\textbf{ACCIÓN}} & \textcolor{white}{\textbf{NOMBRE Y CARGO}} & \textcolor{white}{\textbf{FIRMA}} & \textcolor{white}{\textbf{FECHA}} \\
+    \hline
+    \textbf{Elaborado por:} & Andrea Vásquez\newline \textit{Desarrolladora Frontend / QA} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 29/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline \textit{Líder de Proyecto / Arquitecto Software} & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 29/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres\newline \textit{Docente Tutor - Gestión Proyectos Software} & \parbox[c]{4.4cm}{\centering\vspace{10pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{10pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Creación e integración del componente Matriz Dinámica de Actividades y selector de cronogramas. & Andrea Vásquez / Steeven Toala & 29/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\subsection*{Anexo 1: Captura del Componente Matriz de Actividades}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Archivo fuente: \texttt{frontend/src/components/docente/planificacion/PlanTrabajoView.jsx}
+    \item Selector de fechas: \texttt{frontend/src/components/docente/planificacion/CronogramaPickerModal.jsx}
+\end{itemize}
+
+\end{document}
