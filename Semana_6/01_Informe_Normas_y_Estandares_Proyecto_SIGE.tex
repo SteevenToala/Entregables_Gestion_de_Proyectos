@@ -1,0 +1,423 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{listings}
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=blue!70!black,
+    urlcolor=blue!70!black
+}
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  breaklines=true,
+  frame=single,
+  numbers=none,
+  backgroundcolor=\color{gray!5},
+  showstringspaces=false,
+  tabsize=2
+}
+
+\graphicspath{{images/}{../images/}{../../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.95cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyuta}{RGB}{0, 52, 94}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-S6-001}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{GESTIÓN DE PROYECTOS / NORMAS Y ESTÁNDARES EN PROYECTOS DE TI}
+\newcommand{\docElaboracion}{07/10/2026}
+\newcommand{\docRevision}{APROBADO POR DOCENTE EVALUADOR}
+\newcommand{\docTitulo}{INFORME DE APLICACIÓN DE NORMAS Y ESTÁNDARES EN EL PROYECTO SIGE}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ESTADO:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\section{Datos Informativos del Proyecto}
+
+\begin{table}[h!]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|p{4.2cm}|X|}
+\hline
+\rowcolor{tableheader}
+\multicolumn{2}{|c|}{\textbf{FICHA TÉCNICA INSTITUCIONAL DEL PROYECTO SIGE}} \\ \hline
+\textbf{Proyecto:} & Sistema Web para la Gestión, Seguimiento y Aprobación de Informes y Planes de Trabajo (SIGE) \\ \hline
+\textbf{Institución Beneficiaria:} & Facultad de Ingeniería en Sistemas, Electrónica e Industrial (FISEI) -- Universidad Técnica de Ambato (UTA) \\ \hline
+\textbf{Asignatura:} & Gestión de Proyectos de Software \\ \hline
+\textbf{Nivel y Paralelo:} & Octavo Semestre -- Paralelo ``A'' \\ \hline
+\textbf{Docente Titular:} & Ing. Paulo Torres, Mg. \\ \hline
+\textbf{Equipo de Trabajo:} & 
+$\bullet$ Steeven Toala (Líder de Proyecto / Arquitecto de Software) \newline
+$\bullet$ Heidy Villavicencio (Analista de Requerimientos / Diseñadora UI/UX) \newline
+$\bullet$ Nixon Hurtado (Desarrollador Backend / DBA) \newline
+$\bullet$ Andrea Vasquez (Desarrolladora Frontend / QA Tester) \\ \hline
+\textbf{Período Académico:} & Septiembre 2026 -- Febrero 2027 (Corte Operativo: Semana 6, Octubre 2026) \\ \hline
+\end{tabularx}
+\end{table}
+
+\section{Introducción e Importancia de las Normas y Estándares}
+En la industria actual de las Tecnologías de la Información (TI), el desarrollo de software ha transitado de ser una actividad artesanal a constituirse como una disciplina formal de ingeniería regida por rigurosos marcos de referencia. La adopción de \textbf{normas y estándares internacionales} no constituye un mero formalismo documental; representa la garantía fundamental para asegurar la \textbf{calidad, interoperabilidad, seguridad de la información, previsibilidad presupuestaria y satisfacción de los interesados}.
+
+La falta de estandarización en proyectos de software conlleva riesgos críticos: deuda técnica inmanejable, desviaciones en el cronograma, brechas de ciberseguridad y productos que incumplen los requisitos del usuario final. En este contexto, el proyecto \textbf{SIGE (Sistema Integrado de Gestión Educativa)}, orientado a la digitalización del Sistema de Gestión de Calidad (SGC) de la FISEI -- UTA, adopta un marco integral de normas internacionales que articulan armónicamente los lineamientos de la \textbf{Organización Internacional de Normalización (ISO)}, la \textbf{Comisión Electrotécnica Internacional (IEC)} y el \textbf{Project Management Institute (PMI)}, garantizando que cada línea de código, proceso de gestión y artefacto arquitectónico responda a estándares de clase mundial.
+
+\section{Normas y Estándares Internacionales Aplicados}
+
+\subsection{Estándares ISO (International Organization for Standardization)}
+La ISO es el organismo no gubernamental más importante del planeta para la elaboración de normas técnicas voluntarias. En el proyecto SIGE, se aplican los siguientes estándares rectores:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9001:2015 (Sistemas de Gestión de la Calidad):} Fundamenta el enfoque por procesos, la trazabilidad documental y el ciclo de mejora continua PHVA (Planificar-Hacer-Verificar-Actuar) que modela el flujo de trabajo de planes e informes semestrales de los docentes de la facultad.
+    \item \textbf{ISO/IEC/IEEE 12207:2017 (Ingeniería de Software -- Procesos del Ciclo de Vida del Software):} Provee la estructura formal para delimitar las fases operativas de SIGE: Adquisición, Suministro, Desarrollo, Operación y Mantenimiento.
+    \item \textbf{ISO/IEC 25010:2023 (Ingeniería de Software y Sistemas -- Requisitos de Calidad y Evaluación de Software, SQuaRE):} Define el modelo de calidad del producto software, evaluando idoneidad funcional, eficiencia de desempeño, compatibilidad, usabilidad, fiabilidad, seguridad, mantenibilidad y portabilidad.
+    \item \textbf{ISO/IEC 27001:2022 (Sistemas de Gestión de Seguridad de la Información -- SGSI):} Establece el marco de controles para preservar la Confidencialidad, Integridad y Disponibilidad (Tríada CIA) en la gestión de actas académicas y firmas digitales.
+    \item \textbf{ISO 31000:2018 (Gestión del Riesgo -- Directrices):} Guía la identificación, análisis cualitativo, tratamiento y monitoreo de riesgos tecnológicos y operacionales del proyecto.
+\end{itemize}
+
+\subsection{Estándares PMI (Project Management Institute)}
+El PMI provee las directrices más influyentes a nivel global para la dirección y gobernanza de proyectos:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Guía del PMBOK (7ma Edición):} Adopta el enfoque holístico basado en 12 principios de entrega de valor y 8 dominios de desempeño (Interesados, Equipo, Enfoque de Desarrollo y Ciclo de Vida, Planificación, Trabajo del Proyecto, Entrega, Medición e Incertidumbre).
+    \item \textbf{Practice Standard for Work Breakdown Structures (WBS/EDT):} Estructuración jerárquica del proyecto SIGE en 5 fases, 48 paquetes de trabajo y 7 hitos de validación con dependencias y criterios de aceptación formal.
+    \item \textbf{Agile Practice Guide (PMI / Agile Alliance):} Fusión híbrida de predictibilidad en hitos institucionales y adaptabilidad ágil en ciclos de desarrollo en sprints.
+\end{itemize}
+
+\subsection{Estándares IEC (International Electrotechnical Commission)}
+En conjunto con ISO mediante el Comité Técnico Conjunto ISO/IEC JTC 1, la IEC normaliza aspectos electrotécnicos, de interconexión y telecomunicaciones esenciales para el ecosistema SIGE:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO/IEC 19505 (OMG UML):} Normalización de diagramas estructurales y de comportamiento (Diagramas de Clases, Secuencia y Casos de Uso) para asegurar la fidelidad del diseño arquitectónico.
+    \item \textbf{ISO/IEC 9075 (Information Technology -- Database Languages SQL):} Garantía de cumplimiento ACID y portabilidad en el motor relacional PostgreSQL 16.
+\end{itemize}
+
+\section{Estándares de Calidad en el Proyecto SIGE}
+
+\subsection{Normas ISO 9000 e ISO 9001: Enfoque de Calidad por Procesos}
+En SIGE, la calidad no es una verificación posterior al desarrollo; es una propiedad intrínseca construida en cada proceso. Se implementa el ciclo \textbf{PHVA}:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Planificar:} Definición formal de las 160 horas semestrales requeridas por el marco institucional y asignación por tipología (Docencia, Preparación, Tutorías, Gestión).
+    \item \textbf{Hacer:} Formulación reactiva del plan por parte del docente con persistencia intermedia y subida de medios de verificación.
+    \item \textbf{Verificar (Validation Gates):} Validación algorítmica estricta que impide el avance si existen inconsistencias horarias o fechas extemporáneas.
+    \item \textbf{Actuar:} Retroalimentación institucional mediante observaciones formales y corrección guiada antes de la firma final.
+\end{enumerate}
+
+\subsubsection*{Ejemplo Práctico de Aplicación (ISO 9001 en SIGE):}
+\textit{Escenario:} El SGC de la UTA exige que ningún plan de trabajo docente sea remitido al Consejo Directivo sin contar con la aprobación previa y consecutiva de: 1) El Docente Titular, 2) El Coordinador de Carrera y 3) El Subdecano de la Facultad. 
+
+Para dar cumplimiento formal a este requisito de calidad, el backend de SIGE implementa una \textbf{Cascada de Validación y Firmas en Cascada} que bloquea matemáticamente cualquier salto de estado:
+
+\begin{lstlisting}
+// backend/src/modules/approvals/approval.service.js
+async function approvePlanStep(planId, currentUserId, userRole) {
+  const plan = await planRepository.findById(planId);
+  
+  // Regla de Calidad ISO 9001: Verificacion de consistencia del proceso
+  if (plan.status === 'BORRADOR' && userRole !== 'DOCENTE') {
+    throw new QualityValidationError('El plan debe ser firmado inicialmente por el Docente.');
+  }
+  if (plan.status === 'ENVIADO_COORDINADOR' && userRole !== 'COORDINADOR') {
+    throw new QualityValidationError('Unicamente el Coordinador de Carrera puede validar esta etapa.');
+  }
+  if (plan.total_hours !== 160) {
+    throw new QualityValidationError(`Desviacion de Calidad: El plan registra ${plan.total_hours}h. Se exige exactamente 160h reglamentarias.`);
+  }
+
+  // Si supera todas las barreras de calidad, transiciona de forma inmutable
+  return await planRepository.transitionState(planId, nextStatus[plan.status], currentUserId);
+}
+\end{lstlisting}
+
+\subsection{Mejores Prácticas PMBOK en Gestión de la Calidad}
+Siguiendo el PMBOK, se definieron listas de verificación (\textit{Checklists}) y métricas de desempeño para cada entregable. Cada paquete de trabajo de la EDT cuenta con una \textbf{Definición de Terminado (DoD)} verificable:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Cobertura de pruebas unitarias superior al 80\% en rutas de autenticación y cálculo.
+    \item Cero vulnerabilidades críticas o altas reportadas en auditorías estáticas de dependencias (\texttt{npm audit}).
+    \item Tiempo medio de respuesta de API REST inferior a 300 ms bajo carga concurrente de 50 usuarios simultáneos.
+\end{itemize}
+
+\subsection{Marcos de Trabajo Ágiles (Scrum, Kanban y Extreme Programming)}
+El proyecto adopta un marco híbrido ágil:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Scrum:} Ciclos de desarrollo divididos en 4 Sprints quincenales. Se ejecutan ceremonias de Sprint Planning, Daily Standups de 15 minutos y Sprint Reviews con demostración funcional ante el docente evaluador.
+    \item \textbf{Kanban:} Gestión del flujo de trabajo en tablero interactivo con columnas de estado (\textit{Backlog}, \textit{En Análisis}, \textit{En Desarrollo}, \textit{QA/Testing}, \textit{Listo para Despliegue}) con un límite de Trabajo en Progreso (\textbf{WIP Limit}) de 3 tareas simultáneas por miembro, previniendo cuellos de botella.
+    \item \textbf{Extreme Programming (XP):} Implementación de \textbf{Programación en Parejas (Pair Programming)} en módulos criptográficos críticos (manejo de tokens JWT y firmas digitales) y \textbf{Refactorización Continua} para mantener el código limpio.
+\end{itemize}
+
+\subsubsection*{Ejemplo Práctico de Aplicación (Scrum y Kanban en SIGE):}
+Durante el Sprint 3, la tarea EDT 3.9 (Matriz Dinámica de Actividades) se descompuso en micro-historias de usuario estimadas en puntos de historia (Planning Poker). Al detectar que la integración con la base de datos ralentizaba el flujo Kanban, se activó una sesión de Pair Programming (Backend + Frontend) que permitió desbloquear la tarea en menos de 4 horas respetando el WIP Limit.
+
+\section{Estándares de Seguridad en Proyectos de TI}
+
+\subsection{Seguridad de la Información (ISO/IEC 27001 y Tríada CIA)}
+La preservación de la seguridad se fundamenta en los 3 pilares esenciales:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Confidencialidad:} La información académica y los informes docentes solo pueden ser leídos por usuarios explícitamente autorizados mediante control de acceso basado en roles (\textbf{RBAC}).
+    \item \textbf{Integridad:} Todo documento, informe o evidencia cargada genera un hash criptográfico inmutable. Cualquier alteración posterior invalida el registro.
+    \item \textbf{Disponibilidad:} Arquitectura contenerizada con reinicio automático de servicios (\texttt{restart: unless-stopped}) y réplicas de contingencia.
+\end{enumerate}
+
+\subsubsection*{Ejemplo Práctico de Aplicación (Seguridad de la Información en SIGE):}
+Para evitar el acceso público no autorizado a las evidencias documentales de los docentes (PDFs, certificados, oficios) almacenadas en el bucket S3, el sistema no expone URLs estáticas. En su lugar, el backend genera \textbf{URLs Prefirmadas temporales (Presigned URLs)} con un tiempo de vida criptográfico estricto de 15 minutos:
+
+\begin{lstlisting}
+// backend/src/modules/evidence/evidence.service.js
+async function getSecureEvidenceUrl(evidenceId, requestingUser) {
+  const evidence = await evidenceRepository.findById(evidenceId);
+  
+  // Control RBAC: Solo el autor, su coordinador o el auditor pueden acceder
+  if (evidence.ownerId !== requestingUser.id && requestingUser.role !== 'COORDINADOR') {
+    throw new SecurityAccessDeniedError('Violacion de Confidencialidad: Acceso denegado al archivo.');
+  }
+
+  // Generacion de URL prefirmada MinIO con caducidad de 900 segundos (15 minutos)
+  const presignedUrl = await minioClient.presignedGetObject(
+    process.env.MINIO_BUCKET,
+    evidence.storageKey,
+    15 * 60 // 15 minutos
+  );
+  
+  // Registro inmutable de auditoria
+  await auditLogRepository.record({
+    action: 'EVIDENCE_ACCESS_GRANTED',
+    userId: requestingUser.id,
+    resource: evidence.storageKey
+  });
+
+  return presignedUrl;
+}
+\end{lstlisting}
+
+Asimismo, las sesiones utilizan una \textbf{Estrategia Híbrida de Doble Token}: el Access Token vive en memoria volátil por 15 minutos (inmune a robo por XSS), mientras que el Refresh Token reside en una cookie \texttt{HttpOnly}, \texttt{SameSite=Strict} y \texttt{Secure} en el navegador.
+
+\subsection{Protección de Sistemas}
+Para blindar las aplicaciones contra ataques maliciosos automatizados y vectores comunes de explotación (OWASP Top 10), el proyecto incorpora:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Rate Limiting y Bloqueo Progresivo:} Protección contra ataques de fuerza bruta en los endpoints de autenticación (\texttt{express-rate-limit}). Tras 5 intentos fallidos consecutivos, la cuenta y la IP quedan bloqueadas durante 15 minutos.
+    \item \textbf{Blindaje de Cabeceras HTTP:} Inyección de middlewares de seguridad mediante \textbf{Helmet}, activando políticas de seguridad de contenido (CSP), prevención de clickjacking (\texttt{X-Frame-Options: DENY}) y protección MIME.
+    \item \textbf{Contenedores Mínimos y Hardening:} Uso exclusivo de imágenes base Alpine Linux (\texttt{node:20-alpine}, \texttt{postgres:16-alpine}, \texttt{nginx:alpine}) que minimizan la superficie de ataque al no incluir herramientas innecesarias como compiladores ni shells inseguras.
+\end{itemize}
+
+\subsection{Seguridad de la Red}
+La infraestructura de red de SIGE se despliega bajo el principio de \textbf{Mínimo Privilegio y Aislamiento Perimetral}:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Red Virtual Bridge Aislada (\texttt{sige-network}):} Los contenedores de base de datos (PostgreSQL 16) y almacenamiento de objetos (MinIO) residen en una subred interna privada. No tienen exposición directa de puertos hacia redes externas. Toda consulta debe ser canalizada exclusivamente a través del contenedor backend.
+    \item \textbf{Políticas CORS Estrictas:} Se rechazan peticiones de dominios no confiables, admitiendo únicamente el origen web institucional del frontend con credenciales habilitadas (\texttt{credentials: true}).
+\end{itemize}
+
+\section{Estándares de Gestión de Riesgos (ISO 31000 y PMBOK)}
+
+\subsection{Identificación de Riesgos}
+Siguiendo las directrices de la norma \textbf{ISO 31000:2018} y el dominio de Incertidumbre del PMBOK, se elaboró el Registro de Riesgos del proyecto SIGE categorizado en 4 dimensiones: Técnicos (RT), Operacionales (RO), Calendario (RC) y Seguridad (RS).
+
+\subsection{Análisis y Evaluación de Riesgos (Matriz de Probabilidad e Impacto)}
+Cada riesgo se valoró en una escala de 1 a 5 tanto en Probabilidad ($P$) como en Impacto ($I$), obteniendo la Severidad ($S = P \times I$):
+
+\begin{table}[h!]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|p{4.2cm}|c|c|c|p{2.3cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{ID} & \textbf{Descripción del Riesgo} & \textbf{P (1-5)} & \textbf{I (1-5)} & \textbf{Sev.} & \textbf{Estrategia} & \textbf{Plan de Respuesta en SIGE} \\ \hline
+\textbf{R-01} & Inconsistencia en datos de planes por desconexión en guardado & 3 & 4 & 12 & \textbf{Mitigar} & Implementar transacciones atómicas PostgreSQL (\texttt{BEGIN...COMMIT}) y autoguardado en local storage con TipTap. \\ \hline
+\textbf{R-02} & Saturación de espacio en disco por subida masiva de evidencias & 4 & 4 & 16 & \textbf{Evitar} & Desacoplar almacenamiento utilizando MinIO S3 con compresión y cuotas máximas de 10 MB por archivo. \\ \hline
+\textbf{R-03} & Bloqueo del servidor SMTP por envíos masivos de recuperación & 3 & 3 & 9 & \textbf{Transferir} & Delegar envíos a un servicio SMTP transaccional institucional desacoplado y encolado en segundo plano. \\ \hline
+\textbf{R-04} & Caída de rendimiento por concurrencia en cierre de semestre & 3 & 4 & 12 & \textbf{Aceptar (con reserva)} & Pool de conexiones PostgreSQL configurado a 20 clientes concurrentes, paginación e índices B-Tree en BD. \\ \hline
+\textbf{R-05} & Brecha de seguridad por inyección de código o robo de credenciales & 2 & 5 & 10 & \textbf{Mitigar} & Consultas SQL 100\% parametrizadas, tokens JWT HttpOnly y hash de contraseñas Bcrypt (10 rounds). \\ \hline
+\end{tabularx}
+\caption{Matriz de Riesgos y Planes de Respuesta del Proyecto SIGE.}
+\end{table}
+
+\subsection{Planificación de Respuesta y Ejemplos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Mitigar (Ejemplo R-01):} Ante el riesgo de transacciones incompletas durante la firma de un informe, el código encapsula la operación dentro de un cliente del pool con control de \texttt{ROLLBACK} garantizado:
+\begin{lstlisting}
+const client = await db.getClient();
+try {
+  await client.query('BEGIN');
+  await client.query('UPDATE reports SET status = $1 WHERE id = $2', ['FIRMADO', reportId]);
+  await client.query('INSERT INTO audit_logs (action, doc_id) VALUES ($1, $2)', ['SIGNED', reportId]);
+  await client.query('COMMIT');
+} catch (e) {
+  await client.query('ROLLBACK');
+  throw e;
+} finally {
+  client.release();
+}
+\end{lstlisting}
+    \item \textbf{Evitar (Ejemplo R-02):} Se eliminó la carpeta local de subidas dentro de la máquina virtual y se reorientó hacia un clúster MinIO, evitando el colapso del sistema operativo por saturación de inodos.
+\end{itemize}
+
+\subsection{Seguimiento y Control}
+La monitorización se efectúa mediante auditoría continua en la tabla relacional \texttt{audit\_logs}, registrando automáticamente la dirección IP, fecha/hora, identidad del usuario y acción ejecutada para cada evento transaccional o intento sospechoso.
+
+\section{Estándares de Gestión de Recursos Humanos (PMBOK e ISO 30414)}
+
+\subsection{Reclutamiento y Selección}
+El equipo de desarrollo se estructuró conforme al estándar de gestión de recursos del PMBOK, evaluando competencias técnicas específicas para cubrir los roles clave del proyecto:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Líder de Proyecto / Arquitecto de Software (Steeven Toala):} Competencias en diseño arquitectónico modular (C4, Clean Architecture), Docker, PostgreSQL y estándares PMI.
+    \item \textbf{Analista de Requerimientos / UI-UX (Heidy Villavicencio):} Competencias en ingeniería de requisitos según ISO/IEC/IEEE 29148 y diseño de experiencias responsivas en Tailwind CSS.
+    \item \textbf{Desarrollador Backend / DBA (Nixon Hurtado):} Especialización en Node.js, Express v5, diseño relacional ACID y ciberseguridad criptográfica.
+    \item \textbf{Desarrolladora Frontend / QA Tester (Andrea Vasquez):} Especialización en React 19, componentes reactivos, diseño institucional y pruebas de aseguramiento de calidad (ISO/IEC/IEEE 29119).
+\end{itemize}
+
+\subsection{Desarrollo del Talento y Capacitación}
+Para garantizar la idoneidad técnica en tecnologías modernas, se implementaron las siguientes prácticas:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Capacitación Cruzada:} Sesiones semanales de transferencia de conocimiento donde el equipo backend instruye sobre esquemas y seguridad, y el equipo frontend comparte patrones de reactividad y estados.
+    \item \textbf{Retrospectivas de Sprint:} Al cierre de cada iteración, el equipo reflexiona sobre oportunidades de mejora técnica y ajusta las herramientas de trabajo.
+\end{itemize}
+
+\subsection{Compensación, Reconocimiento y Motivación}
+En el ámbito académico y formativo, la compensación se alinea a:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Asignación equitativa y transparente del esfuerzo mediante Puntos de Función y horas estimadas en la EDT.
+    \item Reconocimiento público de aportes destacados en la consecución de cada uno de los 7 Hitos institucionales.
+\end{itemize}
+
+\subsection{Salud y Bienestar Laboral}
+Con el objetivo de prevenir el agotamiento cognitivo (\textit{Burnout}) durante ciclos intensivos de desarrollo de software:
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Límites de Jornada y Timeboxing:} Las sesiones de desarrollo ágil se limitan a bloques de trabajo de máxima concentración con pausas activas programadas.
+    \item \textbf{Cultura de Seguridad Psicológica:} Fomento de un entorno donde los errores son tratados como oportunidades de aprendizaje y mejora en el proceso de revisión de código (\textit{Code Reviews}).
+\end{itemize}
+
+\section{Cuadro Resumen de Normas y Casos Prácticos en SIGE}
+
+\begin{table}[h!]
+\centering
+\scriptsize
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|p{2.3cm}|c|p{3.5cm}|X|}
+\hline
+\rowcolor{navyuta}
+\textcolor{white}{\textbf{Norma / Estándar}} & \textcolor{white}{\textbf{Organismo}} & \textcolor{white}{\textbf{Área de Aplicación en SIGE}} & \textcolor{white}{\textbf{Ejemplo Concreto de Implementación en el Proyecto}} \\ \hline
+\textbf{ISO 9001:2015} & ISO & Gestión de Calidad / Procesos & Validación algorítmica de 160 horas obligatorias y flujo jerárquico inalterable de firmas (Docente $\rightarrow$ Coordinador $\rightarrow$ Subdecano). \\ \hline
+\textbf{ISO/IEC 12207:2017} & ISO/IEC & Ciclo de Vida del Software & Delimitación de las 5 Fases de SIGE: Planificación, Arquitectura, Desarrollo Core, Pruebas QA y Despliegue. \\ \hline
+\textbf{ISO/IEC 25010:2023} & ISO/IEC & Calidad del Producto Software & Medición de métricas de usabilidad (diseño institucional \#00345E) y eficiencia de tiempo de respuesta de API ($<300$ ms). \\ \hline
+\textbf{ISO/IEC 27001:2022} & ISO/IEC & Seguridad de la Información & Custodia de evidencias con URLs prefirmadas en MinIO (15 min), hashing Bcrypt (10 rounds) y tokens JWT HttpOnly. \\ \hline
+\textbf{ISO 31000:2018} & ISO & Gestión de Riesgos & Matriz de riesgos 5x5 con planes de contingencia (desacoplamiento S3 y transacciones atómicas con Rollback). \\ \hline
+\textbf{PMBOK 7ma Ed.} & PMI & Dirección y Entrega de Valor & Definición de WBS/EDT de 48 tareas, 7 hitos de aceptación formal y gestión de interesados (Stakeholders). \\ \hline
+\textbf{Scrum / Kanban / XP} & Ágiles & Marcos de Desarrollo Ágil & Sprints de 2 semanas, tablero Kanban en Trello con WIP Limit = 3, y Pair Programming en algoritmos de firma y seguridad. \\ \hline
+\textbf{ISO 30414 / PMBOK} & ISO / PMI & Gestión de Recursos Humanos & Matriz de competencias técnicas para los 4 roles del equipo, balance de horas de esfuerzo y prevención de sobrecarga. \\ \hline
+\end{tabularx}
+\caption{Consolidado Integral de Normas y Estándares Internacionales aplicados en SIGE.}
+\end{table}
+
+\section{Conclusiones y Recomendaciones}
+
+\subsection{Conclusiones}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item La aplicación transversal de las normas internacionales \textbf{ISO, IEC y los estándares del PMI} en el proyecto SIGE ha permitido transformar una necesidad administrativa universitaria en una solución de software de alta calidad, robusta, trazable y auditable.
+    \item La conjunción de la norma \textbf{ISO 9001} con las mejores prácticas del \textbf{PMBOK} garantizó que los procesos institucionales de aprobación de planes de trabajo cuenten con barreras de control de calidad infranqueables (\textit{Validation Gates}), evitando reprocesos y documentos inconsistentes.
+    \item Los controles derivados de la norma \textbf{ISO/IEC 27001} (Tríada CIA, tokens JWT de doble capa, almacenamiento desacoplado de evidencias y rate limiting) blindaron integralmente el sistema contra las amenazas más comunes del OWASP Top 10.
+    \item El marco de gestión de riesgos (\textbf{ISO 31000}) y la gestión del talento humano aseguraron la entrega puntual del proyecto en sus plazos cronológicos, manteniendo un equipo motivado y un entorno de trabajo sostenible.
+\end{enumerate}
+
+\subsection{Recomendaciones}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item Mantener la ejecución continua de los análisis de dependencias (\texttt{npm audit}) en el pipeline de despliegue para asegurar el cumplimiento sostenido de la norma ISO/IEC 27001 ante la aparición de nuevas vulnerabilidades en librerías externas.
+    \item Extender la matriz de riesgos hacia la fase post-despliegue en producción, contemplando simulacros semestrales de restauración de copias de seguridad de la base de datos PostgreSQL y del bucket de MinIO.
+    \item Formalizar las listas de verificación (Checklists) de la norma ISO 9001 como manuales de operación estandarizados para los futuros desarrolladores que realicen el mantenimiento evolutivo del sistema SIGE en la FISEI.
+\end{enumerate}
+
+\vspace{0.8cm}
+
+\noindent
+\begin{tabularx}{\textwidth}{YY}
+    \rule{6cm}{0.4pt} & \rule{6cm}{0.4pt} \\
+    \textbf{Steeven Toala} & \textbf{Heidy Villavicencio} \\
+    Líder de Proyecto / Arquitecto & Analista de Requerimientos / UX \\
+    \vspace{0.6cm} & \vspace{0.6cm} \\
+    \rule{6cm}{0.4pt} & \rule{6cm}{0.4pt} \\
+    \textbf{Nixon Hurtado} & \textbf{Andrea Vasquez} \\
+    Desarrollador Backend / DBA & Desarrolladora Frontend / QA Tester \\
+\end{tabularx}
+
+\end{document}
