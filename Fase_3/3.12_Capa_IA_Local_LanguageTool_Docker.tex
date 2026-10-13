@@ -191,8 +191,8 @@ La integración técnica se diseñó bajo las siguientes políticas:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/s2_06_docker_compose.png}
-    \caption{Topología de Contenedores Docker Locales incluyendo el Servicio LanguageTool.}
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/f3_12_languagetool_docker.png}
+    \caption{Arquitectura de Asistencia Gramatical Local con LanguageTool en Contenedor Docker.}
     \label{fig:docker_languagetool}
 \end{figure}
 
@@ -218,7 +218,7 @@ Se definió el servicio \texttt{languagetool} asignándole límites de memoria y
 
 \subsection{Servicio de Comunicación Backend (languagetool.service.js)}
 El backend implementa un cliente HTTP dedicado para enviar el texto al servicio:
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}
 // backend/src/services/languagetool.service.js
 const axios = require('axios');
 

@@ -94,7 +94,7 @@
         & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
         \cline{2-3}
         & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
-        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \textbf{\textcolor{darkred}{\docRevision}} \\
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
         \hline
     \end{tabularx}%
     }%
@@ -117,7 +117,7 @@
 
 
 \section{Introducción}
-Para garantizar reproducibilidad en los entornos de desarrollo, pruebas y producción sin incurrir en costos de licencias comerciales ni saturar los recursos de hardware, el sistema \textbf{SIGE} implementa una arquitectura eficiente y desacoplada mediante \textbf{Docker Compose}: servicios locales contenerizados (\textbf{PostgreSQL 18}, MinIO, LanguageTool, \textbf{Backend Node.js + Express v5}, \textbf{Frontend React + Vite}) e inferencia semántica delegada a la \textbf{API de Google Gemini (Gemini 2.5 Flash)} a través de HTTPS sin costo de GPU local.
+Para garantizar reproducibilidad en los entornos de desarrollo, pruebas y producción sin incurrir en costos de licencias comerciales ni saturar los recursos de hardware, el sistema \textbf{SIGE} implementa una arquitectura eficiente y desacoplada mediante \textbf{Docker Compose}: servicios locales contenerizados (\textbf{PostgreSQL 18}, MinIO, LanguageTool, \textbf{Backend Node.js + Express v5}, \textbf{Frontend React + Vite}) e inferencia semántica delegada a la \textbf{API de Google Gemini} a través de HTTPS sin costo de GPU local.
 
 \section{Objetivo}
 
@@ -180,7 +180,7 @@ La topología de servicios contenerizados conectados bajo la red puente \texttt{
 
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Servicios Locales Contenerizados:} Base de datos relacional (\textbf{PostgreSQL 18}), almacenamiento de objetos S3 (\textbf{MinIO}), corrector ortográfico/gramatical local de alta velocidad (\textbf{LanguageTool}), backend REST (\textbf{Node.js + Express v5}) y cliente web (\textbf{React + Vite + Nginx}).
-    \item \textbf{Asistencia Semántica de Inteligencia Artificial:} La inferencia semántica para redacción institucional se delega a la \textbf{API de Google Gemini (Gemini 2.5 Flash)} a través de peticiones seguras HTTPS (REST API), optimizando la infraestructura local a cero sobrecosto de hardware.
+    \item \textbf{Asistencia Semántica de Inteligencia Artificial:} La inferencia semántica para redacción institucional se delega a la \textbf{API de Google Gemini} a través de peticiones seguras HTTPS (REST API), optimizando la infraestructura local a cero sobrecosto de hardware.
 \end{itemize}
 
 \begin{figure}[htbp]

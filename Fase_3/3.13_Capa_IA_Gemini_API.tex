@@ -123,21 +123,21 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Integración de la Capa de Inteligencia Artificial: Asistente con Google Gemini 1.5 Flash API y Motor de Respaldo Heurístico Institucional -- Código EDT: 3.13 (Fase 3: Desarrollo Iterativo Core).
+\textbf{Denominación del Entregable:} Integración de la Capa de Inteligencia Artificial: Asistente con Google Gemini API y Motor de Respaldo Heurístico Institucional -- Código EDT: 3.13 (Fase 3: Desarrollo Iterativo Core).
 
 \section{Introducción}
 La elaboración de los Planes de Trabajo Docente (formato \texttt{UTA-SGC-A-2-1-P7-T1}) y de los Informes Semestrales de Cumplimiento (\texttt{UTA-SGC-A-2-1-P7-T2}) en la FISEI exige coherencia pedagógica entre las asignaturas asignadas, la justificación institucional y los objetivos de aprendizaje formulados de acuerdo con la Taxonomía de Bloom. En el proceso tradicional, los docentes presentaban con frecuencia discordancias sintácticas y demoras al redactar justificaciones y metas semestrales.
 
-Para solucionar este desafío, se diseñó e implementó en la solución SIGE un servicio de asistencia inteligente centrado en la **API de Google Gemini 1.5 Flash** (a través de \texttt{geminiService.js}). Para mitigar caídas de conectividad o limitaciones temporales de cuota, el servicio incorpora un **Motor de Respaldo Heurístico Institucional UTA** y un **Motor de Diff de Versiones**, garantizando asistencia permanente, alta disponibilidad y soporte en auditorías del Sistema de Gestión de Calidad (SGC).
+Para solucionar este desafío, se diseñó e implementó en la solución SIGE un servicio de asistencia inteligente centrado en la **API de Google Gemini** (a través de \texttt{geminiService.js}). Para mitigar caídas de conectividad o limitaciones temporales de cuota, el servicio incorpora un **Motor de Respaldo Heurístico Institucional UTA** y un **Motor de Diff de Versiones**, garantizando asistencia permanente, alta disponibilidad y soporte en auditorías del Sistema de Gestión de Calidad (SGC).
 
 \section{Objetivo}
 
 \subsection{Objetivo General}
-Implementar y verificar el servicio de inteligencia artificial basado en la API de Google Gemini 1.5 Flash integrado en la plataforma SIGE, dotándolo de un motor heurístico de contingencia para la asistencia interactiva en la redacción de objetivos, justificaciones y evaluación de coherencia académica.
+Implementar y verificar el servicio de inteligencia artificial basado en la API de Google Gemini integrado en la plataforma SIGE, dotándolo de un motor heurístico de contingencia para la asistencia interactiva en la redacción de objetivos, justificaciones y evaluación de coherencia académica.
 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
-    \item Integrar el cliente de la API de Google Gemini 1.5 Flash con gestión segura de API Keys mediante almacenamiento local y variables de entorno.
+    \item Integrar el cliente de la API de Google Gemini con gestión segura de API Keys mediante almacenamiento local y variables de entorno.
     \item Desarrollar el motor de respaldo heurístico con timeout de 6.5 segundos para proveer recomendaciones institucionales sin interrupciones operativas.
     \item Diseñar las funciones de análisis de coherencia curricular y detección de diferencias (Diff) entre versiones de borradores docentes.
 \end{itemize}
@@ -159,7 +159,7 @@ Implementar y verificar el servicio de inteligencia artificial basado en la API 
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Google Gemini 1.5 Flash API:} Modelo multimodal de lenguaje de alta velocidad y baja latencia desarrollado por Google, optimizado para razonamiento lingüístico en español.
+    \item \textbf{Google Gemini API:} Servicio de modelo de lenguaje de alta velocidad y baja latencia provisto por Google AI, optimizado para razonamiento lingüístico en español.
     \item \textbf{Motor de Respaldo Heurístico:} Algoritmo determinístico basado en catálogos de verbos de Bloom y plantillas SGC de la UTA que genera recomendaciones válidas si la API externa no responde en 6.5 segundos.
     \item \textbf{Diff Semántico:} Algoritmo de comparación textual que detecta inserciones, supresiones y alteraciones entre dos versiones sucesivas de un expediente.
     \item \textbf{Human-in-the-Loop:} Principio de diseño donde el usuario docente inspecciona, edita y convalida voluntariamente cualquier sugerencia generada antes de incorporarla al borrador oficial.
@@ -191,8 +191,8 @@ La arquitectura de integración opera bajo las siguientes políticas:
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/s2_02_clean_architecture.png}
-    \caption{Arquitectura en Capas de SIGE integrando el Servicio Gemini y Fallback Heurístico.}
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/f3_13_gemini_api_fallback.png}
+    \caption{Flujo de Asistencia Inteligente: Google Gemini API y Fallback Heurístico UTA.}
     \label{fig:arquitectura_gemini}
 \end{figure}
 
@@ -200,13 +200,13 @@ La arquitectura de integración opera bajo las siguientes políticas:
 
 \subsection{Implementación del Servicio de IA (geminiService.js)}
 A continuación se ilustra la arquitectura de invocación y fallback implementada en el cliente frontend:
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}
 // SIGE/frontend/src/services/geminiService.js
 export const callGeminiApi = async ({ prompt, systemInstruction = '', temperature = 0.3 }) => {
   const apiKey = getGeminiApiKey();
   if (!apiKey) throw new Error('NO_API_KEY');
 
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini:generateContent?key=${apiKey}`;
   
   const payload = {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
@@ -226,18 +226,18 @@ export const callGeminiApi = async ({ prompt, systemInstruction = '', temperatur
 
 \subsection{Mecanismo de Respaldo Heurístico Institucional}
 Si la llamada remota falla, se dispara el motor heurístico local:
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}
 export const generatePlanDraftAssistance = async ({ materia, carrera, horas = 160 }) => {
   try {
-    const prompt = `Actúa como especialista curricular de la FISEI UTA. Materia: ${materia}, Carrera: ${carrera}.
-Genera: 1) Justificación institucional SGC, 2) Tres objetivos según Taxonomía de Bloom.`;
+    const prompt = `Actua como especialista curricular de la FISEI UTA. Materia: ${materia}, Carrera: ${carrera}.
+Genera: 1) Justificacion institucional SGC, 2) Tres objetivos segun Taxonomia de Bloom.`;
     const response = await Promise.race([
       callGeminiApi({ prompt }),
       new Promise((_, reject) => setTimeout(() => reject(new Error('TIMEOUT')), 6500))
     ]);
     return { success: true, source: 'gemini_api', data: response };
   } catch (err) {
-    // Activación automática de Fallback Heurístico UTA
+    // Activacion automatica de Fallback Heuristico UTA
     return { success: true, source: 'heuristic_fallback_uta', data: getHeuristicSuggestions(materia) };
   }
 };
@@ -278,7 +278,7 @@ Genera: 1) Justificación institucional SGC, 2) Tres objetivos según Taxonomía
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Integración de Google Gemini 1.5 Flash API con fallback heurístico institucional y motor de diff de versiones en frontend. & Steeven Toala / Heidi Villavicencio & 07/10/2026 \\
+    1.0 & Integración de Google Gemini API con fallback heurístico institucional y motor de diff de versiones en frontend. & Steeven Toala / Heidi Villavicencio & 07/10/2026 \\
     \hline
 \end{tabularx}
 

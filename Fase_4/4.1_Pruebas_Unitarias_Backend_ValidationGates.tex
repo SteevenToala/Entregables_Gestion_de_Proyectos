@@ -191,8 +191,8 @@ Para la construcción de la suite de pruebas se adoptaron las siguientes políti
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/s1_05_validation_gates.png}
-    \caption{Arquitectura de Compuertas de Control (Validation Gates) Evaluadas en la Suite.}
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/f4_01_arquitectura_pruebas_unitarias.png}
+    \caption{Arquitectura de la Suite de Pruebas Unitarias y Flujo de Aserciones en Backend.}
     \label{fig:validation_gates_diag}
 \end{figure}
 
@@ -253,9 +253,9 @@ A continuación se transcribe la salida real arrojada por la suite de pruebas un
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/preview_plan_trabajo.png}
-    \caption{Validación Exitosa y Despliegue de Estados en la Interfaz de Usuario de SIGE.}
-    \label{fig:preview_test_ok}
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/f4_01_consola_npm_test.png}
+    \caption{Captura Oficial de la Consola de Pruebas Unitarias (8/8 Casos Exitosos).}
+    \label{fig:consola_test_ok}
 \end{figure}
 
 \section{Firmas de Responsabilidad}
@@ -295,7 +295,7 @@ A continuación se transcribe la salida real arrojada por la suite de pruebas un
 \section{Anexos}
 
 \subsection*{Anexo 1: Código Fuente de la Suite de Pruebas (validationGates.test.js)}
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}
 // SIGE/backend/tests/validationGates.test.js
 const assert = require('assert');
 const { validarPlanTrabajo, validarInformeCumplimiento } = require('../src/middlewares/validationGates');

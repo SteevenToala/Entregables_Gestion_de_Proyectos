@@ -191,8 +191,8 @@ El flujo de revisión implementa políticas de seguridad y concurrencia optimist
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/s2_03_actividades_ciclo.png}
-    \caption{Diagrama de Flujo del Proceso de Revisión por Comité y Retorno de Observaciones.}
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/f3_11_flujo_revision_comite.png}
+    \caption{Flujo de Trabajo del Comité Académico: Revisión, Observaciones y Subsanaciones.}
     \label{fig:circuito_revision}
 \end{figure}
 
@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS public.observaciones_documento (
 
 \subsection{Controlador de Revisión y Dictámenes (seguimiento.controller.js)}
 El endpoint \texttt{POST /api/seguimiento/:id/dictamen} valida que el usuario posea rol \texttt{COORDINADOR\_AREA} o \texttt{COORDINADOR\_CARRERA} antes de procesar el dictamen:
-\begin{lstlisting}[language=JavaScript]
+\begin{lstlisting}
 // Manejo de dictamen en el backend de SIGE
 exports.registrarDictamen = async (req, res, next) => {
   const { id } = req.params;
