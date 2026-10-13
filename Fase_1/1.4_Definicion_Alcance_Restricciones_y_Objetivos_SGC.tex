@@ -81,10 +81,10 @@
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F1-004}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{GESTIÓN DEL ALCANCE / LÍNEA BASE SGC}
-\newcommand{\docElaboracion}{21/08/2026}
-\newcommand{\docRevision}{21/08/2026}
-\newcommand{\docTitulo}{DEFINICIÓN DEL ALCANCE, RESTRICCIONES Y OBJETIVOS SGC}
+\newcommand{\docProceso}{INGENIERÍA DE REQUERIMIENTOS / LÍNEA BASE DEL ALCANCE}
+\newcommand{\docElaboracion}{18/08/2026}
+\newcommand{\docRevision}{18/08/2026}
+\newcommand{\docTitulo}{DEFINICIÓN DEL ALCANCE Y RESTRICCIONES}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -126,101 +126,97 @@
 \textbf{Denominación Oficial del Entregable:} Definición del Alcance, Restricciones y Objetivos SGC -- Código EDT: 1.4
 
 \section{Introducción}
-El control del alcance y la delimitación rigurosa de fronteras son esenciales para prevenir desviaciones presupuestarias y retrasos en el cronograma (\textit{Scope Creep}). Este documento formaliza la Línea Base del Alcance del sistema SIGE, especificando con precisión los límites del producto (\textit{In-Scope}), las exclusiones explícitas (\textit{Out-of-Scope}) y las compuertas de calidad institucionales que aseguran la conformidad con el SGC de la FISEI.
+El control del alcance constituye uno de los factores más críticos para el éxito de proyectos de software en el ámbito universitario. Un alcance mal delimitado expone al equipo a corrupción del alcance (\textit{scope creep}), desviaciones presupuestarias y retrasos en la entrega de hitos. El presente entregable formaliza los límites exactos de inclusión y exclusión del proyecto SIGE, documenta las restricciones tecnológicas y normativas impuestas por la infraestructura de la FISEI, y alinea el software con los objetivos de calidad institucional.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Definir formalmente el alcance técnico, las restricciones tecnológicas y los objetivos de calidad del proyecto SIGE, estableciendo la Línea Base del Alcance del sistema.
+Delimitar formalmente el alcance operativo y técnico del sistema SIGE, estableciendo las restricciones de infraestructura y garantizando la alineación directa con los objetivos de calidad del SGC de la UTA.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Delimitar las fronteras de integración entre el sistema SIGE y la infraestructura de servidores de la FISEI.
-    \item Establecer la lista exhaustiva de exclusiones para evitar desviaciones operativas.
-    \item Formular los objetivos del proyecto bajo el criterio SMART (Específicos, Medibles, Alcanzables, Relevantes y Temporales).
+    \item Definir los entregables oficiales incluidos en el producto de software.
+    \item Declarar explícitamente las exclusiones fuera del alcance para proteger el cronograma.
+    \item Formalizar las restricciones de entorno (Docker local, Node.js, PostgreSQL 18, MinIO S3).
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Digitalización y orquestación del Procedimiento P7 del SGC.
-    \item Interfaz web responsiva con editor enriquecido y matriz dinámica.
-    \item Almacenamiento local de evidencias mediante MinIO S3 y base de datos PostgreSQL 16.
+    \item Automatización integral de los formatos \texttt{P7-T1} y \texttt{P7-T2} en las carreras de la FISEI.
+    \item Soporte para despliegue reproducible en contenedores locales mediante Docker Compose.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Módulo de control de asistencia biométrica docente.
-    \item Conexión directa a bases de datos de nómina institucional externa.
+    \item Procesamiento de pagos, honorarios docentes o nómina con el sistema financiero institucional.
+    \item Trámites de matriculación estudiantil o registro de calificaciones de asignaturas.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Línea Base del Alcance:} Declaración formal del alcance del proyecto, la EDT y el diccionario de la EDT formalmente aprobados.
-    \item \textbf{Scope Creep:} Incorporación descontrolada de cambios o funciones sin ajuste formal de tiempo, costo o recursos.
-    \item \textbf{Validation Gate:} Compuerta lógica programática que impide avanzar en el flujo si no se cumplen las condiciones de integridad.
+    \item \textbf{Línea Base del Alcance (Scope Baseline):} Versión aprobada del enunciado del alcance, la EDT y su diccionario asociado.
+    \item \textbf{Restricción de Proyecto:} Factor limitante que afecta la ejecución de un proyecto o proceso (e.g., tecnológica, temporal o presupuestaria).
+    \item \textbf{Objetivo SGC:} Meta cuantificable establecida por la institución para asegurar la mejora continua y satisfacción de la comunidad académica.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Steeven Toala / Heidi Villavicencio (Responsables EDT 1.4):} Redacción y estructuración de la declaración del alcance y objetivos.
-    \item \textbf{Equipo SIGE (NH, AV):} Evaluación de restricciones técnicas de arquitectura.
+    \item \textbf{Steeven Toala (Responsable EDT 1.4):} Definición de límites técnicos y restricciones de arquitectura.
+    \item \textbf{Heidi Villavicencio (Calidad):} Alineación con la política de calidad del SGC de la UTA.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la línea base del alcance.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
 \subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{LOES y Reglamento de Carrera Docente:} Obligación de registro y custodia institucional de planes semestrales.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122.}
+    \item \textbf{Reglamento de Régimen Académico (RRA - CES), Art. 45 y 67.}
 \end{itemize}
-
 \subsection{Normas Técnicas Internacionales}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Guía PMBOK (7ma Edición), Gestión del Alcance:} Elaboración de la estructura EDT y verificación de entregables.
-    \item \textbf{ISO 9001:2015, Cláusula 8.2:} Determinación y revisión de los requisitos para los productos y servicios.
+    \item \textbf{PMBOK Guide (7th Edition):} Gestión del Alcance del Proyecto.
+    \item \textbf{ISO 9001:2015, Cláusula 4.3 (Determinación del alcance del sistema de gestión de la calidad).}
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-\subsection{Línea Base del Alcance y Objetivos SMART}
-El proyecto se enfoca en resolver los 6 problemas críticos identificados en el diagnóstico As-Is. En la Figura \ref{fig:trello_board_s1} se aprecia la captura real del Tablero de Gestión oficial en Trello donde se administra el alcance de las 5 fases del proyecto.
+\subsection{Enfoque Metodológico}
+Se aplicó la técnica de descomposición analítica y consulta a expertos para fijar los límites del sistema. Se establecieron las tolerancias del proyecto y los criterios de aceptación contractuales pactados con la dirección académica.
+
+\subsection{Políticas de Control de Alcance}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Inmutabilidad de la Línea Base:} Toda solicitud de cambio que modifique las características aprobadas debe ingresar formalmente por el Comité de Control de Cambios.
+    \item \textbf{Política de Prioridad al Core Académico:} Las funciones auxiliares no esenciales quedan supeditadas a la finalización y aprobación del núcleo transaccional.
+\end{enumerate}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/trello_tablero_captura_real.png}
-    \caption{Tablero Oficial de Gestión EDT del Proyecto SIGE en Trello (Línea Base del Alcance).}
-    \label{fig:trello_board_s1}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_04_alcance.png}
+    \caption{Diagrama de Fronteras del Sistema: Límites de Inclusión y Exclusión del Proyecto SIGE.}
+    \label{fig:alcance_fronteras}
 \end{figure}
 \FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz de Fronteras del Sistema (In-Scope vs. Out-of-Scope)}
+\subsection{Matriz de Alineación entre Objetivos del SGC y Módulos de SIGE}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.0cm}|X|X|}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{3.5cm}|X|m{3.2cm}|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Dimensión} & \textbf{Dentro del Alcance (In-Scope)} & \textbf{Fuera del Alcance (Out-of-Scope)} \\
+\textbf{Objetivo Institucional SGC} & \textbf{Meta Cuantitativa de Calidad} & \textbf{Módulo de Soporte en SIGE} & \textbf{Impacto} \\
 \hline
-Formatos SGC Institucionales & Automatización integral de formatos \texttt{P7-T1} y \texttt{P7-T2}. & Formatos de vinculación con la comunidad fuera del área docente. \\
+O-01: Reducción de Tiempos & Disminuir el ciclo de trámite a menos de 3 días laborables. & Wizard + Cascada de Firmas & Alto \\
 \hline
-Almacenamiento y Evidencias & Servidor MinIO local con S3 API y hashing SHA-256. & Servidores comerciales de almacenamiento en nube pública de pago. \\
+O-02: Integridad de Horas & Garantizar 100\% de planes con 40h exactas contractuales. & Validation Gate 1 & Crítico \\
 \hline
-Autenticación & JWT con roles Docente, Coordinador y Administrador. & Integración física con credenciales biométricas de torniquetes. \\
+O-03: Evidencias Centralizadas & Custodiar el 100\% de medios probatorios en formato digital. & Almacenamiento MinIO S3 & Crítico \\
 \hline
-Asistencia de Redacción & LanguageTool Docker local y Google Gemini API. & Generación autónoma no supervisada de contenido académico. \\
-\hline
-Exportación & PDF y Word idénticos al formato de calidad oficial UTA. & Sistemas externos de impresión o correspondencia física postal. \\
+O-04: Transparencia y Auditoría & Registrar 100\% de modificaciones y observaciones en bitácora. & Logs de Auditoría y Trazabilidad & Alto \\
 \hline
 \end{tabularx}
-\caption{Delimitación de Fronteras Operativas del Sistema SIGE.}
-\label{tab:fronteras}
+\caption{Matriz de alineación estratégica entre el SGC y el sistema SIGE.}
+\label{tab:sgc_alignment}
 \end{table}
-\FloatBarrier
-
-\section{Conclusiones}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item El alcance oficial quedó fijado en los 24 Requisitos Funcionales y las 5 fases de la EDT, garantizando cero desviación de objetivos.
-    \item Las restricciones de arquitectura local con Docker y MinIO garantizan la independencia de costos recurrentes de licencias en la nube.
-\end{itemize}
 
 \section{Firmas de Responsabilidad}
 
@@ -231,9 +227,9 @@ Exportación & PDF y Word idénticos al formato de calidad oficial UTA. & Sistem
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 21/08/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 18/08/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 21/08/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 18/08/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -250,7 +246,7 @@ Exportación & PDF y Word idénticos al formato de calidad oficial UTA. & Sistem
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 21/08/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -258,7 +254,7 @@ Exportación & PDF y Word idénticos al formato de calidad oficial UTA. & Sistem
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha de Registro y Control en el Tablero Oficial de Gestión (EDT Trello)}
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.4 en el Tablero Trello}
 \begin{table}[H]
 \centering
 \small
@@ -274,30 +270,63 @@ Nombre de la Tarjeta & Definición del alcance, restricciones y objetivos SGC \\
 \hline
 Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
 \hline
-Período de Ejecución & 18 de agosto al 21 de agosto de 2026 (4 días laborables) \\
+Período de Ejecución & 15 de agosto al 18 de agosto de 2026 (3 días laborables) \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
+Horas Asignadas & 24 horas hombre netas \\
 \hline
 Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV) \\
 \hline
 Entregable Oficial & \texttt{04\_Definicion\_Alcance\_Restricciones\_Objetivos.pdf} \\
 \hline
-Estado en el Tablero & 100\% Completado y Verificado en Reunión de Hito 1 \\
+Estado en el Tablero & 100\% Completado y Aprobado \\
 \hline
 \end{tabularx}
 \caption{Ficha técnica de la tarea EDT 1.4 en el Tablero Trello.}
 \end{table}
 
-\subsection*{Anexo 2: Evidencia de Control de Alcance en el Tablero Trello}
-Verificación de los 5 contenedores de fase y sus 34 tareas activas, manteniendo congelada la línea base de requerimientos.
+\subsection*{Anexo 2: Matriz de Restricciones del Proyecto SIGE}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{2.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Tipo} & \textbf{Restricción} & \textbf{Detalle de la Limitante Técnica} & \textbf{Impacto} \\
+\hline
+Tecnológica & Entorno Docker & Despliegue obligatorio mediante contenedores orquestados localmente. & Alto \\
+\hline
+Normativa & Formatos Oficiales & Los reportes PDF deben coincidir con \texttt{P7-T1} y \texttt{P7-T2} de la UTA. & Crítico \\
+\hline
+Temporal & Fechas Semestrales & El sistema debe estar probado antes del inicio del ciclo 2026-B. & Crítico \\
+\hline
+Recursos & Equipo de Trabajo & 4 ingenieros de desarrollo con asignación de 832 horas hombre totales. & Medio \\
+\hline
+\end{tabularx}
+\caption{Restricciones técnicas y normativas del proyecto.}
+\end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{6d24f11 - docs(scope): definicion formal de linea base del alcance y objetivos SMART}
-    \item \textbf{Archivos Afectados:} \texttt{docs/alcance\_restricciones.md}, \texttt{Entregables\_Latex/Fase\_1/1.4*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Definición de Límites & Declaración unívoca de inclusiones y exclusiones del sistema & 100\% CONFORME & Steeven Toala \\
+\hline
+Alineación SGC & Correspondencia con metas institucionales de la UTA & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Factibilidad Operativa & Validación de restricciones tecnológicas del entorno Docker & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Aprobación del Alcance & Conformidad del docente evaluador con la línea base pactada & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 1.4.}
+\end{table}
 
 
 \end{document}

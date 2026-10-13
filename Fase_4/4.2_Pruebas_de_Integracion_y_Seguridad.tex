@@ -341,13 +341,27 @@ Contenedores Docker & Imágenes OCI oficiales basadas en \texttt{alpine} con par
 \caption{Certificación de ausencia de dependencias vulnerables.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{9180ab1 - sec(audit): informe de seguridad OWASP Top 10, sanitizacion y cabeceras helmet}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/middlewares/security.middleware.js}, \texttt{Entregables\_Latex/Fase\_4/4.2*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Auditoría OWASP Top 10 & Evaluación de los 10 vectores de riesgo con 0 vulnerabilidades críticas & 100\% CONFORME & Steeven Toala \\
+\hline
+Inyección SQL y NoSQL & Uso exclusivo de consultas parametrizadas y tipadas en PostgreSQL 18 & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Cross-Site Scripting (XSS) & Sanitización con DOMPurify y cabeceras estrictas Content-Security-Policy & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Protección de Cabeceras & Integración de paquete Helmet en Express v5 ocultando metadata del servidor & 100\% CONFORME & Steeven Toala \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 4.2.}
+\end{table}
 
 
 \end{document}

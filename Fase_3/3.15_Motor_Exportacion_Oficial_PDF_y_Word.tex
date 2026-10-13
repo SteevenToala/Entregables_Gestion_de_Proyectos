@@ -330,13 +330,27 @@ Escaneo de Código QR & Lectura en dispositivo móvil & Redirecciona a la págin
 \caption{Auditoría de correspondencia frente a formatos originales de la UTA.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{f0192bc - feat(export): motor de exportacion PDF con Puppeteer y Word con docx y QR verificador}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/services/export.service.js}, \texttt{backend/src/templates/*}, \texttt{Entregables\_Latex/Fase\_3/3.15*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Fidelidad Documental & Exportación idéntica a plantillas oficiales UTA-SGC P7-T1 y P7-T2 & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Generación PDF Vectorial & Motor de renderizado basado en Puppeteer para documentos nítidos & 100\% CONFORME & Steeven Toala \\
+\hline
+Generación DOCX & Conversión a formato editable Word respetando márgenes y tipografía & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Código QR Institucional & Estampado de QR de verificación que valida autenticidad del documento & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.15.}
+\end{table}
 
 
 \end{document}

@@ -335,13 +335,27 @@ TC-EP04 & \texttt{PUT /api/planes/:id} & Edición de plan en estado ``Aprobado H
 \caption{Resultados de pruebas automatizadas sobre endpoints RESTful.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{a5190df - feat(api): controladores RESTful para planes y secciones con transacciones ACID}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/modules/documentos/*}, \texttt{backend/src/modules/secciones/*}, \texttt{Entregables\_Latex/Fase\_3/3.7*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Controladores RESTful & Endpoints CRUD para planes y secciones con semántica HTTP estándar & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Transacciones Atómicas & Bloques BEGIN / COMMIT / ROLLBACK que aseguran consistencia ACID & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Validación de Payloads & Validación de esquemas JSON antes de ejecutar inserciones en BD & 100\% CONFORME & Steeven Toala \\
+\hline
+Auditoría de Modificaciones & Actualización automática de marcas de tiempo y usuario modificador & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.7.}
+\end{table}
 
 
 \end{document}

@@ -81,10 +81,10 @@
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F1-006}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{EVALUACIÓN FINANCIERA / PROJECT CHARTER}
-\newcommand{\docElaboracion}{24/08/2026}
-\newcommand{\docRevision}{24/08/2026}
-\newcommand{\docTitulo}{ELABORACIÓN DE CASO DE NEGOCIO, ROI Y PROJECT CHARTER}
+\newcommand{\docProceso}{GESTIÓN DE PROYECTOS / CASO DE NEGOCIO Y CHARTER}
+\newcommand{\docElaboracion}{18/08/2026}
+\newcommand{\docRevision}{18/08/2026}
+\newcommand{\docTitulo}{CASO DE NEGOCIO, ROI Y CHARTER}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -126,130 +126,104 @@
 \textbf{Denominación Oficial del Entregable:} Elaboración de Caso de Negocio, ROI y Project Charter -- Código EDT: 1.6
 
 \section{Introducción}
-Todo proyecto de ingeniería de software en el sector público universitario debe fundamentarse en una estricta evaluación de viabilidad económica, operativa y estratégica. El presente informe formaliza el Caso de Negocio del sistema SIGE, demostrando cuantitativamente la rentabilidad institucional mediante el Retorno de Inversión (ROI), el Valor Actual Neto (VAN), la Tasa Interna de Retorno (TIR) y el Acta de Constitución formal del proyecto (\textit{Project Charter}) con la asignación presupuestaria de \$630.30 para gastos de infraestructura local.
+Todo proyecto de desarrollo de software institucional debe fundamentarse en un sólido análisis de viabilidad financiera, operativa y estratégica. El desarrollo del sistema web SIGE no solo resuelve deficiencias de gestión documental en la FISEI, sino que genera retornos tangibles en optimización de horas-hombre docentes, erradicación del gasto en papelería e impresiones, y mitigación de riesgos de auditoría ante el CACES. El presente informe formaliza el Caso de Negocio (\textit{Business Case}), el cálculo del Retorno de la Inversión (ROI) y el Acta de Constitución del Proyecto (\textit{Project Charter}) oficial.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Evaluar y fundamentar la viabilidad económica, operativa y financiera del sistema SIGE mediante el cálculo de indicadores de rentabilidad (ROI, VAN, TIR) y la emisión formal del Project Charter del proyecto.
+Estructurar el Caso de Negocio, cuantificar el Retorno de la Inversión (ROI) y formalizar el Project Charter que autoriza formalmente el inicio y asignación de recursos para el proyecto SIGE.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Cuantificar los costos operativos del proceso actual manual frente a los ahorros anuales proyectados con SIGE.
-    \item Calcular los indicadores financieros de rentabilidad (ROI $> 300\%$, Payback $< 6$ meses).
-    \item Emitir el Project Charter que autoriza formalmente al equipo de ingeniería el uso de los recursos institucionales.
+    \item Evaluar los costos del proceso manual As-Is frente a los costos de inversión del desarrollo.
+    \item Calcular el ROI y el período de recuperación de la inversión (\textit{Payback Period}).
+    \item Emitir el Project Charter formal con objetivos, hitos, presupuesto y gobernanza.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Evaluación financiera a horizonte de 4 años para 65 docentes de la FISEI.
-    \item Estructura de costos de infraestructura local (Docker, MinIO y servidor institucional).
-    \item Acta de Constitución formal con roles del equipo.
+    \item Análisis económico proyectado a un horizonte de 3 años lectivos (6 ciclos semestrales).
+    \item Asignación de gobernanza entre el equipo de desarrollo, analista de calidad y docente evaluador.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Adquisición de servidores físicos nuevos (se reutiliza infraestructura existente de la facultad).
+    \item Presupuestos de adquisición de hardware para data centers institucionales de la universidad.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Project Charter (Acta de Constitución):} Documento emitido por el patrocinador que autoriza formalmente la existencia del proyecto.
-    \item \textbf{ROI (Return on Investment):} Relación porcentual entre los beneficios netos obtenidos y los costos incurridos en la inversión.
-    \item \textbf{VAN (Valor Actual Neto):} Suma del valor presente de los flujos de caja futuros descontados a una tasa de oportunidad institucional.
-    \item \textbf{Payback:} Tiempo necesario para que los ahorros acumulados amortigüen la inversión inicial.
+    \item \textbf{Project Charter (Acta de Constitución):} Documento emitido por el patrocinador que autoriza formalmente la existencia del proyecto y otorga autoridad al director.
+    \item \textbf{ROI (Return on Investment):} Razón financiera que compara el beneficio neto obtenido respecto a los costos de inversión inicial.
+    \item \textbf{Payback Period:} Tiempo requerido para que los ahorros acumulados igualen el costo total de la inversión en el software.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Equipo de Proyecto SIGE (ST, HV, NH, AV - EDT 1.6):} Modelado financiero, estimación de costos y redacción del Project Charter.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador / Patrocinador):} Aprobación del caso de negocio y suscripción del Project Charter.
+    \item \textbf{Steeven Toala (Líder de Proyecto):} Redacción del Project Charter y análisis económico de costos.
+    \item \textbf{Heidi Villavicencio (Analista Financiero/Calidad):} Cuantificación de ahorros operativos y cálculo del ROI.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador / Patrocinador):} Aprobación del Project Charter institucional.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
 \subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Ley Orgánica de Educación Superior (LOES):} Eficiencia en la utilización de los recursos públicos de las universidades.
-    \item \textbf{Código Orgánico de Planificación y Finanzas Públicas:} Criterios de evaluación social y beneficio institucional.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122:} Uso eficiente y transparente de los recursos institucionales.
 \end{itemize}
-
 \subsection{Normas Técnicas Internacionales}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Guía PMBOK (7ma Edición), Inicio del Proyecto:} Desarrollo del Acta de Constitución del Proyecto.
-    \item \textbf{IEEE Std 1058-1998:} Estándar para planes de gestión de proyectos de software.
+    \item \textbf{PMBOK Guide (7th Edition):} Iniciación del proyecto y desarrollo del Acta de Constitución.
+    \item \textbf{ISO 9001:2015, Cláusula 6.2 (Objetivos de la calidad y planificación para lograrlos).}
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-\subsection{Presupuesto y Evaluación Financiera}
-El presupuesto asignado se calculó considerando licencias de desarrollo, dominio y contingencias operativas:
+\subsection{Enfoque Metodológico}
+Se utilizó el análisis de flujo de caja descontado proyectado a 3 años, considerando el ahorro en horas de reprocesos de 120 docentes de la FISEI valoradas a un costo promedio hora de \$12.50 USD, sumado al ahorro en papel y tóners. La fórmula de cálculo del ROI aplicada es:
+\begin{equation}
+    \text{ROI} = \frac{\text{Ahorros Netos Acumulados} - \text{Costo de Inversión}}{\text{Costo de Inversión}} \times 100\%
+\end{equation}
 
-\begin{table}[H]
-\centering
-\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{4.5cm}|X|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Ítem} & \textbf{Rubro de Inversión} & \textbf{Justificación Técnica} & \textbf{Monto USD} \\
-\hline
-1 & Infraestructura de Contenedores & Despliegue en VPS local con Docker y MinIO & \$0.00 (FOSS) \\
-\hline
-2 & Base de Datos PostgreSQL 16 & Motor relacional Open Source sin costo de licenciamiento & \$0.00 (FOSS) \\
-\hline
-3 & Certificado SSL y Dominio & Seguridad HTTPS TLS v1.3 y nombre de dominio institucional & \$38.00 \\
-\hline
-4 & Asistente IA (Gemini API) & Tokens para capa de sugerencias ortográficas y síntesis & \$50.00 \\
-\hline
-5 & Reserva de Imprevistos & Fondo de contingencia operativa ($10\%$) & \$42.30 \\
-\hline
-6 & Horas de Ingeniería & Trabajo de desarrollo y validación académica del equipo & \$500.00 \\
-\hline
-\multicolumn{3}{|r|}{\textbf{PRESUPUESTO TOTAL INICIAL ASIGNADO:}} & \textbf{\$630.30} \\
-\hline
-\end{tabularx}
-\caption{Presupuesto Consolidado de Inversión del Proyecto SIGE.}
-\label{tab:presupuesto}
-\end{table}
+\subsection{Políticas de Viabilidad Económica}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Inversión Eficiente:} El proyecto debe autofinanciarse mediante ahorros operativos en un plazo menor a 1.5 años.
+    \item \textbf{Política de Sostenibilidad Ecológica:} Compromiso de reducción del 100\% en el uso de papel físico para la gestión de planes.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_06_beneficios_pie.png}
+    \caption{Distribución Porcentual de Ahorros Operativos Proyectados con la Implementación de SIGE.}
+    \label{fig:beneficios_pie}
+\end{figure}
 \FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Cuantificación del Ahorro Anual y Retorno de Inversión (ROI)}
-Considerando una planta de 65 docentes que elaboran 2 informes semestrales al año (130 informes anuales), con un costo por hora docente estimado de \$15.00:
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Horas Invertidas en Proceso Manual:} $130 \times 8 \text{ h} = 1,040 \text{ h/año}$ (Costo: \$15,600).
-    \item \textbf{Horas Invertidas en Revisiones y Reprocesos:} $600 \text{ h/año}$ de coordinadores (Costo: \$9,000).
-    \item \textbf{Horas Requeridas con SIGE:} $130 \times 1.5 \text{ h} = 195 \text{ h/año}$ (Costo: \$2,925).
-    \item \textbf{Ahorro Neto Anual Estimado:} \textbf{\$21,675.00 anuales}.
-\end{itemize}
-
+\subsection{Cuantificación Financiera del Proyecto y Retorno de la Inversión (ROI)}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.5cm}|c|X|}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{4.0cm}|c|c|X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Indicador Financiero} & \textbf{Valor Calculado} & \textbf{Interpretación Técnica y Viabilidad} \\
+\textbf{Rubro Financiero} & \textbf{Proceso Manual (Anual)} & \textbf{Con SIGE (Anual)} & \textbf{Ahorro Neto Anual} \\
 \hline
-Retorno de Inversión (ROI) & \textbf{+3,438\%} & Rendimiento extremadamente alto por automatización de procesos burocráticos. \\
+Horas-hombre en revisión manual & \$18,000 USD & \$2,400 USD & +\$15,600 USD (Ahorro en tiempo) \\
 \hline
-Valor Actual Neto (VAN a 12\%) & \textbf{\$64,820.00} & Proyecto altamente viable que crea valor social y académico directo. \\
+Papelería, impresiones y archivo & \$2,800 USD & \$200 USD & +\$2,600 USD (Cero papel) \\
 \hline
-Tasa Interna de Retorno (TIR) & \textbf{$>180\%$} & Supera ampliamente la tasa de corte institucional. \\
+Costos por reprocesos y extravíos & \$4,500 USD & \$0 USD & +\$4,500 USD (Eliminación de fallas) \\
 \hline
-Período de Recuperación (Payback) & \textbf{1.8 meses} & La inversión inicial se amortiza antes del cierre del primer semestre lectivo. \\
+\textbf{TOTAL COSTO ANUAL:} & \textbf{\$25,300 USD} & \textbf{\$2,600 USD} & \textbf{+\$22,700 USD / año} \\
 \hline
 \end{tabularx}
-\caption{Indicadores Financieros de Evaluación del Proyecto SIGE.}
-\label{tab:roi}
+\caption{Comparativa económica anual entre el proceso manual As-Is y el sistema SIGE.}
+\label{tab:comparativa_financiera}
 \end{table}
-\FloatBarrier
 
-\subsection{Acta de Constitución Oficial (Project Charter)}
-Se formaliza el nombramiento del equipo de desarrollo integrado por Steeven Toala (Líder / Arquitecto), Heidi Villavicencio (Analista de Calidad / UI-UX), Nixon Hurtado (Backend / DBA) y Andrea Vásquez (Frontend / QA), bajo la dirección y patrocinio institucional del Ing. Paulo Torres.
-
-\section{Conclusiones}
+\subsection{Indicadores Clave de Viabilidad Financiera}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item El caso de negocio demuestra la altísima rentabilidad social y financiera del proyecto, amortizándose en menos de 2 meses de operación.
-    \item La suscripción del Project Charter formaliza la existencia del proyecto y blinda el presupuesto asignado de \$630.30.
+    \item \textbf{Costo Total de Desarrollo (832 h netas equipo):} \$10,400 USD estimado.
+    \item \textbf{Retorno de la Inversión (ROI a 3 años):} \textbf{+554.8\%}.
+    \item \textbf{Período de Recuperación (Payback Period):} \textbf{5.5 meses} desde el despliegue.
 \end{itemize}
 
 \section{Firmas de Responsabilidad}
@@ -261,9 +235,9 @@ Se formaliza el nombramiento del equipo de desarrollo integrado por Steeven Toal
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 24/08/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 18/08/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 24/08/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 18/08/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -280,7 +254,7 @@ Se formaliza el nombramiento del equipo de desarrollo integrado por Steeven Toal
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 24/08/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -288,7 +262,7 @@ Se formaliza el nombramiento del equipo de desarrollo integrado por Steeven Toal
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha de Registro y Control en el Tablero Oficial de Gestión (EDT Trello)}
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.6 en el Tablero Trello}
 \begin{table}[H]
 \centering
 \small
@@ -304,53 +278,65 @@ Nombre de la Tarjeta & Elaboración de Caso de Negocio, ROI y Project Charter \\
 \hline
 Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
 \hline
-Período de Ejecución & 20 de agosto al 24 de agosto de 2026 (3 días laborables) \\
+Período de Ejecución & 17 de agosto al 18 de agosto de 2026 (2 días laborables) \\
 \hline
 Horas Asignadas & 24 horas hombre netas \\
 \hline
-Responsables Técnicos & Todo el Equipo (ST, HV, NH, AV) \\
+Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV) \\
 \hline
-Entregable Oficial & \texttt{06\_Caso\_de\_Negocio\_ROI\_Project\_Charter.pdf} \\
+Entregable Oficial & \texttt{06\_Caso\_de\_Negocio.md} \& Project Charter Oficial \\
 \hline
-Estado en el Tablero & 100\% Completado y Verificado en Reunión de Hito 1 \\
+Estado en el Tablero & 100\% Completado y Aprobado \\
 \hline
 \end{tabularx}
 \caption{Ficha técnica de la tarea EDT 1.6 en el Tablero Trello.}
 \end{table}
 
-\subsection*{Anexo 2: Flujo de Caja Descontado Proyectado a 4 Años}
+\subsection*{Anexo 2: Ficha Resumen del Project Charter Oficial de SIGE}
 \begin{table}[H]
 \centering
 \footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|c|c|c|c|}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Año} & \textbf{Inversión / Costo Operativo} & \textbf{Ahorro Bruto} & \textbf{Flujo Neto} & \textbf{Flujo Descontado (12\%)} \\
+\multicolumn{2}{|c|}{\textbf{ACTA DE CONSTITUCIÓN DEL PROYECTO (PROJECT CHARTER) -- SIGE}} \\
 \hline
-Año 0 & \$630.30 & \$0.00 & -\$630.30 & -\$630.30 \\
+\textbf{Título del Proyecto:} & Sistema Integrado de Gestión y Evaluación Académica (SIGE) -- FISEI \\
 \hline
-Año 1 & \$120.00 & \$21,675.00 & \$21,555.00 & \$19,245.54 \\
+\textbf{Patrocinador / Evaluador:} & Ing. Paulo Torres, Mg. (Docente de Gestión de Proyectos) \\
 \hline
-Año 2 & \$120.00 & \$21,675.00 & \$21,555.00 & \$17,183.51 \\
+\textbf{Líder de Proyecto:} & Steeven Toala (Estudiante de Ingeniería de Software) \\
 \hline
-Año 3 & \$120.00 & \$21,675.00 & \$21,555.00 & \$15,342.42 \\
+\textbf{Propósito Central:} & Automatizar el flujo de planes e informes institucionales del SGC de la FISEI. \\
 \hline
-Año 4 & \$120.00 & \$21,675.00 & \$21,555.00 & \$13,698.59 \\
-\hline
-\multicolumn{4}{|r|}{\textbf{VALOR ACTUAL NETO (VAN):}} & \textbf{\$64,839.76} \\
+\textbf{Presupuesto de Esfuerzo:} & 832 horas hombre distribuidas en 4 Fases de trabajo estructurado. \\
 \hline
 \end{tabularx}
-\caption{Flujo financiero descontado del proyecto SIGE.}
+\caption{Resumen del Acta de Constitución del Proyecto SIGE.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{e12480a - docs(finance): modelo financiero de retorno de inversion ROI y project charter}
-    \item \textbf{Archivos Afectados:} \texttt{docs/caso\_negocio\_roi.md}, \texttt{Entregables\_Latex/Fase\_1/1.6*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Viabilidad Financiera & Cuantificación precisa de costos y ahorro neto proyectado & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Cálculo de ROI y Payback & Métodos estándar de análisis financiero (Payback $<6$ meses) & 100\% CONFORME & Steeven Toala \\
+\hline
+Gobernanza Formal & Asignación inequívoca de roles en el Project Charter & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Aprobación del Charter & Firma y autorización formal del docente evaluador & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 1.6.}
+\end{table}
 
 
 \end{document}

@@ -332,13 +332,27 @@ TC-PERF-01 & Tipeo rápido sostenido (80 WPM por 2 minutos) & 3 llamadas HTTP co
 \caption{Pruebas de seguridad XSS y desempeño de debounce.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{90c812a - feat(editor): TipTap integration, useDebounce 800ms y sanitizacion HTML con DOMPurify}
-    \item \textbf{Archivos Afectados:} \texttt{frontend/src/components/editor/*}, \texttt{Entregables\_Latex/Fase\_3/3.6*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Editor TipTap & Integración de editor enriquecido con soporte de negritas, listas y tablas & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Autoguardado Debounce & Persistencia automática asíncrona tras 800 ms de inactividad de tipeo & 100\% CONFORME & Steeven Toala \\
+\hline
+Feedback de Guardado & Indicador visual instantáneo de sincronización exitosa en base de datos & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Sanitización HTML & Filtrado estricto contra inyección XSS mediante DOMPurify & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.6.}
+\end{table}
 
 
 \end{document}

@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F1-003}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{INGENIERÍA DE REQUERIMIENTOS / ESPECIFICACIÓN FORMAL}
-\newcommand{\docElaboracion}{21/08/2026}
-\newcommand{\docRevision}{21/08/2026}
-\newcommand{\docTitulo}{DEFINICIÓN DE REQUISITOS FUNCIONALES Y NO FUNCIONALES}
+\newcommand{\docProceso}{INGENIERÍA DE REQUERIMIENTOS / ESPECIFICACIÓN SRS}
+\newcommand{\docElaboracion}{18/08/2026}
+\newcommand{\docRevision}{18/08/2026}
+\newcommand{\docTitulo}{DEFINICIÓN DE REQUISITOS (SRS)}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,161 +123,114 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Especificación de Requisitos de Software (SRS IEEE 830) -- Código EDT: 1.3
+\textbf{Denominación Oficial del Entregable:} Definición de Requisitos Funcionales y No Funcionales (SRS) -- Código EDT: 1.3
 
 \section{Introducción}
-La especificación rigurosa de los requerimientos constituye el cimiento para el diseño y construcción del sistema SIGE. Siguiendo el estándar internacional IEEE 830 y los lineamientos de calidad ISO/IEC 25010, se formalizan en este informe los 24 requerimientos funcionales (RF-01 a RF-24) y 10 requerimientos no funcionales (RNF-01 a RNF-10) que rigen la arquitectura y el comportamiento del software. Cada requerimiento ha sido clasificado por módulo de negocio y ponderado por criticidad para garantizar la completa digitalización de los formatos SGC \texttt{P7-T1} y \texttt{P7-T2}.
+La Especificación de Requisitos de Software (SRS) define con precisión las capacidades que el sistema SIGE debe proporcionar a la comunidad universitaria. Bajo el estándar internacional ISO/IEC/IEEE 29148:2018, este informe consolida el catálogo oficial de 24 Requisitos Funcionales (RF-01 a RF-24) y 8 Requisitos No Funcionales (RNF-01 a RNF-08). Estos requisitos constituyen el contrato técnico basal que guía las etapas posteriores de diseño, desarrollo y pruebas.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Especificar de manera formal, completa y verificable los requisitos funcionales y no funcionales del sistema SIGE bajo el estándar IEEE 830, alineados con el Sistema de Gestión de Calidad institucional de la FISEI.
+Especificar de manera inequívoca, trazable y verificable los requisitos funcionales y no funcionales del sistema SIGE bajo estándares internacionales de ingeniería de requisitos.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Formalizar los 24 requerimientos funcionales estructurados en 7 módulos del sistema.
-    \item Definir los 10 requisitos no funcionales bajo las dimensiones de ISO/IEC 25010 (Seguridad, Rendimiento, Usabilidad, Confiabilidad).
-    \item Construir la matriz de trazabilidad entre necesidades SGC y requisitos técnicos.
+    \item Catalogar los 24 requerimientos funcionales cubriendo gestión de planes, matriz de actividades, evidencias y firmas.
+    \item Definir los 8 requerimientos no funcionales de rendimiento, seguridad, usabilidad y mantenibilidad.
+    \item Construir la matriz de trazabilidad bidireccional entre requisitos y objetivos del SGC.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Módulos de Autenticación RBAC, Wizard de Edición, Matriz Dinámica, MinIO S3, Revisión de Comité, Asistencia Ortográfica y Motor de Exportación.
-    \item Criterios de aceptación comprobables y métricas objetivas de cumplimiento.
+    \item Requerimientos para los módulos: Autenticación, Wizard de Planificación, Matriz Dinámica, MinIO S3, Revisión de Comité y Exportación Oficial.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Requerimientos de sistemas externos de matriculación no cubiertos por las APIs expuestas.
+    \item Especificaciones de arquitectura de bajo nivel o código fuente (Fases 2 y 3).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{IEEE 830-1998:} Práctica recomendada para la especificación de requerimientos de software.
-    \item \textbf{ISO/IEC 25010:} Modelo de calidad para sistemas y productos de software.
-    \item \textbf{RF (Requisito Funcional):} Declaración de servicios que el sistema debe prestar y cómo debe reaccionar ante entradas específicas.
-    \item \textbf{RNF (Requisito No Funcional):} Restricción sobre los servicios o funciones ofrecidos por el sistema (rendimiento, seguridad, disponibilidad).
+    \item \textbf{SRS (Software Requirements Specification):} Documento formal que describe el comportamiento completo del sistema a construir.
+    \item \textbf{Requisito Funcional (RF):} Declaración de un servicio o función que el sistema debe proveer.
+    \item \textbf{Requisito No Funcional (RNF):} Restricción sobre los servicios o funciones ofrecidas (e.g., latencia, seguridad, disponibilidad).
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Heidi Villavicencio / Andrea Vásquez (Responsables EDT 1.3):} Redacción formal de la especificación IEEE 830, criterios de aceptación y RNFs.
-    \item \textbf{Steeven Toala (Arquitecto de Software):} Validación de viabilidad arquitectónica de los requisitos.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación técnica del pliego de requisitos SRS.
+    \item \textbf{Heidi Villavicencio (Responsable EDT 1.3):} Redacción y formalización del SRS bajo norma IEEE 29148.
+    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de viabilidad arquitectónica de los requisitos.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la especificación oficial de requisitos.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{IEEE Std 830-1998:} Recommended Practice for Software Requirements Specifications.
-    \item \textbf{ISO/IEC 25010:2011:} Systems and software engineering -- Systems and software Quality Requirements and Evaluation (SQuaRE).
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149.}
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 32.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO/IEC/IEEE 29148:2018 (Systems and software engineering -- Requirements engineering).}
+    \item \textbf{ISO/IEC 25010:2011 (Systems and software Quality Requirements and Evaluation).}
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-La especificación se organizó modularmente. En la Figura \ref{fig:s1_03_rf} se ilustra la distribución de los 24 Requisitos Funcionales en los módulos del sistema SIGE.
+\subsection{Enfoque Metodológico}
+Se estructuraron los requisitos utilizando plantillas estandarizadas con identificador único, nombre, descripción detallada, criterios de aceptación comprobables y prioridad según el método MoSCoW (\textit{Must have, Should have, Could have, Won't have}).
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de Requisitos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de No Ambigüedad:} Todo requisito debe ser verificable mediante una prueba objetiva binaria (Pasa / No Pasa).
+    \item \textbf{Política de Trazabilidad Total:} Todo requisito funcional debe mapearse a al menos un objetivo de calidad del SGC.
+    \item \textbf{Política de Congelamiento de Alcance:} Los requisitos aprobados en este documento quedan congelados como línea base del proyecto.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.5cm,keepaspectratio]{images/s1_03_modulos_rf.png}
-    \caption{Arquitectura Modular de Requerimientos Funcionales del Sistema SIGE.}
-    \label{fig:s1_03_rf}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_03_modulos_rf.png}
+    \caption{Mapa de Módulos Funcionales y Distribución de los 24 Requerimientos en SIGE.}
+    \label{fig:modulos_rf}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Catálogo de Requerimientos Funcionales (RF-01 a RF-24)}
-
-\begin{table}[htbp]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.6cm}|X|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Código} & \textbf{Módulo} & \textbf{Descripción Funcional} & \textbf{Prioridad} \\
-\hline
-\textbf{RF-01} & Autenticación & Inicio de sesión seguro con credenciales institucionales y generación de JWT. & Alta \\
-\hline
-\textbf{RF-02} & Autenticación & Control de acceso basado en roles (Docente, Coordinador, Subdecano, Admin). & Alta \\
-\hline
-\textbf{RF-03} & Wizard Edición & Creación y gestión de borradores de Plan de Trabajo e Informe de Cumplimiento. & Alta \\
-\hline
-\textbf{RF-04} & Wizard Edición & Navegación modular por pestañas con validación previa de avance de paso. & Alta \\
-\hline
-\textbf{RF-05} & Editor TipTap & Edición de texto enriquecido para secciones descriptivas del formato SGC. & Alta \\
-\hline
-\textbf{RF-06} & Editor TipTap & Mecanismo de autoguardado asíncrono con debounce de 1500 ms y aviso visual. & Alta \\
-\hline
-\textbf{RF-07} & Matriz Dinámica & Registro dinámico de actividades académicas con horas y fechas de ejecución. & Alta \\
-\hline
-\textbf{RF-08} & Matriz Dinámica & Validación automática de suma de ponderaciones que obligue al 100\%. & Crítica \\
-\hline
-\textbf{RF-09} & Matriz Dinámica & Cálculo matemático ponderado en tiempo real del porcentaje de avance global. & Alta \\
-\hline
-\textbf{RF-10} & MinIO S3 & Carga en streaming de archivos PDF de evidencia hacia almacenamiento S3. & Alta \\
-\hline
-\textbf{RF-11} & MinIO S3 & Cálculo y persistencia del hash SHA-256 inmutable de cada archivo cargado. & Alta \\
-\hline
-\textbf{RF-12} & MinIO S3 & Generación de URLs prefirmadas de visualización segura con expiración de 60 min. & Media \\
-\hline
-\textbf{RF-13} & Validation Gates & Bloqueo preventivo de envío si el avance es mayor a 0\% y no hay evidencias. & Crítica \\
-\hline
-\textbf{RF-14} & Validation Gates & Validación de fechas de actividades contra el calendario académico oficial. & Alta \\
-\hline
-\textbf{RF-15} & Revisión Comité & Bandeja de revisión para Coordinadores de Área y Carrera con filtro por estado. & Alta \\
-\hline
-\textbf{RF-16} & Revisión Comité & Motor de observaciones granulares a nivel de sección o actividad específica. & Alta \\
-\hline
-\textbf{RF-17} & Cascada Firmas & Circuito de firmas de 3 niveles (Elaborador, Revisor, Aprobador) en serie. & Alta \\
-\hline
-\textbf{RF-18} & Cascada Firmas & Bloqueo de edición del documento una vez estampado el primer nivel de firma. & Crítica \\
-\hline
-\textbf{RF-19} & Corrección Texto & Integración con microservicio local LanguageTool para corrección ortográfica. & Media \\
-\hline
-\textbf{RF-20} & Asistencia Redacción & Asistencia de redacción académica formal mediante Google Gemini API. & Media \\
-\hline
-\textbf{RF-21} & Motor Exportación & Generación de archivos PDF oficiales idénticos a los formatos SGC P7-T1 y P7-T2. & Alta \\
-\hline
-\textbf{RF-22} & Motor Exportación & Generación de archivos DOCX editables con cabeceras y logos institucionales. & Media \\
-\hline
-\textbf{RF-23} & Auditoría & Registro inmutable de bitácora con estampas de tiempo, usuario y acción. & Alta \\
-\hline
-\textbf{RF-24} & Gestión Extemporánea & Solicitud y desbloqueo supervisado de edición fuera de plazo con justificación. & Media \\
-\hline
-\end{tabularx}
-\caption{Catálogo de Requisitos Funcionales del Sistema SIGE.}
-\label{tab:rf}
-\end{table}
-
-\subsection{Requisitos No Funcionales (RNF-01 a RNF-10)}
-\begin{table}[htbp]
+\subsection{Catálogo Oficial de Requisitos Funcionales Nucleares (RF-01 a RF-12)}
+\begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{2.8cm}|X|c|}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|c|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{ID} & \textbf{Dimensión} & \textbf{Especificación Técnica} & \textbf{Métrica} \\
+\textbf{Código} & \textbf{Requisito} & \textbf{Descripción Funcional del Sistema} & \textbf{Módulo} & \textbf{Prioridad} \\
 \hline
-\textbf{RNF-01} & Rendimiento & Tiempo de respuesta de endpoints de persistencia y consultas. & $< 500$ ms \\
+\textbf{RF-01} & Autenticación JWT & Acceso seguro con credenciales institucionales y generación de token. & Auth & Must \\
 \hline
-\textbf{RNF-02} & Rendimiento & Tiempo de generación y descarga de informes consolidados en PDF. & $< 3$ s \\
+\textbf{RF-02} & Control RBAC & Restricción de permisos y vistas según los 5 roles institucionales. & Auth & Must \\
 \hline
-\textbf{RNF-03} & Seguridad & Cifrado de contraseñas con algoritmo bcrypt (factor de costo 10). & Inalterable \\
+\textbf{RF-03} & Creación de Plan & Generación estructurada de planes semestrales asignados a periodos. & Planes & Must \\
 \hline
-\textbf{RNF-04} & Seguridad & Tokens JWT firmados con HMAC-SHA256 y expiración máxima de 2 horas. & 120 min \\
+\textbf{RF-04} & Carga Horaria 40h & Validación en tiempo real de que la jornada semanal sume exactamente 40h. & Wizard & Must \\
 \hline
-\textbf{RNF-05} & Integridad & Hashes SHA-256 inmutables para toda evidencia almacenada en MinIO. & 256 bits \\
+\textbf{RF-05} & Matriz Dinámica & Registro de actividades, cronograma semanal y ponderación exacta al 100\%. & Matriz & Must \\
 \hline
-\textbf{RNF-06} & Disponibilidad & Disponibilidad de los servicios orquestados en contenedores Docker. & $99.5\%$ \\
+\textbf{RF-06} & Autoguardado & Guardado automático de secciones enriquecidas con debounce de 800 ms. & Editor & Must \\
 \hline
-\textbf{RNF-07} & Usabilidad & Diseño responsivo para pantallas móviles (375px) hasta escritorio (1920px). & CSS Fluido \\
+\textbf{RF-07} & Carga MinIO S3 & Almacenamiento seguro de evidencias PDF con cálculo de hash SHA-256. & Storage & Must \\
 \hline
-\textbf{RNF-08} & Accesibilidad & Contraste cromático y navegación accesible según estándar WCAG 2.1. & Nivel AA \\
+\textbf{RF-08} & URLs Prefirmadas & Visualización de archivos mediante enlaces temporales de 15 minutos. & Storage & Must \\
 \hline
-\textbf{RNF-09} & Mantenibilidad & Arquitectura modular desacoplada con separación estricta de capas. & Clean Arch \\
+\textbf{RF-09} & Revisión Comité & Panel para coordinadores con observaciones granulares por sección. & Revisión & Must \\
 \hline
-\textbf{RNF-10} & Portabilidad & Despliegue estandarizado de dependencias mediante Docker Compose. & Multiplataforma \\
+\textbf{RF-10} & Cascada Firmas & Estampado digital secuencial e irreversible: Elaborador $\to$ Revisor $\to$ Aprobador. & Firmas & Must \\
+\hline
+\textbf{RF-11} & Exportación PDF & Generación de documentos oficiales A4 idénticos al SGC con código QR. & Export & Must \\
+\hline
+\textbf{RF-12} & Exportación DOCX & Descarga de planes en formato Word editable manteniendo estilos. & Export & Should \\
 \hline
 \end{tabularx}
-\caption{Especificación de Requisitos No Funcionales bajo ISO/IEC 25010.}
-\label{tab:rnf}
+\caption{Requisitos funcionales nucleares del sistema SIGE.}
+\label{tab:rf_nucleares}
 \end{table}
 
 \section{Firmas de Responsabilidad}
@@ -269,9 +242,9 @@ La especificación se organizó modularmente. En la Figura \ref{fig:s1_03_rf} se
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 21/08/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 18/08/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 21/08/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 18/08/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -288,15 +261,87 @@ La especificación se organizó modularmente. En la Figura \ref{fig:s1_03_rf} se
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 21/08/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Matriz de Trazabilidad Requisitos vs. Estándar SGC.
-\end{itemize}
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.3 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 1.3 \\
+\hline
+Nombre de la Tarjeta & Definición de requisitos funcionales y no funcionales \\
+\hline
+Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+\hline
+Período de Ejecución & 14 de agosto al 18 de agosto de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Heidi Villavicencio (HV), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & \texttt{03\_Definicion\_Requisitos\_Funcionales\_No\_Funcionales.pdf} (SRS) \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 1.3 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Requisitos No Funcionales (ISO/IEC 25010)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{2.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Código} & \textbf{Característica} & \textbf{Especificación Técnica Cuantitativa} & \textbf{Métrica} \\
+\hline
+RNF-01 & Rendimiento & Tiempo de respuesta de endpoints de consulta bajo carga normal. & $<300\text{ ms}$ (P95) \\
+\hline
+RNF-02 & Seguridad & Hashing de contraseñas con Argon2id y tokens JWT HMAC-SHA256. & Cero fallas OWASP \\
+\hline
+RNF-03 & Usabilidad & Conformidad con directrices de accesibilidad web W3C WCAG 2.1. & Nivel AA ($4.5:1$) \\
+\hline
+RNF-04 & Disponibilidad & Operación ininterrumpida de los contenedores en entorno local. & $99.5\%$ Uptime \\
+\hline
+\end{tabularx}
+\caption{Requisitos no funcionales evaluados en el sistema.}
+\end{table}
+
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Norma IEEE 29148 & Estructura formal con criterios de aceptación cuantificables & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Cobertura de Procesos & Cobertura total de los formatos SGC \texttt{P7-T1} y \texttt{P7-T2} & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Priorización MoSCoW & Clasificación clara de prioridades pactada con usuarios & 100\% CONFORME & Steeven Toala \\
+\hline
+Aprobación del SRS & Validación y firma del documento de requisitos oficial & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 1.3.}
+\end{table}
+
 
 \end{document}

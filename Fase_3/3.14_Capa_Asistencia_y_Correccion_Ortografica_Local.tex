@@ -332,13 +332,27 @@ TC-GR03 & Corte intencional de Internet (modo offline) & LanguageTool opera norm
 \caption{Pruebas de verificación de rendimiento y precisión del corrector.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{b71902d - feat(nlp): LanguageTool en Docker puerto 8010 y servicio hibrido con Google Gemini API}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/services/grammar.service.js}, \texttt{docker-compose.yml}, \texttt{Entregables\_Latex/Fase\_3/3.14*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Corrector LanguageTool & Servicio local en contenedor Docker para gramática y ortografía en español & 100\% CONFORME & Steeven Toala \\
+\hline
+Asistencia Contextual & Detección de errores ortográficos y sugerencias directas en TipTap & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Privacidad de Datos & Tratamiento local de textos garantizando reserva de información académica & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Rendimiento Asistido & Tiempo de respuesta del análisis ortográfico inferior a 250 ms & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.14.}
+\end{table}
 
 
 \end{document}

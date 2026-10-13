@@ -342,13 +342,27 @@ Detención & \texttt{docker compose down} & Detención segura preservando los vo
 \caption{Comandos de operación y verificación del entorno Docker.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{a90182c - feat(devops): orquestacion integral con docker-compose.yml, redes bridge y healthchecks}
-    \item \textbf{Archivos Afectados:} \texttt{docker-compose.yml}, \texttt{.env.example}, \texttt{Entregables\_Latex/Fase\_2/2.6*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Orquestación de Servicios & Configuración de 5 contenedores en \texttt{docker-compose.yml} con redes aisladas & 100\% CONFORME & Steeven Toala \\
+\hline
+Persistencia de Volúmenes & Volúmenes nombrados para PostgreSQL 18 y MinIO S3 evitando pérdida de datos & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Sondas de Salud (Healthchecks) & Parámetros de monitoreo automático (\texttt{pg\_isready}, curl) activos & 100\% CONFORME & Steeven Toala \\
+\hline
+Seguridad de Variables & Aislamiento de credenciales mediante archivo \texttt{.env} protegido & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.6.}
+\end{table}
 
 
 \end{document}

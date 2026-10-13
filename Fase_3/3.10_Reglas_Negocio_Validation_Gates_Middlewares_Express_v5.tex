@@ -335,13 +335,27 @@ TC-G05 & Todos OK & Expediente completo (40h, 100\%, evidencias, orden) & 200 & 
 \caption{Matriz de pruebas unitarias sobre el pipeline de Middlewares.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{e1028bc - feat(gates): pipeline de 6 validation gates con middlewares Express v5 y HTTP 422}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/middlewares/validation.middleware.js}, \texttt{Entregables\_Latex/Fase\_3/3.10*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Gate 1: Límite Horario & Validación estricta de jornada semanal de 40 horas en tiempo completo & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Gate 2: Ponderación Total & Bloqueo de envío a revisión si la matriz de actividades no suma 100\% & 100\% CONFORME & Steeven Toala \\
+\hline
+Gate 3: Plazos y Prórrogas & Control estricto de fechas de entrega impidiendo envíos extemporáneos & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Errores Semánticos & Respuestas HTTP 422 con detalle descriptivo de los campos infractores & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.10.}
+\end{table}
 
 
 \end{document}

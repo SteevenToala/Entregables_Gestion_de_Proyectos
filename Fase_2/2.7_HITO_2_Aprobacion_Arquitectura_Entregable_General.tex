@@ -265,6 +265,33 @@ Cost Performance Index (CPI) & 1.00 & 1.00 & Proyecto dentro del presupuesto de 
 \caption{Métricas de gestión del proyecto al cierre del Hito 2.}
 \end{table}
 
+\subsection{Línea Base del Cronograma del Proyecto SIGE al Cierre del Hito 2}
+A la fecha del cierre del Hito 2 (31 de agosto de 2026), se certifica formalmente que las fases de Análisis y Diseño se encuentran concluidas al 100\% con aprobación colegiada, y que la fase de desarrollo e implementación se encuentra formalmente lista para iniciar su primer Sprint el 1 de septiembre de 2026:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Fase} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 2} \\
+\hline
+\textbf{Fase 1} & Análisis y Planificación & 12 ago -- 18 ago 2026 & 8 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 2} & Diseño y Arquitectura & 19 ago -- 31 ago 2026 & 7 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 3} & Implementación y Desarrollo & 01 sep -- 12 oct 2026 & 16 & 400 h & \textit{0\% PROGRAMADO (Inicia Sep)} \\
+\hline
+\textbf{Fase 4} & Pruebas y Cierre Formal & 12 oct -- 13 oct 2026 & 3 & 48 h & \textit{0\% PROGRAMADO (Octubre)} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL GENERAL DEL PROYECTO:}} & \textbf{34} & \textbf{832 h} & \textbf{Avance Global: 46.2\%} \\
+\hline
+\end{tabularx}
+\caption{Línea Base del Cronograma del Proyecto SIGE al cierre del Hito 2 (31 de agosto de 2026).}
+\label{tab:linea_base_hito2}
+\end{table}
+
 \section{Firmas de Responsabilidad}
 
 \noindent
@@ -353,14 +380,27 @@ Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
 \caption{Acta de aprobación colegiada del Hito 2.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Etiqueta de Versión (\textit{Release Tag}):} \texttt{v0.2.0-milestone2-arch-approved}
-    \item \textbf{Commit de Consolidación:} \texttt{82019ab - docs(milestone2): consolidacion de paquete de arquitectura semana 2 y acta de aprobacion}
-    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_2/*}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Cumplimiento de Fase 2 & 7 de 7 entregables técnicos de diseño y arquitectura auditados y aprobados & 100\% CONFORME & Steeven Toala \\
+\hline
+Arquitectura Congelada & Modelo C4 y esquema relacional PostgreSQL 18 aprobados formalmente & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Métricas de Desempeño & 384 horas-hombre netas ejecutadas (Fase 1 + Fase 2) con SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Aprobación del Hito 2 & Acta oficial firmada por el Docente Evaluador para iniciar Fase 3 & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.7.}
+\end{table}
 
 
 \end{document}

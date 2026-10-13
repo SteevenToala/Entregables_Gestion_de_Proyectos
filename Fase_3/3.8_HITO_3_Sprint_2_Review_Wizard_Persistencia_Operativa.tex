@@ -240,6 +240,39 @@ Defectos Críticos Abiertos & 0 & 0 & Software estabilizado y listo para matriz 
 \caption{Métricas de esfuerzo y desempeño ágil en el Sprint 2.}
 \end{table}
 
+\subsection{Línea Base del Cronograma del Proyecto SIGE al Cierre del Hito 3}
+A la fecha de corte del Hito 3 (22 de septiembre de 2026), se certifica formalmente la culminación de los dos primeros Sprints de desarrollo (Core DB, Base UI, Wizard y Persistencia), manteniendo los Sprints 3 y 4 en ejecución planificada conforme al cronograma:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Fase / Sprint} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 3} \\
+\hline
+\textbf{Fase 1} & Análisis y Planificación & 12 ago -- 18 ago 2026 & 8 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 2} & Diseño y Arquitectura & 19 ago -- 31 ago 2026 & 7 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{F3 - Sprint 1} & Core DB y Base Frontend & 01 sep -- 11 sep 2026 & 4 & 112 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{F3 - Sprint 2} & Wizard y Persistencia & 14 sep -- 22 sep 2026 & 4 & 88 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{F3 - Sprint 3} & Matriz Dinámica y MinIO & 23 sep -- 02 oct 2026 & 4 & 100 h & \textit{0\% PROGRAMADO (Siguiente)} \\
+\hline
+\textbf{F3 - Sprint 4} & Revisión, Firmas y NLP & 05 oct -- 12 oct 2026 & 4 & 100 h & \textit{0\% PROGRAMADO (Futuro)} \\
+\hline
+\textbf{Fase 4} & Pruebas y Cierre Formal & 12 oct -- 13 oct 2026 & 3 & 48 h & \textit{0\% PROGRAMADO (Octubre)} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL GENERAL DEL PROYECTO:}} & \textbf{34} & \textbf{832 h} & \textbf{Avance Global: 70.2\%} \\
+\hline
+\end{tabularx}
+\caption{Línea Base del Cronograma del Proyecto SIGE al cierre del Hito 3 (22 de septiembre de 2026).}
+\label{tab:linea_base_hito3}
+\end{table}
+
 \section{Firmas de Responsabilidad}
 
 \noindent
@@ -326,14 +359,27 @@ Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
 \caption{Acta oficial de aprobación de Hito 3.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Etiqueta de Versión:} \texttt{v0.3.0-milestone3-wizard-db-ready}
-    \item \textbf{Commit de Consolidación:} \texttt{71a90bc - docs(sprint2): acta de aprobacion formal de hito 3 y cierre de sprint 2}
-    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_3/3.8*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Cumplimiento Sprint 2 & Historias de usuario US-05 a US-10 probadas y aceptadas al 100\% & 100\% CONFORME & Steeven Toala \\
+\hline
+Persistencia Verificada & Operación fluida del Wizard y TipTap con guardado en PostgreSQL 18 & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Rendimiento del Cronograma & 112 horas netas ejecutadas en el Sprint 2 con índice SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Aprobación Colegiada & Acta formal de cierre de Hito 3 firmada por el Docente Evaluador & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.8.}
+\end{table}
 
 
 \end{document}

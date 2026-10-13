@@ -349,13 +349,27 @@ Estado en el Tablero & 100\% Completado y Certificado \\
 \caption{Reporte de ejecución de pruebas automatizadas.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{410ab92 - test(backend): suite completa de pruebas unitarias para Validation Gates y matriz}
-    \item \textbf{Archivos Afectados:} \texttt{backend/tests/*}, \texttt{Entregables\_Latex/Fase\_4/4.1*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Pruebas Unitarias Automatizadas & 35 pruebas ejecutadas en 4 suites con framework Jest (100\% PASSED) & 100\% CONFORME & Steeven Toala \\
+\hline
+Cobertura de Validation Gates & Verificación de las 6 compuertas de negocio impidiendo estados no válidos & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Cálculo de Matriz Dinámica & Pruebas parametrizadas de sumatoria horaria y distribución semanal & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Rendimiento de Ejecución & Tiempo total de la suite de pruebas unitarias inferior a 1.0 segundo & 100\% CONFORME & Steeven Toala \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 4.1.}
+\end{table}
 
 
 \end{document}

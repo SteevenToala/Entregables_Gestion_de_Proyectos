@@ -338,13 +338,27 @@ TC-W04 & Cumplimiento del 100\% de ponderación en Paso 3 & Se desbloquea autom�
 \caption{Pruebas de validación de transiciones del Wizard.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{38e910b - feat(wizard): componente PlanEditorWizard en 5 pasos con barra de progreso y gates}
-    \item \textbf{Archivos Afectados:} \texttt{frontend/src/components/wizard/*}, \texttt{Entregables\_Latex/Fase\_3/3.5*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Estructura Wizard & Asistente guiado de 5 pestañas modulares para el Plan de Trabajo & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Preservación de Estado & Gestión reactiva de estado global evitando pérdida de información al navegar & 100\% CONFORME & Steeven Toala \\
+\hline
+Bloqueo Secuencial & Validación de pasos previos obligatorios antes de permitir la finalización & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Accesibilidad UI & Navegación accesible con teclado y soporte de etiquetas ARIA & 100\% CONFORME & Andrea Vásquez \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.5.}
+\end{table}
 
 
 \end{document}

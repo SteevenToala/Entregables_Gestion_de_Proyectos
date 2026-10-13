@@ -343,13 +343,27 @@ Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
 \caption{Matriz de respuestas HTTP y seguridad del módulo Auth.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{4f9102c - feat(auth): login JWT, middleware RBAC y rate limiting con proteccion contra fuerza bruta}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/modules/auth/*}, \texttt{frontend/src/context/AuthContext.jsx}, \texttt{Entregables\_Latex/Fase\_3/3.3*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Autenticación JWT & Emisión de tokens firmados RS256 con claims protegidos de rol y usuario & 100\% CONFORME & Steeven Toala \\
+\hline
+Middlewares de Autorización & Interceptores Express v5 que validan roles y estado de sesión activa & 100\% CONFORME & Steeven Toala \\
+\hline
+Protección Anti-Fuerza Bruta & Rate limiting configurado en 5 intentos por minuto en endpoint login & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Seguridad de Headers & Implementación de cookies HttpOnly, Secure y SameSite=Strict & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.3.}
+\end{table}
 
 
 \end{document}

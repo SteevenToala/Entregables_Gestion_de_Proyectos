@@ -358,13 +358,27 @@ INV-04 & \texttt{EvidenciaAdjunta} & $\text{Longitud}(\text{hash\_sha256}) = 64 
 \caption{Invariantes y contratos del modelo de dominio.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{b38190c - feat(arch): modelado dinamico UML, secuencia de gates y clases de dominio DDD}
-    \item \textbf{Archivos Afectados:} \texttt{docs/diagramas\_dinamicos\_uml.md}, \texttt{Entregables\_Latex/Fase\_2/2.3*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Secuencia de Negocio & Mapeo de flujos interactivos para Validation Gates y cascada de firmas & 100\% CONFORME & Steeven Toala \\
+\hline
+Diagrama de Actividades & Modelado de bifurcaciones condicionales, aprobación y rechazo con drawer & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Clases de Dominio (DDD) & Estructura de entidades \texttt{PlanTrabajo}, \texttt{Actividad}, \texttt{Observacion} y agregados & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Validación Metodológica & Rúbrica técnica de integridad de modelos UML 2.5.1 por el líder de calidad & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.3.}
+\end{table}
 
 
 \end{document}

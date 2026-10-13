@@ -337,13 +337,27 @@ P4 - Búsqueda JSONB & Consulta con operador \texttt{@>} sobre \texttt{contenido
 \caption{Pruebas de verificación de restricciones e integridad en PostgreSQL 18.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{104b2a8 - feat(db): scripts DDL PostgreSQL 18, indices B-Tree y GIN con restricciones CHECK}
-    \item \textbf{Archivos Afectados:} \texttt{database/schema.sql}, \texttt{Entregables\_Latex/Fase\_3/3.1*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Integridad Estructural DDL & 13 tablas creadas en PostgreSQL 18 con llaves primarias y foráneas & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Restricciones Declarativas & Cláusulas CHECK de validación horaria (0 a 40h) y estados del SGC & 100\% CONFORME & Steeven Toala \\
+\hline
+Indexación Especializada & Índices B-Tree en FKs e índices GIN en campos JSONB y búsqueda de texto & 100\% CONFORME & Steeven Toala \\
+\hline
+Nomenclatura SGC & Cumplimiento de estándares de nomenclatura snake\_case institucional & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.1.}
+\end{table}
 
 
 \end{document}

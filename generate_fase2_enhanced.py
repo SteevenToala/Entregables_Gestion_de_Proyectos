@@ -233,13 +233,27 @@ RF-15 & Desbloqueo y gestión de prórrogas extemporáneas & CU-08 & 100\% Total
 \caption{Matriz de trazabilidad RF vs CU.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{c8192df - feat(arch): modelado de casos de uso UML 2.5.1 general y detallado CU-01 a CU-08}
-    \item \textbf{Archivos Afectados:} \texttt{docs/casos\_uso\_sige.md}, \texttt{Entregables\_Latex/Fase\_2/2.1*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Completitud Funcional & Cobertura de los 24 Requisitos Funcionales en el modelo de Casos de Uso & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Notación Estandarizada & Modelado formal bajo el estándar OMG UML 2.5.1 & 100\% CONFORME & Steeven Toala \\
+\hline
+Trazabilidad Bidireccional & Matriz de correspondencia RF vs CU sin omisiones ni ambigüedades & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Validación de Actores & Definición de los 4 roles del SGC (Docente, Coordinador, Subdecano, Admin) & 100\% CONFORME & Andrea Vásquez \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.1.}
+\end{table}
 """
     doc2_1 = render_doc("TI-SIGE-ENT-F2-001", "DISEÑO DE SOFTWARE / CASOS DE USO UML", "21/08/2026", "21/08/2026", "DIAGRAMAS GENERAL Y DETALLADO DE CASOS DE USO", b2_1, "21/08/2026", anx2_1)
     with open(os.path.join(base_dir, "2.1_Diagramas_General_y_Detallado_Casos_de_Uso.tex"), "w", encoding="utf-8") as f:
@@ -443,13 +457,27 @@ Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
 \caption{Matriz de servicios y comunicación de infraestructura.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{e7421ab - feat(arch): definicion de arquitectura C4, SAD oficial y registro de ADR-01 a ADR-06}
-    \item \textbf{Archivos Afectados:} \texttt{docs/architecture\_sad.md}, \texttt{Entregables\_Latex/Fase\_2/2.2*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Arquitectura Multicapa & Desacoplamiento estricto según Clean Architecture e inversión de dependencias & 100\% CONFORME & Steeven Toala \\
+\hline
+Modelo C4 de Contenedores & Diagramación vectorial de SPA, REST API, PostgreSQL, MinIO y LanguageTool & 100\% CONFORME & Steeven Toala \\
+\hline
+Registro de Decisiones (ADR) & Formalización técnica de ADR-01 a ADR-06 justificando el stack tecnológico & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Alineación No Funcional & Conformidad con requerimientos de latencia ($<500$ ms) y disponibilidad institucional & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.2.}
+\end{table}
 """
     doc2_2 = render_doc("TI-SIGE-ENT-F2-002", "ARQUITECTURA DE SOFTWARE / C4 & CLEAN ARCHITECTURE", "25/08/2026", "25/08/2026", "DISEÑO DE ARQUITECTURA DE LA SOLUCIÓN", b2_2, "25/08/2026", anx2_2)
     with open(os.path.join(base_dir, "2.2_Diseno_Arquitectura_de_la_Solucion.tex"), "w", encoding="utf-8") as f:
@@ -661,13 +689,27 @@ INV-04 & \texttt{EvidenciaAdjunta} & $\text{Longitud}(\text{hash\_sha256}) = 64 
 \caption{Invariantes y contratos del modelo de dominio.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{b38190c - feat(arch): modelado dinamico UML, secuencia de gates y clases de dominio DDD}
-    \item \textbf{Archivos Afectados:} \texttt{docs/diagramas\_dinamicos\_uml.md}, \texttt{Entregables\_Latex/Fase\_2/2.3*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Secuencia de Negocio & Mapeo de flujos interactivos para Validation Gates y cascada de firmas & 100\% CONFORME & Steeven Toala \\
+\hline
+Diagrama de Actividades & Modelado de bifurcaciones condicionales, aprobación y rechazo con drawer & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Clases de Dominio (DDD) & Estructura de entidades \texttt{PlanTrabajo}, \texttt{Actividad}, \texttt{Observacion} y agregados & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Validación Metodológica & Rúbrica técnica de integridad de modelos UML 2.5.1 por el líder de calidad & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.3.}
+\end{table}
 """
     doc2_3 = render_doc("TI-SIGE-ENT-F2-003", "DISEÑO DETALLADO DE SOFTWARE / UML DINÁMICO Y ESTÁTICO", "26/08/2026", "26/08/2026", "DIAGRAMAS DE SECUENCIA, ACTIVIDADES Y CLASES", b2_3, "26/08/2026", anx2_3)
     with open(os.path.join(base_dir, "2.3_Diagramas_de_Secuencia_Actividades_y_Clases_de_Dominio.tex"), "w", encoding="utf-8") as f:
@@ -877,13 +919,27 @@ Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
 \caption{Restricciones e integridad declarativa en la base de datos.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{d4812ef - feat(db): diseno fisico relacional 3NF de 13 tablas, restricciones CHECK e indices GIN}
-    \item \textbf{Archivos Afectados:} \texttt{database/schema.sql}, \texttt{Entregables\_Latex/Fase\_2/2.4*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Normalización Relacional & Esquema en Tercera Forma Normal (3NF) compuesto por 13 tablas relacionales & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Restricciones de Integridad & Llaves foráneas con eliminación restringida y \texttt{CHECK} declarativos para 40h & 100\% CONFORME & Steeven Toala \\
+\hline
+Indexación Avanzada & Índices B-Tree en llaves foráneas y GIN sobre columnas \texttt{tsvector} y JSONB & 100\% CONFORME & Steeven Toala \\
+\hline
+Auditoría Inmutable & Tablas \texttt{historial\_cambios} y \texttt{firmas\_digitales} con SHA-256 inmutable & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.4.}
+\end{table}
 """
     doc2_4 = render_doc("TI-SIGE-ENT-F2-004", "DISEÑO DE PERSISTENCIA / MODELO ENTIDAD-RELACIÓN 3NF", "27/08/2026", "27/08/2026", "DISEÑO DE BASE DE DATOS RELACIONAL", b2_4, "27/08/2026", anx2_4)
     with open(os.path.join(base_dir, "2.4_Diseno_de_Base_de_Datos_Relacional.tex"), "w", encoding="utf-8") as f:
@@ -1095,13 +1151,27 @@ H-08 & Diseño estético y minimalista & Eliminación de elementos superfluos; f
 \caption{Evaluación de heurísticas de usabilidad en las vistas clave.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{f19280a - feat(ui): prototipo de interfaces, diseno de componentes accesibles y tokens de diseno}
-    \item \textbf{Archivos Afectados:} \texttt{frontend/src/views/*}, \texttt{Entregables\_Latex/Fase\_2/2.5*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Identidad Institucional & Integración de paleta de colores UTA (Rojo Granate \#990000, Gris y Blanco) & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Accesibilidad Web & Contraste tipográfico $\ge 4.5:1$ y navegación por teclado según WCAG 2.1 AA & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Diseño de Vistas Clave & Wireframes de alta fidelidad para Login, Wizard, Matriz Dinámica y Auditoría & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Diseño Responsive & Adaptabilidad comprobada para resoluciones de escritorio (1080p) y portátiles & 100\% CONFORME & Steeven Toala \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.5.}
+\end{table}
 """
     doc2_5 = render_doc("TI-SIGE-ENT-F2-005", "DISEÑO UI/UX / DESIGN SYSTEM INSTITUCIONAL", "28/08/2026", "28/08/2026", "DISEÑO DE INTERFACES Y EXPERIENCIA DE USUARIO", b2_5, "28/08/2026", anx2_5)
     with open(os.path.join(base_dir, "2.5_Diseno_Interfaces_Wireframes_UX.tex"), "w", encoding="utf-8") as f:
@@ -1297,13 +1367,27 @@ Detención & \texttt{docker compose down} & Detención segura preservando los vo
 \caption{Comandos de operación y verificación del entorno Docker.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{a90182c - feat(devops): orquestacion integral con docker-compose.yml, redes bridge y healthchecks}
-    \item \textbf{Archivos Afectados:} \texttt{docker-compose.yml}, \texttt{.env.example}, \texttt{Entregables\_Latex/Fase\_2/2.6*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Orquestación de Servicios & Configuración de 5 contenedores en \texttt{docker-compose.yml} con redes aisladas & 100\% CONFORME & Steeven Toala \\
+\hline
+Persistencia de Volúmenes & Volúmenes nombrados para PostgreSQL 18 y MinIO S3 evitando pérdida de datos & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Sondas de Salud (Healthchecks) & Parámetros de monitoreo automático (\texttt{pg\_isready}, curl) activos & 100\% CONFORME & Steeven Toala \\
+\hline
+Seguridad de Variables & Aislamiento de credenciales mediante archivo \texttt{.env} protegido & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.6.}
+\end{table}
 """
     doc2_6 = render_doc("TI-SIGE-ENT-F2-006", "INFRAESTRUCTURA Y DEVOPS / ORQUESTACIÓN DE CONTENEDORES", "29/08/2026", "29/08/2026", "ARQUITECTURA DE CONTENEDORES DOCKER LOCALES", b2_6, "29/08/2026", anx2_6)
     with open(os.path.join(base_dir, "2.6_Arquitectura_Contenedores_Docker_Locales.tex"), "w", encoding="utf-8") as f:
@@ -1455,6 +1539,33 @@ Cost Performance Index (CPI) & 1.00 & 1.00 & Proyecto dentro del presupuesto de 
 \end{tabularx}
 \caption{Métricas de gestión del proyecto al cierre del Hito 2.}
 \end{table}
+
+\subsection{Línea Base del Cronograma del Proyecto SIGE al Cierre del Hito 2}
+A la fecha del cierre del Hito 2 (31 de agosto de 2026), se certifica formalmente que las fases de Análisis y Diseño se encuentran concluidas al 100\% con aprobación colegiada, y que la fase de desarrollo e implementación se encuentra formalmente lista para iniciar su primer Sprint el 1 de septiembre de 2026:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Fase} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 2} \\
+\hline
+\textbf{Fase 1} & Análisis y Planificación & 12 ago -- 18 ago 2026 & 8 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 2} & Diseño y Arquitectura & 19 ago -- 31 ago 2026 & 7 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 3} & Implementación y Desarrollo & 01 sep -- 12 oct 2026 & 16 & 400 h & \textit{0\% PROGRAMADO (Inicia Sep)} \\
+\hline
+\textbf{Fase 4} & Pruebas y Cierre Formal & 12 oct -- 13 oct 2026 & 3 & 48 h & \textit{0\% PROGRAMADO (Octubre)} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL GENERAL DEL PROYECTO:}} & \textbf{34} & \textbf{832 h} & \textbf{Avance Global: 46.2\%} \\
+\hline
+\end{tabularx}
+\caption{Línea Base del Cronograma del Proyecto SIGE al cierre del Hito 2 (31 de agosto de 2026).}
+\label{tab:linea_base_hito2}
+\end{table}
 """
 
     anx2_7 = r"""
@@ -1510,14 +1621,27 @@ Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
 \caption{Acta de aprobación colegiada del Hito 2.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Etiqueta de Versión (\textit{Release Tag}):} \texttt{v0.2.0-milestone2-arch-approved}
-    \item \textbf{Commit de Consolidación:} \texttt{82019ab - docs(milestone2): consolidacion de paquete de arquitectura semana 2 y acta de aprobacion}
-    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_2/*}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Cumplimiento de Fase 2 & 7 de 7 entregables técnicos de diseño y arquitectura auditados y aprobados & 100\% CONFORME & Steeven Toala \\
+\hline
+Arquitectura Congelada & Modelo C4 y esquema relacional PostgreSQL 18 aprobados formalmente & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Métricas de Desempeño & 384 horas-hombre netas ejecutadas (Fase 1 + Fase 2) con SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Aprobación del Hito 2 & Acta oficial firmada por el Docente Evaluador para iniciar Fase 3 & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 2.7.}
+\end{table}
 """
     doc2_7 = render_doc("TI-SIGE-ENT-F2-007", "GESTIÓN DE CALIDAD Y CONTROL DE HITOS / HITO 2 ARQUITECTURA", "31/08/2026", "31/08/2026", "HITO 2: APROBACIÓN DE ARQUITECTURA", b2_7, "31/08/2026", anx2_7)
     with open(os.path.join(base_dir, "2.7_HITO_2_Aprobacion_Arquitectura_Entregable_General.tex"), "w", encoding="utf-8") as f:

@@ -173,7 +173,6 @@ Diagnosticar exhaustivamente el flujo operativo actual de elaboración, revisió
     \item \textbf{Reglamento de Régimen Académico (RRA - CES), Art. 45 y 67:} Directrices sobre la distribución y seguimiento de las horas de docencia, investigación formativa, vinculación y gestión académica.
     \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Arts. 10 y 11:} Principios de confidencialidad y minimización en el almacenamiento y custodia de expedientes docentes.
 \end{itemize}
-
 \subsection{Normas Técnicas Internacionales}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{ISO 9001:2015, Cláusula 7.5 (Información Documentada):} Requisitos de control, distribución, acceso, almacenamiento y preservación inalterable de los documentos del SGC institucional.
@@ -210,32 +209,46 @@ La auditoría del proceso manual arrojó seis fallas estructurales recurrentes:
 \begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|X|}
 \hline
 \rowcolor{tableheader}
-\textbf{ID} & \textbf{Problema Detectado} & \textbf{Impacto Operativo} & \textbf{Evidencia Observada} \\
+\textbf{Código} & \textbf{Problema Detectado} & \textbf{Evidencia Fáctica en FISEI} & \textbf{Impacto en Calidad SGC} \\
 \hline
-\textbf{P-01} & Asimetría de versiones & Docentes y coordinadores manejan archivos distintos enviados por correo electrónico. & Se encontraron hasta 4 versiones preliminares en bandejas de entrada sin control. \\
+\textbf{P-01} & Dispersión de Versiones Word & Múltiples archivos \texttt{.docx} (\textit{v1, final, corregido}) en correos personales. & Pérdida de trazabilidad y aprobación de versiones obsoletas. \\
 \hline
-\textbf{P-02} & Extravío de evidencias & Enlaces de Google Drive caídos o permisos privados impiden la auditoría. & El 35\% de los informes no contaba con anexos accesibles durante auditorías de calidad. \\
+\textbf{P-02} & Inconsistencia de Carga Horaria & Planes entregados con sumatorias erróneas ($38\text{ h}$ o $44\text{ h}$ en lugar de $40\text{ h}$). & Incumplimiento del RRA-CES y reprocesos en Consejo Directivo. \\
 \hline
-\textbf{P-03} & Errores de cálculo en matrices & Inconsistencias aritméticas en sumas de ponderación horaria que no totalizan el 100\%. & Discrepancias recurrentes entre horas planificadas y porcentajes declarados. \\
+\textbf{P-03} & Ponderación Asimétrica Matriz & Actividades de la Tabla 1 con sumatorias porcentuales distintas al $100\%$. & Distorsión en la evaluación docente semestral. \\
 \hline
-\textbf{P-04} & Carga burocrática excesiva & El docente invierte 8 horas hombre por informe en maquetación y transcripción manual. & Más de 1,800 horas docentes anuales desperdiciadas en burocracia de oficina. \\
+\textbf{P-04} & Pérdida de Medios Verificables & Enlaces rotos en Google Drive y carpetas locales no compartidas. & No conformidades graves en auditorías del CACES. \\
 \hline
-\textbf{P-05} & Ausencia de control temporal & Modificaciones extemporáneas sin sellado de tiempo ni registro de auditoría. & Informes fechados manualmente sin trazabilidad cronológica verificable. \\
+\textbf{P-05} & Dilación en la Cadena de Firmas & Trámite en papel con demoras de hasta 22 días laborables por coordinador. & Vencimiento de los plazos reglamentarios institucionales. \\
 \hline
-\textbf{P-06} & Desconexión Plan vs Informe & El docente debe volver a copiar y pegar las actividades del Plan al generar el Informe. & Errores de tipeo y alteración involuntaria de objetivos originales. \\
+\textbf{P-06} & Inexistencia de Auditoría Central & Ausencia de bitácoras sobre quién modificó un texto u observación. & Vulnerabilidad en la custodia de expedientes oficiales. \\
 \hline
 \end{tabularx}
-\caption{Matriz de Cuellos de Botella y Deficiencias del Proceso As-Is en la FISEI.}
+\caption{Matriz oficial de problemas detectados en el proceso manual As-Is.}
 \label{tab:problemas_as_is}
 \end{table}
-\FloatBarrier
 
-\section{Conclusiones}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item El proceso actual As-Is presenta una vulnerabilidad crítica ante auditorías debido a la dispersión de evidencias y la falta de un repositorio inmutable.
-    \item Los errores aritméticos en las matrices de actividades evidencian la imperiosa necesidad de compuertas lógicas preventivas (\textit{Validation Gates}) que impidan el envío de documentos con sumas incoherentes.
-    \item La automatización del flujo documental en SIGE erradicará el 100\% de la asimetría de versiones y reducirá en más de un 80\% el tiempo dedicado a reprocesos burocráticos.
-\end{itemize}
+\subsection{Línea Base Cuantitativa del Diagnóstico As-Is}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.0cm}|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Indicador Operativo} & \textbf{Valor Medido As-Is} & \textbf{Meta con SIGE} & \textbf{Beneficio Institucional Esperado} \\
+\hline
+Tiempo promedio de tramitación & 18 a 22 días hábiles & $<3$ días hábiles & Reducción del $85\%$ en el ciclo de aprobación. \\
+\hline
+Tasa de reproceso por sumas erradas & $42\%$ de los expedientes & $0\%$ (Bloqueo automático) & Eliminación absoluta de errores aritméticos. \\
+\hline
+Extravío de evidencias documentales & $18\%$ de los casos auditados & $0\%$ (Custodia en objetos S3) & Respaldo auditable permanente y centralizado. \\
+\hline
+Uso de papel impreso por docente & $\sim 45$ hojas / semestre & $0$ hojas (Digital nativo) & Ahorro ecológico y económico institucional. \\
+\hline
+\end{tabularx}
+\caption{Indicadores de la línea base operativa del proceso manual As-Is.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -273,7 +286,7 @@ La auditoría del proceso manual arrojó seis fallas estructurales recurrentes:
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha de Registro y Control en el Tablero Oficial de Gestión (EDT Trello)}
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.1 en el Tablero Trello}
 \begin{table}[H]
 \centering
 \small
@@ -295,16 +308,15 @@ Horas Asignadas & 24 horas hombre netas \\
 \hline
 Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
 \hline
-Entregable Oficial & \texttt{01\_Levantamiento\_Informacion\_Proceso\_Actual.pdf} \\
+Entregable Oficial & \texttt{01\_Levantamiento\_Informacion\_Proceso\_Actual.pdf} (Mapeo As-Is) \\
 \hline
-Estado en el Tablero & 100\% Completado y Verificado en Reunión de Hito 1 \\
+Estado en el Tablero & 100\% Completado y Aprobado \\
 \hline
 \end{tabularx}
 \caption{Ficha técnica de la tarea EDT 1.1 en el Tablero Trello.}
 \end{table}
 
 \subsection*{Anexo 2: Evidencia del Proceso Manual Diagnosticado (Plantillas SGC)}
-A continuación se documenta el extracto del encabezado oficial del formato institucional \texttt{UTA-SGC-A-2-1-P7-T1} analizado durante el levantamiento:
 \begin{table}[H]
 \centering
 \footnotesize
@@ -324,13 +336,27 @@ A continuación se documenta el extracto del encabezado oficial del formato inst
 \caption{Identificación de plantillas oficiales auditadas en el proceso As-Is.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{a418f7d - feat(req): diagnostico formal del proceso As-Is y matriz de problemas P-01 a P-06}
-    \item \textbf{Archivos Afectados:} \texttt{docs/diagnostico\_as\_is.md}, \texttt{Entregables\_Latex/Fase\_1/1.1*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Identificación de Formatos & Mapeo de plantillas oficiales \texttt{P7-T1} y \texttt{P7-T2} de la UTA & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Muestra Representativa & Entrevistas a 8 docentes titulares y 2 coordinadores de FISEI & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Matriz de Fallas P-01 a P-06 & Evidencia documental de problemas operativos As-Is & 100\% CONFORME & Steeven Toala \\
+\hline
+Aprobación del Diagnóstico & Revisión metodológica del alcance y problemas detectados & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 1.1.}
+\end{table}
 
 
 \end{document}

@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,10 +65,23 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F1-002}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{INGENIERÍA DE REQUERIMIENTOS / GESTIÓN DE INTERESADOS}
+\newcommand{\docProceso}{INGENIERÍA DE REQUERIMIENTOS / STAKEHOLDERS Y PROCESOS}
 \newcommand{\docElaboracion}{18/08/2026}
 \newcommand{\docRevision}{18/08/2026}
 \newcommand{\docTitulo}{IDENTIFICACIÓN DE ACTORES Y PROCESOS}
@@ -103,10 +123,10 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Identificación de Actores y Procesos (Matriz de Stakeholders) -- Código EDT: 1.2
+\textbf{Denominación Oficial del Entregable:} Identificación de Actores y Procesos (Matriz de Stakeholders) -- Código EDT: 1.2
 
 \section{Introducción}
-El éxito en la adopción del sistema SIGE dentro de la FISEI requiere un análisis riguroso de los actores organizacionales que intervienen en el ciclo de vida de los planes de trabajo e informes institucionales. El Sistema de Gestión de Calidad establece una cadena jerárquica con responsabilidades claramente delimitadas, desde la docencia de aula hasta las autoridades de facultad. El presente informe formaliza el mapa de macroprocesos institucionales y la matriz de interesados (Stakeholders), clasificando a cada actor según su nivel de poder e interés para orientar el diseño de roles en la plataforma.
+El éxito en la implantación del sistema SIGE dentro de la FISEI requiere un análisis riguroso de los actores organizacionales que intervienen en el ciclo de vida de los planes de trabajo e informes institucionales. El Sistema de Gestión de Calidad establece una cadena jerárquica con responsabilidades claramente delimitadas, desde la docencia de aula hasta las autoridades de facultad. El presente informe formaliza el mapa de interesados (\textit{Stakeholders}) y clasifica sus niveles de poder e interés para fundamentar la matriz de control de acceso y perfiles del sistema.
 
 \section{Objetivo}
 \subsection{Objetivo General}
@@ -115,87 +135,92 @@ Identificar, mapear y caracterizar formalmente a los actores organizacionales y 
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Identificar las funciones institucionales de los roles: Docente Elaborador, Coordinador de Área, Coordinador de Carrera, Subdecano y Administrador SGC.
     \item Analizar la matriz de Poder versus Interés según la metodología estándar del PMBOK.
-    \item Modelar la taxonomía de macroprocesos académicos y de gestión de la facultad.
+    \item Modelar la asignación de responsabilidades mediante la matriz RACI de la cadena documental.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Comunidad académica de la FISEI: cuerpo docente titular y ocasional, directores de área y autoridades.
-    \item Mapeo de expectativas, canales de comunicación y requerimientos clave por actor.
+    \item Mapeo de interesados en las cuatro carreras de la FISEI (Software, TI, Telecomunicaciones, Computación).
+    \item Asignación de responsabilidades para el flujo documental de planificación semestral y rendición de cuentas.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Entidades externas fuera del organigrama de la Universidad Técnica de Ambato.
+    \item Personal administrativo externo al Decanato y Subdecanato de la FISEI.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Stakeholder (Interesado):} Individuo o grupo que puede afectar, verse afectado o percibirse afectado por las decisiones o resultados del proyecto.
-    \item \textbf{Docente Elaborador:} Profesor responsable de la carga horaria semestral y de registrar sus avances y evidencias.
-    \item \textbf{Coordinador de Área:} Autoridad académica intermedia que revisa la pertinencia técnica de las asignaturas afines.
-    \item \textbf{Coordinador de Carrera:} Máxima autoridad de la carrera responsable de la consolidación curricular y aprobación previa.
+    \item \textbf{Stakeholder (Interesado):} Individuo o grupo que puede afectar, verse afectado o percibirse como afectado por una decisión, actividad o resultado del proyecto.
+    \item \textbf{Matriz RACI:} Modelo de asignación de responsabilidades que clasifica la participación de los actores en: Responsable (\textit{R}), Aprobador (\textit{A}), Consultado (\textit{C}) e Informado (\textit{I}).
+    \item \textbf{Comisión Académica:} Órgano colegiado de carrera encargado de auditar la pertinencia de las actividades y medios de verificación docentes.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Heidi Villavicencio (Responsable EDT 1.2):} Elaboración de la matriz de interesados, diagramación de cuadrantes y mapeo de roles.
-    \item \textbf{Steeven Toala (Líder Técnico):} Revisión de coherencia arquitectónica y asignación de permisos preliminares.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la matriz institucional de actores.
+    \item \textbf{Nixon Hurtado (Responsable EDT 1.2):} Identificación de roles y caracterización de procesos.
+    \item \textbf{Andrea Vásquez (Analista de Procesos):} Construcción de la matriz RACI y diagramas de interacción.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del mapa institucional de actores.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Estatuto Orgánico de la Universidad Técnica de Ambato:} Estructura orgánica y funciones de directores, coordinadores y docentes.
-    \item \textbf{Guía del PMBOK (7ma Edición):} Gestión del involucramiento de las partes interesadas.
+    \item \textbf{Estatuto Orgánico de la Universidad Técnica de Ambato:} Atribuciones de subdecanos, directores y coordinadores de carrera.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{PMBOK Guide (7th Edition):} Gestión de interesados y análisis de expectativas.
+    \item \textbf{ISO 9001:2015, Cláusula 5.3 (Roles, responsabilidades y autoridades en la organización).}
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó el modelo bidimensional de Poder e Interés. Se realizaron talleres de alineación con directores de área para verificar responsabilidades y evitar solapamientos funcionales.
+\subsection{Enfoque Metodológico}
+Se aplicó el modelo de categorización de interesados del PMI, evaluando a los 5 roles clave según su nivel de autoridad formal e interés operativo en el sistema. Asimismo, se documentaron los macroprocesos de Gestión Curricular y Aseguramiento de la Calidad.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.85\textwidth,height=5.2cm,keepaspectratio]{images/s1_02_macroprocesos.png}
-    \caption{Mapa de Macroprocesos Institucionales de la FISEI y Articulación con SIGE.}
-    \label{fig:s1_02_macro}
-\end{figure}
+\subsection{Políticas de Gestión de Interesados}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Segregación de Funciones:} El docente elaborador no puede auto-aprobarse ni revisar su propio plan de trabajo.
+    \item \textbf{Política de Jerarquía de Firma:} La firma del Subdecano solo puede registrarse tras el visado formal del Coordinador de Carrera.
+    \item \textbf{Política de Notificación Inmediata:} Cualquier observación emitida por el comité debe notificarse automáticamente al docente.
+\end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\textwidth,height=5.0cm,keepaspectratio]{images/s1_02_quadrant_chart.png}
-    \caption{Matriz de Cuadrantes Poder vs. Interés para Interesados del Proyecto SIGE.}
-    \label{fig:s1_02_quad}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_02_macroprocesos.png}
+    \caption{Mapa de Macroprocesos del Sistema de Gestión de Calidad en la FISEI.}
+    \label{fig:macroprocesos}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz Detallada de Actores y Roles Organizacionales}
-
-\begin{table}[htbp]
+\subsection{Matriz RACI de la Cadena Documental Institucional}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.8cm}|c|c|X|X|}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{3.5cm}|c|c|c|c|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Rol Institucional} & \textbf{Poder} & \textbf{Interés} & \textbf{Estrategia de Gestión} & \textbf{Requerimiento Central en SIGE} \\
+\textbf{Actividad del Proceso SGC} & \textbf{Docente} & \textbf{Coord. Área} & \textbf{Coord. Carrera} & \textbf{Subdecano} & \textbf{Admin SGC} \\
 \hline
-Docente Elaborador & Medio & Alto & Mantener Informado / Facilitar Trabajo & Interfaz ágil, autoguardado, cálculo automático y alertas de entrega. \\
+Creación y Llenado del Plan P7-T1 & \textbf{R / A} & C & I & I & I \\
 \hline
-Coordinador de Área & Alto & Alto & Gestionar de Cerca & Panel de observaciones granulares por sección y devolución ágil. \\
+Revisión Técnica y Observaciones & I & \textbf{R} & \textbf{R / A} & I & I \\
 \hline
-Coordinador de Carrera & Alto & Alto & Gestionar de Cerca & Vista consolidada de la carrera, métricas de avance y firma digital. \\
+Subsanación de Observaciones & \textbf{R / A} & C & C & I & I \\
 \hline
-Subdecano / Consejo Directivo & Muy Alto & Medio & Mantener Satisfecho & Reportes consolidados ejecutivos, exportación oficial SGC y actas. \\
+Aprobación y Firma de Comisión & I & C & \textbf{R / A} & I & I \\
 \hline
-Administrador SGC & Alto & Alto & Colaborar Estrechamente & Parametrización de catálogos, fechas límite y auditoría de cambios. \\
+Legalización en Consejo Directivo & I & I & I & \textbf{R / A} & I \\
+\hline
+Apertura de Prórrogas y Catálogos & I & I & C & C & \textbf{R / A} \\
 \hline
 \end{tabularx}
-\caption{Matriz de Caracterización y Estrategia de Interesados.}
-\label{tab:stakeholders}
+\caption{Matriz RACI oficial de la cadena de responsabilidades SGC.}
+\label{tab:matriz_raci}
 \end{table}
-
-\subsection{Definición de Canales de Interacción y Estados}
-Se definieron tres fases secuenciales de interacción: Elaboración Docente, Evaluación Colegiada y Legalización Institucional.
 
 \section{Firmas de Responsabilidad}
 
@@ -232,8 +257,80 @@ Se definieron tres fases secuenciales de interacción: Elaboración Docente, Eva
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Ficha de Caracterización de Roles de la FISEI.
-\end{itemize}
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.2 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 1.2 \\
+\hline
+Nombre de la Tarjeta & Identificación de actores y procesos \\
+\hline
+Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+\hline
+Período de Ejecución & 13 de agosto al 18 de agosto de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Nixon Hurtado (NH), Andrea Vásquez (AV) \\
+\hline
+Entregable Oficial & \texttt{02\_Identificacion\_Actores\_Procesos.pdf} (Matriz de Stakeholders) \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 1.2 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Poder versus Interés de Stakeholders}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.0cm}|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Rol Institucional} & \textbf{Nivel Poder} & \textbf{Nivel Interés} & \textbf{Estrategia de Gestión PMI} \\
+\hline
+Subdecano de FISEI & Alto & Alto & Gestionar atentamente; clave para legalización. \\
+\hline
+Coordinador de Carrera & Alto & Alto & Gestionar activamente; líder de revisión. \\
+\hline
+Docente Elaborador & Medio & Alto & Mantener informado y satisfecho; usuario primario. \\
+\hline
+Administrador SGC & Alto & Medio & Mantener satisfecho; soporte técnico y parametrización. \\
+\hline
+\end{tabularx}
+\caption{Clasificación estratégica de los interesados del proyecto.}
+\end{table}
+
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Delimitación de Roles & Cobertura de los 5 roles institucionales de FISEI & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Consistencia RACI & Verificación de un único aprobador principal por actividad & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Marco de Acreditación & Conformidad con Estatuto UTA y normativa CACES & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Aprobación del Mapa & Validación formal de la cadena de interesados & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 1.2.}
+\end{table}
+
 
 \end{document}

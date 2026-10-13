@@ -207,13 +207,27 @@ Estado en el Tablero & 100\% Completado y Certificado \\
 \caption{Reporte de ejecución de pruebas automatizadas.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{410ab92 - test(backend): suite completa de pruebas unitarias para Validation Gates y matriz}
-    \item \textbf{Archivos Afectados:} \texttt{backend/tests/*}, \texttt{Entregables\_Latex/Fase\_4/4.1*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Pruebas Unitarias Automatizadas & 35 pruebas ejecutadas en 4 suites con framework Jest (100\% PASSED) & 100\% CONFORME & Steeven Toala \\
+\hline
+Cobertura de Validation Gates & Verificación de las 6 compuertas de negocio impidiendo estados no válidos & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Cálculo de Matriz Dinámica & Pruebas parametrizadas de sumatoria horaria y distribución semanal & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Rendimiento de Ejecución & Tiempo total de la suite de pruebas unitarias inferior a 1.0 segundo & 100\% CONFORME & Steeven Toala \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 4.1.}
+\end{table}
 """
     write_tex("4.1_Pruebas_Unitarias_en_Backend.tex",
               render_doc("TI-SIGE-ENT-F4-001", "ASEGURAMIENTO DE CALIDAD / PRUEBAS UNITARIAS AUTOMATIZADAS", "13/10/2026", "13/10/2026", "PRUEBAS UNITARIAS EN BACKEND", b4_1, "13/10/2026", anx4_1))
@@ -407,13 +421,27 @@ Contenedores Docker & Imágenes OCI oficiales basadas en \texttt{alpine} con par
 \caption{Certificación de ausencia de dependencias vulnerables.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{9180ab1 - sec(audit): informe de seguridad OWASP Top 10, sanitizacion y cabeceras helmet}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/middlewares/security.middleware.js}, \texttt{Entregables\_Latex/Fase\_4/4.2*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Auditoría OWASP Top 10 & Evaluación de los 10 vectores de riesgo con 0 vulnerabilidades críticas & 100\% CONFORME & Steeven Toala \\
+\hline
+Inyección SQL y NoSQL & Uso exclusivo de consultas parametrizadas y tipadas en PostgreSQL 18 & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Cross-Site Scripting (XSS) & Sanitización con DOMPurify y cabeceras estrictas Content-Security-Policy & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Protección de Cabeceras & Integración de paquete Helmet en Express v5 ocultando metadata del servidor & 100\% CONFORME & Steeven Toala \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 4.2.}
+\end{table}
 """
     write_tex("4.2_Pruebas_de_Integracion_y_Seguridad.tex",
               render_doc("TI-SIGE-ENT-F4-002", "ASEGURAMIENTO DE CALIDAD / SEGURIDAD Y PENTESTING OWASP", "13/10/2026", "13/10/2026", "PRUEBAS DE INTEGRACIÓN Y SEGURIDAD", b4_2, "13/10/2026", anx4_2))
@@ -581,6 +609,33 @@ SEO & \textbf{100 / 100} & $\ge 90$ & Óptimo (Metadatos universitarios completo
 \end{tabularx}
 \caption{Resultados consolidados de la auditoría Lighthouse en producción local.}
 \end{table}
+
+\subsection{Línea Base del Cronograma del Proyecto SIGE al Cierre Definitivo de Fase 4}
+A la fecha del 13 de octubre de 2026, se certifica el cierre pleno y exitoso de las 4 fases del proyecto SIGE, habiendo ejecutado las 34 tareas de la EDT con un total de 832 horas-hombre y alcanzando el 100.0\% de cumplimiento institucional:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Fase} & \textbf{Denominación Oficial} & \textbf{Período Ejecutado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado Final} \\
+\hline
+\textbf{Fase 1} & Análisis y Planificación & 12 ago -- 18 ago 2026 & 8 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 2} & Diseño y Arquitectura & 19 ago -- 31 ago 2026 & 7 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 3} & Implementación y Desarrollo & 01 sep -- 12 oct 2026 & 16 & 400 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 4} & Pruebas y Cierre Formal & 12 oct -- 13 oct 2026 & 3 & 48 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL GENERAL DEL PROYECTO:}} & \textbf{34} & \textbf{832 h} & \textbf{Avance Global: 100.0\%} \\
+\hline
+\end{tabularx}
+\caption{Línea Base Final del Cronograma del Proyecto SIGE (13 de octubre de 2026).}
+\label{tab:linea_base_final}
+\end{table}
 """
 
     anx4_3 = r"""
@@ -636,13 +691,27 @@ Badge de Éxito & Blanco (\texttt{\#FFFFFF}) & Verde Éxito (\texttt{\#16A34A}) 
 \caption{Medición fotométrica de contrastes según estándar WCAG 2.1.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{9f8120c - test(ui): auditoria WCAG 2.1 AA, matriz cross-browser y reporte Lighthouse}
-    \item \textbf{Archivos Afectados:} \texttt{frontend/src/styles/*}, \texttt{Entregables\_Latex/Fase\_4/4.3*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Accesibilidad Web WCAG & Ratio de contraste fotométrico superior a 4.5:1 en todos los componentes & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Compatibilidad Cross-Browser & Funcionamiento homogéneo verificado en Chrome, Firefox, Edge y Safari & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Auditoría Lighthouse & Calificación de 98 en Rendimiento, 100 en Accesibilidad y 100 en Best Practices & 100\% CONFORME & Steeven Toala \\
+\hline
+Cierre de Proyecto SIGE & 34 de 34 tareas completadas (832 h) y conformidad plena del Docente Evaluador & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 4.3.}
+\end{table}
 """
     write_tex("4.3_Pruebas_de_Interfaz_UI_UX_Responsive_y_Accesibilidad.tex",
               render_doc("TI-SIGE-ENT-F4-003", "ASEGURAMIENTO DE CALIDAD / ACCESIBILIDAD Y UI-UX", "13/10/2026", "13/10/2026", "PRUEBAS DE INTERFAZ Y ACCESIBILIDAD", b4_3, "13/10/2026", anx4_3))

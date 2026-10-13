@@ -196,13 +196,27 @@ P4 - Búsqueda JSONB & Consulta con operador \texttt{@>} sobre \texttt{contenido
 \caption{Pruebas de verificación de restricciones e integridad en PostgreSQL 18.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{104b2a8 - feat(db): scripts DDL PostgreSQL 18, indices B-Tree y GIN con restricciones CHECK}
-    \item \textbf{Archivos Afectados:} \texttt{database/schema.sql}, \texttt{Entregables\_Latex/Fase\_3/3.1*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Integridad Estructural DDL & 13 tablas creadas en PostgreSQL 18 con llaves primarias y foráneas & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Restricciones Declarativas & Cláusulas CHECK de validación horaria (0 a 40h) y estados del SGC & 100\% CONFORME & Steeven Toala \\
+\hline
+Indexación Especializada & Índices B-Tree en FKs e índices GIN en campos JSONB y búsqueda de texto & 100\% CONFORME & Steeven Toala \\
+\hline
+Nomenclatura SGC & Cumplimiento de estándares de nomenclatura snake\_case institucional & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.1.}
+\end{table}
 """
     write_tex("3.1_Implementacion_Tablas_Indices_Scripts_DDL_PostgreSQL_18.tex",
               render_doc("TI-SIGE-ENT-F3-001", "IMPLEMENTACIÓN DE SOFTWARE / PERSISTENCIA POSTGRESQL", "04/09/2026", "04/09/2026", "IMPLEMENTACIÓN DE TABLAS E ÍNDICES DDL", b3_1, "04/09/2026", anx3_1))
@@ -389,13 +403,27 @@ Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
 \caption{Registro de ejecución del sembrado de base de datos.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{29f81ac - feat(db): database seeder de catalogos institucionales FISEI y usuarios base}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/database/seed.js}, \texttt{Entregables\_Latex/Fase\_3/3.2*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Catálogos Institucionales & Población de facultades, carreras, comisiones y periodos académicos & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Matriz de Roles RBAC & Definición y permisos de Docente, Coordinador, Subdecano y Administrador & 100\% CONFORME & Steeven Toala \\
+\hline
+Seguridad Criptográfica & Cifrado de credenciales de usuario con algoritmo Argon2id y salt & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Idempotencia del Seeder & Script reejecutable sin generar duplicidad de registros semilla & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.2.}
+\end{table}
 """
     write_tex("3.2_Datos_Iniciales_y_Catalogos_Institucionales.tex",
               render_doc("TI-SIGE-ENT-F3-002", "IMPLEMENTACIÓN DE SOFTWARE / CATÁLOGOS INSTITUCIONALES", "08/09/2026", "08/09/2026", "DATOS INICIALES Y CATÁLOGOS INSTITUCIONALES", b3_2, "08/09/2026", anx3_2))
@@ -591,13 +619,27 @@ Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
 \caption{Matriz de respuestas HTTP y seguridad del módulo Auth.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{4f9102c - feat(auth): login JWT, middleware RBAC y rate limiting con proteccion contra fuerza bruta}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/modules/auth/*}, \texttt{frontend/src/context/AuthContext.jsx}, \texttt{Entregables\_Latex/Fase\_3/3.3*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Autenticación JWT & Emisión de tokens firmados RS256 con claims protegidos de rol y usuario & 100\% CONFORME & Steeven Toala \\
+\hline
+Middlewares de Autorización & Interceptores Express v5 que validan roles y estado de sesión activa & 100\% CONFORME & Steeven Toala \\
+\hline
+Protección Anti-Fuerza Bruta & Rate limiting configurado en 5 intentos por minuto en endpoint login & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Seguridad de Headers & Implementación de cookies HttpOnly, Secure y SameSite=Strict & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.3.}
+\end{table}
 """
     write_tex("3.3_Autenticacion_y_Autorizacion_de_Usuarios.tex",
               render_doc("TI-SIGE-ENT-F3-003", "IMPLEMENTACIÓN DE SOFTWARE / SEGURIDAD Y CONTROL DE ACCESO", "11/09/2026", "11/09/2026", "AUTENTICACIÓN Y AUTORIZACIÓN DE USUARIOS", b3_3, "11/09/2026", anx3_3))
@@ -792,13 +834,27 @@ SEO & \textbf{100 / 100} & $\ge 90$ & Metaetiquetas institucionales y estructura
 \caption{Resultados de la auditoría de rendimiento web en Google Lighthouse.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{72b901a - feat(frontend): cliente base React 18, Vite, Tailwind CSS y Dashboard Docente}
-    \item \textbf{Archivos Afectados:} \texttt{frontend/src/layouts/*}, \texttt{frontend/src/views/DashboardView.jsx}, \texttt{Entregables\_Latex/Fase\_3/3.4*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Arquitectura SPA React & Estructura modular con React 18, Vite y enrutamiento con React Router & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Dashboard Informativo & Panel de métricas con tarjetas de horas, planes activos y notificaciones & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Identidad Visual UTA & Design tokens institucionales en Tailwind CSS (Granate \#990000 y Gris) & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Diseño Responsive & Adaptabilidad fluida en resoluciones de 1080p, portátiles y tabletas & 100\% CONFORME & Steeven Toala \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.4.}
+\end{table}
 """
     write_tex("3.4_Cliente_Base_y_Diseno_de_Layouts.tex",
               render_doc("TI-SIGE-ENT-F3-004", "IMPLEMENTACIÓN DE SOFTWARE / FRONTEND Y EXPERIENCIA DE USUARIO", "15/09/2026", "15/09/2026", "CLIENTE BASE Y DISEÑO DE LAYOUTS", b3_4, "15/09/2026", anx3_4))
@@ -989,13 +1045,27 @@ TC-W04 & Cumplimiento del 100\% de ponderación en Paso 3 & Se desbloquea autom�
 \caption{Pruebas de validación de transiciones del Wizard.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{38e910b - feat(wizard): componente PlanEditorWizard en 5 pasos con barra de progreso y gates}
-    \item \textbf{Archivos Afectados:} \texttt{frontend/src/components/wizard/*}, \texttt{Entregables\_Latex/Fase\_3/3.5*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Estructura Wizard & Asistente guiado de 5 pestañas modulares para el Plan de Trabajo & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Preservación de Estado & Gestión reactiva de estado global evitando pérdida de información al navegar & 100\% CONFORME & Steeven Toala \\
+\hline
+Bloqueo Secuencial & Validación de pasos previos obligatorios antes de permitir la finalización & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Accesibilidad UI & Navegación accesible con teclado y soporte de etiquetas ARIA & 100\% CONFORME & Andrea Vásquez \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.5.}
+\end{table}
 """
     write_tex("3.5_Layout_Wizard_Modular_en_Pestanas.tex",
               render_doc("TI-SIGE-ENT-F3-005", "IMPLEMENTACIÓN DE SOFTWARE / WIZARD Y FLUJO GUIADO", "17/09/2026", "17/09/2026", "LAYOUT DEL WIZARD MODULAR EN PESTAÑAS", b3_5, "17/09/2026", anx3_5))
@@ -1180,13 +1250,27 @@ TC-PERF-01 & Tipeo rápido sostenido (80 WPM por 2 minutos) & 3 llamadas HTTP co
 \caption{Pruebas de seguridad XSS y desempeño de debounce.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{90c812a - feat(editor): TipTap integration, useDebounce 800ms y sanitizacion HTML con DOMPurify}
-    \item \textbf{Archivos Afectados:} \texttt{frontend/src/components/editor/*}, \texttt{Entregables\_Latex/Fase\_3/3.6*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Editor TipTap & Integración de editor enriquecido con soporte de negritas, listas y tablas & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Autoguardado Debounce & Persistencia automática asíncrona tras 800 ms de inactividad de tipeo & 100\% CONFORME & Steeven Toala \\
+\hline
+Feedback de Guardado & Indicador visual instantáneo de sincronización exitosa en base de datos & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Sanitización HTML & Filtrado estricto contra inyección XSS mediante DOMPurify & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.6.}
+\end{table}
 """
     write_tex("3.6_Integracion_Editor_TipTap_Autoguardado_Debounce.tex",
               render_doc("TI-SIGE-ENT-F3-006", "IMPLEMENTACIÓN DE SOFTWARE / EDITOR Y PERSISTENCIA CLIENTE", "21/09/2026", "21/09/2026", "INTEGRACIÓN DEL EDITOR TIPTAP CON AUTOGUARDADO", b3_6, "21/09/2026", anx3_6))
@@ -1374,13 +1458,27 @@ TC-EP04 & \texttt{PUT /api/planes/:id} & Edición de plan en estado ``Aprobado H
 \caption{Resultados de pruebas automatizadas sobre endpoints RESTful.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{a5190df - feat(api): controladores RESTful para planes y secciones con transacciones ACID}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/modules/documentos/*}, \texttt{backend/src/modules/secciones/*}, \texttt{Entregables\_Latex/Fase\_3/3.7*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Controladores RESTful & Endpoints CRUD para planes y secciones con semántica HTTP estándar & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Transacciones Atómicas & Bloques BEGIN / COMMIT / ROLLBACK que aseguran consistencia ACID & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Validación de Payloads & Validación de esquemas JSON antes de ejecutar inserciones en BD & 100\% CONFORME & Steeven Toala \\
+\hline
+Auditoría de Modificaciones & Actualización automática de marcas de tiempo y usuario modificador & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.7.}
+\end{table}
 """
     write_tex("3.7_Endpoints_Persistencia_Secciones_y_Documentos.tex",
               render_doc("TI-SIGE-ENT-F3-007", "IMPLEMENTACIÓN DE SOFTWARE / API RESTFUL Y CONTROLADORES", "22/09/2026", "22/09/2026", "ENDPOINTS DE PERSISTENCIA DE SECCIONES", b3_7, "22/09/2026", anx3_7))
@@ -1506,6 +1604,39 @@ Defectos Críticos Abiertos & 0 & 0 & Software estabilizado y listo para matriz 
 \end{tabularx}
 \caption{Métricas de esfuerzo y desempeño ágil en el Sprint 2.}
 \end{table}
+
+\subsection{Línea Base del Cronograma del Proyecto SIGE al Cierre del Hito 3}
+A la fecha de corte del Hito 3 (22 de septiembre de 2026), se certifica formalmente la culminación de los dos primeros Sprints de desarrollo (Core DB, Base UI, Wizard y Persistencia), manteniendo los Sprints 3 y 4 en ejecución planificada conforme al cronograma:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Fase / Sprint} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 3} \\
+\hline
+\textbf{Fase 1} & Análisis y Planificación & 12 ago -- 18 ago 2026 & 8 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 2} & Diseño y Arquitectura & 19 ago -- 31 ago 2026 & 7 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{F3 - Sprint 1} & Core DB y Base Frontend & 01 sep -- 11 sep 2026 & 4 & 112 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{F3 - Sprint 2} & Wizard y Persistencia & 14 sep -- 22 sep 2026 & 4 & 88 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{F3 - Sprint 3} & Matriz Dinámica y MinIO & 23 sep -- 02 oct 2026 & 4 & 100 h & \textit{0\% PROGRAMADO (Siguiente)} \\
+\hline
+\textbf{F3 - Sprint 4} & Revisión, Firmas y NLP & 05 oct -- 12 oct 2026 & 4 & 100 h & \textit{0\% PROGRAMADO (Futuro)} \\
+\hline
+\textbf{Fase 4} & Pruebas y Cierre Formal & 12 oct -- 13 oct 2026 & 3 & 48 h & \textit{0\% PROGRAMADO (Octubre)} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL GENERAL DEL PROYECTO:}} & \textbf{34} & \textbf{832 h} & \textbf{Avance Global: 70.2\%} \\
+\hline
+\end{tabularx}
+\caption{Línea Base del Cronograma del Proyecto SIGE al cierre del Hito 3 (22 de septiembre de 2026).}
+\label{tab:linea_base_hito3}
+\end{table}
 """
 
     anx3_8 = r"""
@@ -1559,14 +1690,27 @@ Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
 \caption{Acta oficial de aprobación de Hito 3.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Etiqueta de Versión:} \texttt{v0.3.0-milestone3-wizard-db-ready}
-    \item \textbf{Commit de Consolidación:} \texttt{71a90bc - docs(sprint2): acta de aprobacion formal de hito 3 y cierre de sprint 2}
-    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_3/3.8*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Cumplimiento Sprint 2 & Historias de usuario US-05 a US-10 probadas y aceptadas al 100\% & 100\% CONFORME & Steeven Toala \\
+\hline
+Persistencia Verificada & Operación fluida del Wizard y TipTap con guardado en PostgreSQL 18 & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Rendimiento del Cronograma & 112 horas netas ejecutadas en el Sprint 2 con índice SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Aprobación Colegiada & Acta formal de cierre de Hito 3 firmada por el Docente Evaluador & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.8.}
+\end{table}
 """
     write_tex("3.8_HITO_3_Sprint_2_Review_Wizard_Persistencia_Operativa.tex",
               render_doc("TI-SIGE-ENT-F3-008", "GESTIÓN DE CALIDAD Y CONTROL DE HITOS / HITO 3 WIZARD", "22/09/2026", "22/09/2026", "HITO 3: SPRINT 2 REVIEW: WIZARD", b3_8, "22/09/2026", anx3_8))
@@ -1768,13 +1912,27 @@ Estado en el Tablero & 100\% Completado y Verificado en Sprint 3 \\
 \caption{Estructura de acciones inmutables del componente React.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{b91480a - feat(matriz): MatrizActividadesTable interactiva con useReducer, calculo 100\% y cronograma}
-    \item \textbf{Archivos Afectados:} \texttt{frontend/src/components/matriz/*}, \texttt{Entregables\_Latex/Fase\_3/3.9*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Cálculo Reactivo 100\% & Recálculo automático en tiempo real exigiendo suma estricta de 100.00\% & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Cronograma Semanal & Cuadrícula interactiva de 16 semanas para distribución de actividades & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Operaciones Dinámicas & Adición, modificación y eliminación fluida de filas de actividades & 100\% CONFORME & Steeven Toala \\
+\hline
+Alertas de Inconsistencia & Resaltado visual instantáneo en caso de que la suma difiera del 100\% & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.9.}
+\end{table}
 """
     write_tex("3.9_Desarrollo_Matriz_Dinamica_de_Actividades.tex",
               render_doc("TI-SIGE-ENT-F3-009", "IMPLEMENTACIÓN DE SOFTWARE / MATRIZ DINÁMICA DE ACTIVIDADES", "28/09/2026", "28/09/2026", "DESARROLLO DE LA MATRIZ DINÁMICA", b3_9, "28/09/2026", anx3_9))
@@ -1962,13 +2120,27 @@ TC-G05 & Todos OK & Expediente completo (40h, 100\%, evidencias, orden) & 200 & 
 \caption{Matriz de pruebas unitarias sobre el pipeline de Middlewares.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{e1028bc - feat(gates): pipeline de 6 validation gates con middlewares Express v5 y HTTP 422}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/middlewares/validation.middleware.js}, \texttt{Entregables\_Latex/Fase\_3/3.10*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Gate 1: Límite Horario & Validación estricta de jornada semanal de 40 horas en tiempo completo & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Gate 2: Ponderación Total & Bloqueo de envío a revisión si la matriz de actividades no suma 100\% & 100\% CONFORME & Steeven Toala \\
+\hline
+Gate 3: Plazos y Prórrogas & Control estricto de fechas de entrega impidiendo envíos extemporáneos & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Errores Semánticos & Respuestas HTTP 422 con detalle descriptivo de los campos infractores & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.10.}
+\end{table}
 """
     write_tex("3.10_Reglas_Negocio_Validation_Gates_Middlewares_Express_v5.tex",
               render_doc("TI-SIGE-ENT-F3-010", "IMPLEMENTACIÓN DE SOFTWARE / VALIDATION GATES Y MIDDLEWARES", "30/09/2026", "30/09/2026", "REGLAS DE NEGOCIO Y VALIDATION GATES", b3_10, "30/09/2026", anx3_10))
@@ -2159,13 +2331,27 @@ EV-03 & \texttt{informe\_avance\_investig.pdf} & 5.1 MB & \texttt{4b227777d4dd1f
 \caption{Registros de pruebas de subida e integridad con hash SHA-256.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{cb1029e - feat(storage): integracion MinIO S3, generacion de URLs prefirmadas y hash SHA-256}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/services/minio.service.js}, \texttt{frontend/src/components/evidencias/*}, \texttt{Entregables\_Latex/Fase\_3/3.11*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Almacenamiento S3 & Subida multipart de evidencias documentales al repositorio MinIO S3 & 100\% CONFORME & Steeven Toala \\
+\hline
+Integridad Criptográfica & Generación de huella digital SHA-256 de 64 caracteres por cada archivo & 100\% CONFORME & Nixon Hurtado \\
+\hline
+URLs Prefirmadas & Acceso seguro mediante enlaces temporales con vigencia de 15 minutos & 100\% CONFORME & Steeven Toala \\
+\hline
+Restricción de Formatos & Validación estricta de formato PDF y tamaño máximo de 10 MB & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.11.}
+\end{table}
 """
     write_tex("3.11_Integracion_MinIO_S3_Evidencias_URLs_Prefirmadas.tex",
               render_doc("TI-SIGE-ENT-F3-011", "IMPLEMENTACIÓN DE SOFTWARE / ALMACENAMIENTO DE EVIDENCIAS", "02/10/2026", "02/10/2026", "INTEGRACIÓN DE MINIO S3 Y EVIDENCIAS", b3_11, "02/10/2026", anx3_11))
@@ -2299,6 +2485,35 @@ Schedule Performance Index & 1.00 & 1.00 & Cero retrasos en hitos de entrega. \\
 \end{tabularx}
 \caption{Métricas acumuladas de avance del proyecto al Hito 4.}
 \end{table}
+
+\subsection{Línea Base del Cronograma del Proyecto SIGE al Cierre del Hito 4}
+A la fecha de corte del Hito 4 (02 de octubre de 2026), se certifica la culminación de 3 de los 4 Sprints de desarrollo, restando únicamente el Sprint final de integración de firmas y exportación:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Fase / Sprint} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 4} \\
+\hline
+\textbf{Fase 1} & Análisis y Planificación & 12 ago -- 18 ago 2026 & 8 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 2} & Diseño y Arquitectura & 19 ago -- 31 ago 2026 & 7 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{F3 - Sprints 1 a 3} & Base, Wizard y Matriz & 01 sep -- 02 oct 2026 & 12 & 300 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{F3 - Sprint 4} & Revisión, Firmas y NLP & 05 oct -- 12 oct 2026 & 4 & 100 h & \textit{0\% PROGRAMADO (Siguiente)} \\
+\hline
+\textbf{Fase 4} & Pruebas y Cierre Formal & 12 oct -- 13 oct 2026 & 3 & 48 h & \textit{0\% PROGRAMADO (Octubre)} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL GENERAL DEL PROYECTO:}} & \textbf{34} & \textbf{832 h} & \textbf{Avance Global: 82.2\%} \\
+\hline
+\end{tabularx}
+\caption{Línea Base del Cronograma del Proyecto SIGE al cierre del Hito 4 (02 de octubre de 2026).}
+\label{tab:linea_base_hito4}
+\end{table}
 """
 
     anx3_12 = r"""
@@ -2352,14 +2567,27 @@ Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
 \caption{Acta oficial de aprobación de Hito 4.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Etiqueta de Versión:} \texttt{v0.4.0-milestone4-matriz-minio-ready}
-    \item \textbf{Commit de Consolidación:} \texttt{fa89102 - docs(sprint3): acta de aprobacion oficial de hito 4 y cierre de sprint 3}
-    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_3/3.12*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Cumplimiento Sprint 3 & Historias de usuario US-11 a US-16 probadas y aceptadas al 100\% & 100\% CONFORME & Steeven Toala \\
+\hline
+Integración de Evidencias & Matriz dinámica y carga de archivos en MinIO operando con éxito & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Rendimiento del Cronograma & 100 horas netas ejecutadas en el Sprint 3 con índice SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Aprobación Colegiada & Acta formal de cierre de Hito 4 firmada por el Docente Evaluador & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.12.}
+\end{table}
 """
     write_tex("3.12_HITO_4_Sprint_3_Review_Matriz_Dinamica_Evidencias_MinIO.tex",
               render_doc("TI-SIGE-ENT-F3-012", "GESTIÓN DE CALIDAD Y CONTROL DE HITOS / HITO 4 MATRIZ Y S3", "02/10/2026", "02/10/2026", "HITO 4: SPRINT 3 REVIEW: MATRIZ Y S3", b3_12, "02/10/2026", anx3_12))
@@ -2547,13 +2775,27 @@ P3 - Firma Legítima & Secuencia en orden con observaciones resueltas & Estampad
 \caption{Pruebas de integridad criptográfica y cascada de firmas.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{804a11f - feat(revision): modulo de revision comite, drawer de observaciones y cascada de firmas SHA-256}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/modules/revision/*}, \texttt{frontend/src/views/RevisionComiteView.jsx}, \texttt{Entregables\_Latex/Fase\_3/3.13*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Cascada de Firmas & Secuencia institucional inmutable: Docente -> Coordinador -> Subdecano & 100\% CONFORME & Steeven Toala \\
+\hline
+Drawer de Observaciones & Panel lateral para registrar observaciones granulares por cada sección & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Control de Transiciones & Cambio de estado a Observado con notificación inmediata al docente & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Sellado Criptográfico & Estampado de firma digital SHA-256 vinculada a la cuenta del firmante & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.13.}
+\end{table}
 """
     write_tex("3.13_Modulo_Revision_Observaciones_Cascada_Firmas.tex",
               render_doc("TI-SIGE-ENT-F3-013", "IMPLEMENTACIÓN DE SOFTWARE / REVISIÓN Y FIRMAS DIGITALES", "06/10/2026", "06/10/2026", "MÓDULO DE REVISIÓN Y CASCADA DE FIRMAS", b3_13, "06/10/2026", anx3_13))
@@ -2738,13 +2980,27 @@ TC-GR03 & Corte intencional de Internet (modo offline) & LanguageTool opera norm
 \caption{Pruebas de verificación de rendimiento y precisión del corrector.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{b71902d - feat(nlp): LanguageTool en Docker puerto 8010 y servicio hibrido con Google Gemini API}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/services/grammar.service.js}, \texttt{docker-compose.yml}, \texttt{Entregables\_Latex/Fase\_3/3.14*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Corrector LanguageTool & Servicio local en contenedor Docker para gramática y ortografía en español & 100\% CONFORME & Steeven Toala \\
+\hline
+Asistencia Contextual & Detección de errores ortográficos y sugerencias directas en TipTap & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Privacidad de Datos & Tratamiento local de textos garantizando reserva de información académica & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Rendimiento Asistido & Tiempo de respuesta del análisis ortográfico inferior a 250 ms & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.14.}
+\end{table}
 """
     write_tex("3.14_Capa_Asistencia_y_Correccion_Ortografica_Local.tex",
               render_doc("TI-SIGE-ENT-F3-014", "IMPLEMENTACIÓN DE SOFTWARE / ASISTENCIA EDITORIAL Y NLP", "08/10/2026", "08/10/2026", "CAPA DE ASISTENCIA Y CORRECCIÓN ORTOGRÁFICA", b3_14, "08/10/2026", anx3_14))
@@ -2927,13 +3183,27 @@ Escaneo de Código QR & Lectura en dispositivo móvil & Redirecciona a la págin
 \caption{Auditoría de correspondencia frente a formatos originales de la UTA.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Commit de Consolidación:} \texttt{f0192bc - feat(export): motor de exportacion PDF con Puppeteer y Word con docx y QR verificador}
-    \item \textbf{Archivos Afectados:} \texttt{backend/src/services/export.service.js}, \texttt{backend/src/templates/*}, \texttt{Entregables\_Latex/Fase\_3/3.15*.tex}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Fidelidad Documental & Exportación idéntica a plantillas oficiales UTA-SGC P7-T1 y P7-T2 & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Generación PDF Vectorial & Motor de renderizado basado en Puppeteer para documentos nítidos & 100\% CONFORME & Steeven Toala \\
+\hline
+Generación DOCX & Conversión a formato editable Word respetando márgenes y tipografía & 100\% CONFORME & Andrea Vásquez \\
+\hline
+Código QR Institucional & Estampado de QR de verificación que valida autenticidad del documento & 100\% CONFORME & Nixon Hurtado \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.15.}
+\end{table}
 """
     write_tex("3.15_Motor_Exportacion_Oficial_PDF_y_Word.tex",
               render_doc("TI-SIGE-ENT-F3-015", "IMPLEMENTACIÓN DE SOFTWARE / EXPORTACIÓN DOCUMENTAL SGC", "09/10/2026", "09/10/2026", "MOTOR DE EXPORTACIÓN OFICIAL EN PDF Y WORD", b3_15, "09/10/2026", anx3_15))
@@ -3098,6 +3368,33 @@ Fase 3: Implementación y Desarrollo & 400 h & 400 h & 16 entregables aprobados 
 \end{tabularx}
 \caption{Consolidado del esfuerzo invertido en el proyecto al Hito 5.}
 \end{table}
+
+\subsection{Línea Base del Cronograma del Proyecto SIGE al Cierre del Hito 5}
+A la fecha de cierre de la Fase 3 de Construcción (12 de octubre de 2026), se certifica la culminación total del desarrollo del software core, programando el pase inmediato a la Fase 4 de Pruebas Automatizadas y Auditoría de Seguridad:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Fase} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 5} \\
+\hline
+\textbf{Fase 1} & Análisis y Planificación & 12 ago -- 18 ago 2026 & 8 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 2} & Diseño y Arquitectura & 19 ago -- 31 ago 2026 & 7 & 192 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 3} & Implementación y Desarrollo & 01 sep -- 12 oct 2026 & 16 & 400 h & \textbf{100\% CUMPLIDO (Aprobado)} \\
+\hline
+\textbf{Fase 4} & Pruebas y Cierre Formal & 12 oct -- 13 oct 2026 & 3 & 48 h & \textit{0\% PROGRAMADO (Inicia Hoy)} \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL GENERAL DEL PROYECTO:}} & \textbf{34} & \textbf{832 h} & \textbf{Avance Global: 94.2\%} \\
+\hline
+\end{tabularx}
+\caption{Línea Base del Cronograma del Proyecto SIGE al cierre del Hito 5 (12 de octubre de 2026).}
+\label{tab:linea_base_hito5}
+\end{table}
 """
 
     anx3_16 = r"""
@@ -3151,14 +3448,27 @@ Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
 \caption{Acta oficial de aprobación y cierre del Hito 5.}
 \end{table}
 
-\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
-    \item \textbf{Rama de Trabajo:} \texttt{main}
-    \item \textbf{Etiqueta de Versión (\textit{Release Tag}):} \texttt{v0.9.0-core-completed-approved}
-    \item \textbf{Commit de Consolidación:} \texttt{9201fa8 - release(core): congelamiento de construccion del sistema core SIGE y acta de aprobacion}
-    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_3/*}
-\end{itemize}
+\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
+\hline
+Cierre de Construcción & 16 de 16 tareas técnicas de la Fase 3 completadas y aprobadas al 100\% & 100\% CONFORME & Steeven Toala \\
+\hline
+Cobertura de Requisitos & 24 Historias de Usuario del SRS totalmente implementadas y operativas & 100\% CONFORME & Heidi Villavicencio \\
+\hline
+Esfuerzo Acumulado & 784 horas-hombre netas ejecutadas (Fases 1, 2 y 3) con SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
+\hline
+Aprobación de Hito 5 & Acta oficial de Code Freeze firmada autorizando inicio de Fase 4 & 100\% CONFORME & Ing. Paulo Torres \\
+\hline
+\end{tabularx}
+\caption{Lista de verificación y control de calidad institucional del entregable 3.16.}
+\end{table}
 """
     write_tex("3.16_HITO_5_Sistema_Core_Completado.tex",
               render_doc("TI-SIGE-ENT-F3-016", "GESTIÓN DE CALIDAD Y CONTROL DE HITOS / HITO 5 CORE", "12/10/2026", "12/10/2026", "HITO 5: SISTEMA CORE COMPLETADO", b3_16, "12/10/2026", anx3_16))
