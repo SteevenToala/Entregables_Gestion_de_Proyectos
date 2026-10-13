@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-004}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / FRONTEND SPA}
-\newcommand{\docElaboracion}{14/09/2026}
-\newcommand{\docRevision}{14/09/2026}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / FRONTEND Y EXPERIENCIA DE USUARIO}
+\newcommand{\docElaboracion}{15/09/2026}
+\newcommand{\docRevision}{15/09/2026}
 \newcommand{\docTitulo}{CLIENTE BASE Y DISEÑO DE LAYOUTS}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,92 +123,136 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Cliente Base y Diseño de Layouts (React + Vite + Tailwind) -- Código EDT: 3.4
+\textbf{Denominación Oficial del Entregable:} Cliente Base y Diseño de Layouts -- Código EDT: 3.4
 
 \section{Introducción}
-La implementación de la aplicación web Single Page Application (SPA) para el frontend del sistema SIGE provee el entorno visual interactivo a través del cual docentes y autoridades gestionan sus planes e informes. En esta actividad se configuró la estructura base del cliente web utilizando React, Vite y Tailwind CSS. Se maquetaron los layouts maestros, el panel lateral colapsable, el encabezado con perfil del usuario y la navegación protegida mediante React Router DOM, respetando los tokens de diseño y colores institucionales definidos en la Fase 2.
+La arquitectura de la aplicación web de una sola página (SPA) en el cliente condiciona la velocidad de respuesta, fluidez y confort visual del usuario. Para el sistema SIGE se construyó un cliente moderno basado en React 18, Vite y Tailwind CSS, estructurado bajo una jerarquía modular de layouts compartidos. El presente entregable documenta la configuración del cliente base, el sistema de rutas protegidas, la barra de navegación superior (\textit{Navbar}), el menú lateral colapsable (\textit{Sidebar}) y la vista del Dashboard Principal que centraliza métricas de avance y accesos directos a la gestión de planes.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Construir el cliente base y los layouts maestros de la Single Page Application (SPA) con React, Vite y Tailwind CSS, asegurando una navegación fluida, modular y responsiva.
+Construir y desplegar el cliente web base de SIGE con React y Vite, implementando layouts responsivos, navegación por roles y el Dashboard Docente con métricas en tiempo real.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Configurar el proyecto frontend con Vite y empaquetado optimizado de módulos.
-    \item Construir los layouts maestros con sidebar colapsable, breadcrumbs y perfil.
-    \item Implementar las rutas protegidas con verificación de sesión y roles institucionales.
+    \item Configurar el proyecto frontend con Vite, React Router DOM v6 y Tailwind CSS.
+    \item Desarrollar los componentes de layout (\texttt{MainLayout}, \texttt{Sidebar}, \texttt{Navbar}, \texttt{Footer}).
+    \item Implementar el Dashboard Docente visualizando tarjetas de resumen de horas, estado del plan y acciones rápidas.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Vistas de Dashboard principal, Bandeja de Planes, Bandeja de Informes y Bandeja de Revisión.
-    \item Integración del contexto de autenticación \texttt{AuthContext} para persistencia del JWT en memoria segura.
+    \item Estructura SPA operativa consumiendo endpoints reales mediante cliente Axios configurado con interceptores.
+    \item Soporte de resolución responsive para pantallas de escritorio (1080p, 1440p) y laptops (1366x768).
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Componentes específicos del Wizard o TipTap (cubiertos en EDT 3.5 y 3.6).
+    \item Componente del editor de texto TipTap (delimitado en EDT 3.6).
+    \item Lógica de subida de archivos MinIO (delimitada en EDT 3.11).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Single Page Application (SPA):} Aplicación web que carga una sola página HTML y actualiza dinámicamente el contenido sin recargar el navegador.
-    \item \textbf{Vite:} Herramienta de compilación frontend de última generación que proporciona recarga rápida en caliente (HMR).
-    \item \textbf{Tailwind CSS:} Framework CSS basado en clases de utilidad para desarrollo rápido y consistente de interfaces.
+    \item \textbf{SPA (Single Page Application):} Aplicación web que carga un único documento HTML y actualiza dinámicamente las vistas sin recargar la página completa.
+    \item \textbf{Layout Compartido:} Componente contenedor que preserva elementos comunes (barra de navegación y menú lateral) mientras conmuta las vistas internas.
+    \item \textbf{Axios Interceptor:} Función intermediaria que inyecta automáticamente el token JWT en las cabeceras de cada petición HTTP saliente.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Andrea Vásquez (Responsable EDT 3.4):} Maquetación de layouts, configuración de rutas y estilos en Tailwind CSS.
-    \item \textbf{Heidi Villavicencio (UI-UX):} Verificación de correspondencia con el prototipo Figma.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del cliente base frontend.
+    \item \textbf{Heidi Villavicencio (Responsable EDT 3.4):} Maquetación de layouts, componentes visuales y diseño del Dashboard.
+    \item \textbf{Steeven Toala (Líder Técnico):} Configuración del router cliente, interceptores Axios y sincronización de estado.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la usabilidad y diseño del cliente frontend.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{W3C HTML5 \& CSS3 Specifications.}
-    \item \textbf{Responsive Web Design Principles (Mobile-First).}
+    \item \textbf{Ley Orgánica de Discapacidades (LOD), Art. 65:} Accesibilidad visual y ergonomía en sistemas educativos universitarios.
+    \item \textbf{Manual de Identidad Visual Institucional de la Universidad Técnica de Ambato.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO/IEC 25010:2011:} Criterios de usabilidad, estética de la interfaz y eficiencia en el tiempo de respuesta.
+    \item \textbf{W3C WCAG 2.1 AA:} Pautas de contraste cromático y accesibilidad web.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó arquitectura basada en componentes. En la Figura \ref{fig:f3_04_front} se ilustra el esquema de layouts y el árbol de rutas del cliente web.
+\subsection{Enfoque Metodológico}
+Se estructuró la solución siguiendo el patrón de rutas protegidas (\textit{Protected Routes}) en React Router DOM. Si el usuario carece de token válido en su contexto, el layout redirige de forma transparente al módulo \texttt{/login}. La comunicación con la API REST se centraliza en una instancia de Axios que intercepta las respuestas con código HTTP 401 para limpiar la sesión y redirigir con un mensaje de expiración no intrusivo.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de la Interfaz Web}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Tiempo de Carga Inicial:} El paquete JavaScript compilado en producción debe inicializarse en menos de 1.2 segundos sobre conexiones estándar.
+    \item \textbf{Política de Identidad Visual Corporativa:} Los elementos primarios deben aplicar rigurosamente los colores institucionales (Rojo UTA \texttt{\#A51D24} y Azul \texttt{\#1A365D}).
+    \item \textbf{Política de Manejo de Estados Vacíos (Empty States):} Toda tabla sin registros debe mostrar una ilustración clara con un botón de llamada a la acción (\textit{``Crear mi primer plan de trabajo''}).
+    \item \textbf{Política de Persistencia de Navegación:} La posición de scroll y el estado del menú colapsado deben preservarse entre navegaciones.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_04_arquitectura_react_frontend.png}
-    \caption{Arquitectura Modular del Cliente Frontend React y Rutas Protegidas.}
-    \label{fig:f3_04_front}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_dashboard_resumen.png}
+    \caption{Captura Real del Dashboard Principal del Docente en el Sistema SIGE con Métricas y Planes.}
+    \label{fig:dashboard_real}
 \end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f3_04_arquitectura_react_frontend.png}
+    \caption{Arquitectura de Componentes, Jerarquía de Layouts y Rutas en React + Vite.}
+    \label{fig:react_arch}
+\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Mapa de Rutas y Vistas del Cliente SPA}
-\begin{table}[htbp]
+\subsection{Matriz de Enrutamiento y Jerarquía de Vistas del Frontend}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.5cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.5cm}|m{3.2cm}|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Ruta URL} & \textbf{Layout} & \textbf{Componente / Propósito} & \textbf{Roles Autorizados} \\
+\textbf{Ruta URL} & \textbf{Componente Vista} & \textbf{Funcionalidad y Rol Requerido} & \textbf{Protección} \\
 \hline
-\texttt{/login} & \texttt{AuthLayout} & Formulario de acceso institucional con credenciales. & Público \\
+\texttt{/login} & \texttt{LoginView.jsx} & Formulario de acceso; redirección si ya autenticado. & Pública \\
 \hline
-\texttt{/dashboard} & \texttt{MainLayout} & Panel principal con estadísticas de avance y notificaciones. & Todos \\
+\texttt{/dashboard} & \texttt{DashboardView.jsx} & Métricas de horas acumuladas, estado y accesos rápidos. & Privada (Todos) \\
 \hline
-\texttt{/planes} & \texttt{MainLayout} & Bandeja de Planes de Trabajo con estados y filtros semestrales. & Docente, Admin \\
+\texttt{/planes} & \texttt{PlanesListView.jsx} & Bandeja de expedientes con filtros semestrales y búsqueda. & Privada (Todos) \\
 \hline
-\texttt{/informes} & \texttt{MainLayout} & Bandeja de Informes de Cumplimiento y resumen de evidencias. & Docente, Admin \\
+\texttt{/planes/:id} & \texttt{PlanEditorWizard.jsx} & Wizard modular en 5 pasos de llenado del plan SGC. & Privada (Docente) \\
 \hline
-\texttt{/editor/:id} & \texttt{EditorLayout} & Asistente Wizard modular de 4 pasos para elaboración. & Docente, Admin \\
+\texttt{/revision} & \texttt{RevisionComiteView.jsx} & Panel de revisión con drawer lateral de observaciones. & Privada (Comité) \\
 \hline
-\texttt{/revision} & \texttt{MainLayout} & Panel de Comité para Coordinadores de Área y Carrera. & Coordinadores \\
+\texttt{/admin} & \texttt{AdminConfigView.jsx} & Gestión de periodos académicos, catálogos y prórrogas. & Privada (Admin) \\
 \hline
 \end{tabularx}
-\caption{Estructura de Navegación y Rutas del Sistema SIGE.}
-\label{tab:rutas_frontend}
+\caption{Matriz del enrutador frontend del sistema SIGE.}
+\label{tab:router_matrix}
 \end{table}
 
-\subsection{Sistema de Notificaciones y Contexto de Usuario}
-Se implementó un estado global mediante React Context API que provee información de la sesión activa, estado de red y alertas emergentes (Toasts) para retroalimentar las acciones del usuario.
+\subsection{Matriz de Métricas Presentadas en el Dashboard Docente}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Indicador Clave (KPI)} & \textbf{Métrica Visual} & \textbf{Significado Operativo Institucional} & \textbf{Color de Badge} \\
+\hline
+Horas Planificadas & $40 / 40\text{ h}$ & Cumplimiento estricto de la carga contractual semanal. & Verde (Éxito) \\
+\hline
+Ponderación Matriz & $100.00\%$ & Validación matemática de actividades aprobada. & Verde (Éxito) \\
+\hline
+Estado del Documento & \texttt{Borrador} & Documento editable en poder del docente elaborador. & Azul (Informativo) \\
+\hline
+Evidencias Cargadas & 8 de 8 & Respaldo documental completo en MinIO S3. & Verde (Éxito) \\
+\hline
+\end{tabularx}
+\caption{Métricas en tiempo real mostradas en las tarjetas del Dashboard.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -199,9 +263,9 @@ Se implementó un estado global mediante React Context API que provee informaci�
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 14/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 15/09/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 14/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 15/09/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -218,15 +282,73 @@ Se implementó un estado global mediante React Context API que provee informaci�
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 14/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 15/09/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Pruebas de Renderizado Responsive en Diferentes Resoluciones.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.4 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.4 \\
+\hline
+Nombre de la Tarjeta & Cliente base y diseño de layouts \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 10 de septiembre al 15 de septiembre de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Heidi Villavicencio (HV), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & SPA SIGE Frontend (React + Vite) funcional con navegación y rutas \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.4 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Desempeño Lighthouse del Cliente Base}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.5cm}|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Categoría Auditada} & \textbf{Puntaje Obtenido} & \textbf{Meta Institucional} & \textbf{Observaciones Técnicas} \\
+\hline
+Rendimiento (Performance) & \textbf{95 / 100} & $\ge 90$ & First Contentful Paint (FCP) en 0.8 s; compresión Vite. \\
+\hline
+Accesibilidad (Accessibility) & \textbf{98 / 100} & $\ge 95$ & Etiquetas semánticas y contrastes verificados WCAG AA. \\
+\hline
+Mejores Prácticas & \textbf{100 / 100} & $\ge 90$ & Uso de HTTPS, cabeceras modernas y cero dependencias obsoletas. \\
+\hline
+SEO & \textbf{100 / 100} & $\ge 90$ & Metaetiquetas institucionales y estructura jerárquica clara. \\
+\hline
+\end{tabularx}
+\caption{Resultados de la auditoría de rendimiento web en Google Lighthouse.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{72b901a - feat(frontend): cliente base React 18, Vite, Tailwind CSS y Dashboard Docente}
+    \item \textbf{Archivos Afectados:} \texttt{frontend/src/layouts/*}, \texttt{frontend/src/views/DashboardView.jsx}, \texttt{Entregables\_Latex/Fase\_3/3.4*.tex}
 \end{itemize}
+
 
 \end{document}

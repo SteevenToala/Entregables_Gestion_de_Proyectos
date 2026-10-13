@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F2-007}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{HITO DE CONTROL / APROBACIÓN DE FASE 2}
-\newcommand{\docElaboracion}{04/09/2026}
-\newcommand{\docRevision}{04/09/2026}
-\newcommand{\docTitulo}{HITO 2: APROBACIÓN DE ARQUITECTURA Y ENTREGABLE GENERAL}
+\newcommand{\docProceso}{GESTIÓN DE CALIDAD Y CONTROL DE HITOS / HITO 2 ARQUITECTURA}
+\newcommand{\docElaboracion}{31/08/2026}
+\newcommand{\docRevision}{31/08/2026}
+\newcommand{\docTitulo}{HITO 2: APROBACIÓN DE ARQUITECTURA}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,96 +123,147 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} HITO 2: Aprobación de Arquitectura y Entregable General Semana 2 -- Código EDT: 2.7
+\textbf{Denominación Oficial del Entregable:} HITO 2: Aprobación de Arquitectura y Entregable General Semana 2 -- Código EDT: 2.7
 
 \section{Introducción}
-El cierre formal de la Fase 2: Diseño y Arquitectura representa el hito más crítico previo al inicio de la codificación y desarrollo del núcleo del sistema SIGE. En este documento se consolida la revisión exhaustiva de todos los artefactos de diseño construidos entre el 25 de agosto y el 04 de septiembre de 2026: Casos de Uso, Documento de Arquitectura de Software (SAD), Modelos Dinámicos UML, Base de Datos PostgreSQL 18, Wireframes y Prototipo Figma, y la Orquestación de Contenedores con Docker Compose. Se documenta la sustentación ante el docente evaluador Ing. Paulo Torres y la certificación formal para dar inicio al desarrollo Core en la Fase 3.
+El cierre exitoso de la Fase 2 (Diseño y Arquitectura) marca el punto de congelamiento formal de las especificaciones estructurales y de comportamiento del sistema web SIGE. La reunión de revisión de Hito 2 (\textit{Stage-Gate Review 2}) es un mecanismo de aseguramiento de calidad institucional donde el equipo de desarrollo, el analista de calidad y el docente evaluador auditan la coherencia y completitud de todos los artefactos de diseño generados entre el 19 y el 31 de agosto de 2026. El presente documento consolida la evaluación de los entregables 2.1 a 2.6, certificando que la arquitectura de software, el modelo de datos relacional y el entorno de infraestructura cumplen con todos los requerimientos funcionales y normativos institucionales antes de dar inicio a la Fase 3 de Construcción.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Consolidar, evaluar y aprobar formalmente el paquete de entregables de la Fase 2: Diseño y Arquitectura (Hito 2), certificando la conformidad técnica y autorizando el inicio de la Fase 3 de Desarrollo Core.
+Consolidar, auditar y legalizar formalmente la aprobación de la arquitectura de la solución del sistema SIGE correspondiente al Hito 2 de la EDT, autorizando el inicio de la fase de implementación de software.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Verificar el cumplimiento y calidad técnica de los entregables EDT 2.1 al 2.6.
-    \item Comprobar la trazabilidad del 100\% entre los Requerimientos SRS IEEE 830 y los artefactos de diseño arquitectónico.
-    \item Realizar la demostración del prototipo interactivo en Figma y la puesta en marcha del stack Docker local.
-    \item Suscribir el acta formal de aprobación de Hito 2 por parte del docente evaluador.
+    \item Auditar el cumplimiento del 100\% de las tareas técnicas asignadas a la Fase 2 en el Tablero Trello y Cronograma Gantt.
+    \item Verificar la trazabilidad estricta entre los 24 Requisitos Funcionales de la Fase 1 y los modelos arquitectónicos de la Fase 2.
+    \item Formalizar el Acta Oficial de Aprobación de Arquitectura y cierre de la Semana 2 de gestión del proyecto.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Consolidado de los 7 entregables de Fase 2 ejecutados entre el 25 de agosto y el 04 de septiembre de 2026.
-    \item Validación de arquitectura de datos, interfaces y contenedores.
+    \item Auditoría integral de los 6 entregables técnicos previos (EDT 2.1 a 2.6).
+    \item Consolidación de métricas de esfuerzo (192 horas-hombre netas programadas y ejecutadas).
+    \item Firma y emisión del paquete general de arquitectura aprobado.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Cambios estructurales en el modelo relacional o arquitectura tras la firma de este hito.
+    \item Certificación de código fuente funcional de producción (objeto de los Hitos 3, 4 y 5 de la Fase 3).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Hito 2 (Milestone Semana 2):} Punto de control que certifica que los cimientos arquitectónicos del software están terminados y validados.
-    \item \textbf{Línea Base de Arquitectura:} Conjunto congelado de especificaciones técnicas que guiarán la implementación del código fuente.
-    \item \textbf{Trazabilidad Arquitectónica:} Capacidad de vincular cada requisito funcional con un componente o módulo específico del diseño.
+    \item \textbf{Hito de Proyecto (Milestone):} Evento significativo en el cronograma que marca la culminación formal de una fase importante o conjunto de entregables clave.
+    \item \textbf{Stage-Gate Review:} Punto de control formal en el ciclo de vida del software donde se evalúa si los criterios de aceptación fueron alcanzados para avanzar a la fase siguiente.
+    \item \textbf{Arquitectura Congelada (Baseline):} Versión oficial y aprobada de la arquitectura técnica que sirve como referencia inmutable para la fase de construcción.
+    \item \textbf{SPI (Schedule Performance Index):} Índice de desempeño del cronograma; una razón de $1.0$ certifica avance exacto según lo planificado.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Equipo de Proyecto SIGE (Responsables EDT 2.7):} Consolidación del paquete técnico, demostración de prototipos y sustentación.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador / Patrocinador):} Revisión de conformidad, retroalimentación y suscripción formal de aprobación.
+    \item \textbf{Steeven Toala (Líder de Proyecto / Arquitecto):} Consolidación del paquete técnico de arquitectura y sustentación del Hito 2.
+    \item \textbf{Heidi Villavicencio (Analista de Calidad):} Verificación de la matriz de criterios de aceptación y auditoría de artefactos.
+    \item \textbf{Nixon Hurtado / Andrea Vásquez (Equipo de Desarrollo):} Verificación de correspondencia de modelos de persistencia y vistas UI.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Evaluación metodológica y aprobación formal del Hito 2.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{IEEE Std 1016-2009:} Standard for Information Technology -- Systems Design -- Software Design Descriptions.
-    \item \textbf{Guía PMBOK (7ma Edición):} Gestión de la Calidad y Cierre de Fase Técnica.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Rigor y calidad en el desarrollo de herramientas tecnológicas de gestión académica institucional.
+    \item \textbf{Reglamento de Régimen Académico (RRA - CES), Art. 45:} Coherencia de los sistemas informáticos con los procedimientos del régimen académico.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{PMBOK Guide (7th Edition):} Gestión del desempeño de proyectos y control de puertas de decisión (\textit{Stage Gates}).
+    \item \textbf{ISO 9001:2015, Cláusula 8.3 (Diseño y Desarrollo de Productos y Servicios):} Verificación y validación de las salidas del diseño de software.
+    \item \textbf{ISO/IEC 25010:2011:} Aseguramiento de los atributos de calidad arquitectónica del producto.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se llevó a cabo una sesión de sustentación técnica de 2 horas el viernes 04 de septiembre de 2026. En la Figura \ref{fig:s2_07_cons} se presenta el mapa consolidado de la Fase 2 de Arquitectura.
+\subsection{Enfoque Metodológico}
+Para la aprobación del Hito 2 se aplicó el protocolo formal de revisión de arquitectura (\textit{Architecture Tradeoff Analysis Method - ATAM}). Se contrastaron los escenarios de atributos de calidad (mantenibilidad, rendimiento, seguridad) contra las decisiones arquitectónicas documentadas en los ADRs. Asimismo, se cotejó el estado de cada tarjeta en el Tablero Kanban de Trello frente a los artefactos compilados, certificando el 100\% de avance físico y cronológico.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad para el Cierre de Hito}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Aceptación Plena (Zero Defect Policy):} Ningún entregable de la Fase 2 puede presentar observaciones críticas abiertas al momento del cierre de hito.
+    \item \textbf{Política de Congelamiento de Arquitectura:} Cualquier modificación posterior a los diagramas C4 o al esquema relacional deberá gestionarse mediante el proceso formal de Control de Cambios.
+    \item \textbf{Política de Paridad de Entornos:} El entorno de contenedores Docker Compose debe ejecutarse de forma limpia y exitosa en las estaciones de todo el equipo.
+    \item \textbf{Política de Consenso Colegiado:} La aprobación del hito requiere la conformidad unánime de los integrantes del equipo y el visto bueno del Docente Evaluador.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth,height=5.2cm,keepaspectratio]{images/s2_07_consolidado_s2.png}
-    \caption{Mapa Consolidado de la Fase 2: Diseño y Arquitectura de la Solución.}
-    \label{fig:s2_07_cons}
+    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/trello_tablero_captura_real.png}
+    \caption{Captura Real del Tablero Trello evidenciando el 100\% de Tareas Completadas en la Fase 2.}
+    \label{fig:trello_fase2}
 \end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/trello_gantt_cronograma.png}
+    \caption{Cronograma Gantt en MS Project mostrando la Culminación Exitosa del Hito 2 en la Semana 2.}
+    \label{fig:gantt_fase2}
+\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz de Verificación y Conformidad de Entregables de Fase 2}
-\begin{table}[htbp]
+\subsection{Matriz de Auditoría y Aprobación de Entregables de la Fase 2}
+A continuación se detalla la matriz que certifica la auditoría y estado de cumplimiento de los entregables que componen la Fase 2:
+
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{4.0cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|c|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{EDT} & \\textbf{Entregable Oficial} & \textbf{Artefacto Verificado} & \textbf{Horas} & \textbf{Estado} \\
+\textbf{Código} & \textbf{Entregable Auditado} & \textbf{Horas} & \textbf{Criterio de Aceptación Verificado} & \textbf{Resultado} \\
 \hline
-2.1 & Casos de Uso UML & Diagrama general y especificación CU-01 a CU-08 & 24 h & Aprobado \\
+\textbf{EDT 2.1} & Casos de Uso General y Detallado & 24 h & Cobertura total de los 24 RF y actores del SGC bajo notación OMG UML 2.5.1. & \textbf{APROBADO} \\
 \hline
-2.2 & Arquitectura SAD & Clean Architecture, C4 Model Nivel 1 y 2 & 32 h & Aprobado \\
+\textbf{EDT 2.2} & Diseño de Arquitectura (SAD y C4) & 32 h & Clean Architecture multicapa, modelo C4 de contenedores y 6 ADRs documentados. & \textbf{APROBADO} \\
 \hline
-2.3 & Modelado Dinámico & Diagramas Secuencia, Actividades y Clases & 40 h & Aprobado \\
+\textbf{EDT 2.3} & Secuencia, Actividades y Clases & 32 h & Secuencia de Validation Gates, ciclo de revisión y modelo de dominio DDD validado. & \textbf{APROBADO} \\
 \hline
-2.4 & Base de Datos & ER Crow's Foot, normalización 3NF y 13 tablas & 40 h & Aprobado \\
+\textbf{EDT 2.4} & Base de Datos Relacional & 32 h & Modelo ER en 3NF con 13 tablas, restricciones CHECK declarativas e índices GIN. & \textbf{APROBADO} \\
 \hline
-2.5 & Interfaces y UX & Wireframes alta fidelidad, Wizard y Figma & 40 h & Aprobado \\
+\textbf{EDT 2.5} & Wireframes y Prototipos UX & 32 h & Tokens oficiales UTA, cumplimiento WCAG 2.1 AA y capturas reales de vistas clave. & \textbf{APROBADO} \\
 \hline
-2.6 & Contenedores Docker & \texttt{docker-compose.yml}, PostgreSQL, MinIO, LT & 32 h & Aprobado \\
+\textbf{EDT 2.6} & Arquitectura Docker Compose & 24 h & Despliegue reproducible de 5 contenedores con redes aisladas y healthchecks. & \textbf{APROBADO} \\
 \hline
-2.7 & Hito 2: Aprobación Arquitectura & Paquete Arquitectura Aprobado y Sustentación & 0 h & Aprobado \\
+\textbf{EDT 2.7} & Hito 2: Aprobación Arquitectura & 16 h & Auditoría de calidad, actas de consenso y legalización formal del hito. & \textbf{APROBADO} \\
 \hline
-\multicolumn{3}{|r|}{\textbf{TOTAL HORAS INVERTIDAS EN FASE 2:}} & \textbf{208 h} & \textbf{100\%} \\
+\multicolumn{2}{|r|}{\textbf{TOTAL HORAS FASE 2:}} & \textbf{192 h} & \multicolumn{2}{l|}{\textbf{100\% de Objetivos Técnicos Alcanzados}} \\
 \hline
 \end{tabularx}
-\caption{Matriz de Conformidad y Cierre de Entregables de Fase 2.}
-\label{tab:cierre_fase2}
+\caption{Matriz oficial de auditoría de entregables de la Fase 2.}
+\label{tab:auditoria_fase2}
 \end{table}
 
-\subsection{Dictamen Técnico y Autorización de Desarrollo}
-El docente evaluador Ing. Paulo Torres emite el dictamen de APROBADO sin observaciones impeditivas, autorizando formalmente al equipo para iniciar la Fase 3: Desarrollo Core a partir del lunes 07 de septiembre de 2026.
+\subsection{Métricas de Esfuerzo y Desempeño del Proyecto al Hito 2}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.0cm}|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Indicador de Gestión} & \textbf{Planificado} & \textbf{Ejecutado} & \textbf{Interpretación del Desempeño} \\
+\hline
+Horas-Hombre Fase 1 & 192 h & 192 h & Cumplimiento estricto al 100\% de análisis y requerimientos. \\
+\hline
+Horas-Hombre Fase 2 & 192 h & 192 h & Cumplimiento estricto al 100\% de diseño y arquitectura. \\
+\hline
+Horas Acumuladas (F1 + F2) & 384 h & 384 h & Mitad del esfuerzo global del proyecto completado exitosamente. \\
+\hline
+Schedule Performance Index (SPI) & 1.00 & 1.00 & Proyecto en cronograma perfecto sin desviaciones de tiempo. \\
+\hline
+Cost Performance Index (CPI) & 1.00 & 1.00 & Proyecto dentro del presupuesto de horas establecido en Project Charter. \\
+\hline
+\end{tabularx}
+\caption{Métricas de gestión del proyecto al cierre del Hito 2.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -203,9 +274,9 @@ El docente evaluador Ing. Paulo Torres emite el dictamen de APROBADO sin observa
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 04/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 31/08/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 04/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 31/08/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -222,16 +293,74 @@ El docente evaluador Ing. Paulo Torres emite el dictamen de APROBADO sin observa
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 04/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 31/08/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Acta de Aprobación de Hito 2 (Semana 2).
-\item \textbf{Anexo 2:} Matriz de Trazabilidad Arquitectura vs. Requerimientos SRS.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.7 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 2.7 \\
+\hline
+Nombre de la Tarjeta & HITO 2: Aprobación de Arquitectura y Entregable General Semana 2 \\
+\hline
+Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+\hline
+Período de Ejecución & 29 de agosto al 31 de agosto de 2026 (2 días laborables) \\
+\hline
+Horas Asignadas & 16 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV), Nixon Hurtado (NH), Andrea Vásquez (AV) \\
+\hline
+Entregable Oficial & \texttt{07\_Entregable\_General\_Semana\_2.pdf} (Paquete Arquitectura Aprobado) \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 2.7 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Acta Formal de Aprobación de Arquitectura de Software}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.0cm}|X|}
+\hline
+\rowcolor{tableheader}
+\multicolumn{2}{|c|}{\textbf{ACTA INSTITUCIONAL DE CIERRE DE HITO 2 -- SISTEMA SIGE}} \\
+\hline
+\textbf{Fecha de Sesión:} & 31 de agosto de 2026 \\
+\hline
+\textbf{Lugar:} & Laboratorio de Gestión de Software / Entorno Virtual Teams -- FISEI \\
+\hline
+\textbf{Participantes:} & Steeven Toala (Líder/Arquitecto), Heidi Villavicencio (Calidad), Nixon Hurtado (Backend), Andrea Vásquez (UI/UX), Ing. Paulo Torres (Docente Evaluador). \\
+\hline
+\textbf{Resolución:} & Habiendo verificado la consistencia de los modelos C4, el esquema 3NF en PostgreSQL 18, los wireframes UX institucionales y la orquestación en Docker Compose, el Comité aprueba por unanimidad el Hito 2 y autoriza el inicio de la Fase 3 de Construcción. \\
+\hline
+\end{tabularx}
+\caption{Acta de aprobación colegiada del Hito 2.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Etiqueta de Versión (\textit{Release Tag}):} \texttt{v0.2.0-milestone2-arch-approved}
+    \item \textbf{Commit de Consolidación:} \texttt{82019ab - docs(milestone2): consolidacion de paquete de arquitectura semana 2 y acta de aprobacion}
+    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_2/*}
 \end{itemize}
+
 
 \end{document}

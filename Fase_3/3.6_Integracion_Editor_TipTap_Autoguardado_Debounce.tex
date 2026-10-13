@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
 
-\newcommand{\docCodigo}{TI-SIGE-ENT-F3-003}
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F3-006}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / EDITOR TIPTAP}
-\newcommand{\docElaboracion}{22/09/2026}
-\newcommand{\docRevision}{22/09/2026}
-\newcommand{\docTitulo}{INTEGRACIÓN DEL EDITOR TIPTAP CON AUTOGUARDADO DEBOUNCE}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / EDITOR Y PERSISTENCIA CLIENTE}
+\newcommand{\docElaboracion}{21/09/2026}
+\newcommand{\docRevision}{21/09/2026}
+\newcommand{\docTitulo}{INTEGRACIÓN DEL EDITOR TIPTAP CON AUTOGUARDADO}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,90 +123,126 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Integración del Editor TipTap con Autoguardado Debounce -- Código EDT: 3.6
+\textbf{Denominación Oficial del Entregable:} Integración del Editor TipTap con Autoguardado Debounce -- Código EDT: 3.6
 
 \section{Introducción}
-La redacción de las secciones descriptivas de los formatos SGC (Justificación, Objetivos, Metodología, Conclusiones) requería tradicionalmente el uso de procesadores de texto de escritorio, provocando inconsistencias en el formateo y riesgo permanente de pérdida de información ante cortes de energía o caídas del navegador. En este entregable se documenta la integración en el frontend de la biblioteca Headless TipTap basada en ProseMirror, junto con un mecanismo de autoguardado asíncrono con temporizador debounce de 1500 ms y avisos visuales en tiempo real.
+Las secciones descriptivas de los formatos SGC institucionales (e.g., Justificación Académica, Metodología de Cátedra, Medios de Evaluación) demandan formateo de texto estructurado (negritas, cursivas, listas ordenadas y tablas) manteniendo completa compatibilidad semántica con los estándares tipográficos oficiales de la UTA. Para evitar la pérdida de información ante cierres imprevistos de navegador, se integró el editor moderno basado en ProseMirror denominado TipTap en React, complementado con una estrategia de autoguardado asíncrono con temporizador debounce (800 ms) y sanitización estricta contra inyección XSS mediante DOMPurify.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Integrar el editor de texto enriquecido TipTap en el cliente web con autoguardado asíncrono mediante debounce de 1500 ms, asegurando la preservación transparente del contenido institucional.
+Integrar y configurar el editor de texto enriquecido TipTap con mecanismo de autoguardado debounce de 800 ms y vista previa A4 oficial en el sistema SIGE.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Configurar las extensiones esenciales de TipTap (Títulos, Negrita, Cursiva, Listas, Tablas limpias).
-    \item Implementar el hook personalizado \texttt{useDebounce} para espaciar las peticiones de guardado HTTP.
-    \item Diseñar los indicadores visuales de estado: 'Modificado', 'Guardando...' y 'Guardado'.
+    \item Implementar el componente \texttt{RichTextEditor.jsx} con extensiones oficiales de TipTap.
+    \item Desarrollar el hook de autoguardado reactivo con debounce de 800 ms y feedback de estado.
+    \item Integrar sanitización de contenido HTML y renderizado en vista preliminar A4.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Componente \texttt{RichTextEditor.jsx} integrado en las secciones descriptivas del Paso 2 del Wizard.
-    \item Sanitización de código HTML generado para evitar inyecciones de scripts maliciosos.
+    \item Formateo tipográfico (párrafos, encabezados H1-H3, listas, citas, negritas).
+    \item Indicador visual dinámico de guardado (\textit{``Guardando cambios...''} $\to$ \textit{``Guardado en tiempo real''}).
+    \item Vista previa fidedigna en formato A4 con membrete institucional UTA.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Edición colaborativa simultánea tipo Google Docs en tiempo real (fuera de requerimientos SGC).
+    \item Edición colaborativa simultánea en tiempo real vía WebSockets (reservada para Fase 5).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{TipTap / ProseMirror:} Framework de edición de texto enriquecido extensible, modular y sin interfaz rígida (Headless).
-    \item \textbf{Debounce:} Técnica de programación que retrasa la ejecución de una función hasta que haya transcurrido un período de inactividad predeterminado.
-    \item \textbf{Sanitización HTML:} Proceso de limpiar el contenido HTML entrante eliminando etiquetas o atributos potencialmente peligrosos (\texttt{<script>}, \texttt{onerror}).
+    \item \textbf{TipTap / ProseMirror:} Motor de edición de texto enriquecido headless, extensible y fuertemente tipado para aplicaciones web modernas.
+    \item \textbf{Debounce (Técnica):} Patrón de programación que retrasa la ejecución de una función hasta que haya transcurrido un intervalo de inactividad predefinido (800 ms).
+    \item \textbf{DOMPurify:} Librería de sanitización de código HTML que elimina vectores de ataque Cross-Site Scripting (XSS).
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Andrea Vásquez (Responsable EDT 3.6):} Configuración de extensiones TipTap, implementación del debounce y manejo de estados.
-    \item \textbf{Nixon Hurtado (Backend):} Recepción asíncrona de los fragmentos HTML y persistencia en base de datos.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del comportamiento del editor y autoguardado.
+    \item \textbf{Andrea Vásquez (Responsable EDT 3.6):} Integración del editor TipTap, extensiones y maquetación de la vista A4.
+    \item \textbf{Steeven Toala (Líder Técnico):} Implementación del hook de debounce y sanitización con DOMPurify.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la fidelidad del texto frente a los formatos SGC.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{W3C ContentEditable Specification.}
-    \item \textbf{OWASP Cross-Site Scripting (XSS) Prevention Cheat Sheet.}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122:} Conservación fidedigna de contenidos de planificación académica.
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 32.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{W3C HTML5 Specification:} Semántica y estructuración de contenido web limpio.
+    \item \textbf{OWASP Top 10: A03 -- Injection:} Sanitización estricta de entradas de texto enriquecido.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó un temporizador debounce de 1500 ms tras la última pulsación de tecla. En la Figura \ref{fig:f3_06_tiptap} se ilustra el ciclo de vida del autoguardado con debounce.
+\subsection{Enfoque Metodológico}
+Se configuró TipTap como editor \textit{headless} desacoplado con estilos Tailwind Typography (\texttt{prose prose-sm}). Cada pulsación de tecla desencadena la actualización del árbol DOM local; el hook \texttt{useDebounce} reinicia un temporizador de 800 ms. Al vencer el temporizador, el contenido HTML es sanitizado con DOMPurify y transmitido vía HTTP PUT al endpoint \texttt{/api/secciones/:id}. En caso de fallo de red, el contenido se respalda de forma transparente en \texttt{localStorage} para recuperación offline inmediata.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de la Edición de Texto}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Autoguardado Silencioso:} La persistencia debe ocurrir en segundo plano sin bloquear la escritura ni provocar parpadeos visuales en pantalla.
+    \item \textbf{Política de Sanitización Mandatoria:} Ningún fragmento HTML se almacena en base de datos sin pasar previamente por el filtro anti-XSS de DOMPurify.
+    \item \textbf{Política de Respaldo Local (RPO = 0):} Si el servidor no responde, el borrador se custodia localmente hasta que se restablezca la conectividad.
+    \item \textbf{Política de Formato Limpio:} El editor prohíbe etiquetas complejas ajenas al estándar institucional, garantizando exportaciones PDF libres de distorsión tipográfica.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_05_wizard_modular_flujo.png}
-    \caption{Ciclo de Autoguardado Asíncrono con Debounce y Estados de Sincronización.}
-    \label{fig:f3_06_tiptap}
+    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/sige_plan_trabajo_a4.png}
+    \caption{Captura Real de la Vista A4 Oficial de Plan de Trabajo con Secciones Enriquecidas en TipTap.}
+    \label{fig:tiptap_a4}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Extensiones TipTap Configuradas y Formateo SGC}
-\begin{table}[htbp]
+\subsection{Matriz de Extensiones y Capacidades del Editor TipTap}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|m{2.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{3.0cm}|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Extensión TipTap} & \textbf{Etiqueta HTML} & \textbf{Utilidad en el Formato SGC} \\
+\textbf{Extensión TipTap} & \textbf{Paquete NPM} & \textbf{Funcionalidad SGC Brindada} & \textbf{Sanitización} \\
 \hline
-\texttt{StarterKit (Heading)} & \texttt{<h2>, <h3>} & Subtítulos limpios para estructurar los apartados del informe. \\
+\texttt{StarterKit} & \texttt{@tiptap/starter-kit} & Párrafos, negrita, cursiva, listas ordenadas y viñetas. & Estándar W3C \\
 \hline
-\texttt{Bold / Italic} & \texttt{<strong>, <em>} & Énfasis tipográfico en conceptos clave y normas citadas. \\
+\texttt{Heading} & \texttt{@tiptap/extension-heading} & Subsecciones estructuradas (niveles H2 y H3). & Filtrado de atributos \\
 \hline
-\texttt{Bullet / OrderedList} & \texttt{<ul>, <ol>} & Enumeración de objetivos específicos y compromisos semestrales. \\
+\texttt{Table} & \texttt{@tiptap/extension-table} & Tablas con celdas combinadas para anexos descriptivos. & Limpieza de scripts \\
 \hline
-\texttt{Table / TableRow} & \texttt{<table>, <tr>} & Inserción de tablas de datos auxiliares con formato institucional. \\
+\texttt{Placeholder} & \texttt{@tiptap/extension-placeholder} & Texto guía institucional cuando la sección está vacía. & No persistido \\
 \hline
-\texttt{Placeholder} & \texttt{data-placeholder} & Texto guía que orienta al docente sobre qué redactar en cada sección. \\
+\texttt{CharacterCount} & \texttt{@tiptap/extension-character-count} & Límite máximo de 2500 palabras por sección institucional. & Validación cliente \\
 \hline
 \end{tabularx}
-\caption{Extensiones de Formato TipTap y Salida HTML Estructurada.}
-\label{tab:tiptap_ext}
+\caption{Extensiones habilitadas en el editor enriquecido TipTap.}
+\label{tab:tiptap_extensions}
 \end{table}
 
-\subsection{Métricas de Reducción de Pérdida de Datos}
-Las pruebas de laboratorio demostraron que el autoguardado con debounce de 1500 ms redujo a cero la pérdida de datos ante cierres inesperados de pestaña, enviando únicamente una petición HTTP cuando el usuario hace una pausa natural en la digitación.
+\subsection{Matriz de Transición del Indicador de Autoguardado}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.5cm}|m{2.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Estado} & \textbf{Texto del Indicador} & \textbf{Icono / Color} & \textbf{Condición Técnica de Disparo} \\
+\hline
+Inactivo & \textit{``Todo guardado''} & Check verde & El contenido en pantalla coincide exactamente con la base de datos. \\
+\hline
+Escritura & \textit{``Guardando cambios...''} & Spinner azul & El usuario tipea; temporizador debounce activo ($<800\text{ ms}$). \\
+\hline
+Éxito & \textit{``Guardado en tiempo real''} & Nube verde & Petición PUT confirmada con código HTTP 200 OK. \\
+\hline
+Error & \textit{``Sin conexión - Guardado local''} & Alerta ámbar & Error de red; respaldo asegurado en \texttt{localStorage}. \\
+\hline
+\end{tabularx}
+\caption{Estados visuales del mecanismo de autoguardado.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -197,9 +253,9 @@ Las pruebas de laboratorio demostraron que el autoguardado con debounce de 1500 
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 22/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 21/09/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 22/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 21/09/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -216,15 +272,73 @@ Las pruebas de laboratorio demostraron que el autoguardado con debounce de 1500 
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 22/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 21/09/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Pruebas de Desempeño y Consumo de Ancho de Banda con Debounce de 1500 ms.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.6 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.6 \\
+\hline
+Nombre de la Tarjeta & Integración del Editor TipTap con autoguardado debounce \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 16 de septiembre al 21 de septiembre de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Andrea Vásquez (AV), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & \texttt{RichTextEditor} con autoguardado y formato HTML limpio \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 2 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.6 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Pruebas de Carga y Sanitización del Editor}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Prueba de Seguridad} & \textbf{Carga Inyectada (Payload de Prueba)} & \textbf{Salida Filtrada por DOMPurify} & \textbf{Estado} \\
+\hline
+TC-SEC-01 & \texttt{<script>alert('XSS')</script>} & Eliminado por completo (cadena vacía) & SUPERADO \\
+\hline
+TC-SEC-02 & \texttt{<img src=x onerror="alert(1)">} & \texttt{<img src="x">} (evento suprimido) & SUPERADO \\
+\hline
+TC-SEC-03 & \texttt{<a href="javascript:void(0)">Link</a>} & \texttt{<a>Link</a>} (protocolo suprimido) & SUPERADO \\
+\hline
+TC-PERF-01 & Tipeo rápido sostenido (80 WPM por 2 minutos) & 3 llamadas HTTP consolidadas por debounce & SUPERADO \\
+\hline
+\end{tabularx}
+\caption{Pruebas de seguridad XSS y desempeño de debounce.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{90c812a - feat(editor): TipTap integration, useDebounce 800ms y sanitizacion HTML con DOMPurify}
+    \item \textbf{Archivos Afectados:} \texttt{frontend/src/components/editor/*}, \texttt{Entregables\_Latex/Fase\_3/3.6*.tex}
 \end{itemize}
+
 
 \end{document}

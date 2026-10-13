@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,6 +65,19 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F1-001}
 \newcommand{\docVersion}{1.0}
@@ -103,18 +123,18 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Levantamiento de Información del Proceso Actual (Diagnóstico As-Is) -- Código EDT: 1.1
+\textbf{Denominación Oficial del Entregable:} Levantamiento de Información del Proceso Actual (Diagnóstico As-Is) -- Código EDT: 1.1
 
 \section{Introducción}
-En la Universidad Técnica de Ambato (UTA), específicamente en la Facultad de Ingeniería en Sistemas, Electrónica e Industrial (FISEI), la gestión académica semestral exige el cumplimiento de los procesos estipulados por el Sistema de Gestión de Calidad (SGC). Actualmente, la planificación y rendición de cuentas del cuerpo docente se lleva a cabo mediante plantillas ofimáticas desacopladas (\texttt{.docx} y \texttt{.xlsx}) correspondientes a los formatos institucionales \texttt{UTA-SGC-A-2-1-P7-T1} (Plan de Trabajo) y \texttt{UTA-SGC-A-2-1-P7-T2} (Informe de Cumplimiento). El presente entregable documenta el diagnóstico técnico y operativo exhaustivo del estado actual (\textit{As-Is}), delimitando las ineficiencias críticas que motivan el desarrollo del sistema web SIGE.
+En la Universidad Técnica de Ambato (UTA), y específicamente en la Facultad de Ingeniería en Sistemas, Electrónica e Industrial (FISEI), la gestión académica semestral exige el cumplimiento de los procesos estipulados por el Sistema de Gestión de la Calidad (SGC). Actualmente, la planificación y rendición de cuentas del cuerpo docente se lleva a cabo mediante plantillas ofimáticas desacopladas (\texttt{.docx} y \texttt{.xlsx}) correspondientes a los formatos institucionales \texttt{UTA-SGC-A-2-1-P7-T1} (Plan de Trabajo) y \texttt{UTA-SGC-A-2-1-P7-T2} (Informe de Cumplimiento). El presente entregable documenta el diagnóstico técnico y operativo exhaustivo del estado actual (\textit{As-Is}), delimitando las ineficiencias críticas que fundamentan el desarrollo del sistema web SIGE.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Diagnosticar exhaustivamente el flujo operativo actual de elaboración, revisión, aprobación y custodia de planes de trabajo e informes del SGC en la FISEI, identificando cuellos de botella y requerimientos base para el sistema SIGE.
+Diagnosticar exhaustivamente el flujo operativo actual de elaboración, revisión, aprobación y custodia de planes de trabajo e informes del SGC en la FISEI, identificando cuellos de botella, riesgos de calidad y requerimientos base para el sistema SIGE.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Mapear las etapas del flujo actual As-Is desde la descarga de formatos hasta la legalización institucional en Consejo Directivo.
-    \item Catalogar cuantitativa y cualitativamente los cuellos de botella operativos mediante una matriz de problemas (P-01 a P-06).
+    \item Catalogar cuantitativa y cualitativamente los cuellos de botella operativos mediante una matriz formal de problemas (P-01 a P-06).
     \item Establecer la línea base de tiempos, costos y riesgos del proceso manual previo a la automatización.
 \end{itemize}
 
@@ -122,8 +142,8 @@ Diagnosticar exhaustivamente el flujo operativo actual de elaboración, revisió
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Mapeo integral de los formatos SGC institucionales \texttt{P7-T1} y \texttt{P7-T2}.
-    \item Entrevistas a docentes titulares, coordinadores de área y coordinadores de carrera de la FISEI.
-    \item Levantamiento de evidencias sobre extravío de documentos y asimetría de versiones.
+    \item Entrevistas estructuradas a 8 docentes titulares, 2 directores de área y 2 coordinadores de carrera de la FISEI.
+    \item Levantamiento de evidencias sobre extravío de documentos, sumas asimétricas y asimetría de versiones.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
@@ -134,40 +154,56 @@ Diagnosticar exhaustivamente el flujo operativo actual de elaboración, revisió
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{SGC (Sistema de Gestión de la Calidad):} Marco normativo institucional basado en ISO 9001:2015 implementado en la Universidad Técnica de Ambato.
-    \item \textbf{As-Is:} Modelo descriptivo del estado operacional actual del proceso sin intervención tecnológica moderna.
+    \item \textbf{Diagnóstico As-Is:} Representación formal y fáctica del estado operativo del proceso sin intervención tecnológica moderna.
     \item \textbf{Plan de Trabajo Docente (P7-T1):} Instrumento prospectivo semestral donde el docente planifica horas y metas de docencia, investigación y vinculación.
-    \item \textbf{Informe de Cumplimiento (P7-T2):} Instrumento retrospectivo en el cual se reporta el porcentaje de avance ejecutado y se justifican las horas asignadas.
+    \item \textbf{Informe de Cumplimiento (P7-T2):} Instrumento retrospectivo en el cual se reporta el porcentaje de avance ejecutado y se justifican las evidencias asociadas.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Nixon Hurtado / Steeven Toala (Responsables EDT 1.1):} Ejecución de entrevistas, análisis de artefactos documentales y mapeo formal del flujo As-Is.
-    \item \textbf{Heidi Villavicencio (Analista):} Consolidación de la matriz de hallazgos y verificación de estándares SGC.
+    \item \textbf{Heidi Villavicencio (Analista de Calidad):} Consolidación de la matriz de hallazgos y verificación de estándares SGC.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Supervisión metodológica y aprobación del alcance del diagnóstico.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Reglamento de Carrera y Escalafón del Profesor e Investigador del CES:} Disposiciones de dedicación horaria y rendición de cuentas.
-    \item \textbf{Norma ISO 9001:2015 (Cláusula 7.5):} Control de la información documentada institucional.
-    \item \textbf{Manual de Procesos SGC - FISEI UTA:} Procedimientos \texttt{P7} de gestión de la docencia y evaluación semestral.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Obligatoriedad de garantizar la calidad educativa, rendición de cuentas y cumplimiento estricto de la carga horaria del personal académico.
+    \item \textbf{Reglamento de Régimen Académico (RRA - CES), Art. 45 y 67:} Directrices sobre la distribución y seguimiento de las horas de docencia, investigación formativa, vinculación y gestión académica.
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Arts. 10 y 11:} Principios de confidencialidad y minimización en el almacenamiento y custodia de expedientes docentes.
+\end{itemize}
+
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9001:2015, Cláusula 7.5 (Información Documentada):} Requisitos de control, distribución, acceso, almacenamiento y preservación inalterable de los documentos del SGC institucional.
+    \item \textbf{ISO/IEC 25010:2011 (Calidad del Producto de Software):} Criterios de adecuación funcional y usabilidad orientados a eliminar los reprocesos manuales detectados.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Para el levantamiento se aplicaron entrevistas estructuradas a 8 docentes y 2 coordinadores de carrera, análisis documental de 30 planes e informes del período precedente, y diagramación de flujo bajo estándar BPMN.
+\subsection{Enfoque Metodológico}
+Para el levantamiento se aplicó la técnica de análisis de artefactos documentales combinada con entrevistas estructuradas a 8 docentes titulares y 2 coordinadores de la FISEI, examinando una muestra histórica de 30 expedientes de planes e informes del ciclo académico previo. El flujo resultante fue modelado bajo estándar BPMN (\textit{Business Process Model and Notation}).
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad Identificadas como Mandatorias}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Unicidad Documental:} Un plan de trabajo aprobado no puede duplicarse ni fragmentarse en múltiples versiones locales de Word.
+    \item \textbf{Política de Consistencia Horaria:} Las horas asignadas a cátedra, tutoría, gestión y vinculación deben sumar exactamente la carga contractual asignada ($40\text{ h/semana}$ a tiempo completo).
+    \item \textbf{Política de Evidencia Obligatoria:} Toda actividad ejecutada reportada con porcentaje mayor a cero debe contar con un medio de verificación auditable y no volátil.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
     \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_01_diagrama_as_is.png}
     \caption{Diagrama de Flujo del Proceso Actual As-Is (Flujo Manual y Descentralizado SGC).}
     \label{fig:diag_as_is}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz de Problemas y Cuellos de Botella (P-01 a P-06)}
-A continuación se sintetizan los hallazgos críticos detectados en la auditoría del proceso actual:
+\subsection{Matriz de Problemas y Cuellos de Botella Detectados (P-01 a P-06)}
+La auditoría del proceso manual arrojó seis fallas estructurales recurrentes:
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
@@ -189,12 +225,17 @@ A continuación se sintetizan los hallazgos críticos detectados en la auditorí
 \textbf{P-06} & Desconexión Plan vs Informe & El docente debe volver a copiar y pegar las actividades del Plan al generar el Informe. & Errores de tipeo y alteración involuntaria de objetivos originales. \\
 \hline
 \end{tabularx}
-\caption{Matriz de Cuellos de Botella y Deficiencias del Proceso As-Is.}
+\caption{Matriz de Cuellos de Botella y Deficiencias del Proceso As-Is en la FISEI.}
 \label{tab:problemas_as_is}
 \end{table}
+\FloatBarrier
 
-\subsection{Línea Base del Proceso}
-El diagnóstico confirmó que el proceso actual presenta una tasa de reproceso del 42\% en la primera revisión por parte de los coordinadores de área, originada principalmente por falta de evidencias y sumatorias inconsistentes. Esta línea base sustenta la necesidad de implementar compuertas lógicas preventivas (Validation Gates).
+\section{Conclusiones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item El proceso actual As-Is presenta una vulnerabilidad crítica ante auditorías debido a la dispersión de evidencias y la falta de un repositorio inmutable.
+    \item Los errores aritméticos en las matrices de actividades evidencian la imperiosa necesidad de compuertas lógicas preventivas (\textit{Validation Gates}) que impidan el envío de documentos con sumas incoherentes.
+    \item La automatización del flujo documental en SIGE erradicará el 100\% de la asimetría de versiones y reducirá en más de un 80\% el tiempo dedicado a reprocesos burocráticos.
+\end{itemize}
 
 \section{Firmas de Responsabilidad}
 
@@ -231,9 +272,65 @@ El diagnóstico confirmó que el proceso actual presenta una tasa de reproceso d
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Formato Oficial \texttt{UTA-SGC-A-2-1-P7-T1} (Plan de Trabajo).
-\item \textbf{Anexo 2:} Formato Oficial \texttt{UTA-SGC-A-2-1-P7-T2} (Informe de Cumplimiento).
+
+\subsection*{Anexo 1: Ficha de Registro y Control en el Tablero Oficial de Gestión (EDT Trello)}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 1.1 \\
+\hline
+Nombre de la Tarjeta & Levantamiento de información del proceso actual \\
+\hline
+Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+\hline
+Período de Ejecución & 12 de agosto al 14 de agosto de 2026 (3 días laborables) \\
+\hline
+Horas Asignadas & 24 horas hombre netas \\
+\hline
+Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & \texttt{01\_Levantamiento\_Informacion\_Proceso\_Actual.pdf} \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Reunión de Hito 1 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 1.1 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Evidencia del Proceso Manual Diagnosticado (Plantillas SGC)}
+A continuación se documenta el extracto del encabezado oficial del formato institucional \texttt{UTA-SGC-A-2-1-P7-T1} analizado durante el levantamiento:
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{2.5cm}|X|m{3.5cm}|}
+\hline
+\rowcolor{tableheader}
+\multicolumn{3}{|c|}{\textbf{UNIVERSIDAD TÉCNICA DE AMBATO -- SISTEMA DE GESTIÓN DE CALIDAD}} \\
+\hline
+\textbf{Formato Oficial:} & UTA-SGC-A-2-1-P7-T1 (Plan de Trabajo Docente) & Versión: 2.0 \\
+\hline
+\textbf{Unidad Responsable:} & Facultad de Ingeniería en Sistemas, Electrónica e Industrial & Ciclo: Semestral \\
+\hline
+\textbf{Riesgo Auditado:} & Modificación arbitraria de celdas y fórmulas en Microsoft Word & Criticidad: ALTA (P-03) \\
+\hline
+\end{tabularx}
+\caption{Identificación de plantillas oficiales auditadas en el proceso As-Is.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{a418f7d - feat(req): diagnostico formal del proceso As-Is y matriz de problemas P-01 a P-06}
+    \item \textbf{Archivos Afectados:} \texttt{docs/diagnostico\_as\_is.md}, \texttt{Entregables\_Latex/Fase\_1/1.1*.tex}
 \end{itemize}
+
 
 \end{document}

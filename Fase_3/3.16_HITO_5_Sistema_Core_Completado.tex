@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-016}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{HITO DE CONTROL / CODE FREEZE FASE 3}
-\newcommand{\docElaboracion}{08/10/2026}
-\newcommand{\docRevision}{08/10/2026}
+\newcommand{\docProceso}{GESTIÓN DE CALIDAD Y CONTROL DE HITOS / HITO 5 CORE}
+\newcommand{\docElaboracion}{12/10/2026}
+\newcommand{\docRevision}{12/10/2026}
 \newcommand{\docTitulo}{HITO 5: SISTEMA CORE COMPLETADO}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,98 +123,161 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} HITO 5: Sistema Core Completado (Code Freeze) -- Código EDT: 3.16
+\textbf{Denominación Oficial del Entregable:} HITO 5: Sistema Core Completado -- Código EDT: 3.16
 
 \section{Introducción}
-La culminación de la Fase 3: Desarrollo Core representa el logro técnico más trascendente del proyecto SIGE. A lo largo de 24 días laborables y 192 horas de desarrollo continuo (del 07 de septiembre al 08 de octubre de 2026), se implementó exitosamente el 100\% de las funcionalidades estipuladas en la especificación SRS IEEE 830. El presente informe formaliza la sesión de congelamiento de código (Code Freeze) ejecutada el jueves 08 de octubre de 2026, previo al feriado nacional del 9 de octubre (Independencia de Guayaquil). Se consolida la versión operativa v0.9 con el tag Git \texttt{v0.9-beta-freeze} y se autoriza el paso a la Fase 4 de Pruebas y Control de Calidad.
+El cierre formal de la Fase 3 (Implementación y Desarrollo) constituye el hito más trascendental en el ciclo de vida del proyecto SIGE: la culminación exitosa de la versión funcional v0.9 (\textit{Core System Completed}) que integra la totalidad de las 24 Historias de Usuario aprobadas en la especificación de requisitos. A lo largo de cuatro Sprints de desarrollo ágil ejecutados entre el 1 de septiembre y el 12 de octubre de 2026, el equipo completó los módulos de persistencia relacional en PostgreSQL 18, interfaces SPA en React, Matriz Dinámica interactiva, Validation Gates bloqueantes, repositorio MinIO S3, revisión colegiada, corrección ortográfica y exportación oficial en PDF y Word. El presente informe formaliza la entrega y aprobación colegiada del sistema core, autorizando el paso a la Fase 4 de Pruebas y Despliegue.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Consolidar, evaluar y aprobar formalmente el Hito 5: Sistema Core Completado (Code Freeze), certificando la disponibilidad funcional del software para el inicio de la Fase 4 de Pruebas.
+Consolidar, auditar y legalizar la entrega formal del Sistema Core Completado del proyecto SIGE correspondiente al Hito 5 de la EDT, certificando la cobertura total de los requerimientos funcionales del SGC.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Verificar el cumplimiento del 100\% de los 24 Requerimientos Funcionales (RF-01 a RF-24).
-    \item Realizar el cierre y fusión formal de Pull Requests en la rama principal del repositorio Git.
-    \item Generar la etiqueta de versión inmutable \texttt{v0.9-beta-freeze}.
-    \item Suscribir el acta formal de aprobación de Hito 5 por parte del docente evaluador Ing. Paulo Torres.
+    \item Auditar el cumplimiento de las 16 tareas técnicas que integran la Fase 3 en el Tablero Trello y Cronograma Gantt.
+    \item Demostrar de extremo a extremo (\textit{End-to-End}) el ciclo de vida completo de un Plan de Trabajo y un Informe de Cumplimiento.
+    \item Formalizar el Acta Oficial de Cierre de Construcción y pase a la Fase de Aseguramiento de Calidad (QA).
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Consolidado de los 16 entregables de Fase 3 ejecutados entre el 07 de septiembre y el 08 de octubre de 2026.
-    \item Congelamiento de funcionalidades: no se añadirán nuevas características durante la Fase 4 de QA.
+    \item Auditoría global de los 15 entregables técnicos previos de la Fase 3 (EDT 3.1 a 3.15).
+    \item Verificación de los 384 horas-hombre netas programadas y ejecutadas en la Fase 3.
+    \item Certificación de operación conjunta en los 5 contenedores Docker orquestados.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Reportes de pruebas de carga o pentesting (objeto de la Fase 4).
+    \item Informe formal de pruebas unitarias automatizadas y pentesting de seguridad (correspondiente a Fase 4).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Code Freeze (Congelamiento de Código):} Punto en el ciclo de desarrollo donde se suspende estrictamente la adición de nuevas funcionalidades para permitir un ciclo riguroso de pruebas y estabilización.
-    \item \textbf{Release Tag:} Puntero inmutable en el historial de Git que marca una versión específica del código fuente.
-    \item \textbf{Hito 5 (Sistema Core Completado):} Hito contractual que certifica que el software posee todas las capacidades requeridas por el usuario.
+    \item \textbf{Sistema Core Completado (Release Candidate):} Versión del software que contiene todas las funciones de negocio operativas y estabilizadas, lista para pruebas de estrés y auditoría de seguridad.
+    \item \textbf{Trazabilidad End-to-End:} Capacidad de rastrear un requisito desde su origen en el SRS hasta su almacenamiento físico, interfaz visual y reporte final.
+    \item \textbf{Feature Freeze (Congelamiento de Funcionalidades):} Punto del proyecto donde no se aceptan nuevas características para focalizar los recursos en estabilización y pruebas.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Equipo de Proyecto SIGE (Responsables EDT 3.16):} Cierre de ramas de desarrollo, empaquetado del tag Git y sustentación general.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador / Patrocinador):} Revisión integral de cobertura, inspección del sistema y aprobación formal de cierre de Fase 3.
+    \item \textbf{Steeven Toala (Líder de Proyecto / Arquitecto):} Consolidación del paquete técnico del sistema core y sustentación del Hito 5.
+    \item \textbf{Heidi Villavicencio (Analista de Calidad):} Verificación de la matriz de criterios de aceptación de las 24 Historias de Usuario.
+    \item \textbf{Nixon Hurtado / Andrea Vásquez (Equipo de Desarrollo):} Verificación de estabilidad integral de backend y frontend.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Evaluación y aprobación formal del Hito 5.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{IEEE Std 1074-2006:} Standard for Developing a Software Project Life Cycle Process.
-    \item \textbf{Guía PMBOK (7ma Edición):} Gestión de la Calidad y Aprobación de Entregables Principales.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Garantía de rendición de cuentas e informatización de la gestión académica.
+    \item \textbf{Reglamento de Régimen Académico (RRA - CES), Art. 45 y 67.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{PMBOK Guide (7th Edition):} Gestión de la entrega de valor y cierre formal de etapas de construcción.
+    \item \textbf{ISO 9001:2015, Cláusula 8.3.6 (Cambios del diseño y desarrollo) y Cláusula 8.5:} Validación de la entrega del servicio.
+    \item \textbf{ISO/IEC 25010:2011:} Evaluación global de calidad del producto de software.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se realizó una sesión técnica de Code Freeze y sustentación de 90 minutos el 08 de octubre de 2026. En la Figura \ref{fig:f3_16_core} se ilustra el tablero consolidado de avance del proyecto.
+\subsection{Enfoque Metodológico}
+Para la aprobación del Hito 5 se llevó a cabo una sesión formal de inspección de arquitectura y pruebas de extremo a extremo (\textit{E2E}). Se ejecutó una prueba completa que abarcó: 1. Inicio de sesión con credenciales docentes; 2. Creación de un plan semestral 2026-B; 3. Llenado guiado mediante el Wizard; 4. Redacción con TipTap y verificación de autoguardado; 5. Registro de 6 actividades en la matriz dinámica verificando la suma al 100.00\%; 6. Carga de evidencias PDF en MinIO; 7. Superación de las 6 Validation Gates; 8. Revisión y observaciones del coordinador; 9. Estampado de cascada de firmas digitales; y 10. Exportación de PDF vectorial y Word idénticos al SGC.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de Cierre de Construcción}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Cobertura Total de Requisitos:} Todas y cada una de las 24 Historias de Usuario del SRS deben encontrarse implementadas y operativas sin excepciones.
+    \item \textbf{Política de Congelamiento de Código (Code Freeze):} Con la aprobación del Hito 5, la rama principal (\texttt{main}) entra en estado de congelamiento de nuevas funciones, permitiendo únicamente parches de corrección de defectos durante la Fase 4.
+    \item \textbf{Política de Unanimidad Colegiada:} La formalización del Hito 5 requiere el aval unánime del equipo de proyecto y la rúbrica del Docente Evaluador.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/trello_tablero_fases.jpg}
-    \caption{Tablero de Control del Proyecto SIGE con Fase 3 Core Culminada al 100\%.}
-    \label{fig:f3_16_core}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_dashboard_resumen.png}
+    \caption{Captura Real del Dashboard del Sistema Core v0.9 Totalmente Integrado y Operativo.}
+    \label{fig:hito5_dashboard}
 \end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/trello_gantt_cronograma.png}
+    \caption{Cronograma Gantt en MS Project evidenciando el Cumplimiento al 100\% del Hito 5.}
+    \label{fig:hito5_gantt}
+\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz de Cumplimiento de Requerimientos Funcionales en Fase 3}
-\begin{table}[htbp]
+\subsection{Matriz de Auditoría y Aprobación de Entregables de la Fase 3}
+A continuación se detalla la matriz que certifica la auditoría y estado de cumplimiento de los 16 entregables que componen la Fase 3 de Construcción:
+
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|c|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Código} & \textbf{Entregable Técnico} & \textbf{Horas} & \textbf{Criterio de Aceptación Verificado} & \textbf{Resultado} \\
+\hline
+\textbf{EDT 3.1} & Tablas e Índices DDL & 32 h & 13 tablas en PostgreSQL 18 con restricciones CHECK y GIN. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.2} & Datos y Catálogos Seed & 24 h & Inicialización de facultades, carreras, roles y usuarios semilla. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.3} & Autenticación JWT y RBAC & 32 h & Control de acceso por roles, rate limiting y contraseñas Argon2id. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.4} & Cliente Base y Layouts & 32 h & SPA React + Vite con layouts responsivos y Dashboard de métricas. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.5} & Wizard Modular en Pestañas & 32 h & Asistente guiado en 5 pasos con barra de progreso y gates. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.6} & Editor TipTap con Debounce & 32 h & Edición enriquecida, autoguardado a los 800 ms y vista A4. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.7} & Endpoints de Persistencia & 24 h & Controladores RESTful con transaccionalidad ACID en DB. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.8} & Hito 3: Sprint 2 Review & 16 h & Demostración operativa de Wizard y persistencia aprobada. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.9} & Matriz Dinámica de Actividades & 32 h & Recálculo reactivo con \texttt{useReducer}, suma al 100\% y cronograma. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.10} & Middlewares Validation Gates & 32 h & Cadena de 6 gates bloqueantes con respuestas HTTP 422. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.11} & MinIO S3 y Evidencias & 32 h & Bucket privado, URLs prefirmadas de 15 min y hash SHA-256. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.12} & Hito 4: Sprint 3 Review & 16 h & Demostración de matriz dinámica y storage S3 aprobada. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.13} & Revisión y Cascada Firmas & 24 h & Panel de comité con drawer y firmas secuenciales inmutables. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.14} & Asistencia Ortográfica NLP & 32 h & Motor local LanguageTool (puerto 8010) y fallback Gemini API. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.15} & Motor Exportación PDF/Word & 24 h & Salidas oficiales idénticas al formato SGC con código QR. & \textbf{APROBADO} \\
+\hline
+\textbf{EDT 3.16} & Hito 5: Sistema Core & 16 h & Auditoría integral, acta de cierre y pase a fase de pruebas. & \textbf{APROBADO} \\
+\hline
+\multicolumn{2}{|r|}{\textbf{TOTAL HORAS FASE 3:}} & \textbf{400 h} & \multicolumn{2}{l|}{\textbf{100\% de Objetivos Técnicos Cumplidos}} \\
+\hline
+\end{tabularx}
+\caption{Matriz oficial de auditoría de entregables de la Fase 3 de Construcción.}
+\label{tab:auditoria_fase3}
+\end{table}
+
+\subsection{Consolidado Global de Desempeño del Proyecto al Hito 5}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{4.0cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.2cm}|c|c|X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Módulo} & \textbf{Requerimientos SRS} & \textbf{Componentes Implementados} & \textbf{Horas} & \textbf{Estado} \\
+\textbf{Fase del Proyecto} & \textbf{Horas Planificadas} & \textbf{Horas Ejecutadas} & \textbf{Resultado de Gestión} \\
 \hline
-Base de Datos & RF-01, RF-02, RF-23 & 13 tablas relacionales DDL y catálogos en PostgreSQL 18 & 56 h & Aprobado \\
+Fase 1: Análisis y Planificación & 192 h & 192 h & 8 entregables aprobados formalmente (Hito 1). \\
 \hline
-Seguridad & RF-01, RF-02 & JWT Auth, bcrypt y middlewares RBAC & 32 h & Aprobado \\
+Fase 2: Diseño y Arquitectura & 192 h & 192 h & 7 entregables aprobados formalmente (Hito 2). \\
 \hline
-Frontend & RF-03 a RF-06 & SPA React + Vite, Wizard de 4 pasos y Editor TipTap & 104 h & Aprobado \\
+Fase 3: Implementación y Desarrollo & 400 h & 400 h & 16 entregables aprobados formalmente (Hitos 3, 4 y 5). \\
 \hline
-Matriz \& Gates & RF-07 a RF-09, RF-13, 14 & Matriz interactiva reactiva y Validation Gates en Express & 80 h & Aprobado \\
-\hline
-Storage & RF-10 a RF-12 & Custodia MinIO S3 con hashes SHA-256 inmutables & 32 h & Aprobado \\
-\hline
-Comité \& Firmas & RF-15 a RF-18 & Panel de Comité, observaciones y Cascada de 3 firmas & 40 h & Aprobado \\
-\hline
-Asistencia & RF-19, RF-20 & Microservicio LanguageTool local y Google Gemini API & 32 h & Aprobado \\
-\hline
-Exportación & RF-21, RF-22 & Motor de salida idéntica SGC en PDF y Word con QR & 32 h & Aprobado \\
-\hline
-\multicolumn{3}{|r|}{\textbf{TOTAL HORAS INVERTIDAS EN FASE 3:}} & \textbf{192 h} & \textbf{100\%} \\
+\textbf{Total Acumulado (F1 + F2 + F3):} & \textbf{784 h} & \textbf{784 h} & \textbf{Proyecto en cronograma perfecto (SPI = 1.00).} \\
 \hline
 \end{tabularx}
-\caption{Balance de Cobertura Funcional y Cierre de la Fase 3: Desarrollo Core.}
-\label{tab:cierre_fase3}
+\caption{Consolidado del esfuerzo invertido en el proyecto al Hito 5.}
 \end{table}
-
-\subsection{Acta de Declaración de Code Freeze y Paso a Fase 4}
-El docente evaluador Ing. Paulo Torres certifica la culminación satisfactoria del Sistema Core en su versión v0.9, autorizando el inicio inmediato de la Fase 4 de Pruebas y Control de Calidad a partir del lunes 12 de octubre de 2026.
 
 \section{Firmas de Responsabilidad}
 
@@ -205,9 +288,9 @@ El docente evaluador Ing. Paulo Torres certifica la culminación satisfactoria d
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 08/10/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 12/10/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 08/10/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 12/10/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -224,16 +307,72 @@ El docente evaluador Ing. Paulo Torres certifica la culminación satisfactoria d
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 08/10/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 12/10/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Acta Formal de Congelamiento de Código (Code Freeze).
-\item \textbf{Anexo 2:} Registro del Tag Git \texttt{v0.9-beta-freeze} en el Repositorio Oficial.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.16 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.16 \\
+\hline
+Nombre de la Tarjeta & HITO 5: Sistema Core Completado \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 09 de octubre al 12 de octubre de 2026 (2 días laborables) \\
+\hline
+Horas Asignadas & 16 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV), Nixon Hurtado (NH), Andrea Vásquez (AV) \\
+\hline
+Entregable Oficial & Versión funcional v0.9 con todas las funciones del SRS \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.16 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Acta Formal de Cierre de Construcción (Hito 5)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.0cm}|X|}
+\hline
+\rowcolor{tableheader}
+\multicolumn{2}{|c|}{\textbf{ACTA INSTITUCIONAL DE CIERRE DE FASE 3 -- SISTEMA SIGE}} \\
+\hline
+\textbf{Fecha de Sesión:} & 12 de octubre de 2026 \\
+\hline
+\textbf{Participantes:} & Steeven Toala (Líder Técnico / Arquitecto), Heidi Villavicencio (Analista de Calidad), Nixon Hurtado (Backend), Andrea Vásquez (Frontend), Ing. Paulo Torres (Docente Evaluador). \\
+\hline
+\textbf{Dictamen Oficial:} & Tras constatar la integración fluida de los 5 contenedores Docker, la completitud de las 24 Historias de Usuario, el funcionamiento riguroso de las Validation Gates y el motor de exportación oficial SGC, el Comité aprueba por unanimidad el Hito 5 (Sistema Core Completado) y autoriza el inicio inmediato de la Fase 4 de Pruebas y Despliegue. \\
+\hline
+\end{tabularx}
+\caption{Acta oficial de aprobación y cierre del Hito 5.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Etiqueta de Versión (\textit{Release Tag}):} \texttt{v0.9.0-core-completed-approved}
+    \item \textbf{Commit de Consolidación:} \texttt{9201fa8 - release(core): congelamiento de construccion del sistema core SIGE y acta de aprobacion}
+    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_3/*}
 \end{itemize}
+
 
 \end{document}

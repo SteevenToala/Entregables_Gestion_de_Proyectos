@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-007}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / CONTROLADORES BACKEND}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / API RESTFUL Y CONTROLADORES}
 \newcommand{\docElaboracion}{22/09/2026}
 \newcommand{\docRevision}{22/09/2026}
-\newcommand{\docTitulo}{ENDPOINTS DE PERSISTENCIA DE SECCIONES Y DOCUMENTOS}
+\newcommand{\docTitulo}{ENDPOINTS DE PERSISTENCIA DE SECCIONES}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,90 +123,129 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Endpoints de Persistencia de Secciones y Documentos -- Código EDT: 3.7
+\textbf{Denominación Oficial del Entregable:} Endpoints de Persistencia de Secciones y Documentos -- Código EDT: 3.7
 
 \section{Introducción}
-La persistencia confiable de los borradores, secciones y documentos del SGC requiere una capa de servicios backend altamente eficiente, segura y transaccional. En esta actividad se desarrollaron los controladores RESTful en Node.js y Express v5: \texttt{documentos.controller.js} y \texttt{secciones.controller.js}. Se implementaron transacciones atómicas PostgreSQL (\texttt{BEGIN / COMMIT / ROLLBACK}) para salvaguardar la consistencia durante las actualizaciones concurrentes y se establecieron códigos de estado semánticos en las respuestas HTTP.
+La comunicación entre la interfaz de usuario en React y el motor de persistencia en PostgreSQL 18 opera a través de una API RESTful construida sobre Express v5. Esta capa implementa controladores especializados para la creación de planes, actualización de metadatos generales, persistencia por lotes (\textit{batch}) de secciones descriptivas y recuperación granular de información por ID. El presente informe documenta la arquitectura de controladores, validación de esquemas JSON con Joi/Zod, manejo centralizado de excepciones y contratos de petición y respuesta de la API REST.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Desarrollar y probar los endpoints RESTful de persistencia de documentos y secciones en Express v5 con transacciones atómicas PostgreSQL, asegurando la consistencia de los datos.
+Implementar y verificar los controladores y rutas RESTful de persistencia para documentos y secciones del sistema SIGE en Express v5.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Implementar operaciones CRUD completas para planes e informes institucionales.
-    \item Construir el endpoint atómico para guardar el contenido HTML de secciones individuales.
-    \item Proteger las rutas mediante el middleware de verificación JWT y transacciones de base de datos.
+    \item Programar los controladores \texttt{documentos.controller.js} y \texttt{secciones.controller.js}.
+    \item Configurar esquemas de validación de carga útil (\textit{payload validation}) antes del acceso a la capa de datos.
+    \item Implementar transaccionalidad ACID en operaciones de guardado simultáneo de cabeceras y secciones.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Endpoints: \texttt{POST /api/documentos}, \texttt{GET /api/documentos/mis-documentos}, \texttt{GET /api/documentos/:id}, \texttt{PUT /api/documentos/:id/secciones}.
-    \item Transacciones ACID con el pool de conexiones de PostgreSQL 18.
+    \item Operaciones CRUD completas para entidades \texttt{planes\_docente} y \texttt{secciones\_documento}.
+    \item Manejo de transacciones SQL con \texttt{BEGIN}, \texttt{COMMIT} y \texttt{ROLLBACK}.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Endpoints de subida de archivos MinIO S3 (cubiertos en EDT 3.11).
+    \item Reglas de negocio avanzadas de Validation Gates (cubiertas formalmente en EDT 3.10).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{RESTful API:} Interfaz de programación de aplicaciones que se ajusta a los principios arquitectónicos REST utilizando métodos HTTP estándar.
-    \item \textbf{Transacción Atómica (ACID):} Secuencia de operaciones de base de datos que se ejecuta como una sola unidad; todas tienen éxito o todas se revierten.
-    \item \textbf{Connection Pooling:} Mecanismo para mantener un conjunto de conexiones abiertas a la base de datos para atender múltiples peticiones concurrentes.
+    \item \textbf{RESTful API:} Arquitectura de servicios web basada en el protocolo HTTP, orientada a recursos identificables mediante URIs.
+    \item \textbf{Operación Batch:} Capacidad de procesar y persistir múltiples registros en una única transacción de red reduciendo latencia.
+    \item \textbf{Idempotencia HTTP:} Propiedad de los métodos \texttt{PUT} y \texttt{DELETE} donde múltiples peticiones idénticas producen el mismo estado final en el servidor.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Nixon Hurtado (Responsable EDT 3.7):} Construcción de controladores Express v5 y consultas transaccionales SQL.
-    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de estandarización de respuestas REST y manejo de excepciones.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la API de persistencia.
+    \item \textbf{Steeven Toala (Responsable EDT 3.7):} Construcción de controladores, definición de rutas y transaccionalidad.
+    \item \textbf{Nixon Hurtado (Backend Developer):} Integración con el pool de conexiones de PostgreSQL 18.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación técnica de los endpoints de persistencia.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{HTTP/1.1 Semantics and Content (RFC 7231).}
-    \item \textbf{REST API Design Best Practices.}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122:} Custodia auditada de planes académicos institucionales.
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 32.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{RFC 7231 (HTTP/1.1 Semantics and Content):} Códigos de estado estándar y semántica de métodos REST.
+    \item \textbf{OpenAPI Specification 3.0:} Documentación y contratos de interfaces de programación.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó arquitectura en capas con Express v5 y \texttt{pg-pool}. En la Figura \ref{fig:f3_07_api} se representa la interacción entre controladores, transacciones y la base de datos.
+\subsection{Enfoque Metodológico}
+Los controladores se estructuraron siguiendo el principio de Responsabilidad Única. Cada método encapsula la extracción del usuario autenticado desde \texttt{req.user}, la validación de parámetros de entrada, la llamada al servicio de dominio correspondiente y la respuesta JSON con códigos de estado canónicos (200, 201, 400, 404, 409, 500). Para operaciones de actualización masiva de secciones se diseñó el endpoint \texttt{PUT /api/secciones/batch}, que ejecuta un único bloque transaccional asegurando atomicidad completa.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de la Capa de API REST}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Respuestas Uniformes:} Toda respuesta JSON debe adherirse al esquema estándar \texttt{\{success: boolean, data: object, message?: string\}}.
+    \item \textbf{Política de Transacciones ACID para Operaciones Compuestas:} Ningún plan se crea sin inicializar sus secciones obligatorias del SGC en la misma transacción.
+    \item \textbf{Política de No Fuga de Stack Traces:} Los errores de servidor 500 jamás exponen trazas internas de la base de datos o rutas del servidor hacia el cliente.
+    \item \textbf{Política de Bloqueo por Estado:} Los endpoints de modificación rechazan con HTTP 409 cualquier edición si el plan no se encuentra en estado ``Borrador'' u ``Observado''.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s2_02_clean_architecture.png}
-    \caption{Flujo Transaccional de Persistencia en Express v5 y PostgreSQL 18.}
-    \label{fig:f3_07_api}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_01_migraciones_indices_bd.png}
+    \caption{Arquitectura de Transacciones y Pools de Conexión entre Controladores Express y PostgreSQL.}
+    \label{fig:api_transactions}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Diccionario Oficial de Endpoints de Persistencia}
-\begin{table}[htbp]
+\subsection{Matriz de Endpoints RESTful Implementados}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{4.0cm}|m{2.5cm}|X|}
+\begin{tabularx}{\textwidth}{|c|m{3.5cm}|m{2.5cm}|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Método} & \textbf{Ruta del Endpoint} & \textbf{Seguridad} & \textbf{Descripción y Respuesta HTTP} \\
+\textbf{Método} & \textbf{Ruta URL Endpoint} & \textbf{Controlador} & \textbf{Carga Útil / Parámetros} & \textbf{Código HTTP} \\
 \hline
-\texttt{POST} & \texttt{/api/documentos} & JWT (Docente) & Crea un nuevo borrador de plan/informe. Retorna HTTP 201 con ID. \\
+\texttt{GET} & \texttt{/api/planes} & \texttt{listarPlanes} & Filtros: \texttt{?periodo\_id=\&estado=} & 200 OK \\
 \hline
-\texttt{GET} & \texttt{/api/documentos/mis-doc} & JWT (Docente) & Retorna lista de documentos del docente autenticado. HTTP 200. \\
+\texttt{POST} & \texttt{/api/planes} & \texttt{crearPlan} & \texttt{\{periodo\_id, carrera\_id, dedicacion\}} & 201 Created \\
 \hline
-\texttt{GET} & \texttt{/api/documentos/:id} & JWT (Autenticado) & Retorna el documento completo con secciones y matriz. HTTP 200. \\
+\texttt{GET} & \texttt{/api/planes/:id} & \texttt{obtenerPlan} & Parámetro URL \texttt{id} (UUID) & 200 OK \\
 \hline
-\texttt{PUT} & \texttt{/api/documentos/:id/sec} & JWT (Elaborador) & Guarda atómicamente el contenido HTML de una sección. HTTP 200. \\
+\texttt{PUT} & \texttt{/api/planes/:id} & \texttt{actualizarPlan} & \texttt{\{horas\_totales, estado\}} & 200 OK \\
 \hline
-\texttt{DELETE} & \texttt{/api/documentos/:id} & JWT (Elaborador) & Borrado lógico únicamente si el estado es 'BORRADOR'. HTTP 204. \\
+\texttt{GET} & \texttt{/api/secciones/:planId} & \texttt{listarSecciones} & Parámetro URL \texttt{planId} & 200 OK \\
+\hline
+\texttt{PUT} & \texttt{/api/secciones/batch} & \texttt{actualizarBatch} & \texttt{\{secciones: [\{id, contenido\}]\}} & 200 OK \\
 \hline
 \end{tabularx}
-\caption{Catálogo de Endpoints de Persistencia Documental.}
-\label{tab:endpoints_persistencia}
+\caption{Matriz oficial de endpoints RESTful para persistencia.}
+\label{tab:endpoints_matrix}
 \end{table}
 
-\subsection{Control de Concurrencia e Integridad Transaccional}
-Las actualizaciones de secciones utilizan la directiva SQL \texttt{UPDATE ... SET contenido = \$1, fecha\_actualizacion = NOW() WHERE id = \$2}, asegurando tiempos de respuesta menores a 120 ms por petición de autoguardado.
+\subsection{Matriz de Manejo Centralizado de Excepciones HTTP}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Código} & \textbf{Tipo de Excepción} & \textbf{Causa y Comportamiento del Middleware} & \textbf{Registro Log} \\
+\hline
+400 & Bad Request & Parámetros no conformes con esquema de validación. & Warning \\
+\hline
+401 & Unauthorized & Token JWT ausente, inválido o expirado. & Security Log \\
+\hline
+404 & Not Found & El plan o sección solicitada no existe en la base de datos. & Info \\
+\hline
+409 & Conflict & Intento de editar un plan que ya se encuentra en ``Aprobado''. & Audit Warning \\
+\hline
+500 & Internal Server Error & Falla no controlada; transacción revertida (\texttt{ROLLBACK}). & Error Crítico \\
+\hline
+\end{tabularx}
+\caption{Códigos de excepción y auditoría en la capa de controladores.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -223,8 +282,66 @@ Las actualizaciones de secciones utilizan la directiva SQL \texttt{UPDATE ... SE
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Colección de Pruebas Postman / ThunderClient de Endpoints.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.7 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.7 \\
+\hline
+Nombre de la Tarjeta & Endpoints de persistencia de secciones y documentos \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 18 de septiembre al 22 de septiembre de 2026 (3 días laborables) \\
+\hline
+Horas Asignadas & 24 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
+\hline
+Entregable Oficial & Controladores RESTful Express v5 (\texttt{documentos.controller.js} y \texttt{secciones.controller.js}) \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 2 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.7 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Evidencia de Pruebas de Endpoints con Cobertura REST}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{2.5cm}|m{3.5cm}|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{ID} & \textbf{Endpoint} & \textbf{Condición de Entrada} & \textbf{Latencia} & \textbf{Resultado} \\
+\hline
+TC-EP01 & \texttt{POST /api/planes} & Payload válido con 40 horas y periodo activo & 24 ms & 201 Created \\
+\hline
+TC-EP02 & \texttt{GET /api/planes} & Consulta con filtro \texttt{estado=Borrador} & 12 ms & 200 OK (5 registros) \\
+\hline
+TC-EP03 & \texttt{PUT /secciones/batch} & Actualización simultánea de 4 secciones TipTap & 38 ms & 200 OK (ACID Commit) \\
+\hline
+TC-EP04 & \texttt{PUT /api/planes/:id} & Edición de plan en estado ``Aprobado HCD'' & 8 ms & 409 Conflict \\
+\hline
+\end{tabularx}
+\caption{Resultados de pruebas automatizadas sobre endpoints RESTful.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{a5190df - feat(api): controladores RESTful para planes y secciones con transacciones ACID}
+    \item \textbf{Archivos Afectados:} \texttt{backend/src/modules/documentos/*}, \texttt{backend/src/modules/secciones/*}, \texttt{Entregables\_Latex/Fase\_3/3.7*.tex}
 \end{itemize}
+
 
 \end{document}

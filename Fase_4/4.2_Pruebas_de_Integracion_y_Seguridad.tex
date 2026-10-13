@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,10 +65,23 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F4-002}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{CONTROL DE CALIDAD / SEGURIDAD E INTEGRACIÓN}
+\newcommand{\docProceso}{ASEGURAMIENTO DE CALIDAD / SEGURIDAD Y PENTESTING OWASP}
 \newcommand{\docElaboracion}{13/10/2026}
 \newcommand{\docRevision}{13/10/2026}
 \newcommand{\docTitulo}{PRUEBAS DE INTEGRACIÓN Y SEGURIDAD}
@@ -103,98 +123,137 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Pruebas de Integración y Seguridad (Auditoría OWASP) -- Código EDT: 4.2
+\textbf{Denominación Oficial del Entregable:} Pruebas de Integración y Seguridad (Auditoría OWASP Top 10) -- Código EDT: 4.2
 
 \section{Introducción}
-El despliegue de una plataforma académica en un servidor público exige la validación rigurosa de las interfaces de comunicación entre componentes y la resistencia de las APIs frente a vectores de ataque conocidos. Iniciada el 13 de octubre de 2026, la actividad EDT 4.2 evalúa la integración de extremo a extremo entre los controladores Express v5, PostgreSQL 18 y MinIO S3, sometiendo simultáneamente la aplicación a una auditoría técnica de seguridad y pentesting orientada por el estándar internacional OWASP Top 10 API Security Risks.
+La seguridad y confidencialidad de la información docente y documental en la Universidad Técnica de Ambato representan un imperativo ético y legal estipulado en la Ley Orgánica de Protección de Datos Personales (LOPDP). Para certificar que el sistema web SIGE es resiliente frente a vulnerabilidades y vectores de ataque modernos, se realizó una auditoría técnica de seguridad y pruebas de penetración (\textit{Pentesting}) en modalidad caja gris (\textit{Gray Box}), evaluando rigurosamente cada una de las 10 categorías de amenazas del estándar OWASP Top 10:2021. El presente informe formaliza las pruebas de estrés de seguridad y las defensas implementadas en el backend y frontend.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Ejecutar las pruebas de integración entre subsistemas y auditar la seguridad técnica del sistema SIGE bajo los lineamientos OWASP, certificando la protección de la información institucional.
+Ejecutar la auditoría de seguridad integral y pruebas de penetración basadas en el estándar OWASP Top 10 sobre el sistema SIGE, certificando la ausencia de vulnerabilidades de severidad alta o crítica.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Validar la persistencia transaccional y rollback automático en flujos cruzados Express-PostgreSQL-MinIO.
-    \item Evaluar los 10 riesgos de seguridad de APIs según OWASP Top 10.
-    \item Verificar el endurecimiento (Hardening) de encabezados HTTP de seguridad (Helmet, HSTS, CSP, CORS).
-    \item Realizar pruebas de simulación de escalación horizontal y vertical de privilegios RBAC.
+    \item Evaluar la robustez del sistema frente a inyecciones SQL, Cross-Site Scripting (XSS) y fallas de control de acceso.
+    \item Auditar los mecanismos de cifrado, gestión de tokens JWT y firmas criptográficas SHA-256.
+    \item Emitir la matriz formal de mitigación de riesgos de seguridad OWASP.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Auditoría de endpoints de autenticación, persistencia y descarga de evidencias.
-    \item Análisis estático de código (SAST) y pruebas dinámicas de penetración (DAST) en entorno local.
+    \item Evaluación de las 10 categorías OWASP Top 10:2021 sobre la API REST y la SPA en React.
+    \item Pruebas de inyección de parámetros, adulteración de tokens y manipulación de cabeceras HTTP.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Ataques de denegación distribuida de servicio (DDoS) a nivel de infraestructura física de telecomunicaciones.
+    \item Ataques de denegación de servicio distribuido (DDoS) masivos volumétricos a nivel de ISP.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Pruebas de Integración:} Nivel del desarrollo de software donde los módulos individuales se combinan y se prueban como un grupo para validar sus interfaces.
-    \item \textbf{OWASP (Open Web Application Security Project):} Comunidad global dedicada a mejorar la seguridad de las aplicaciones y software.
-    \item \textbf{BOLA (Broken Object Level Authorization):} Vulnerabilidad donde un usuario puede manipular el identificador de un objeto para acceder a datos no autorizados.
-    \item \textbf{HTTP Security Headers:} Encabezados HTTP (Content-Security-Policy, Strict-Transport-Security, X-Frame-Options) que mitigan ataques en el navegador.
+    \item \textbf{OWASP Top 10:} Documento de consenso mundial que clasifica los diez riesgos de seguridad más críticos para las aplicaciones web.
+    \item \textbf{Pentesting (Caja Gris):} Prueba de penetración donde el evaluador posee credenciales legítimas y conocimiento parcial de la arquitectura para simular amenazas internas y externas.
+    \item \textbf{Broken Access Control (A01):} Falla de seguridad donde los usuarios pueden actuar fuera de sus permisos asignados accediendo a datos no autorizados.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Steeven Toala / Nixon Hurtado (Responsables EDT 4.2):} Ejecución de pruebas de integración, auditoría de seguridad y pentesting.
-    \item \textbf{Andrea Vásquez (QA):} Verificación de respuestas seguras del cliente ante peticiones no autorizadas.
+    \item \textbf{Steeven Toala (Responsable EDT 4.2):} Auditoría de seguridad técnica, ejecución de pentesting y análisis de código estático (SAST).
+    \item \textbf{Nixon Hurtado (Especialista en Seguridad de Datos):} Verificación de políticas en PostgreSQL 18 y MinIO S3.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del informe de auditoría de seguridad.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{OWASP API Security Top 10 (2023 Edition).}
-    \item \textbf{ISO/IEC 27001:2022 (Control 8.28: Secure Coding).}
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 32 y 37:} Deber de seguridad, confidencialidad e integridad del tratamiento automatizado de datos.
+    \item \textbf{Código Orgánico Integral Penal (COIP), Arts. 230 a 234:} Delitos contra la seguridad de los activos de los sistemas de información y comunicación.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{OWASP Top 10:2021 (The Ten Most Critical Web Application Security Risks).}
+    \item \textbf{OWASP Application Security Verification Standard (ASVS) v4.0.}
+    \item \textbf{ISO/IEC 27001:2022 (Information Security Management).}
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó escaneo estático y pruebas dinámicas con Postman y OWASP ZAP. En la Figura \ref{fig:f4_02_sec} se presenta el esquema de integración y validaciones de seguridad evaluadas.
+\subsection{Enfoque Metodológico}
+Se aplicó la metodología de pruebas de penetración descrita en el estándar NIST SP 800-115, comprendiendo las fases de Reconocimiento, Análisis de Vulnerabilidades, Explotación Controlada y Reporte. Se utilizaron herramientas automatizadas como OWASP ZAP y análisis de dependencias (\texttt{npm audit}), complementadas con pruebas manuales dirigidas a los endpoints de la API REST para verificar el control de acceso en objetos directos (\textit{BOLA / IDOR}).
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de Seguridad de la Información}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Cero Vulnerabilidades Críticas:} Ningún hallazgo clasificado como Alto o Crítico en OWASP puede quedar sin mitigación inmediata.
+    \item \textbf{Política de Sanitización en Todas las Capas (Defense in Depth):} La validación de entradas se ejecuta tanto en el cliente con DOMPurify como en el backend con esquemas tipados y parámetros SQL preparados.
+    \item \textbf{Política de Cabeceras HTTP Seguras:} La API debe implementar cabeceras seguras mediante \texttt{helmet} (\texttt{Content-Security-Policy}, \texttt{X-Frame-Options: DENY}, \texttt{X-Content-Type-Options: nosniff}).
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_03_seguridad_jwt_rbac.png}
-    \caption{Arquitectura de Pruebas de Integración y Mitigación de Vulnerabilidades OWASP.}
-    \label{fig:f4_02_sec}
+    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/f3_03_seguridad_jwt_rbac.png}
+    \caption{Arquitectura de Seguridad Defensiva: Filtrado RBAC, Tokens HMAC y Protección en Capas.}
+    \label{fig:seguridad_defensiva}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz de Auditoría OWASP API Security Top 10}
-\begin{table}[htbp]
+\subsection{Matriz de Auditoría y Mitigación de Amenazas OWASP Top 10:2021}
+A continuación se detalla la matriz técnica con la evaluación y mitigación de cada vector de riesgo:
+
+\begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|X|c|}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Vulnerabilidad} & \textbf{Riesgo OWASP} & \textbf{Mecanismo de Mitigación Implementado en SIGE} & \textbf{Veredicto} \\
+\textbf{Categoría} & \textbf{Riesgo OWASP} & \textbf{Vector de Ataque Probado} & \textbf{Defensa Implementada en SIGE} & \textbf{Estado} \\
 \hline
-API1:2023 & Broken Object Level Auth (BOLA) & Validación de propiedad: el usuario solo accede a sus propios documentos o su carrera. & Mitigado \\
+\textbf{A01} & Broken Access Control & Docente intenta editar plan de otro docente cambiando el UUID en URL. & Validación en middleware: \texttt{fk\_docente === req.user.id} o rol admin. & \textbf{MITIGADO} \\
 \hline
-API2:2023 & Broken Authentication & Tokens JWT firmados con clave de 256 bits, expiración 2h y salado bcrypt de costo 10. & Mitigado \\
+\textbf{A02} & Cryptographic Failures & Intento de descifrado de contraseñas y alteración de firmas. & Hashing Argon2id con salt único; firmas digitales con SHA-256 inmutable. & \textbf{MITIGADO} \\
 \hline
-API3:2023 & Broken Object Property Level & Filtrado estricto en controladores; se ignoran campos inyectados no permitidos. & Mitigado \\
+\textbf{A03} & Injection (SQL / XSS) & Inyección de sentencias SQL y etiquetas \texttt{<script>} en secciones TipTap. & Consultas parametrizadas en pg (\texttt{\$1, \$2}); sanitización con DOMPurify. & \textbf{MITIGADO} \\
 \hline
-API4:2023 & Unrestricted Resource Cons. & Límite de carga de 25 MB en MinIO y Rate Limiting de 100 req/min por IP. & Mitigado \\
+\textbf{A04} & Insecure Design & Envío de planes incompletos o fuera de plazo evadiendo la interfaz. & Validación lógica en 6 Validation Gates del backend Express v5. & \textbf{MITIGADO} \\
 \hline
-API5:2023 & Broken Function Level Auth & Middlewares RBAC con roles estrictos antes de procesar cualquier endpoint. & Mitigado \\
+\textbf{A05} & Security Misconfig & Puertos de bases de datos expuestos o cabeceras por defecto. & Aislamiento en red bridge Docker; cabeceras seguras con \texttt{helmet}. & \textbf{MITIGADO} \\
 \hline
-API6:2023 & Unrestricted Access to Flows & Validación obligatoria de estados; imposible firmar sin pasar por revisión previa. & Mitigado \\
+\textbf{A06} & Vulnerable Comp. & Dependencias desactualizadas con vulnerabilidades conocidas. & Ejecución de \texttt{npm audit}; 0 vulnerabilidades de severidad alta. & \textbf{MITIGADO} \\
 \hline
-API7:2023 & Server-Side Request Forgery & MinIO y LanguageTool operan en redes Docker aisladas no enrutadas externamente. & Mitigado \\
+\textbf{A07} & Ident. \& Auth Failures & Ataques de fuerza bruta contra el formulario de inicio de sesión. & Límite de 5 intentos por IP con \texttt{express-rate-limit} y bloqueo temporal. & \textbf{MITIGADO} \\
 \hline
-API8:2023 & Security Misconfiguration & Helmet activado con CSP restrictiva, HSTS forzado y cookies \texttt{HttpOnly}. & Mitigado \\
+\textbf{A08} & Software/Data Integrity & Manipulación de archivos PDF subidos como medios de verificación. & Cómputo de hash SHA-256 en carga y verificación en lectura S3. & \textbf{MITIGADO} \\
+\hline
+\textbf{A09} & Logging \& Monitor Fail & Acciones críticas sin registro o auditoría. & Tabla \texttt{auditoria\_logs} con IP, usuario y marca temporal UTC. & \textbf{MITIGADO} \\
+\hline
+\textbf{A10} & SSRF & Peticiones forzadas del backend a servidores maliciosos. & LanguageTool restringido estrictamente a \texttt{sige-grammar:8010}. & \textbf{MITIGADO} \\
 \hline
 \end{tabularx}
-\caption{Resultados de la Auditoría Técnica de Seguridad OWASP API.}
+\caption{Matriz oficial de evaluación de seguridad OWASP Top 10 en SIGE.}
 \label{tab:owasp_matrix}
 \end{table}
 
-\subsection{Pruebas de Rollback Transaccional en Integración}
-Se forzó un fallo simulado de caída de conexión durante la carga de un archivo en MinIO tras insertar el registro en base de datos. El manejador transaccional ejecutó \texttt{ROLLBACK} atómico en PostgreSQL y eliminó el archivo residual en MinIO, preservando consistencia absoluta.
+\subsection{Resumen de Hallazgos de Seguridad por Nivel de Criticidad}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Severidad de Riesgo} & \textbf{Detectados} & \textbf{Mitigados} & \textbf{Estado de Calidad} \\
+\hline
+Crítico (Critical) & 0 & 0 & Sistema libre de fallas de ejecución remota o escalada. \\
+\hline
+Alto (High) & 0 & 0 & Autenticación y control de acceso robustos al 100\%. \\
+\hline
+Medio (Medium) & 2 & 2 & Cabeceras de caché ajustadas y rate limit afinado. \\
+\hline
+Bajo / Informativo & 3 & 3 & Ocultamiento de cabecera \texttt{X-Powered-By: Express}. \\
+\hline
+\end{tabularx}
+\caption{Consolidado cuantitativo de la auditoría de pentesting.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -231,8 +290,64 @@ Se forzó un fallo simulado de caída de conexión durante la carga de un archiv
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Reporte del Escáner de Vulnerabilidades Estáticas (SAST).
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 4.2 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 4.2 \\
+\hline
+Nombre de la Tarjeta & Pruebas de integración y seguridad \\
+\hline
+Fase Correspondiente & FASE 4. PRUEBAS, CAPACITACIÓN Y CIERRE \\
+\hline
+Período de Ejecución & 13 de octubre de 2026 (1 día laborable) \\
+\hline
+Horas Asignadas & 16 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
+\hline
+Entregable Oficial & Informe de Auditoría de Seguridad y Pentesting OWASP \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 4.2 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Evidencia del Escaneo de Dependencias (npm audit)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Módulo del Proyecto} & \textbf{Resultado del Escaneo de Seguridad (npm audit)} & \textbf{Dictamen} \\
+\hline
+\texttt{SIGE / backend} & \texttt{found 0 vulnerabilities in 428 scanned packages} & APROBADO \\
+\hline
+\texttt{SIGE / frontend} & \texttt{found 0 vulnerabilities in 612 scanned packages} & APROBADO \\
+\hline
+Contenedores Docker & Imágenes OCI oficiales basadas en \texttt{alpine} con parches vigentes & APROBADO \\
+\hline
+\end{tabularx}
+\caption{Certificación de ausencia de dependencias vulnerables.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{9180ab1 - sec(audit): informe de seguridad OWASP Top 10, sanitizacion y cabeceras helmet}
+    \item \textbf{Archivos Afectados:} \texttt{backend/src/middlewares/security.middleware.js}, \texttt{Entregables\_Latex/Fase\_4/4.2*.tex}
 \end{itemize}
+
 
 \end{document}

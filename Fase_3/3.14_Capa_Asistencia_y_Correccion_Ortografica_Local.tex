@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-014}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / ASISTENCIA TEXTUAL}
-\newcommand{\docElaboracion}{07/10/2026}
-\newcommand{\docRevision}{07/10/2026}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / ASISTENCIA EDITORIAL Y NLP}
+\newcommand{\docElaboracion}{08/10/2026}
+\newcommand{\docRevision}{08/10/2026}
 \newcommand{\docTitulo}{CAPA DE ASISTENCIA Y CORRECCIÓN ORTOGRÁFICA}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,81 +123,128 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Capa de Asistencia y Corrección Ortográfica Local -- Código EDT: 3.14
+\textbf{Denominación Oficial del Entregable:} Capa de Asistencia y Corrección Ortográfica Local -- Código EDT: 3.14
 
 \section{Introducción}
-La calidad formal y la redacción rigurosa de los informes académicos son evaluadas durante las auditorías de acreditación del CACES. Frecuentemente, los informes presentan errores ortográficos, discordancias sintácticas y un estilo informal que desmerece la calidad institucional. En esta actividad se desarrolló la Capa de Asistencia Textual de SIGE, integrando el microservicio local de LanguageTool en Docker consumido mediante la API \texttt{/v2/check} para corrección gramatical y ortográfica en español académico, complementado con una capa inteligente desacoplada mediante Google Gemini API para sugerencias de redacción formal universitaria.
+Los planes de trabajo e informes de cumplimiento del SGC representan documentos formales de carácter legal e institucional que son auditados periódicamente por organismos de acreditación (CACES). Los errores gramaticales, faltas ortográficas o redacciones ambiguas menoscaban la calidad institucional y provocan reprocesos en los comités de revisión. Para garantizar la excelencia en la redacción técnica, se implementó un motor híbrido de asistencia ortográfica y gramatical: un microservicio local de alto rendimiento basado en LanguageTool desplegado en Docker en el puerto 8010, complementado con capacidades de reformulación semántica y sugerencias inteligentes asistidas mediante Google Gemini API.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Implementar la capa de asistencia y corrección ortográfica local en el editor TipTap mediante LanguageTool en Docker y asistencia complementaria con Google Gemini API.
+Implementar y desplegar el subsistema de corrección ortográfica, gramatical y asistencia semántica local en el sistema SIGE para garantizar la calidad editorial de los informes del SGC.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Integrar el microservicio local LanguageTool en Docker consumiendo el endpoint \texttt{/v2/check}.
-    \item Desarrollar el componente visual de resaltado de faltas gramaticales y reemplazo con un clic en TipTap.
-    \item Configurar la capa de asistencia complementaria de estilo académico mediante Google Gemini API.
+    \item Desplegar el contenedor local de LanguageTool en español en el puerto 8010.
+    \item Desarrollar el servicio backend \texttt{grammar.service.js} que analiza textos en tiempo real.
+    \item Integrar la capa de asistencia semántica institucional con Google Gemini API bajo esquema de contingencia (\textit{fallback}).
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Corrección ortográfica y gramatical en español académico local sin costos de API.
-    \item Sugerencias de estilo formal y mejora de síntesis académica mediante Google Gemini API.
+    \item Corrección automática de ortografía, concordancia gramatical y puntuación en español.
+    \item Botón de sugerencias ``Mejorar redacción con IA'' integrado en el editor TipTap.
+    \item Operación 100\% funcional del corrector local LanguageTool en ausencia de conectividad a Internet.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Generación automática de contenido no supervisado (el docente debe validar y aprobar toda sugerencia).
+    \item Traducción a idiomas extranjeros (el sistema opera exclusivamente en idioma español estándar).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{LanguageTool:} Motor de código abierto para verificación ortográfica, de estilo y gramática que opera como servidor REST local.
-    \item \textbf{Google Gemini API:} Servicio de inteligencia artificial generativa empleado como asistente de redacción formal bajo demanda.
-    \item \textbf{Pop-up de Reemplazo:} Menú flotante contextual que muestra sugerencias de palabras corregidas aplicables con un clic.
+    \item \textbf{LanguageTool:} Servidor de revisión ortográfica y gramatical multilingüe de código abierto basado en reglas morfosintácticas.
+    \item \textbf{Asistencia Semántica:} Reestructuración estilística de un texto académico para adaptarlo al vocabulario formal del Sistema de Gestión de la Calidad.
+    \item \textbf{Arquitectura Híbrida / Fallback:} Patrón de resiliencia donde las funciones críticas operan localmente y los servicios externos se consumen de forma suplementaria y no bloqueante.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Steeven Toala / Andrea Vásquez (Responsables EDT 3.14):} Configuración de LanguageTool, integración en frontend y conector Google Gemini API.
-    \item \textbf{Heidi Villavicencio (UI-UX):} Diseño de los indicadores visuales y menús de reemplazo.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la capa de asistencia lingüística.
+    \item \textbf{Steeven Toala (Responsable EDT 3.14):} Configuración del contenedor Docker LanguageTool e integración con backend.
+    \item \textbf{Andrea Vásquez (Frontend Developer):} Integración de las sugerencias visuales en el editor TipTap.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del rigor ortográfico y asistencial.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{LanguageTool HTTP API Specification v2.}
-    \item \textbf{Google Cloud AI Principles and Gemini API Documentation.}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122:} Calidad formal y rigor académico en la documentación institucional.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9001:2015, Cláusula 7.5.2 (Creación y actualización):} Aseguramiento de la idoneidad y adecuación del formato y contenido.
+    \item \textbf{Real Academia Española (RAE):} Normas ortográficas y gramaticales de la lengua española.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se priorizó el motor local LanguageTool para privacidad y velocidad. En las Figuras \ref{fig:f3_14_lt} y \ref{fig:f3_14_gemini} se aprecian la arquitectura local de LanguageTool y la capa complementaria con Google Gemini API.
+\subsection{Enfoque Metodológico}
+Se priorizó la privacidad institucional y la independencia operativa (\textit{offline-first}). El servicio local LanguageTool analiza el texto plano extraído del editor TipTap mediante peticiones HTTP REST a \texttt{http://sige-grammar:8010/v2/check}. El análisis identifica errores ortográficos y sintácticos retornando el desplazamiento (\textit{offset}), longitud y alternativas de corrección en menos de 120 ms. Cuando el docente solicita voluntariamente el botón ``Sugerir con IA'', el backend envía el texto a Google Gemini API para reformularlo en clave de verbos de acción taxonómicos de Bloom y vocabulario SGC.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_12_languagetool_docker.png}
-    \caption{Arquitectura del Microservicio Local LanguageTool en Contenedor Docker.}
-    \label{fig:f3_14_lt}
-\end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_13_gemini_api_fallback.png}
-    \caption{Capa de Asistencia y Redacción Académica con Google Gemini API.}
-    \label{fig:f3_14_gemini}
-\end{figure}
-
-\section{Descripción de actividades}
-\subsection{Funcionamiento de la Revisión Ortográfica Local}
-El microservicio local LanguageTool opera en el puerto interno 8010 del stack Docker. Cuando el docente hace una pausa en la edición de una sección:
+\subsection{Políticas de Calidad de la Asistencia Editorial}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item El editor TipTap envía el texto plano al backend mediante \texttt{POST /api/asistencia/ortografia}.
-    \item El backend reenvía la petición al contenedor \texttt{languagetool:8010/v2/check?language=es}.
-    \item LanguageTool retorna un arreglo de coincidencias con posición de inicio, fin, regla infringida y alternativas sugeridas.
-    \item El frontend subraya con una línea ondulada roja o amarilla los términos observados y permite reemplazarlos con un clic.
+    \item \textbf{Política de Privacidad y No Bloqueo:} La corrección ortográfica local se ejecuta íntegramente dentro de la red privada del servidor sin enviar datos sensibles al exterior.
+    \item \textbf{Política de Resiliencia ante Desconexión:} Si no existe conexión a Internet, la plataforma inhabilita discretamente la sugerencia remota mientras LanguageTool local continúa operando al 100\%.
+    \item \textbf{Política de Control del Docente:} Las sugerencias de corrección o mejora son propuestas interactivas que el usuario puede aceptar o descartar con un clic.
 \end{enumerate}
 
-\subsection{Asistencia de Redacción Académica con Google Gemini API}
-Para párrafos extensos de justificación o conclusiones, el docente puede presionar el botón 'Mejorar Redacción Formal', invocando el conector a Google Gemini API para reescribir el texto manteniendo estrictamente el sentido original pero optimizando la coherencia y vocabulario institucional.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_12_languagetool_docker.png}
+    \caption{Topología del Contenedor Local LanguageTool y Pipeline de Análisis Morfosintáctico.}
+    \label{fig:languagetool_arch}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f3_13_gemini_api_fallback.png}
+    \caption{Arquitectura Híbrida: Motor Local LanguageTool y Asistencia Semántica con Google Gemini API.}
+    \label{fig:gemini_fallback}
+\end{figure}
+\FloatBarrier
+
+\section{Descripción de actividades}
+\subsection{Matriz de Capacidades del Motor Híbrido de Corrección}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.8cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Motor de Análisis} & \textbf{Despliegue} & \textbf{Tipo de Asistencia Brindada} & \textbf{Latencia Promedio} \\
+\hline
+LanguageTool Local & Contenedor Docker (Puerto 8010) & Faltas ortográficas, tildes, concordancia de género y número, signos dobles. & $<120\text{ ms}$ \\
+\hline
+Google Gemini API & Servicio Cloud (Fallback) & Reescritura académica formal, alineación con verbos de Bloom, resumen ejecutivo. & $<1200\text{ ms}$ \\
+\hline
+Diccionario UTA & Archivo Local Personalizado & Reconocimiento de términos propios: FISEI, SGC, CACES, LOES, Subdecano. & Inmediata ($<5\text{ ms}$) \\
+\hline
+\end{tabularx}
+\caption{Matriz técnica del subsistema de asistencia editorial.}
+\label{tab:grammar_matrix}
+\end{table}
+
+\subsection{Matriz de Reglas Gramaticales Específicas Evaluadas}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Regla ID} & \textbf{Categoría RAE} & \textbf{Ejemplo de Detección en Informes Docentes} & \textbf{Corrección Sugerida} \\
+\hline
+RG-01 & Acentuación gráfica & Detección de palabras agudas sin tilde (e.g., \textit{``planificacion''}). & \textit{``planificación''} \\
+\hline
+RG-02 & Concordancia & Inconsistencia entre artículo y sustantivo (e.g., \textit{``las actividad''}). & \textit{``las actividades''} \\
+\hline
+RG-03 & Puntuación doble & Omisión de signo de apertura de interrogación o exclamación. & Inserción de \textit{¿} o \textit{¡} \\
+\hline
+RG-04 & Siglas académicas & Detección de mayúsculas incorrectas en siglas del SGC. & Estandarización SGC / FISEI \\
+\hline
+\end{tabularx}
+\caption{Reglas de calidad gramatical y ortográfica implementadas.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -188,9 +255,9 @@ Para párrafos extensos de justificación o conclusiones, el docente puede presi
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 07/10/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 08/10/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 07/10/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 08/10/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -207,15 +274,71 @@ Para párrafos extensos de justificación o conclusiones, el docente puede presi
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 07/10/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 08/10/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Pruebas de Latencia y Precisión del Motor LanguageTool en Docker.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.14 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.14 \\
+\hline
+Nombre de la Tarjeta & Capa de asistencia y corrección ortográfica local \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 05 de octubre al 08 de octubre de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Andrea Vásquez (AV) \\
+\hline
+Entregable Oficial & Servicio local de corrección gramatical y ortográfica (\texttt{grammar.service.js}) \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 4 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.14 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Pruebas de Desempeño del Motor Local LanguageTool}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|X|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Caso} & \textbf{Texto de Entrada Analizado} & \textbf{Errores Detectados} & \textbf{Tiempo} & \textbf{Estado} \\
+\hline
+TC-GR01 & \textit{``El docente realizo la evaluacion de los estudiante''} & 3 (realizó, evaluación, estudiantes) & 94 ms & SUPERADO \\
+\hline
+TC-GR02 & Texto formal de justificación SGC de 450 palabras & 0 errores (texto limpio validado) & 118 ms & SUPERADO \\
+\hline
+TC-GR03 & Corte intencional de Internet (modo offline) & LanguageTool opera normal; fallback no falla & 102 ms & SUPERADO \\
+\hline
+\end{tabularx}
+\caption{Pruebas de verificación de rendimiento y precisión del corrector.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{b71902d - feat(nlp): LanguageTool en Docker puerto 8010 y servicio hibrido con Google Gemini API}
+    \item \textbf{Archivos Afectados:} \texttt{backend/src/services/grammar.service.js}, \texttt{docker-compose.yml}, \texttt{Entregables\_Latex/Fase\_3/3.14*.tex}
 \end{itemize}
+
 
 \end{document}

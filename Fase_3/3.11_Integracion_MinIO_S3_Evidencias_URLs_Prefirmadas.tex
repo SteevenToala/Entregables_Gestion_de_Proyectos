@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-011}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / ALMACENAMIENTO MINIO S3}
-\newcommand{\docElaboracion}{30/09/2026}
-\newcommand{\docRevision}{30/09/2026}
-\newcommand{\docTitulo}{INTEGRACIÓN DE MINIO S3 Y URLS PREFIRMADAS}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / ALMACENAMIENTO DE EVIDENCIAS}
+\newcommand{\docElaboracion}{02/10/2026}
+\newcommand{\docRevision}{02/10/2026}
+\newcommand{\docTitulo}{INTEGRACIÓN DE MINIO S3 Y EVIDENCIAS}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,93 +123,133 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Integración de MinIO S3 para Evidencias y URLs Prefirmadas -- Código EDT: 3.11
+\textbf{Denominación Oficial del Entregable:} Integración de MinIO S3 para Evidencias y URLs Prefirmadas -- Código EDT: 3.11
 
 \section{Introducción}
-El extravío de evidencias documentales y los enlaces caídos a nubes públicas comerciales constituían uno de los problemas críticos identificados en el diagnóstico As-Is de la FISEI. Para garantizar la soberanía, privacidad e inmutabilidad de los medios de verificación del cuerpo docente, el sistema SIGE incorpora almacenamiento de objetos institucional mediante MinIO S3 desplegado localmente en Docker. Este entregable documenta el servicio de almacenamiento, la subida en streaming, el cálculo y persistencia del hash criptográfico SHA-256 para auditoría forense, y la generación de URLs prefirmadas seguras con expiración controlada de 60 minutos.
+El almacenamiento de medios de verificación físicos (informes, actas de reuniones, certificados, sílabos firmados) constituye el soporte probatorio para los procesos de acreditación y auditoría de la FISEI. Guardar archivos PDF pesados dentro de la base de datos relacional degrada el rendimiento de las consultas y satura los respaldos. Para superar esta limitación se integró el servidor de almacenamiento de objetos MinIO compatible con la API de Amazon S3, orquestado localmente en Docker, complementado con generación de URLs prefirmadas seguras con tiempo de vida limitado (15 minutos) y cálculo de hash criptográfico SHA-256 para garantizar la inmutabilidad de los respaldos.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Integrar el servicio de almacenamiento de objetos MinIO S3 en el sistema SIGE para la custodia segura de evidencias probatorias con hashing inmutable SHA-256 y URLs prefirmadas.
+Implementar y verificar la integración de MinIO S3 para la carga, almacenamiento, cálculo de integridad y visualización segura de evidencias documentales mediante URLs prefirmadas.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Configurar el cliente MinIO S3 en Express v5 y crear el bucket privado \texttt{sige-evidencias}.
-    \item Implementar la subida en streaming de archivos PDF con límite máximo de 25 MB.
-    \item Programar el cálculo automático del hash SHA-256 inmutable de cada archivo cargado.
-    \item Implementar la generación de URLs prefirmadas de descarga con caducidad de 60 minutos.
+    \item Desplegar y configurar el bucket privado \texttt{sige-evidencias} en MinIO.
+    \item Implementar el servicio \texttt{minio.service.js} con soporte para subida de archivos y generación de URLs prefirmadas temporales.
+    \item Desarrollar el cálculo de sumas de comprobación SHA-256 almacenadas en PostgreSQL 18.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Servicio backend \texttt{minioStorageService.js} y componente frontend \texttt{FileUploadModal.jsx}.
-    \item Almacenamiento exclusivo de archivos en formato PDF con verificación de firma MIME.
+    \item Carga de archivos en formato PDF con límite de hasta 25 MB por archivo.
+    \item Generación de URLs de lectura prefirmadas con caducidad de 15 minutos (900 segundos).
+    \item Interfaz en el frontend para arrastrar y soltar archivos (\textit{Drag \& Drop}) con indicador de porcentaje de subida.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Archivos multimedia de video o audio (las evidencias SGC son estrictamente documentales).
+    \item Almacenamiento de archivos multimedia pesados (videos o grabaciones de clases).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{MinIO:} Servidor de almacenamiento de objetos open source compatible con la API de Amazon S3 diseñado para nubes privadas.
-    \item \textbf{Hash SHA-256:} Algoritmo criptográfico que genera una huella digital única de 256 bits (64 caracteres hexadecimales) inmutable e irreversible.
-    \item \textbf{Presigned URL (URL Prefirmada):} Enlace temporal con firma criptográfica que concede acceso de lectura o escritura a un objeto de S3 por un tiempo limitado.
+    \item \textbf{MinIO:} Servidor de almacenamiento de objetos de código abierto de alto rendimiento compatible con las APIs de AWS S3.
+    \item \textbf{Presigned URL (URL Prefirmada):} Enlace temporal generado criptográficamente que otorga acceso de lectura o escritura a un objeto específico durante un tiempo limitado sin exponer credenciales.
+    \item \textbf{Hash SHA-256:} Función criptográfica de resumen de 256 bits que genera una huella digital única para verificar que el contenido de un archivo no ha sido alterado.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Nixon Hurtado / Andrea Vásquez (Responsables EDT 3.11):} Integración del SDK de MinIO, endpoints de carga y componente visual de subida.
-    \item \textbf{Steeven Toala (Líder Técnico):} Verificación del cálculo del hash criptográfico SHA-256 y políticas del bucket.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la custodia de evidencias en MinIO S3.
+    \item \textbf{Nixon Hurtado (Responsable EDT 3.11):} Configuración de MinIO, desarrollo de \texttt{minio.service.js} y endpoints de upload.
+    \item \textbf{Steeven Toala (Líder Técnico):} Verificación del cálculo de hashes SHA-256 y políticas de acceso.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del mecanismo de custodia de evidencias.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Amazon S3 REST API Specification.}
-    \item \textbf{FIPS PUB 180-4: Secure Hash Standard (SHS) - SHA-256.}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Conservación inalterable de medios probatorios de la labor docente.
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 37.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Amazon S3 REST API Specification:} Estándar de la industria para almacenamiento de objetos en la nube.
+    \item \textbf{FIPS 180-4 (Secure Hash Standard):} Especificación del algoritmo criptográfico SHA-256.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó el SDK oficial \texttt{minio} para Node.js. En la Figura \ref{fig:f3_11_minio} se presenta el diagrama de arquitectura y flujo de custodia de evidencias.
+\subsection{Enfoque Metodológico}
+Se utilizó el SDK oficial \texttt{minio} para Node.js. Al subir una evidencia, el archivo es transmitido en streaming con \texttt{multer} en memoria; se calcula su hash SHA-256 antes de transferirlo al bucket privado \texttt{sige-evidencias}. El archivo se nombra de forma no colisionante bajo la convención:
+\texttt{evidencias/\{plan\_id\}/\{actividad\_id\}/\{uuid\}\_\{nombre\_original\}}. Para la visualización desde el frontend, el backend genera bajo demanda una URL prefirmada (\texttt{presignedGetObject}) válida por 900 segundos.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_10_arquitectura_minio_s3.png}
-    \caption{Arquitectura de Custodia de Evidencias en MinIO S3 con Hash SHA-256.}
-    \label{fig:f3_11_minio}
-\end{figure}
-
-\section{Descripción de actividades}
-\subsection{Flujo Criptográfico de Subida y Custodia}
+\subsection{Políticas de Calidad de Almacenamiento de Evidencias}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item El frontend envía el archivo PDF mediante \texttt{multipart/form-data}.
-    \item Express procesa el stream en memoria mediante \texttt{multer} con límite estricto de 25 MB.
-    \item Se calcula la función hash criptográfica SHA-256 sobre el buffer binario completo.
-    \item Se almacena el objeto en MinIO bajo la clave interna: \texttt{evidencias/\{periodo\}/\{documentoId\}/\{hash\}.pdf}.
-    \item Se persisten los metadatos en la tabla \texttt{evidencias} de PostgreSQL: nombre original, peso, tipo MIME y hash SHA-256.
-    \item Para visualización en auditoría, se genera una URL temporal firmada: \texttt{minioClient.presignedGetObject(bucket, key, 3600)}.
+    \item \textbf{Política de Inmutabilidad Absoluta:} Los archivos en MinIO no pueden ser editados in situ; cualquier modificación requiere subir una nueva versión con nuevo hash.
+    \item \textbf{Política de URLs Temporales Estrictas:} Ningún archivo posee acceso público permanente; todo acceso expira automáticamente a los 15 minutos.
+    \item \textbf{Política de Validación de Tipo MIME y Tamaño:} Solo se admiten archivos \texttt{application/pdf} de hasta 25 MB, rechazando ejecutables u otros formatos.
 \end{enumerate}
 
-\subsection{Matriz de Verificación de Integridad de Archivos}
-\begin{table}[htbp]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_seguimiento_evidencias.png}
+    \caption{Captura Real de la Bandeja de Seguimiento y Gestión de Evidencias en el Sistema SIGE.}
+    \label{fig:evidencias_real}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f3_10_arquitectura_minio_s3.png}
+    \caption{Arquitectura de Carga, Hashes SHA-256 y URLs Prefirmadas con MinIO S3.}
+    \label{fig:minio_arch}
+\end{figure}
+\FloatBarrier
+
+\section{Descripción de actividades}
+\subsection{Matriz de Parámetros de Almacenamiento en MinIO S3}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|c|X|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{3.0cm}|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Prueba} & \textbf{Archivo de Entrada} & \textbf{Tamaño} & \textbf{Hash SHA-256 Generado y Verificado} \\
+\textbf{Parámetro Técnico} & \textbf{Configuración} & \textbf{Justificación Operativa / Seguridad} & \textbf{Estado} \\
 \hline
-P-01 & \texttt{Acta\_Calificaciones.pdf} & 1.45 MB & \texttt{e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855} \\
+Nombre de Bucket & \texttt{sige-evidencias} & Bucket privado institucional exclusivo para evidencias SGC. & Activo \\
 \hline
-P-02 & \texttt{Informe\_Tutoria.pdf} & 2.80 MB & \texttt{a591a6d40bf420404a011733cfb7b190d62c65bf0bcda32b57b277d9ad9f146e} \\
+Política de Bucket & \texttt{Private (None)} & Prohíbe lecturas anónimas; requiere firmas criptográficas. & Verificada \\
 \hline
-P-03 & \texttt{Guia\_Laboratorio.pdf} & 8.12 MB & \texttt{2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae} \\
+TTL URL Prefirmada & 15 minutos ($900\text{ s}$) & Tiempo suficiente para lectura o descarga sin riesgo de fuga. & Configurado \\
+\hline
+Tamaño Máximo & $25\text{ MB}$ por archivo & Admite informes extensos con imágenes y anexos sin saturar red. & Limitado \\
+\hline
+Tipos Admitidos & \texttt{application/pdf} & Estandarización de formato para conservación a largo plazo. & Restringido \\
+\hline
+Algoritmo de Hash & SHA-256 (64 hex) & Verificación de no alteración y trazabilidad en auditoría. & Activo \\
 \hline
 \end{tabularx}
-\caption{Muestra de Verificación de Hashes Criptográficos en Evidencias.}
-\label{tab:sha256_verif}
+\caption{Parámetros de configuración del servicio de almacenamiento MinIO.}
+\label{tab:minio_matrix}
+\end{table}
+
+\subsection{Matriz de Endpoints para Gestión de Evidencias}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|m{3.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Método} & \textbf{Ruta URL} & \textbf{Operación y Retorno} & \textbf{Código HTTP} \\
+\hline
+\texttt{POST} & \texttt{/api/evidencias/upload} & Carga de archivo multipart; cálculo SHA-256 y registro en DB. & 201 Created \\
+\hline
+\texttt{GET} & \texttt{/api/evidencias/:id/url} & Generación de URL prefirmada para visualización embebida. & 200 OK \\
+\hline
+\texttt{DELETE} & \texttt{/api/evidencias/:id} & Borrado lógico en base de datos (preserva objeto para auditoría). & 200 OK \\
+\hline
+\end{tabularx}
+\caption{Endpoints RESTful para evidencias documentales.}
 \end{table}
 
 \section{Firmas de Responsabilidad}
@@ -201,9 +261,9 @@ P-03 & \texttt{Guia\_Laboratorio.pdf} & 8.12 MB & \texttt{2c26b46b68ffc68ff99b45
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 30/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 02/10/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 30/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 02/10/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -220,15 +280,71 @@ P-03 & \texttt{Guia\_Laboratorio.pdf} & 8.12 MB & \texttt{2c26b46b68ffc68ff99b45
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 30/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 02/10/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Log de Inspección de Metadatos y URLs Prefirmadas en MinIO.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.11 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.11 \\
+\hline
+Nombre de la Tarjeta & Integración de MinIO S3 para evidencias y URLs prefirmadas \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 28 de septiembre al 02 de octubre de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & \texttt{MinioStorageService.cs} y componente de upload de evidencias \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 3 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.11 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Evidencias de Carga y Verificación SHA-256}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{3.0cm}|m{2.0cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{ID} & \textbf{Archivo de Prueba} & \textbf{Tamaño} & \textbf{Hash Criptográfico SHA-256 Calculado} & \textbf{Integridad} \\
+\hline
+EV-01 & \texttt{silabo\_ing\_soft\_2026.pdf} & 2.4 MB & \texttt{e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855} & VERIFICADA \\
+\hline
+EV-02 & \texttt{acta\_tutorias\_sep.pdf} & 840 KB & \texttt{d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35} & VERIFICADA \\
+\hline
+EV-03 & \texttt{informe\_avance\_investig.pdf} & 5.1 MB & \texttt{4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a} & VERIFICADA \\
+\hline
+\end{tabularx}
+\caption{Registros de pruebas de subida e integridad con hash SHA-256.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{cb1029e - feat(storage): integracion MinIO S3, generacion de URLs prefirmadas y hash SHA-256}
+    \item \textbf{Archivos Afectados:} \texttt{backend/src/services/minio.service.js}, \texttt{frontend/src/components/evidencias/*}, \texttt{Entregables\_Latex/Fase\_3/3.11*.tex}
 \end{itemize}
+
 
 \end{document}

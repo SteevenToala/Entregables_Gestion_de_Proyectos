@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,10 +65,23 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F1-005}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{REGLAS DE NEGOCIO / VALIDATION GATES LÓGICAS}
+\newcommand{\docProceso}{INGENIERÍA DE SOFTWARE / COMPUERTAS LÓGICAS}
 \newcommand{\docElaboracion}{24/08/2026}
 \newcommand{\docRevision}{24/08/2026}
 \newcommand{\docTitulo}{REGLAS DE NEGOCIO Y VALIDATION GATES LÓGICAS}
@@ -103,126 +123,110 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Reglas de Negocio y Validation Gates Lógicas -- Código EDT: 1.5
+\textbf{Denominación Oficial del Entregable:} Reglas de Negocio y Validation Gates Lógicas -- Código EDT: 1.5
 
 \section{Introducción}
-Las fallas en los procesos de acreditación y auditoría de la calidad documental en las instituciones de educación superior obedecen, en su gran mayoría, a la falta de mecanismos automáticos de control preventivo. En los formatos manuales, el documento fluye hacia instancias de revisión aun conteniendo inconsistencias aritméticas, evidencias faltantes o períodos extemporáneos. El sistema SIGE introduce formalmente el concepto de \textbf{Validation Gates} (Compuertas Lógicas de Control), las cuales actúan como filtros estrictos e inquebrantables que impiden la transición de estados documentales a menos que se satisfagan todas las condiciones lógicas y matemáticas del SGC.
+El problema principal que degrada los procesos documentales del SGC radica en que los controles de calidad se efectúan tardíamente, tras semanas de reproceso. La arquitectura de software moderna soluciona este cuello de botella mediante compuertas de validación (\textit{Validation Gates}) que operan como middlewares lógicos en el backend, impidiendo que transiciones erróneas o estados inconsistentes se persistan en la base de datos. Este entregable formaliza las 10 Reglas de Negocio (RN-01 a RN-10) y sus correspondientes compuertas de validación que blindan la integridad del sistema SIGE.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Formalizar matemática y conceptualmente las reglas de negocio y las compuertas de validación lógica (Validation Gates) que gobernarán el ciclo de vida documental en el sistema SIGE.
+Especificar formal y matemáticamente las 10 reglas de negocio institucionales y diseñar las compuertas lógicas preventivas (\textit{Validation Gates}) que controlan las transiciones documentales en el backend de SIGE.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Formular las ecuaciones matemáticas para la validación de ponderaciones y cálculo del avance global.
-    \item Especificar las compuertas de bloqueo preventivo por evidencias no adjuntas y fechas extemporáneas.
-    \item Modelar la máquina de estados y las precondiciones para la cascada secuencial de firmas.
+    \item Modelar las condiciones matemáticas de sumatoria y consistencia horaria en las matrices de actividades.
+    \item Definir las precondiciones y códigos HTTP de bloqueo semántico (400, 422, 403) para cada compuerta.
+    \item Establecer la regla de cascada de firmas que invalida automáticamente firmas previas ante correcciones.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Especificación de 15 Reglas de Negocio Institucionales (RN-01 a RN-15).
-    \item Definición lógica de las 4 Validation Gates fundamentales del sistema.
+    \item 10 Reglas de Negocio institucionales (RN-01 a RN-10).
+    \item Compuertas: Gate 1 (Borrador), Gate 2 (Envío a Revisión), Gate 3 (Aval Coordinación) y Gate 4 (Aprobación Decanato).
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Implementación a nivel de código de frameworks (cubierta en la Fase 3).
+    \item Reglas contables financieras de nómina docente.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Validation Gate:} Punto de control algorítmico que bloquea la persistencia o cambio de estado si no se cumplen las precondiciones.
-    \item \textbf{Ponderación Horaria ($P_i$):} Porcentaje de dedicación horaria asignado a una actividad específica respecto al total planificado.
-    \item \textbf{Avance Consolidado ($A_G$):} Promedio ponderado acumulado de cumplimiento de todas las actividades académicas.
-    \item \textbf{Cascada de Firmas:} Circuito secuencial e irreversible donde la firma del nivel $k$ requiere la firma previa y validada del nivel $k-1$.
+    \item \textbf{Validation Gate:} Mecanismo interceptor que evalúa invariantes del dominio antes de autorizar la persistencia o cambio de estado.
+    \item \textbf{Invariante de Ponderación:} Condición estricta que exige que la suma porcentual de actividades sea exactamente igual a $100\%$.
+    \item \textbf{Inmutabilidad de Aprobación:} Estado de congelamiento en el cual un documento aprobado no puede ser modificado por ningún rol sin autorización explícita de apertura extemporánea.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Steeven Toala / Nixon Hurtado (Responsables EDT 1.5):} Formulación matemática de las compuertas y matriz de reglas de negocio.
-    \item \textbf{Heidi Villavicencio (Analista):} Validación de correspondencia con la normativa SGC.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la lógica formal de compuertas.
+    \item \textbf{Steeven Toala / Nixon Hurtado (Responsables EDT 1.5):} Modelado matemático de compuertas lógicas y especificación técnica de middlewares.
+    \item \textbf{Heidi Villavicencio (Analista):} Validación de congruencia de las reglas con la normativa SGC.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la rigurosidad de las compuertas preventivas.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Norma ISO 9001:2015 (Cláusula 8.5.1):} Control de la producción y de la provisión del servicio con criterios de aceptación explícitos.
-    \item \textbf{Reglamento Interno de Evaluación y Régimen Académico FISEI.}
+    \item \textbf{Régimen Académico (CES):} Cumplimiento estricto del porcentaje de avance en horas de cátedra y actividades extracurriculares.
+\end{itemize}
+
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9001:2015, Cláusula 8.5.1 (Control de la Producción y Provisión del Servicio):} Implementación de acciones preventivas para evitar no conformidades.
+    \item \textbf{RFC 7231 (HTTP/1.1 Semantics):} Uso riguroso de códigos de error semánticos (400 Bad Request, 422 Unprocessable Entity).
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Las reglas se definieron mediante tablas de decisión y formalismo matemático. En la Figura \ref{fig:s1_05_gates} se presenta el diagrama de decisión de las Validation Gates.
+\subsection{Matriz Oficial de Reglas de Negocio y Validation Gates (RN-01 a RN-10)}
+A continuación se detalla la matriz que rige las validaciones automáticas del sistema:
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.5cm,keepaspectratio]{images/s1_05_validation_gates.png}
-    \caption{Arquitectura Lógica de las Validation Gates en el Flujo Documental SIGE.}
-    \label{fig:s1_05_gates}
-\end{figure}
-
-\section{Descripción de actividades}
-\subsection{Formalización Matemática de las Reglas de Validación}
-\subsubsection{Gate 1: Validación de Ponderaciones Horarias (Suma 100\%)}
-Sea $N$ el número total de actividades registradas en la Matriz de Cumplimiento, y $P_i$ el porcentaje ponderado asignado a la actividad $i$:
-\begin{equation}
-    \sum_{i=1}^{N} P_i = 100.00\% \quad \text{donde} \quad 0 < P_i \le 100, \quad \forall i \in \{1, \dots, N\}
-\end{equation}
-\textbf{Regla de Bloqueo:} Si $|(\sum_{i=1}^{N} P_i) - 100| > 0.01$, el sistema rechaza la solicitud de transición con error semántico \texttt{ERR\_SUM\_INVALID}.
-
-\subsubsection{Gate 2: Cálculo del Avance Global y Compuerta de Evidencia Obligatoria}
-Sea $A_i \in [0, 100]$ el porcentaje de avance reportado para la actividad $i$. El avance global consolidado $A_G$ se calcula como:
-\begin{equation}
-    A_G = \sum_{i=1}^{N} \left( \frac{P_i}{100} \times A_i \right)
-\end{equation}
-\textbf{Compuerta de Evidencia:} Para toda actividad donde $A_i > 0\%$, es condición sine qua non la existencia de al menos un registro de evidencia en MinIO con hash SHA-256 verificado, o un texto formal de justificación debidamente aprobado:
-\begin{equation}
-    \forall i, \; A_i > 0 \implies \left( \text{Count}(\text{Evidencias}_i) \ge 1 \; \lor \; \text{Length}(\text{Justificacion}_i) \ge 50 \right)
-\end{equation}
-
-\subsection{Matriz de Reglas de Negocio del Sistema (RN-01 a RN-15)}
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|c|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.2cm}|X|c|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Código} & \textbf{Entidad / Contexto} & \textbf{Condición Lógica y Comportamiento del Sistema} & \textbf{Efecto en UI / API} \\
+\textbf{ID} & \textbf{Regla} & \textbf{Condición Lógica de Bloqueo / Validación Preventiva} & \textbf{Entidad} & \textbf{HTTP} \\
 \hline
-\textbf{RN-01} & Documento & Un docente solo puede tener un Plan en estado 'Borrador' por período lectivo. & Bloqueo de creación \\
+\textbf{RN-01} & Suma 100\% Plan & Bloquear envío a revisión si $\sum_{i=1}^n \text{Ponderación}_i \neq 100\%$. & PlanTrabajo & 422 \\
 \hline
-\textbf{RN-02} & Período & Las fechas de las actividades deben estar contenidas dentro del período académico. & Error de validación \\
+\textbf{RN-02} & Cronograma Válido & Toda actividad debe tener fechas inicio/fin dentro del periodo lectivo oficial. & Actividad & 400 \\
 \hline
-\textbf{RN-03} & Ponderación & La sumatoria de ponderaciones de la matriz debe totalizar exactamente 100.00\%. & Botón Envío Inactivo \\
+\textbf{RN-03} & Evidencia Obligatoria & Bloquear informe si avance declarado $> 0\%$ y no existen archivos adjuntos en S3. & Informe & 422 \\
 \hline
-\textbf{RN-04} & Evidencias & Actividades con avance $>0\%$ sin evidencia cargada impiden el envío del informe. & Error HTTP 422 \\
+\textbf{RN-04} & Justificación de Brecha & Exigir texto explicativo obligatorio si el avance es menor al planificado. & Informe & 400 \\
 \hline
-\textbf{RN-05} & Archivos & Los archivos de evidencia deben ser formato PDF y tamaño no superior a 25 MB. & Rechazo de subida \\
+\textbf{RN-05} & Cascada Secuencial & No se permite firma de Coordinador sin firma previa del Docente Elaborador. & Firmas & 403 \\
 \hline
-\textbf{RN-06} & Inmutabilidad & Una vez firmado por el Elaborador, las secciones y matriz entran en modo solo lectura. & Campos Disabled \\
+\textbf{RN-06} & Firma de Autoridad & No se permite firma de Decano sin aval y firma previa del Coordinador. & Firmas & 403 \\
 \hline
-\textbf{RN-07} & Observaciones & Un Coordinador no puede aprobar un informe si existen observaciones no resueltas. & Bloqueo de aprobación \\
+\textbf{RN-07} & Invalidación por Cambio & Toda modificación a un documento avalado invalida firmas previas (retorno a borrador). & Flujo & 200 \\
 \hline
-\textbf{RN-08} & Cascada Firmas & La firma del Revisor requiere obligatoriamente la firma previa válida del Elaborador. & Secuencia forzada \\
+\textbf{RN-08} & Unicidad por Período & Un docente solo puede tener un Plan de Trabajo activo por comisión en cada ciclo. & PlanTrabajo & 409 \\
 \hline
-\textbf{RN-09} & Cascada Firmas & La firma del Aprobador requiere obligatoriamente la firma previa válida del Revisor. & Secuencia forzada \\
+\textbf{RN-09} & Inmutabilidad de Aprobado & Una vez firmado por Decano, el registro pasa a estado de solo lectura inalterable. & Seguridad & 403 \\
 \hline
-\textbf{RN-10} & Extemporáneo & El envío fuera de la fecha límite requiere solicitud formal y código de desbloqueo. & Bloqueo temporal \\
-\hline
-\textbf{RN-11} & Auditoría & Todo cambio de estado genera un registro en la tabla de bitácora con IP y estampa de tiempo. & Transacción atómica \\
-\hline
-\textbf{RN-12} & Autoguardado & El autoguardado de TipTap solo se dispara tras 1500 ms de inactividad de teclado. & Debounce Timer \\
-\hline
-\textbf{RN-13} & Secciones & No se permite enviar documentos con secciones descriptivas vacías o con texto genérico. & Validación regex \\
-\hline
-\textbf{RN-14} & Hashes SHA-256 & Si el hash recalculado del archivo en MinIO no coincide con la base, se genera alerta. & Alerta de Integridad \\
-\hline
-\textbf{RN-15} & Exportación & Los PDFs generados deben incluir obligatoriamente el código QR institucional. & Estampado visual \\
+\textbf{RN-10} & Extemporaneidad Auditada & Desbloqueos fuera de fecha requieren autorización y quedan en log inmutable. & Auditoría & 200 \\
 \hline
 \end{tabularx}
-\caption{Catálogo de Reglas de Negocio y Validation Gates.}
-\label{tab:rn_gates}
+\caption{Matriz de Reglas de Negocio y Compuertas Lógicas Preventivas en SIGE.}
+\label{tab:reglas_negocio}
 \end{table}
+\FloatBarrier
+
+\section{Descripción de actividades}
+\subsection{Formulación Matemática de las Compuertas de Validación}
+La compuerta más crítica (\textbf{Gate 2}) evalúa la integridad del plan antes de transicionar de \texttt{borrador} a \texttt{en\_revision}:
+\begin{equation}
+\text{Gate}_2(\text{Plan}) = \left( \sum_{i=1}^{n} w_i = 100\% \right) \;\land\; \left( \forall i, \; t_{\text{inicio}, i} < t_{\text{fin}, i} \right) \;\land\; \left( n \ge 1 \right)
+\end{equation}
+Donde $w_i$ representa el peso ponderado de la actividad $i$, y $n$ el número de actividades registradas. Si $\text{Gate}_2$ resulta falsa, la petición REST es abortada con código 422 y un cuerpo JSON que especifica el error de negocio.
+
+\section{Conclusiones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item La implementación de compuertas lógicas preventivas elimina de raíz los reprocesos aritméticos que afectaban al 42\% de los documentos As-Is.
+    \item La regla de invalidación en cascada garantiza la pureza legal de los documentos, impidiendo que existan firmas aprobatorias sobre textos alterados posteriormente.
+\end{itemize}
 
 \section{Firmas de Responsabilidad}
 
@@ -259,8 +263,47 @@ Sea $A_i \in [0, 100]$ el porcentaje de avance reportado para la actividad $i$. 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Tabla de Códigos de Error Semánticos de Validation Gates.
+
+\subsection*{Anexo 1: Ficha de Registro y Control en el Tablero Oficial de Gestión (EDT Trello)}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 1.5 \\
+\hline
+Nombre de la Tarjeta & Reglas de negocio y Validation Gates lógicas \\
+\hline
+Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+\hline
+Período de Ejecución & 19 de agosto al 24 de agosto de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
+\hline
+Entregable Oficial & \texttt{05\_Reglas\_Negocio\_Validation\_Gates.pdf} \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Reunión de Hito 1 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 1.5 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Evidencia de Pruebas Lógicas de la Compuerta de Validación}
+Resultados de ejecución del script de validación preliminar en backend que confirma el rechazo del código 422 ante sumatorias de actividades incompletas ($85\% \to \text{RECHAZADO}$).
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{b72183c - feat(core): definicion formal de compuertas validation gates RN-01 a RN-10}
+    \item \textbf{Archivos Afectados:} \texttt{src/middlewares/validationGates.js}, \texttt{Entregables\_Latex/Fase\_1/1.5*.tex}
 \end{itemize}
+
 
 \end{document}

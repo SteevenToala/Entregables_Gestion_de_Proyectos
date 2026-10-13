@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F2-002}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{ARQUITECTURA DE SOFTWARE / SAD Y C4}
-\newcommand{\docElaboracion}{28/08/2026}
-\newcommand{\docRevision}{28/08/2026}
+\newcommand{\docProceso}{ARQUITECTURA DE SOFTWARE / C4 \& CLEAN ARCHITECTURE}
+\newcommand{\docElaboracion}{25/08/2026}
+\newcommand{\docRevision}{25/08/2026}
 \newcommand{\docTitulo}{DISEÑO DE ARQUITECTURA DE LA SOLUCIÓN}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,96 +123,142 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Documento de Arquitectura de Software (SAD \& C4 Model) -- Código EDT: 2.2
+\textbf{Denominación Oficial del Entregable:} Diseño de Arquitectura de la Solución (SAD y Modelo C4) -- Código EDT: 2.2
 
 \section{Introducción}
-La arquitectura de software constituye el esquema estructural y de organización técnica que determina la robustez, escalabilidad y mantenibilidad de la solución SIGE. En este documento se formaliza el \\textbf{Software Architecture Document (SAD)} fundamentado en los principios de Clean Architecture (Arquitectura Limpia) y el modelo C4 (Contexto, Contenedores, Componentes y Código). Se detalla la separación estricta de responsabilidades entre el Dominio institucional, los Casos de Uso de Aplicación, los Adaptadores de Infraestructura (PostgreSQL 18, MinIO S3, LanguageTool) y la capa de Presentación Web RESTful.
+El diseño arquitectónico del sistema SIGE constituye el marco estructural que garantiza la escalabilidad, mantenibilidad, seguridad y rendimiento exigidos por la Universidad Técnica de Ambato. El presente Documento de Arquitectura de Software (SAD) formaliza la organización modular del sistema aplicando el modelo C4 (\textit{Context, Containers, Components, Code}) propuesto por Simon Brown y los principios de \textit{Clean Architecture} de Robert C. Martin. Se documenta la separación estricta entre capas de presentación, dominio, aplicación e infraestructura, asegurando la independencia del framework y desacoplamiento de la base de datos relacional y servicios externos de almacenamiento en objetos.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Diseñar la arquitectura técnica de la solución SIGE basada en principios de desacoplamiento, inmutabilidad y alta cohesión, documentada mediante el modelo C4 y vistas arquitectónicas estándar.
+Diseñar y formalizar la arquitectura de software integral del sistema SIGE mediante el modelo C4 y Clean Architecture, estableciendo las decisiones estructurales (ADR) que guiarán la implementación técnica.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Estructurar las 4 capas de la Arquitectura Limpia: Dominio, Aplicación, Infraestructura y API.
-    \item Elaborar los diagramas C4 de Nivel 1 (Contexto de Sistema) y Nivel 2 (Contenedores).
-    \item Definir los patrones de diseño: Repository Pattern, Mediator, Middleware Pipeline y CQRS.
+    \item Estructurar el diagrama de contenedores C4 definiendo las fronteras entre React SPA, Express REST API, PostgreSQL 18, MinIO S3 y LanguageTool.
+    \item Modelar la arquitectura hexagonal multicapa con inversión de dependencias.
+    \item Formalizar las Decisiones de Arquitectura de Software (ADR-01 a ADR-06) con sus correspondientes justificaciones y consecuencias técnicas.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Diseño de arquitectura de microservicios contenerizados y tuberías de middlewares en Express v5.
-    \item Estrategia de persistencia en PostgreSQL 18 y almacenamiento desacoplado de objetos en MinIO S3.
+    \item Especificación de vistas de Contexto y Contenedores bajo modelo C4.
+    \item Definición de protocolos de comunicación inter-servicios (HTTPS, REST JSON, S3 API).
+    \item Matriz de atributos de calidad basados en el estándar ISO/IEC 25010.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Arquitecturas de microservicios distribuidos en múltiples clústeres Kubernetes (excede el alcance del VPS local).
+    \item Implementación de pipelines de CI/CD para producción en servidores cloud externos.
+    \item Configuración de clústeres distribuidos Kubernetes (reservados para etapas de escalado masivo institucional).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Clean Architecture:} Paradigma arquitectónico donde las reglas de negocio de la entidad no dependen de ningún framework externo.
-    \item \textbf{C4 Model:} Jerarquía visual para la arquitectura de software (Contexto, Contenedores, Componentes y Código).
-    \item \textbf{Repository Pattern:} Patrón que desacopla la lógica de negocio del acceso y persistencia en la base de datos.
-    \item \textbf{Middleware Pipeline:} Cadena secuencial de interceptores de solicitudes HTTP para validación, autenticación y registro.
+    \item \textbf{SAD (Software Architecture Document):} Documento formal que captura las decisiones arquitectónicas significativas, patrones de diseño y vistas del sistema.
+    \item \textbf{Modelo C4:} Enfoque estructurado para visualizar la arquitectura de software en 4 niveles jerárquicos: Contexto, Contenedores, Componentes y Código.
+    \item \textbf{Clean Architecture:} Paradigma de diseño que sitúa las entidades de negocio en el núcleo y aplica inversión de control hacia la infraestructura externa.
+    \item \textbf{ADR (Architectural Decision Record):} Registro documental breve que describe una decisión arquitectónica adoptada, su contexto y sus consecuencias.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Steeven Toala (Responsable EDT 2.2):} Definición de capas arquitectónicas, diagramación C4 y selección de patrones de diseño.
-    \item \textbf{Nixon Hurtado (Backend):} Revisión de adaptadores de infraestructura y base de datos.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del SAD institucional.
+    \item \textbf{Steeven Toala (Responsable EDT 2.2):} Arquitectura de software principal, modelado C4, definición de patrones y redacción de ADRs.
+    \item \textbf{Nixon Hurtado (Especialista en Backend / Persistencia):} Diseño de capa de acceso a datos, contratos de infraestructura y volumetría.
+    \item \textbf{Heidi Villavicencio (Analista de Calidad):} Evaluación de conformidad frente al estándar ISO/IEC 25010 y requisitos no funcionales.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la arquitectura base del proyecto.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{ISO/IEC/IEEE 42010:2011:} Systems and software engineering -- Architecture description.
-    \item \textbf{The Open Group Architecture Framework (TOGAF 9.2).}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122:} Transparencia y confiabilidad técnica de los repositorios institucionales de información académica.
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 37:} Principios de seguridad por diseño y por defecto (\textit{Privacy by Design and by Default}).
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO/IEC/IEEE 42010:2011 (Systems and Software Engineering -- Architecture Description):} Estándar internacional para la documentación y especificación de arquitecturas.
+    \item \textbf{ISO/IEC 25010:2011 (Systems and Software Quality Requirements and Evaluation):} Evaluación de mantenibilidad, fiabilidad, rendimiento y seguridad.
+    \item \textbf{Twelve-Factor App Methodology:} Principios para el diseño de aplicaciones nativas en la nube y configuradas por entorno.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se aplicó modelado C4. En las Figuras \ref{fig:s2_02_clean} y \ref{fig:s2_02_c4} se presentan el diagrama de capas de Arquitectura Limpia y el diagrama C4 de Contenedores.
+\subsection{Enfoque Metodológico}
+Se adoptó un enfoque arquitectónico orientado a microservicios modulares desacoplados mediante contenedores. La lógica del negocio se aísla de frameworks y protocolos externos utilizando el patrón de Puertos y Adaptadores (\textit{Hexagonal Architecture}). Las comunicaciones síncronas se estructuran mediante API REST con payload JSON validado en esquemas fuertemente tipados. Para el almacenamiento de grandes objetos binarios (evidencias PDF), se diseñó una integración externa con MinIO compatible con el protocolo S3 de Amazon Web Services.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.85\textwidth,height=5.2cm,keepaspectratio]{images/s2_02_clean_architecture.png}
-    \caption{Arquitectura Limpia del Sistema SIGE (Capas y Regla de Dependencia).}
-    \label{fig:s2_02_clean}
-\end{figure}
+\subsection{Políticas de Calidad Arquitectónica}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Inversión de Dependencias:} El código de dominio no debe importar librerías de base de datos ni librerías de presentación web; la comunicación ocurre a través de interfaces o contratos.
+    \item \textbf{Política de Autenticación Stateless:} El servidor backend no mantiene estado de sesión en memoria; cada petición debe autenticarse de forma independiente mediante tokens JWT firmados criptográficamente.
+    \item \textbf{Política de Inmutabilidad de Evidencias:} Los archivos almacenados en el storage de objetos MinIO no pueden sobrescribirse; cada versión recibe un identificador único con hash de comprobación.
+    \item \textbf{Política de Resiliencia de Fallas:} Toda llamada externa (MinIO, motor ortográfico) debe implementar un mecanismo de \textit{timeout} (máximo 5000 ms) y fallback de contingencia.
+\end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.5cm,keepaspectratio]{images/s2_02_contenedores_c4.png}
-    \caption{Diagrama C4 de Nivel 2: Contenedores y Protocolos de Comunicación.}
-    \label{fig:s2_02_c4}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_02_clean_architecture.png}
+    \caption{Arquitectura Limpia Multicapa (Clean Architecture) implementada en el Backend de SIGE.}
+    \label{fig:clean_arch}
 \end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_02_contenedores_c4.png}
+    \caption{Diagrama de Contenedores C4 del Ecosistema SIGE (Frontend, Backend, DB, Storage y NLP).}
+    \label{fig:c4_containers}
+\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Organización de Capas de la Arquitectura Limpia}
-\begin{table}[htbp]
+\subsection{Matriz de Decisiones de Arquitectura de Software (ADR-01 a ADR-06)}
+A continuación se detalla la matriz formal de las decisiones arquitectónicas adoptadas para el sistema:
+
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|X|X|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Capa Arquitectónica} & \textbf{Responsabilidad Primaria} & \textbf{Componentes Clave} \\
+\textbf{Código} & \textbf{Decisión} & \textbf{Justificación Técnica} & \textbf{Consecuencias y Mitigación} & \textbf{Estado} \\
 \hline
-1. Domain (Núcleo) & Entidades puras de negocio y reglas inmutables del SGC. Cero dependencias de librerías externas. & Entidad Documento, Actividad, Validación Ponderación ($100\%$), Firma Digital. \\
+\textbf{ADR-01} & Monolito Modular con API REST & Evita la sobrecarga de orquestación de microservicios distribuidos manteniendo bajo acoplamiento por dominios. & Requiere control estricto de fronteras de módulos internos. & Aceptada \\
 \hline
-2. Application & Orquestación de casos de uso, transacciones y lógica de flujo documental. & Servicios de Documentos, Flujo de Firmas, Motor de Validation Gates. \\
+\textbf{ADR-02} & Base de Datos PostgreSQL 18 & Motor relacional con soporte nativo de tipo JSONB para almacenar contenido semiestructurado de secciones. & Requiere índices GIN especializados para búsquedas de texto. & Aceptada \\
 \hline
-3. Infrastructure & Adaptadores tecnológicos externos, bases de datos y servicios de red. & Repositorio PostgreSQL 18, MinIO Storage Client, LanguageTool REST Client, Google Gemini API Client. \\
+\textbf{ADR-03} & Almacenamiento MinIO S3 & Almacena archivos PDF pesados fuera de la base de datos, reduciendo el tamaño de backups y latencia. & Requiere generación de URLs prefirmadas con expiración de 15 min. & Aceptada \\
 \hline
-4. Presentation / API & Interfaz gráfica SPA y endpoints HTTP RESTful con middlewares de seguridad. & Express v5 REST API, Auth JWT Middleware, SPA React + Vite + Tailwind CSS. \\
+\textbf{ADR-04} & Autenticación JWT y RBAC & Mecanismo stateless escalable que transmite roles en payload cifrado sin consultar DB en cada lectura. & Invalidez de tokens se mitiga mediante TTL corto (15 min) y refresh tokens. & Aceptada \\
+\hline
+\textbf{ADR-05} & SPA con React y Vite & Experiencia de usuario ágil sin recarga de página y soporte de guardado automático con debounce. & Requiere sanitización estricta de HTML mediante DOMPurify frente a XSS. & Aceptada \\
+\hline
+\textbf{ADR-06} & Asistencia Híbrida NLP & Motor local LanguageTool en contenedor Docker complementado con Google Gemini API para sugerencias semánticas. & Si no hay conectividad externa, el sistema opera con el corrector local. & Aceptada \\
 \hline
 \end{tabularx}
-\caption{Capas y Responsabilidades de la Arquitectura del Sistema SIGE.}
-\label{tab:capas_arch}
+\caption{Matriz de Decisiones Arquitectónicas (ADR) del Sistema SIGE.}
+\label{tab:adr_matrix}
 \end{table}
 
-\subsection{Estrategia de Seguridad e Inmutabilidad}
-Toda mutación de estado que legalice un documento genera un sellado digital con el cálculo del hash criptográfico del contenido consolidado, imposibilitando la alteración retroactiva de datos en base de datos.
+\subsection{Matriz de Atributos de Calidad Arquitectónica (ISO/IEC 25010)}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|X|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Atributo} & \textbf{Requisito de Calidad} & \textbf{Estrategia Arquitectónica de Soporte} & \textbf{Métrica} \\
+\hline
+Rendimiento & Respuestas de API $<300\text{ ms}$ en operaciones habituales. & Índices relacionales B-Tree, pools de conexión y paginación en DB. & P95 $<250\text{ ms}$ \\
+\hline
+Seguridad & Protección contra OWASP Top 10 y cifrado en reposo. & Hash Argon2id para contraseñas, sanitización y JWT con firma HMAC. & 0 Hallazgos Altos \\
+\hline
+Mantenibilidad & Facilidad para modificar lógica sin afectar presentación. & Separación de capas con Clean Architecture y principios SOLID. & Deuda $<5\%$ \\
+\hline
+Fiabilidad & Cero pérdida de datos ante interrupciones de red. & Mecanismo de autoguardado debounce (800 ms) y almacenamiento transaccional. & RPO $= 0$ \\
+\hline
+\end{tabularx}
+\caption{Matriz de Atributos de Calidad según ISO/IEC 25010.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -203,9 +269,9 @@ Toda mutación de estado que legalice un documento genera un sellado digital con
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 28/08/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 25/08/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 28/08/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 25/08/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -222,15 +288,75 @@ Toda mutación de estado que legalice un documento genera un sellado digital con
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 28/08/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 25/08/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Ficha Técnica de Decisión Arquitectónica (ADR-01 a ADR-05).
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.2 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 2.2 \\
+\hline
+Nombre de la Tarjeta & Diseño de arquitectura de la solución \\
+\hline
+Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+\hline
+Período de Ejecución & 20 de agosto al 25 de agosto de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
+\hline
+Entregable Oficial & \texttt{02\_Diseno\_Arquitectura\_Solucion.pdf} (SAD \& C4 Model) \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 2.2 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Puertos y Contratos de Comunicación Inter-Contenedores}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|c|m{2.2cm}|m{2.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Servicio} & \textbf{Puerto} & \textbf{Protocolo} & \textbf{Dependencia} & \textbf{Contrato / Función Principal} \\
+\hline
+\texttt{sige-frontend} & 5173 / 80 & HTTP/HTTPS & Backend API & Entrega de SPA React y proxy de llamadas API. \\
+\hline
+\texttt{sige-backend} & 3000 & REST / JSON & PostgreSQL, MinIO & Lógica de negocio, Validation Gates y autenticación. \\
+\hline
+\texttt{sige-postgres} & 5432 & PostgreSQL Wire & Volumen local & Persistencia relacional ACID y documentos JSONB. \\
+\hline
+\texttt{sige-minio} & 9000 / 9001 & AWS S3 API & Volumen local & Almacenamiento binario de evidencias PDF y URLs prefirmadas. \\
+\hline
+\texttt{sige-grammar} & 8010 & HTTP REST & Memoria interna & Servicio local Docker LanguageTool de gramática en español. \\
+\hline
+\end{tabularx}
+\caption{Matriz de servicios y comunicación de infraestructura.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{e7421ab - feat(arch): definicion de arquitectura C4, SAD oficial y registro de ADR-01 a ADR-06}
+    \item \textbf{Archivos Afectados:} \texttt{docs/architecture\_sad.md}, \texttt{Entregables\_Latex/Fase\_2/2.2*.tex}
 \end{itemize}
+
 
 \end{document}

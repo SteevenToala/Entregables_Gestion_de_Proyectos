@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-002}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / CATÁLOGOS MAESTROS}
-\newcommand{\docElaboracion}{14/09/2026}
-\newcommand{\docRevision}{14/09/2026}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / CATÁLOGOS INSTITUCIONALES}
+\newcommand{\docElaboracion}{08/09/2026}
+\newcommand{\docRevision}{08/09/2026}
 \newcommand{\docTitulo}{DATOS INICIALES Y CATÁLOGOS INSTITUCIONALES}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,93 +123,126 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Datos Iniciales y Catálogos Institucionales -- Código EDT: 3.2
+\textbf{Denominación Oficial del Entregable:} Datos Iniciales y Catálogos Institucionales -- Código EDT: 3.2
 
 \section{Introducción}
-Para que el sistema SIGE sea operativo y refleje fielmente la estructura orgánica de la FISEI, se requiere la inicialización de los catálogos maestros y los datos semilla (Seeding). En esta actividad se desarrolló el módulo de inicialización automatizada que precarga en la base de datos relacional las carreras académicas, roles de seguridad institucional, períodos lectivos vigentes y el catálogo estandarizado de tipologías de actividades de docencia, investigación y vinculación.
+El funcionamiento integral del sistema SIGE requiere el aprovisionamiento de datos maestros correspondientes a la estructura organizacional de la Universidad Técnica de Ambato y la Facultad de Ingeniería en Sistemas, Electrónica e Industrial (FISEI). El presente informe documenta el desarrollo y ejecución del componente de inicialización de datos (\textit{Database Seeder}), el cual puebla de manera determinista los catálogos de facultades, carreras, roles institucionales, catálogo oficial de actividades del SGC y cuentas base para pruebas de integración.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Poblar y parametrizar los catálogos institucionales maestros y datos iniciales en PostgreSQL 18, asegurando la disponibilidad de datos de referencia para el funcionamiento del SGC.
+Poblar y verificar los catálogos institucionales maestros y datos de prueba en la base de datos de SIGE, asegurando la correspondencia con la estructura académica de la FISEI.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Poblar las tablas maestras de Roles, Facultades, Carreras y Períodos Académicos.
-    \item Estandarizar el catálogo de 28 tipos de actividades académicas según el Manual SGC.
-    \item Crear los usuarios institucionales de prueba con roles asignados para validación del ciclo completo.
+    \item Implementar el script \texttt{seed.js} para carga automatizada e idempotente de datos iniciales.
+    \item Cargar los catálogos institucionales oficiales (4 carreras de FISEI, 5 roles RBAC, periodos académicos).
+    \item Registrar el catálogo de actividades homologadas del SGC según las plantillas P7-T1 y P7-T2.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Script de inicialización \texttt{seed.sql} y módulo automatizado \texttt{init.js}.
-    \item Validación de idempotencia: el script puede ejecutarse múltiples veces sin duplicar registros.
+    \item Poblado de carreras: Software, Tecnologías de la Información, Telecomunicaciones y Computación.
+    \item Inserción de usuarios semilla con contraseñas encriptadas mediante Argon2id.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Migración masiva de expedientes de semestres anteriores a 2026.
+    \item Migración masiva de expedientes de docentes de ciclos anteriores a 2026.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Database Seeding:} Proceso de poblar inicialmente una base de datos con un conjunto predeterminado de datos maestros.
-    \item \textbf{Idempotencia:} Propiedad de una operación que puede ser ejecutada varias veces produciendo el mismo resultado que tras la primera ejecución.
-    \item \textbf{Catálogo SGC:} Clasificador institucional de actividades docentes que rige las horas asignadas en los planes de trabajo.
+    \item \textbf{Database Seeder:} Script automatizado que inserta registros iniciales necesarios para que el sistema funcione en un estado base conocido.
+    \item \textbf{Idempotencia:} Propiedad por la cual la ejecución múltiple de un script no genera duplicados ni errores (\texttt{ON CONFLICT DO NOTHING}).
+    \item \textbf{Catálogo SGC:} Listado estandarizado de tipos de actividad académica aprobado por la Comisión de Calidad.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Nixon Hurtado (Responsable EDT 3.2):} Desarrollo del script de semillado y verificación de catálogos.
-    \item \textbf{Heidi Villavicencio (Analista):} Validación de la concordancia de los códigos de actividad con el formato P7-T1.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de los datos iniciales y catálogos institucionales.
+    \item \textbf{Nixon Hurtado (Responsable EDT 3.2):} Desarrollo del script de sembrado y validación de integridad.
+    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de hashes criptográficos y roles de usuario.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del catálogo oficial de la FISEI.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Manual de Calidad SGC - FISEI UTA:} Catálogo de Actividades y Funciones Docentes.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122:} Organización académica por facultades y carreras legalmente reconocidas.
+    \item \textbf{Reglamento de Régimen Académico (CES), Art. 45:} Clasificación de actividades de docencia, investigación y vinculación.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9001:2015, Cláusula 7.5:} Control de los catálogos de información documentada oficial.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó un script de inicialización transaccional con sentencias \texttt{ON CONFLICT DO NOTHING}. En la Figura \ref{fig:f3_02_seed} se presenta el esquema de catálogos y usuarios inicializados.
+\subsection{Enfoque Metodológico}
+Se estructuró el módulo de sembrado en JavaScript ejecutado mediante Node.js directamente contra el contenedor PostgreSQL 18. Para evitar duplicaciones en arranques sucesivos, cada inserción utiliza la cláusula SQL \texttt{ON CONFLICT (codigo) DO UPDATE} o \texttt{DO NOTHING}. Las credenciales de prueba fueron cifradas empleando el algoritmo Argon2id con factor de memoria de 64 MB.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de Catálogos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Idempotencia de Sembrado:} El script de seed debe poder ejecutarse indefinidas veces produciendo exactamente el mismo estado sin fallos.
+    \item \textbf{Política de Seguridad de Cuentas Semilla:} Ninguna contraseña en texto plano se almacena en el repositorio; se emplean hashes con salt único.
+    \item \textbf{Política de Homologación SGC:} Los tipos de actividad deben coincidir textualmente con las opciones de las plantillas oficiales UTA.
+    \item \textbf{Política de Periodo Vigente Único:} Solo un periodo académico puede encontrarse en estado ``Activo'' de forma simultánea.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_02_catalogos_institucionales_seed.png}
-    \caption{Mapa de Catálogos Institucionales y Semillado Inicial en PostgreSQL 18.}
-    \label{fig:f3_02_seed}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_02_catalogos_institucionales_seed.png}
+    \caption{Arquitectura de Poblado y Relación de Catálogos Maestros Institucionales.}
+    \label{fig:seed_catalogos}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Catálogo Maestro de Actividades Académicas SGC}
-\begin{table}[htbp]
+\subsection{Matriz de Catálogos Institucionales Maestros Sembrados}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|c|X|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Código SGC} & \textbf{Categoría} & \textbf{Horas Máx.} & \textbf{Descripción de Actividad Institucional} \\
+\textbf{Catálogo} & \textbf{Registros} & \textbf{Valores Maestros Sembrados} & \textbf{Estado} \\
 \hline
-\texttt{ACT-DOC-01} & Docencia de Aula & 16 h/sem & Impartición de clases presenciales en asignaturas curriculares. \\
+Facultad & 1 & FISEI (Facultad de Ingeniería en Sistemas, Electrónica e Industrial) & Activo \\
 \hline
-\texttt{ACT-DOC-02} & Preparación Clases & 8 h/sem & Planificación didáctica, elaboración de material y exámenes. \\
+Carreras & 4 & Software, Tecnologías de la Información, Telecomunicaciones, Computación & Activos \\
 \hline
-\texttt{ACT-DOC-03} & Tutorías Académicas & 4 h/sem & Atención extracurricular y refuerzo pedagógico a estudiantes. \\
+Roles RBAC & 5 & \texttt{DOCENTE}, \texttt{COORD\_AREA}, \texttt{COORD\_CARRERA}, \texttt{SUBDECANO}, \texttt{ADMIN\_SGC} & Activos \\
 \hline
-\texttt{ACT-INV-01} & Proyecto Investigación & 10 h/sem & Dirección y ejecución de proyectos de investigación aprobados DIS. \\
+Periodo Académico & 1 & Octubre 2026 -- Febrero 2027 (Código: \texttt{2026-B}) & Vigente \\
 \hline
-\texttt{ACT-INV-02} & Publicación Científica & 6 h/sem & Redacción de artículos científicos en revistas Scopus/Latindex. \\
-\hline
-\texttt{ACT-VIN-01} & Vinculación Sociedad & 8 h/sem & Ejecución de programas de vinculación comunitaria institucional. \\
-\hline
-\texttt{ACT-GES-01} & Coordinación / Gestión & 10 h/sem & Desempeño de funciones directivas de área o comisiones de calidad. \\
+Actividades SGC & 12 & Cátedra, Preparación, Tutorías Académicas, Proyectos de Investigación, etc. & Homologadas \\
 \hline
 \end{tabularx}
-\caption{Muestra del Catálogo Estandarizado de Actividades SGC.}
-\label{tab:catalogos_seed}
+\caption{Catálogos maestros insertados en la base de datos.}
+\label{tab:seed_matrix}
 \end{table}
 
-\subsection{Cuentas Institucionales Iniciales}
-Se parametrizaron 4 cuentas institucionales representativas con contraseñas cifradas con bcrypt (costo 10) para Docente, Coordinador de Área, Coordinador de Carrera y Administrador General.
+\subsection{Matriz de Cuentas de Prueba para Validación de Roles}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|m{4.0cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Rol Institucional} & \textbf{Correo Institucional de Prueba} & \textbf{Ámbito de Permisos / Facultad} \\
+\hline
+Docente Titular & \texttt{docente@uta.edu.ec} & Elaboración y edición de planes de trabajo propios. \\
+\hline
+Coordinador de Área & \texttt{coord.area@uta.edu.ec} & Revisión técnica y emisión de observaciones de área. \\
+\hline
+Coordinador de Carrera & \texttt{coordinador@uta.edu.ec} & Aprobación en primera instancia y firma digital. \\
+\hline
+Subdecano & \texttt{subdecano@uta.edu.ec} & Legalización en Consejo Directivo y cierre de plan. \\
+\hline
+Administrador SGC & \texttt{admin@uta.edu.ec} & Gestión de usuarios, periodos y prórrogas extemporáneas. \\
+\hline
+\end{tabularx}
+\caption{Cuentas institucionales base para verificación de perfiles.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -200,9 +253,9 @@ Se parametrizaron 4 cuentas institucionales representativas con contraseñas cif
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 14/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 08/09/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 14/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 08/09/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -219,15 +272,75 @@ Se parametrizaron 4 cuentas institucionales representativas con contraseñas cif
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 14/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 08/09/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Lista Completa de los 28 Tipos de Actividades Académicas Parametrizadas.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.2 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.2 \\
+\hline
+Nombre de la Tarjeta & Datos iniciales y catálogos institucionales \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 04 de septiembre al 08 de septiembre de 2026 (3 días laborables) \\
+\hline
+Horas Asignadas & 24 horas hombre netas \\
+\hline
+Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & \texttt{DbInitializer} con usuarios y catálogos institucionales \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.2 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Evidencia de Ejecución del Script Seeder en Consola}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Paso de Ejecución} & \textbf{Salida Registrada en Consola del Contenedor Backend} & \textbf{Estado} \\
+\hline
+1 & \texttt{[SEED] Conectando a sige-postgres:5432/sige\_sgc\_db... OK} & ÉXITO \\
+\hline
+2 & \texttt{[SEED] Insertando catálogos de Facultad y Carreras FISEI... (4 insertadas)} & ÉXITO \\
+\hline
+3 & \texttt{[SEED] Insertando roles RBAC y permisos del SGC... (5 roles creados)} & ÉXITO \\
+\hline
+4 & \texttt{[SEED] Registrando usuarios base con hash Argon2id... (5 usuarios OK)} & ÉXITO \\
+\hline
+5 & \texttt{[SEED] Catálogo de actividades SGC inicializado... (12 tipos creados)} & ÉXITO \\
+\hline
+\end{tabularx}
+\caption{Registro de ejecución del sembrado de base de datos.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{29f81ac - feat(db): database seeder de catalogos institucionales FISEI y usuarios base}
+    \item \textbf{Archivos Afectados:} \texttt{backend/src/database/seed.js}, \texttt{Entregables\_Latex/Fase\_3/3.2*.tex}
 \end{itemize}
+
 
 \end{document}

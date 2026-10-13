@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F2-001}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DISEÑO DE SOFTWARE / MODELADO FUNCIONAL}
-\newcommand{\docElaboracion}{27/08/2026}
-\newcommand{\docRevision}{27/08/2026}
+\newcommand{\docProceso}{DISEÑO DE SOFTWARE / CASOS DE USO UML}
+\newcommand{\docElaboracion}{21/08/2026}
+\newcommand{\docRevision}{21/08/2026}
 \newcommand{\docTitulo}{DIAGRAMAS GENERAL Y DETALLADO DE CASOS DE USO}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,101 +123,165 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Diagramas General y Detallado de Casos de Uso del Sistema SIGE -- Código EDT: 2.1
+\textbf{Denominación Oficial del Entregable:} Diagramas General y Detallado de Casos de Uso del Sistema SIGE -- Código EDT: 2.1
 
 \section{Introducción}
-El modelado de Casos de Uso bajo el estándar de la Object Management Group (OMG) en UML permite capturar con precisión las interacciones funcionales entre los actores institucionales y los límites del sistema SIGE. Tras el congelamiento de los 24 Requisitos Funcionales en la Fase 1, este informe detalla el comportamiento del sistema a través del Diagrama General de Casos de Uso y las especificaciones textuales detalladas de los escenarios primarios, alternos y de excepción, asegurando la trazabilidad directa con los procesos del Sistema de Gestión de Calidad (SGC) de la FISEI.
+El modelado de Casos de Uso bajo el estándar de la Object Management Group (OMG) en UML constituye el pilar fundamental para formalizar las fronteras funcionales y operativas del sistema web SIGE. A partir de los 24 Requisitos Funcionales consolidados en la Fase 1, el presente entregable estructura el catálogo y las relaciones entre los actores institucionales del Sistema de Gestión de la Calidad (SGC) de la FISEI y los módulos del sistema. Se definen las dependencias de inclusión (\texttt{<<include>>}) y extensión (\texttt{<<extend>>}), junto con las especificaciones textuales detalladas para los escenarios primarios, alternos y de excepción en la elaboración de planes, matrices dinámicas y flujos de revisión colegiada.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Modelar formalmente el comportamiento funcional e interacciones del sistema SIGE mediante diagramas UML de casos de uso generales y detallados, garantizando la cobertura de los roles institucionales del SGC.
+Modelar formalmente el comportamiento funcional e interacciones del sistema SIGE mediante diagramas UML de casos de uso generales y detallados, garantizando la cobertura integral de los roles institucionales y los procesos del SGC de la FISEI.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Elaborar el Diagrama General de Casos de Uso agrupando los 8 casos de uso centrales (CU-01 a CU-08).
-    \item Especificar la plantilla formal de caso de uso para los flujos críticos: Elaboración, Carga de Evidencias y Cascada de Firmas.
-    \item Definir los escenarios de excepción y manejo de errores para el envío extemporáneo y rechazo de documentos.
+    \item Especificar la plantilla formal de casos de uso detallados para los flujos críticos: Elaboración de Plan, Gestión de la Matriz Dinámica y Cascada de Firmas.
+    \item Documentar los escenarios de excepción, controles transaccionales y mecanismos de gestión de extemporaneidad.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Casos de uso para Docente Elaborador, Coordinador de Área, Coordinador de Carrera y Administrador SGC.
-    \item Relaciones de inclusión (\texttt{<<include>>}) y extensión (\texttt{<<extend>>}) formales.
+    \item Mapeo completo de interacciones para: Docente Titular/Ocasional, Coordinador de Área, Coordinador de Carrera, Subdecano y Administrador SGC.
+    \item Especificación formal de precondiciones, disparadores, secuencias de eventos y postcondiciones en 3NF conceptual.
+    \item Trazabilidad directa con los requisitos funcionales RF-01 a RF-24 aprobados en EDT 1.3.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Implementación de controladores o componentes visuales.
+    \item Codificación de controladores en Node.js o construcción de vistas JSX en React (correspondientes a Fase 3).
+    \item Modelos físicos relacionales DDL (abordados en EDT 2.4).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Caso de Uso (Use Case):} Descripción de una secuencia de acciones realizadas por el sistema que produce un resultado observable de valor para un actor.
-    \item \textbf{Actor:} Entidad externa (humana o automatizada) que interactúa directamente con el sistema.
-    \item \textbf{Extensión (\texttt{<<extend>>}):} Relación que especifica que el comportamiento de un caso de uso puede ser incrementado condicionalmente por otro.
-    \item \textbf{Inclusión (\texttt{<<include>>}):} Relación que denota que el caso de uso base incorpora explícitamente el comportamiento de otro caso de uso.
+    \item \textbf{Caso de Uso (Use Case):} Conjunto de secuencias de acciones realizadas por el sistema que producen un resultado observable de valor para un actor específico según UML 2.5.1.
+    \item \textbf{Actor Primario:} Entidad institucional que inicia una interacción con el sistema para alcanzar un objetivo funcional directo (e.g., Docente Elaborador).
+    \item \textbf{Relación de Inclusión (\texttt{<<include>>}):} Vínculo donde el caso de uso base incorpora explícitamente y de forma no opcional el comportamiento del caso de uso incluido.
+    \item \textbf{Relación de Extensión (\texttt{<<extend>>}):} Vínculo que especifica que el comportamiento de un caso de uso puede ser incrementado condicionalmente por otro en puntos de extensión definidos.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Heidi Villavicencio (Responsable EDT 2.1):} Diagramación UML, redacción de especificaciones textuales y análisis de actores.
-    \item \textbf{Steeven Toala (Arquitecto de Software):} Validación de relaciones de inclusión y arquitectura de negocio.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación metodológica de los casos de uso.
+    \item \textbf{Heidi Villavicencio (Responsable EDT 2.1):} Diagramación UML formal, redacción de especificaciones textuales y diseño de escenarios alternos.
+    \item \textbf{Steeven Toala (Líder Técnico / Arquitecto):} Validación de consistencia arquitectónica y trazabilidad con el modelo C4.
+    \item \textbf{Nixon Hurtado (Analista de Requisitos):} Verificación de cobertura con la matriz de trazabilidad RF-01 a RF-24.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación metodológica de los casos de uso institucionales.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{OMG Unified Modeling Language (OMG UML) Superstructure Version 2.5.1.}
-    \item \textbf{Norma ISO/IEC/IEEE 29148:2018:} Systems and software engineering -- Life cycle processes -- Requirements engineering.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Garantía de calidad, transparencia y rendición obligatoria de la labor docente ante organismos directivos.
+    \item \textbf{Reglamento de Régimen Académico (RRA - CES), Art. 45 y 67:} Distribución legal de actividades de docencia, tutoría, investigación y gestión institucional.
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Arts. 10 y 11:} Delimitación de perfiles y confidencialidad en el acceso a los datos de evaluación y seguimiento académico.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{OMG Unified Modeling Language (OMG UML), Versión 2.5.1:} Especificación formal de sintaxis y semántica para modelado de casos de uso.
+    \item \textbf{ISO/IEC/IEEE 29148:2018 (Requirements Engineering):} Estructura y especificación formal de casos de uso y requerimientos operacionales.
+    \item \textbf{ISO 9001:2015, Cláusula 7.5:} Aseguramiento de la información documentada en procesos de revisión y aprobación institucional.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó notación UML 2.5. En la Figura \ref{fig:s2_01_casos} se representa el diagrama general de interacción de los actores institucionales.
+\subsection{Enfoque Metodológico}
+Se empleó la metodología orientada a objetos bajo el marco de desarrollo guiado por casos de uso (\textit{Use-Case Driven Development}). Se derivaron los actores y límites del sistema mediante matrices de correspondencia con los requerimientos funcionales aprobados. Para cada caso de uso se elaboró una ficha normalizada compuesta por: identificador, nombre, actor principal, precondiciones, flujo principal o camino feliz (\textit{happy path}), flujos alternos, flujos de excepción y postcondiciones comprobables.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad del Modelado}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Completitud Funcional:} Cada uno de los 24 requerimientos funcionales debe estar cubierto por al menos un caso de uso primario o extendido.
+    \item \textbf{Política de Trazabilidad Bidireccional:} Cada especificación textual debe declarar explícitamente sus dependencias de requisitos y entidades del modelo de dominio.
+    \item \textbf{Política de Control de Acceso por Roles:} Ningún caso de uso puede ejecutarse sin la previa resolución de identidad y verificación de permisos RBAC del actor en sesión.
+    \item \textbf{Política de Atomicidad de Escenarios:} Los flujos de excepción deben garantizar que un fallo en la validación mantenga el sistema en un estado consistente sin corrupción de datos.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/s2_01_casos_de_uso.png}
-    \caption{Diagrama General de Casos de Uso del Sistema SIGE (UML 2.5).}
-    \label{fig:s2_01_casos}
+    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/s2_01_casos_de_uso.png}
+    \caption{Diagrama General de Casos de Uso del Sistema SIGE bajo Estándar OMG UML 2.5.1.}
+    \label{fig:casos_uso_general}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Catálogo de Casos de Uso del Sistema (CU-01 a CU-08)}
-\begin{table}[htbp]
+\subsection{Matriz Oficial de Casos de Uso del Sistema (CU-01 a CU-08)}
+A continuación se detalla la matriz general de casos de uso estructurada para el sistema SIGE:
+
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|X|c|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|c|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Código} & \textbf{Caso de Uso} & \textbf{Actor Principal y Propósito Funcional} & \textbf{Criticidad} \\
+\textbf{Código} & \textbf{Nombre del Caso de Uso} & \textbf{Actores y Propósito Funcional} & \textbf{Requisitos} & \textbf{Criticidad} \\
 \hline
-\textbf{CU-01} & Iniciar Sesión en SIGE & Docente, Coordinadores y Admin: Autenticación JWT y carga de perfil. & Alta \\
+\textbf{CU-01} & Iniciar Sesión en SIGE & Docente, Coordinadores, Admin: Validación credenciales JWT y carga de roles. & RF-01, RF-02 & Alta \\
 \hline
-\textbf{CU-02} & Elaborar Plan de Trabajo & Docente Elaborador: Llenado de secciones descriptivas y asignación horaria. & Crítica \\
+\textbf{CU-02} & Elaborar Plan de Trabajo & Docente Elaborador: Diligenciamiento estructurado de datos generales y carga horaria. & RF-03, RF-04 & Crítica \\
 \hline
-\textbf{CU-03} & Gestionar Matriz Dinámica & Docente Elaborador: Registro de actividades, cálculo de $100\%$ y avance. & Crítica \\
+\textbf{CU-03} & Gestionar Matriz Dinámica & Docente Elaborador: Registro de actividades, cronograma semanal y ponderación 100\%. & RF-05, RF-06 & Crítica \\
 \hline
-\textbf{CU-04} & Cargar Evidencias en MinIO & Docente Elaborador: Subida de anexos PDF con cálculo de hash SHA-256. & Alta \\
+\textbf{CU-04} & Cargar Evidencias en MinIO & Docente Elaborador: Carga de respaldos PDF, cálculo de hash SHA-256 y URLs prefirmadas. & RF-07, RF-08 & Alta \\
 \hline
-\textbf{CU-05} & Revisar en Comité & Coordinador de Área/Carrera: Registro granular de observaciones por sección. & Alta \\
+\textbf{CU-05} & Revisar en Comité & Coordinador de Área / Carrera: Auditoría técnica y observaciones granulares. & RF-09, RF-10 & Alta \\
 \hline
-\textbf{CU-06} & Firmar Documento Cascada & Elaborador, Revisor, Aprobador: Estampado digital secuencial e irreversible. & Crítica \\
+\textbf{CU-06} & Cascada de Firmas Digitales & Docente, Revisor, Aprobador: Estampado cronológico irreversible de firmas digitales. & RF-11, RF-12 & Crítica \\
 \hline
-\textbf{CU-07} & Exportar Documento SGC & Todos los roles: Generación de salidas PDF oficiales y DOCX editables. & Alta \\
+\textbf{CU-07} & Exportar Documento SGC & Todos los Roles: Generación de salidas oficiales en formato PDF vectorial y Word. & RF-13, RF-14 & Alta \\
 \hline
-\textbf{CU-08} & Gestionar Extemporáneo & Docente / Administrador: Solicitud formal y desbloqueo auditado de plazos. & Media \\
+\textbf{CU-08} & Gestionar Extemporaneidad & Docente y Administrador: Solicitud auditada de prórroga para apertura de plazos. & RF-15, RF-16 & Media \\
 \hline
 \end{tabularx}
-\caption{Catálogo de Casos de Uso Institucionales.}
-\label{tab:casos_uso}
+\caption{Matriz del catálogo oficial de Casos de Uso del Sistema SIGE.}
+\label{tab:matriz_casos_uso}
 \end{table}
 
 \subsection{Especificación Textual Detallada: CU-03 (Gestión de Matriz Dinámica)}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Precondiciones:} El docente debe poseer sesión activa y un borrador de plan o informe abierto.
-    \item \textbf{Flujo Principal:} El docente ingresa actividad, fecha inicio, fecha fin, horas asignadas y ponderación. El sistema actualiza en tiempo real la suma total ($\sum P_i$) y el avance ponderado global.
-    \item \textbf{Flujo Alterno (Validation Gate):} Si la ponderación no suma exactamente el 100\%, el sistema deshabilita el botón de guardado definitivo y emite una alerta visual en la interfaz.
-\end{itemize}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\multicolumn{2}{|c|}{\textbf{FORMATO OFICIAL DE ESPECIFICACIÓN DE CASO DE USO -- CU-03}} \\
+\hline
+Nombre del Caso de Uso & Gestión de Matriz Dinámica de Actividades SGC \\
+\hline
+Actor Principal & Docente Elaborador \\
+\hline
+Precondiciones & El usuario posee una sesión activa en el sistema y ha seleccionado un documento en estado ``Borrador''. \\
+\hline
+Disparador (Trigger) & El docente navega a la pestaña ``Matriz de Actividades'' dentro del Wizard del Plan de Trabajo. \\
+\hline
+Flujo Principal (Happy Path) & 
+\begin{enumerate}[leftmargin=1.2em, itemsep=1pt]
+    \item El sistema renderiza la tabla interactiva de actividades recuperadas de PostgreSQL 18.
+    \item El docente hace clic en ``Agregar Actividad'' o selecciona ``Sugerir con IA''.
+    \item El docente ingresa la descripción de la actividad, medios de verificación y horas semanales.
+    \item El docente asigna la ponderación porcentual y marca las semanas del cronograma (1 a 16).
+    \item El sistema recalcula en tiempo real la sumatoria de ponderación y horas acumuladas.
+    \item Al alcanzar el 100\% de ponderación, el sistema habilita el botón de guardado definitivo.
+    \item El sistema persiste las filas en la base de datos y confirma el estado ``Guardado''.
+\end{enumerate} \\
+\hline
+Flujos Alternos & 
+\begin{itemize}[leftmargin=1.2em, itemsep=1pt]
+    \item \textbf{A1 - Asistencia de IA:} El docente solicita sugerencias automáticas de redacción acordes al catálogo institucional de actividades del SGC.
+    \item \textbf{A2 - Reordenamiento:} El docente arrastra filas para ordenar prioridades sin alterar las sumatorias.
+\end{itemize} \\
+\hline
+Flujos de Excepción & 
+\begin{itemize}[leftmargin=1.2em, itemsep=1pt]
+    \item \textbf{E1 - Ponderación Distinta de 100\%:} La Validation Gate bloquea la transición de estado y resalta en color carmesí la diferencia porcentual faltante o excedente.
+    \item \textbf{E2 - Actividad sin Medios de Verificación:} El sistema impide el avance al paso de firmas hasta que cada ítem posea al menos un medio auditable.
+\end{itemize} \\
+\hline
+Postcondiciones & La matriz de actividades queda almacenada con integridad relacional en la tabla \texttt{actividades\_matriz}. \\
+\hline
+\end{tabularx}
+\caption{Especificación textual detallada del caso de uso crítico CU-03.}
+\label{tab:cu_03_detalle}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -208,9 +292,9 @@ Se utilizó notación UML 2.5. En la Figura \ref{fig:s2_01_casos} se representa 
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 27/08/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 21/08/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 27/08/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 21/08/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -227,15 +311,81 @@ Se utilizó notación UML 2.5. En la Figura \ref{fig:s2_01_casos} se representa 
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 27/08/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 21/08/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Especificaciones Textuales Completas de CU-01 a CU-08.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.1 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 2.1 \\
+\hline
+Nombre de la Tarjeta & Diagramas general y detallado de casos de uso \\
+\hline
+Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+\hline
+Período de Ejecución & 19 de agosto al 21 de agosto de 2026 (3 días laborables) \\
+\hline
+Horas Asignadas & 24 horas hombre netas \\
+\hline
+Responsables Técnicos & Heidi Villavicencio (HV), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & \texttt{01\_Diagrama\_General\_Detallado\_Casos\_de\_Uso.pdf} \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 2.1 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Trazabilidad entre Requisitos Funcionales y Casos de Uso}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Requisito Funcional} & \textbf{Descripción del Requisito} & \textbf{Caso de Uso Vinculado} & \textbf{Cobertura} \\
+\hline
+RF-01 & Autenticación institucional con credenciales universitarias & CU-01 & 100\% Total \\
+\hline
+RF-03 & Configuración general del plan semestral y carga horaria & CU-02 & 100\% Total \\
+\hline
+RF-05 & Registro interactivo de matriz de actividades y cronograma & CU-03 & 100\% Total \\
+\hline
+RF-07 & Almacenamiento seguro de medios de verificación en MinIO S3 & CU-04 & 100\% Total \\
+\hline
+RF-09 & Panel de revisión con observaciones granulares por sección & CU-05 & 100\% Total \\
+\hline
+RF-11 & Flujo secuencial e inmutable de cascada de firmas digitales & CU-06 & 100\% Total \\
+\hline
+RF-13 & Generación de reportes institucionales en PDF y DOCX & CU-07 & 100\% Total \\
+\hline
+RF-15 & Desbloqueo y gestión de prórrogas extemporáneas & CU-08 & 100\% Total \\
+\hline
+\end{tabularx}
+\caption{Matriz de trazabilidad RF vs CU.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{c8192df - feat(arch): modelado de casos de uso UML 2.5.1 general y detallado CU-01 a CU-08}
+    \item \textbf{Archivos Afectados:} \texttt{docs/casos\_uso\_sige.md}, \texttt{Entregables\_Latex/Fase\_2/2.1*.tex}
 \end{itemize}
+
 
 \end{document}

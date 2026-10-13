@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-009}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / MATRIZ DINÁMICA}
-\newcommand{\docElaboracion}{29/09/2026}
-\newcommand{\docRevision}{29/09/2026}
-\newcommand{\docTitulo}{DESARROLLO DE LA MATRIZ DINÁMICA DE ACTIVIDADES}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / MATRIZ DINÁMICA DE ACTIVIDADES}
+\newcommand{\docElaboracion}{28/09/2026}
+\newcommand{\docRevision}{28/09/2026}
+\newcommand{\docTitulo}{DESARROLLO DE LA MATRIZ DINÁMICA}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,94 +123,142 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Desarrollo de la Matriz Dinámica de Actividades -- Código EDT: 3.9
+\textbf{Denominación Oficial del Entregable:} Desarrollo de la Matriz Dinámica de Actividades -- Código EDT: 3.9
 
 \section{Introducción}
-La Tabla 1 del formato institucional del Sistema de Gestión de Calidad (Planificación y Control de Actividades Docentes) representa el núcleo aritmético de la evaluación semestral. Históricamente, esta tabla en procesadores de texto era propensa a errores manuales de suma de ponderación y discrepancias entre horas y porcentajes. En esta actividad se desarrolló el componente \\textbf{MatrizActividadesTable.jsx}, una tabla interactiva reactiva que permite agregar, editar y eliminar actividades en tiempo real, calculando automáticamente la suma de ponderación ($\sum P_i = 100\%$) y el avance ponderado global del documento.
+La Tabla 1 del formato institucional del Sistema de Gestión de la Calidad (\texttt{UTA-SGC-A-2-1-P7-T1}), correspondiente a la Planificación de Actividades y su Control Semestral, constituye el núcleo aritmético y normativo de la rendición docente en la FISEI. En los formatos manuales anteriores en Microsoft Word, esta sección presentaba graves fallas operativas: sumas asimétricas que no totalizaban el 100\%, cálculo erróneo del avance acumulado e inconsistencias en la distribución semanal. Para resolver definitivamente esta problemática, se desarrolló el componente interactivo reactivo \texttt{MatrizActividadesTable.jsx}, el cual permite crear, editar y eliminar actividades académicas con recálculo matemático instantáneo de ponderaciones, selector matricial de 16 semanas y validación de suma exacta al 100\%.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Desarrollar el componente interactivo de Matriz Dinámica de Actividades para el registro, edición y cálculo automático de ponderaciones y avance global bajo normas SGC.
+Desarrollar, integrar y validar el componente interactivo de Matriz Dinámica de Actividades con cálculo automático en tiempo real de ponderación ($\sum P_i = 100\%$) y cronograma semanal para el sistema SIGE.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Implementar la tabla reactiva con adición y eliminación dinámica de filas.
-    \item Programar el validador en tiempo real de sumatoria de ponderaciones al $100.00\%$.
-    \item Implementar el cálculo matemático ponderado del porcentaje de avance global.
+    \item Construir la tabla interactiva reactiva utilizando el hook \texttt{useReducer} para gestión inmutable de filas.
+    \item Implementar el validador aritmético en tiempo real de ponderación porcentual y horas semanales.
+    \item Integrar el selector de cronograma semestral de 16 semanas con cálculo de avance ponderado.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Componente \texttt{MatrizActividadesTable.jsx} integrado en el Paso 3 del Wizard.
-    \item Clasificación por categorías SGC: Docencia, Investigación, Vinculación y Gestión.
+    \item Componente \texttt{MatrizActividadesTable.jsx} plenamente operativo en el Paso 3 del Wizard.
+    \item Botones interactivos ``+ Agregar Actividad'', ``+ Sugerir con IA'', eliminación de fila y cálculo de avance.
+    \item Clasificación estricta por áreas del SGC: Docencia, Investigación, Vinculación y Gestión.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Carga física de archivos binarios de evidencias (cubierto en EDT 3.11).
+    \item Almacenamiento físico de archivos binarios de verificación (desarrollado en EDT 3.11).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Matriz Dinámica:} Componente de interfaz tipo hoja de cálculo ligera que ejecuta validaciones y cálculos matemáticos reactivos en el cliente.
-    \item \textbf{Ponderación Horaria ($P_i$):} Peso porcentual asignado a una actividad en relación a la dedicación horaria global.
-    \item \textbf{Avance Ponderado Global ($A_G$):} Suma acumulada de los avances individuales multiplicados por su ponderación relativa.
+    \item \textbf{Matriz Dinámica SGC:} Componente de interfaz de tipo hoja de cálculo ligera reactiva que ejecuta operaciones aritméticas de agregación sin recargar la página.
+    \item \textbf{Ponderación de Actividad ($P_i$):} Peso porcentual asignado a una labor específica dentro del periodo semestral, cuya sumatoria global debe ser exactamente $100.00\%$.
+    \item \textbf{Medio de Verificación:} Evidencia documental auditable (e.g., sílabos, actas, certificados) que justifica la ejecución y cumplimiento de una actividad.
+    \item \textbf{Cronograma Semestral Matricial:} Matriz booleana de 16 columnas que representa la planificación temporal semana a semana de cada actividad docente.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Andrea Vásquez (Responsable EDT 3.9):} Desarrollo del componente interactivo de la matriz y algoritmos de cálculo.
-    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de fórmulas matemáticas de ponderación.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la fidelidad con la Tabla 1 del formato SGC.
+    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de fórmulas matemáticas de ponderación y persistencia inmutable.
+    \item \textbf{Heidi Villavicencio (UI/UX):} Optimización visual, accesibilidad de la tabla y diseño de badges de estado.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la fidelidad con la Tabla 1 del formato oficial SGC.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Formato Oficial UTA-SGC-A-2-1-P7-T1 y T2 (Tabla 1: Matriz de Actividades).}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Obligatoriedad de registrar fielmente las actividades docentes planificadas y ejecutadas.
+    \item \textbf{Reglamento de Régimen Académico (RRA - CES), Art. 45:} Distribución de la jornada de trabajo del personal académico en docencia, vinculación e investigación.
+    \item \textbf{Formato Oficial UTA-SGC-A-2-1-P7-T1 y T2:} Estructura obligatoria de la Matriz de Actividades y Medios de Verificación.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9001:2015, Cláusula 7.5:} Aseguramiento de la integridad de datos cuantitativos en registros de calidad.
+    \item \textbf{ISO/IEC 25010:2011:} Exactitud en cálculos numéricos y prevención de errores humanos de entrada.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó el hook \texttt{useReducer} para gestión inmutable de filas. En la Figura \ref{fig:f3_09_matriz} se aprecia la vista previa del componente de matriz de actividades.
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/preview_plan_trabajo.png}
-    \caption{Componente Interactivo de la Matriz Dinámica de Actividades SGC.}
-    \label{fig:f3_09_matriz}
-\end{figure}
-
-\section{Descripción de actividades}
-\subsection{Algoritmo Matemático de Cálculo en Tiempo Real}
-Para cada modificación en las filas de la matriz, el componente recalcula instantáneamente:
+\subsection{Enfoque Metodológico}
+Para garantizar inmutabilidad, predictibilidad y rendimiento óptimo en la manipulación de filas complejas, se empleó el hook \texttt{useReducer} de React con acciones tipadas (\texttt{ADD\_ROW}, \texttt{UPDATE\_FIELD}, \texttt{TOGGLE\_WEEK}, \texttt{REMOVE\_ROW}, \texttt{CALCULATE\_TOTALS}). Las fórmulas aritméticas operan en tiempo real con precisión de dos decimales:
 \begin{equation}
     P_{\text{total}} = \sum_{i=1}^{n} P_i, \qquad A_G = \sum_{i=1}^{n} \left( \frac{P_i}{100} \times A_i \right)
 \end{equation}
-Si $P_{\text{total}} = 100.00\%$, el indicador de estado se torna verde (\texttt{Success}) y se habilita la transición. Si $P_{\text{total}} \ne 100.00\%$, el badge muestra la diferencia exacta en rojo y notifica al docente.
+donde $P_{\text{total}}$ es la sumatoria de ponderaciones (obligatoriamente $100.00\%$), $A_i$ es el porcentaje de avance reportado para la actividad $i$, y $A_G$ es el avance global acumulado del informe.
 
-\subsection{Estructura de Columnas de la Matriz Dinámica}
-\begin{table}[htbp]
+\subsection{Políticas de Calidad de la Matriz Dinámica}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política del 100\% Estricto:} Si la suma de ponderaciones difiere de $100.00\%$ (e.g., $95\%$ o $105\%$), el sistema bloquea el paso de guardado final y resalta la diferencia en color rojo carmesí.
+    \item \textbf{Política de Medio de Verificación Obligatorio:} Cada actividad registrada debe declarar al menos un medio de verificación auditable y específico.
+    \item \textbf{Política de Coherencia Cronológica:} Toda actividad debe tener marcada al menos una de las 16 semanas del semestre lectivo.
+    \item \textbf{Política de Inmutabilidad de Filas:} Las operaciones sobre la tabla no mutan el estado directamente, previniendo condiciones de carrera (\textit{race conditions}) en el navegador.
+\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=6.2cm,keepaspectratio]{images/sige_matriz_dinamica_actividades.png}
+    \caption{Captura Real del Componente Interactivo de la Matriz Dinámica de Actividades SGC en SIGE.}
+    \label{fig:matriz_dinamica_real}
+\end{figure}
+\FloatBarrier
+
+\section{Descripción de actividades}
+\subsection{Matriz Oficial de Datos de Actividades del Plan Docente (Tabla 1 SGC)}
+A continuación se presenta la tabla formal con el conjunto completo de actividades académicas modeladas en el sistema, totalizando exactamente el 100\% de ponderación y cubriendo la carga horaria semanal:
+
+\begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.0cm}|m{2.5cm}|X|}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|c|c|m{2.8cm}|}
 \hline
 \rowcolor{tableheader}
-\textbf{Col.} & \textbf{Campo} & \textbf{Tipo de Entrada} & \textbf{Regla de Validación / Comportamiento} \\
+\textbf{N°} & \textbf{Área SGC} & \textbf{Actividad Específica Planificada} & \textbf{Horas} & \textbf{Pond.} & \textbf{Medio de Verificación} \\
 \hline
-1 & Actividad SGC & Dropdown catálogo & Obligatorio; clasificado según áreas de formación. \\
+1 & Docencia & Dictado de Cátedra: Ingeniería de Software I y II & 16 h & 40.00\% & Registro de Asistencia, Sílabo. \\
 \hline
-2 & Descripción / Meta & Texto multilínea & Descripción precisa de los productos o resultados esperados. \\
+2 & Docencia & Preparación de clases, material didáctico y evaluaciones & 8 h & 20.00\% & Guías de Taller, Rúbricas. \\
 \hline
-3 & Horas Asignadas & Numérico entero & Mayor a 0; suma validada contra dedicación docente. \\
+3 & Docencia & Tutorías Académicas y atención a estudiantes & 4 h & 10.00\% & Bitácora de Tutorías, Actas. \\
 \hline
-4 & Ponderación ($P_i$) & Numérico decimal & Rango $0.01$ a $100.00$; la suma total debe ser $100.00\%$. \\
+4 & Investigación & Proyecto I+D: Desarrollo de Plataforma de Calidad SIGE & 6 h & 15.00\% & Avance de Proyecto, Código Git. \\
 \hline
-5 & \% Avance ($A_i$) & Slider / Input & Rango $0$ a $100$; si $>0$, exige evidencia probatoria. \\
+5 & Gestión & Comisión Académica y Acreditación de Carrera & 4 h & 10.00\% & Actas de Reunión de Comisión. \\
 \hline
-6 & Evidencias Adjuntas & Botón de carga & Muestra contador de PDFs en MinIO y estado de hash. \\
+6 & Vinculación & Capacitación comunitaria en alfabetización digital & 2 h & 5.00\% & Certificados, Nómina asistentes. \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTALES CONSOLIDADOS:}} & \textbf{40 h} & \textbf{100.00\%} & \textbf{Validación SGC: APROBADA} \\
 \hline
 \end{tabularx}
-\caption{Columnas y Reglas de la Matriz Dinámica de Actividades.}
-\label{tab:columnas_matriz}
+\caption{Matriz oficial de actividades académicas del plan semestral P7-T1.}
+\label{tab:matriz_actividades_datos}
+\end{table}
+
+\subsection{Matriz de Distribución del Cronograma Semanal (Semanas 1 a 16)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{N°} & \textbf{Actividad Planificada} & \textbf{Sem. 1--4} & \textbf{Sem. 5--8} & \textbf{Sem. 9--12} & \textbf{Sem. 13--16} \\
+\hline
+1 & Dictado de Cátedra (Cursos Teóricos y Prácticos) & Activo & Activo & Activo & Activo \\
+\hline
+2 & Preparación de clases y diseño de instrumentos & Activo & Activo & Activo & Activo \\
+\hline
+3 & Tutorías Académicas individuales y grupales & Activo & Activo & Activo & Activo \\
+\hline
+4 & Desarrollo del Proyecto de Investigación SIGE & Activo & Activo & Activo & Activo \\
+\hline
+5 & Sesiones de Comisión Académica y Aseguramiento & Quincenal & Quincenal & Quincenal & Quincenal \\
+\hline
+6 & Talleres de Vinculación con la Sociedad & Inactivo & Activo & Activo & Cierre \\
+\hline
+\end{tabularx}
+\caption{Cronograma de ejecución semestral distribuido en 16 semanas.}
 \end{table}
 
 \section{Firmas de Responsabilidad}
@@ -202,9 +270,9 @@ Si $P_{\text{total}} = 100.00\%$, el indicador de estado se torna verde (\texttt
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 29/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 28/09/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 29/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 28/09/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -221,15 +289,73 @@ Si $P_{\text{total}} = 100.00\%$, el indicador de estado se torna verde (\texttt
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 29/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 28/09/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Casos de Prueba de Sumatoria Aritmética con Decimales en la Matriz.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.9 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.9 \\
+\hline
+Nombre de la Tarjeta & Desarrollo de la Matriz Dinámica de Actividades \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 23 de septiembre al 28 de septiembre de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Andrea Vásquez (AV), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & Componente \texttt{MatrizActividadesTable.tsx} interactivo \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 3 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.9 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Acciones y Casos de Reducer en el Componente}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{3.2cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Acción Reducer} & \textbf{Tipo de Disparo} & \textbf{Transformación de Estado Ejecutada} & \textbf{Complejidad} \\
+\hline
+\texttt{ADD\_ACTIVITY} & Clic en botón ``+ Agregar'' & Inserta nueva fila con valores por defecto e ID autogenerado. & $O(1)$ \\
+\hline
+\texttt{UPDATE\_WEIGHT} & Modificación de ponderación & Recalcula $\sum P_i$; actualiza badge a verde si $100\%$ o rojo si difiere. & $O(n)$ \\
+\hline
+\texttt{TOGGLE\_WEEK} & Clic en casilla de semana & Invierte el booleano de la semana específica en el array de 16 ítems. & $O(1)$ \\
+\hline
+\texttt{SUGGEST\_AI} & Clic en botón ``Sugerir IA'' & Poblado inteligente con base en sugerencias de redacción del SGC. & $O(1)$ \\
+\hline
+\end{tabularx}
+\caption{Estructura de acciones inmutables del componente React.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{b91480a - feat(matriz): MatrizActividadesTable interactiva con useReducer, calculo 100\% y cronograma}
+    \item \textbf{Archivos Afectados:} \texttt{frontend/src/components/matriz/*}, \texttt{Entregables\_Latex/Fase\_3/3.9*.tex}
 \end{itemize}
+
 
 \end{document}

@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F2-005}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{EXPERIENCIA DE USUARIO / WIREFRAMES UI-UX}
-\newcommand{\docElaboracion}{03/09/2026}
-\newcommand{\docRevision}{03/09/2026}
+\newcommand{\docProceso}{DISEÑO UI/UX / DESIGN SYSTEM INSTITUCIONAL}
+\newcommand{\docElaboracion}{28/08/2026}
+\newcommand{\docRevision}{28/08/2026}
 \newcommand{\docTitulo}{DISEÑO DE INTERFACES Y EXPERIENCIA DE USUARIO}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,104 +123,152 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Diseño de Interfaces y Experiencia de Usuario (Wireframes y UX) -- Código EDT: 2.5
+\textbf{Denominación Oficial del Entregable:} Diseño de Interfaces y Experiencia de Usuario (Wireframes y Prototipo UX) -- Código EDT: 2.5
 
 \section{Introducción}
-La usabilidad y la experiencia de usuario (UX) son determinantes para la adopción exitosa del software en entornos universitarios. El cuerpo docente requiere una interfaz moderna, limpia y predecible que minimice la fatiga visual y agilice el registro de sus labores. Este informe consolida el diseño de alta fidelidad, la arquitectura de interfaces, el flujo del Wizard modular de 4 pasos para el elaborador, los componentes de la matriz interactiva y el panel de revisión colegiada, acompañados de una guía de estilos y tokens cromáticos institucionales accesibles bajo el estándar WCAG 2.1 nivel AA.
+La interfaz de usuario del sistema SIGE debe proporcionar una experiencia fluida, intuitiva y accesible que elimine la fricción operativa detectada en el manejo manual de plantillas Word y Excel. Un diseño centrado en el usuario (\textit{User-Centered Design}) garantiza que docentes y directivos realicen sus tareas de planificación y revisión con la mínima carga cognitiva. El presente informe documenta el sistema de diseño visual (\textit{Design System}) institucional, la arquitectura de navegación, los wireframes de media y alta fidelidad y las capturas reales de la interfaz web implementada en React y Tailwind CSS, cumpliendo con los estándares de identidad visual de la Universidad Técnica de Ambato.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Diseñar la arquitectura de interfaces y experiencia de usuario (UI/UX) del sistema SIGE, elaborando wireframes de alta fidelidad, flujos interactivos y el sistema de diseño accesible.
+Diseñar y validar el sistema visual, los wireframes y los prototipos de interfaz de usuario del sistema SIGE, garantizando estándares institucionales de usabilidad, accesibilidad y eficiencia operativa.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Diseñar el Wizard modular de 4 pasos para la elaboración secuencial de documentos.
-    \item Maquetar la Matriz Dinámica responsive que replica la Tabla 1 del formato SGC.
-    \item Diseñar el panel de revisión del Comité con bandeja de observaciones contextuales.
-    \item Establecer la paleta de colores institucional, tipografía y tokens accesibles WCAG AA.
+    \item Establecer la paleta cromática, escala tipográfica y tokens de diseño corporativos de la Universidad Técnica de Ambato.
+    \item Diseñar los wireframes y vistas clave: Inicio de Sesión, Dashboard Docente, Wizard de Planificación y Matriz Interactiva.
+    \item Validar el cumplimiento de accesibilidad WCAG 2.1 nivel AA y heurísticas de usabilidad de Nielsen.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Vistas de Dashboard Docente, Editor Wizard, Tabla de Matriz, Subida de Archivos y Panel de Revisión.
-    \item Prototipo interactivo en Figma y especificación de tokens para Tailwind CSS.
+    \item Prototipado y captura real de las vistas funcionales de Inicio de Sesión y Dashboard Docente.
+    \item Especificación de componentes modulares interactivos (botones, tablas, modales, barras de progreso).
+    \item Definición de microinteracciones, estados de carga y mensajes de validación en tiempo real.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Código JavaScript de componentes React (cubierto en Fase 3).
+    \item Pruebas de compatibilidad cross-browser automatizadas (correspondientes a Fase 4).
+    \item Vistas de administración de infraestructura de servidores.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Wireframe de Alta Fidelidad:} Representación visual interactiva y detallada de la interfaz con colores y tipografías reales.
-    \item \textbf{Design Tokens:} Variables de diseño centralizadas (colores, espaciados, fuentes) que garantizan consistencia visual.
-    \item \textbf{WCAG 2.1 (Nivel AA):} Pautas de Accesibilidad para el Contenido Web con ratios mínimos de contraste cromático (4.5:1).
-    \item \textbf{Wizard de Navegación:} Patrón de diseño UI que guía al usuario paso a paso a través de un flujo complejo.
+    \item \textbf{Design System:} Conjunto integrado de estándares, componentes reutilizables y directrices de diseño que guían el desarrollo visual del sistema.
+    \item \textbf{Wireframe:} Representación visual esquemática de la estructura y jerarquía de contenidos de una página o pantalla interactiva.
+    \item \textbf{WCAG 2.1 AA:} Directrices de Accesibilidad para el Contenido Web orientadas a garantizar legibilidad y operabilidad universal.
+    \item \textbf{Feedback Inmediato:} Respuesta visual o sonora que el sistema presenta al usuario ante una interacción en un tiempo menor a 100 ms.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Heidi Villavicencio / Andrea Vásquez (Responsables EDT 2.5):} Diseño UI en Figma, investigación de usuarios y diseño del sistema visual.
-    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de factibilidad de maquetación en Tailwind CSS.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del prototipo de interfaces.
+    \item \textbf{Heidi Villavicencio (Responsable EDT 2.5):} Diseño UI/UX, arquitectura de información, sistema de componentes y prototipado.
+    \item \textbf{Andrea Vásquez (Diseñadora de Interfaces):} Elaboración de wireframes, tokens tipográficos y validación de contrastes.
+    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de viabilidad técnica de los componentes en React y Tailwind CSS.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del diseño visual y la experiencia de usuario.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{W3C Web Content Accessibility Guidelines (WCAG) 2.1.}
-    \item \textbf{ISO 9241-210:2019:} Ergonomics of human-system interaction -- Human-centred design for interactive systems.
+    \item \textbf{Ley Orgánica de Discapacidades (LOD), Art. 65:} Accesibilidad en plataformas y servicios web de instituciones públicas y educativas del Ecuador.
+    \item \textbf{Manual de Identidad Visual Institucional de la Universidad Técnica de Ambato:} Directrices sobre uso de logos, tipografías y colores corporativos (Rojo UTA, Azul Institucional y Gris Neutro).
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9241-210:2019 (Human-Centred Design for Interactive Systems):} Principios y procesos de diseño centrado en el usuario.
+    \item \textbf{W3C Web Content Accessibility Guidelines (WCAG) 2.1 Nivel AA:} Contraste cromático mínimo de $4.5:1$ para texto normal y diseño responsive adaptable.
+    \item \textbf{Heurísticas de Usabilidad de Jakob Nielsen:} Diez principios generales para el diseño de interfaces de usuario.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó diseño centrado en el usuario (HCD). En las Figuras \ref{fig:s2_05_views} y \ref{fig:s2_05_palette} se aprecian las vistas principales del sistema y la paleta de colores institucional.
+\subsection{Enfoque Metodológico}
+Se aplicó la metodología de diseño atómico (\textit{Atomic Design}), descomponiendo la interfaz en átomos (botones, inputs, badges), moléculas (formularios, tarjetas de métricas), organismos (navbar, wizard, matriz de actividades) y plantillas de página completas. Para asegurar una estética moderna, profesional y alineada con la identidad de la UTA, se implementó una interfaz limpia construida con Tailwind CSS, que incorpora soporte nativo para visualización responsive (escritorio, tablet y móvil).
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s2_05_layout_vistas.png}
-    \caption{Diseño de Layouts y Vistas del Sistema SIGE.}
-    \label{fig:s2_05_views}
-\end{figure}
+\subsection{Políticas de Calidad de Diseño UI/UX}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Contraste y Accesibilidad:} Todos los elementos interactivos y textos deben cumplir con una relación de contraste mínima de $4.5:1$ frente a su fondo según WCAG AA.
+    \item \textbf{Política de Prevención de Pérdida de Datos:} Las pantallas con entrada de datos deben incluir indicadores visuales automáticos de guardado (\textit{``Guardado en tiempo real''}) y confirmación previa a cualquier navegación destructiva.
+    \item \textbf{Política de Jerarquía Visual Clara:} La información primaria (estados, sumatorias de horas, botones de acción) debe destacar mediante peso tipográfico y color semántico.
+    \item \textbf{Política de Retroalimentación de Errores:} Los mensajes de error de validación deben presentarse junto al campo afectado con lenguaje claro y sugerencias de corrección accionables.
+\end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.80\textwidth,height=5.0cm,keepaspectratio]{images/s2_05_paleta_colores.png}
-    \caption{Paleta Cromática y Tokens de Diseño Accesible del Sistema SIGE.}
-    \label{fig:s2_05_palette}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_login_view.png}
+    \caption{Captura Real de la Interfaz Web de Inicio de Sesión Institucional del Sistema SIGE.}
+    \label{fig:sige_login}
 \end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_dashboard_resumen.png}
+    \caption{Captura Real del Dashboard Principal del Docente en SIGE con Métricas y Planes Activos.}
+    \label{fig:sige_dashboard}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_05_layout_vistas.png}
+    \caption{Arquitectura de Wireframes y Jerarquía de Vistas del Entorno Docente y Coordinador.}
+    \label{fig:layout_vistas}
+\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Arquitectura del Wizard Modular de 4 Pasos}
-\begin{table}[htbp]
+\subsection{Matriz de Especificación de Vistas y Componentes UI/UX}
+A continuación se detalla la matriz que relaciona las pantallas principales con sus componentes y validaciones de experiencia de usuario:
+
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|X|X|}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|m{2.4cm}|X|X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Paso} & \textbf{Denominación} & \textbf{Componentes de Interfaz} & \textbf{Validación de Avance} \\
+\textbf{Pantalla} & \textbf{Ruta Frontend} & \textbf{Componentes Clave} & \textbf{Criterios de Usabilidad y Validación} \\
 \hline
-Paso 1 & Datos Generales & Selección de Período, Dedicación Horaria, Carrera y Asignaturas. & Período activo y datos obligatorios completos. \\
+Inicio de Sesión & \texttt{/login} & Formulario de credenciales, botón institucional, badge de seguridad. & Validación de correo institucional en tiempo real; mensajes de error claros. \\
 \hline
-Paso 2 & Secciones SGC & Editor TipTap con barra de herramientas enriquecida y autoguardado. & Mínimo 50 caracteres por sección requerida. \\
+Dashboard Docente & \texttt{/dashboard} & Tarjetas de resumen (Horas, Planes, Estado), tabla de expedientes recientes. & Acceso directo a edición en 1 clic; badges de estado codificados por color. \\
 \hline
-Paso 3 & Matriz Dinámica & Tabla interactiva de actividades con adición/edición de filas y avance. & Suma estricta de ponderaciones igual a $100.00\%$. \\
+Bandeja de Planes & \texttt{/planes} & Listado con filtros por periodo, botón ``Nuevo Plan'', buscador instantáneo. & Paginación fluida; ordenamiento por fecha de última modificación. \\
 \hline
-Paso 4 & Resumen y Envío & Visor general de cumplimiento, gestor de evidencias y botón de firma. & Validación de evidencias y ausencia de observaciones. \\
+Wizard de Edición & \texttt{/planes/:id} & Barra de progreso de 5 pasos, editor TipTap, indicador de autoguardado. & Bloqueo de pasos posteriores si existen Validation Gates insatisfechas. \\
+\hline
+Matriz de Actividades & \texttt{/matriz} & Tabla dinámica con cálculo automático, botón ``+ Sugerir IA'', selector de semanas. & Feedback numérico inmediato ($100\%$ sumatoria); advertencias en rojo. \\
+\hline
+Revisión de Comité & \texttt{/revision} & Drawer lateral de observaciones, visor de PDF embebido, botones de aprobación. & Registro granular por sección con historial de comentarios auditado. \\
 \hline
 \end{tabularx}
-\caption{Estructura de Pasos del Wizard de Edición.}
-\label{tab:wizard_steps}
+\caption{Matriz de especificación de vistas del sistema SIGE.}
+\label{tab:vistas_ui}
 \end{table}
 
-\subsection{Tokens de Color y Accesibilidad}
-La paleta se fundamenta en el azul corporativo institucional:
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Primary Navy:} \texttt{\#1A365D} (Contraste 11.2:1 con fondo blanco, cumple WCAG AAA).
-    \item \textbf{Accent Blue:} \texttt{\#2B6CB0} (Para botones primarios e indicadores de navegación).
-    \item \textbf{Success Green:} \texttt{\#2F855A} (Para estado 100\% de ponderación y firmas válidas).
-    \item \textbf{Warning Amber:} \texttt{\#C05621} (Para estados de observación pendiente).
-    \item \textbf{Danger Red:} \texttt{\#C53030} (Para bloqueos de Validation Gate y sumatorias incorrectas).
-\end{itemize}
+\subsection{Matriz de Tokens de Diseño e Identidad Visual Institucional}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Token de Diseño} & \textbf{Código HEX} & \textbf{RGB} & \textbf{Uso Institucional Recomendado} \\
+\hline
+Rojo UTA Primario & \texttt{\#A51D24} & (165, 29, 36) & Botones principales, cabeceras oficiales, marcas de énfasis. \\
+\hline
+Azul Institucional & \texttt{\#1A365D} & (26, 54, 93) & Barras de navegación, tarjetas de métricas, enlaces activos. \\
+\hline
+Gris Superficie & \texttt{\#F8FAFC} & (248, 250, 252) & Fondo de interfaz general para descanso visual. \\
+\hline
+Verde Éxito & \texttt{\#16A34A} & (22, 163, 74) & Badges de estado ``Aprobado'', suma al 100\%, validación superada. \\
+\hline
+Naranja Advertencia & \texttt{\#EA580C} & (234, 88, 12) & Badges de estado ``En Revisión'', campos con alertas leves. \\
+\hline
+\end{tabularx}
+\caption{Paleta de tokens de color del sistema de diseño institucional.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -211,9 +279,9 @@ La paleta se fundamenta en el azul corporativo institucional:
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 03/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 28/08/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 03/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 28/08/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -230,15 +298,73 @@ La paleta se fundamenta en el azul corporativo institucional:
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 03/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 28/08/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Enlace y Especificación del Prototipo Interactivo Figma.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.5 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 2.5 \\
+\hline
+Nombre de la Tarjeta & Diseño de interfaces y experiencia de usuario \\
+\hline
+Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+\hline
+Período de Ejecución & 25 de agosto al 28 de agosto de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Heidi Villavicencio (HV), Andrea Vásquez (AV) \\
+\hline
+Entregable Oficial & \texttt{05\_Diseno\_Interfaces\_Wireframes\_UX.pdf} \& Prototipo Figma \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 2.5 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Heurísticas de Usabilidad de Nielsen Evaluadas}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{3.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Heurística} & \textbf{Principio de Nielsen} & \textbf{Implementación Específica en SIGE} & \textbf{Cumplimiento} \\
+\hline
+H-01 & Visibilidad del estado del sistema & Indicador dinámico de autoguardado (\textit{``Guardando...'' / ``Guardado''}). & 100\% \\
+\hline
+H-03 & Control y libertad del usuario & Posibilidad de deshacer cambios de texto y cancelar acciones en modales. & 100\% \\
+\hline
+H-05 & Prevención de errores & Validación de horas en tiempo real impidiendo sumas mayores a 40h. & 100\% \\
+\hline
+H-08 & Diseño estético y minimalista & Eliminación de elementos superfluos; foco en el diligenciamiento SGC. & 100\% \\
+\hline
+\end{tabularx}
+\caption{Evaluación de heurísticas de usabilidad en las vistas clave.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{f19280a - feat(ui): prototipo de interfaces, diseno de componentes accesibles y tokens de diseno}
+    \item \textbf{Archivos Afectados:} \texttt{frontend/src/views/*}, \texttt{Entregables\_Latex/Fase\_2/2.5*.tex}
 \end{itemize}
+
 
 \end{document}

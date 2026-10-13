@@ -21,6 +21,13 @@ PREAMBLE_TEMPLATE = r"""\documentclass[12pt,a4paper]{article}
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -60,6 +67,19 @@ PREAMBLE_TEMPLATE = r"""\documentclass[12pt,a4paper]{article}
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{@CODIGO@}
 \newcommand{\docVersion}{1.0}
@@ -147,11 +167,16 @@ FOOTER_TEMPLATE = r"""
 """
 
 def render_doc(codigo, proceso, fecha_el, fecha_rev, titulo_doc, body_content, fecha_firma, anexos_content):
-    preamble = PREAMBLE_TEMPLATE.replace("@CODIGO@", codigo)\
-                                .replace("@PROCESO@", proceso)\
+    # Sanitize header fields so unescaped & doesn't break tabularx header table
+    proceso_safe = proceso.replace(r"\&", "&").replace("&", r"\&")
+    titulo_doc_safe = titulo_doc.replace(r"\&", "&").replace("&", r"\&")
+    codigo_safe = codigo.replace(r"\&", "&").replace("&", r"\&")
+    preamble = PREAMBLE_TEMPLATE.replace("@CODIGO@", codigo_safe)\
+                                .replace("@PROCESO@", proceso_safe)\
                                 .replace("@FECHA_EL@", fecha_el)\
                                 .replace("@FECHA_REV@", fecha_rev)\
-                                .replace("@TITULO_DOC@", titulo_doc)
+                                .replace("@TITULO_DOC@", titulo_doc_safe)
     footer = FOOTER_TEMPLATE.replace("@FECHA_FIRMA@", fecha_firma)\
                             .replace("@ANEXOS_CONTENT@", anexos_content)
     return preamble + body_content + footer
+

@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-013}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / REVISIÓN Y FIRMAS}
-\newcommand{\docElaboracion}{07/10/2026}
-\newcommand{\docRevision}{07/10/2026}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / REVISIÓN Y FIRMAS DIGITALES}
+\newcommand{\docElaboracion}{06/10/2026}
+\newcommand{\docRevision}{06/10/2026}
 \newcommand{\docTitulo}{MÓDULO DE REVISIÓN Y CASCADA DE FIRMAS}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,93 +123,131 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Módulo de Revisión, Observaciones y Cascada de Firmas -- Código EDT: 3.13
+\textbf{Denominación Oficial del Entregable:} Módulo de Revisión, Observaciones y Cascada de Firmas -- Código EDT: 3.13
 
 \section{Introducción}
-La evaluación colegiada y la legalización de los planes de trabajo e informes constituyen el eje institucional de la rendición de cuentas en la FISEI. Para sustituir las cadenas informales de correo electrónico y las observaciones verbales, se desarrolló el Módulo de Revisión para Coordinadores de Área y Carrera, junto con el servicio de Cascada de Firmas Digitales multinivel. Este módulo permite registrar observaciones granulares a nivel de sección o actividad específica, impidiendo la legalización hasta que todas sean solventadas, y formaliza el circuito secuencial de firmas: Elaborador, Revisor y Aprobador.
+El flujo colegiado de revisión y aprobación de los planes de trabajo del SGC en la FISEI involucra una cadena de responsabilidades jerárquica: el Docente Elaborador diseña el plan, el Coordinador de Área o Carrera audita su coherencia y registra observaciones técnicas, y finalmente las autoridades de facultad (Subdecano / H. Consejo Directivo) legalizan el documento. Para automatizar este flujo con plena validez institucional, se implementó el panel de revisión con panel lateral (\textit{Drawer}) de observaciones granulares por sección y el subsistema de estampado secuencial e inmutable de firmas digitales en cascada (\textit{Cascading Signatures}).
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Implementar el módulo de revisión colegiada, gestión de observaciones granulares y el circuito de firmas digitales en cascada para la legalización formal de los documentos SGC.
+Implementar el módulo de revisión técnica colegiada, gestión granular de observaciones y cascada secuencial de firmas digitales para el sistema SIGE.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Construir el Panel de Comité para Coordinadores con bandeja de documentos 'En Revisión'.
-    \item Implementar el sistema de observaciones granulares por sección con estados 'Abierta' y 'Resuelta'.
-    \item Diseñar el circuito de 3 firmas secuenciales con sellado de hash SHA-256 e inmutabilidad total.
+    \item Desarrollar el panel de revisión del coordinador con visor de documento y drawer de observaciones.
+    \item Programar el sistema de firmas en cascada secuencial inmutable con hash SHA-256 y marca temporal.
+    \item Implementar las transiciones de estado: \textit{Borrador} $\to$ \textit{En Revisión} $\to$ \textit{Observado} $\to$ \textit{Aprobado Comisión} $\to$ \textit{Aprobado HCD}.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Vistas de revisión, componentes de marcación de observaciones y diálogo de firma con certificado digital.
-    \item Bloqueo absoluto de edición del documento tras el estampado de la firma del Elaborador.
+    \item Interfaz de usuario para Coordinador de Carrera y Comité de Revisión (\texttt{RevisionComiteView.jsx}).
+    \item Servicio de firmas digitales en backend garantizando orden estricto (1: Elaborador, 2: Revisor, 3: Aprobador).
+    \item Trazabilidad y no repudio de firmas mediante hash de contenido.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Integración con tokens criptográficos físicos USB no estándares (se emplean certificados PKCS\#12 estándar).
+    \item Integración con certificados de firma electrónica con token USB físico (Banco Central / Security Data), prevista para fases de interoperabilidad externa.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Cascada de Firmas:} Proceso formal donde el documento avanza secuencialmente a través de 3 niveles jerárquicos: Elaborador $\to$ Revisor $\to$ Aprobador.
-    \item \textbf{Observación Granular:} Anotación formal vinculada a un elemento específico (sección o fila de actividad) que detalla una no conformidad que debe ser corregida.
-    \item \textbf{Sellado Criptográfico:} Operación matemática que calcula el hash inmutable del documento al firmar, garantizando que no sufra alteraciones posteriores.
+    \item \textbf{Cascada de Firmas:} Mecanismo criptográfico y de negocio donde una firma requiere obligatoriamente la existencia y validez de la firma del nivel jerárquico anterior.
+    \item \textbf{Observación Granular:} Comentario correctivo vinculado de forma unívoca a una sección específica del documento, que impide su aprobación hasta ser resuelta.
+    \item \textbf{Estampillado Digital (Timestamping):} Registro criptográfico inmutable de la fecha, hora exacta e identidad del firmante al momento del visado.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Andrea Vásquez / Nixon Hurtado (Responsables EDT 3.13):} Desarrollo del panel de revisión, motor de observaciones y endpoints de firma.
-    \item \textbf{Steeven Toala (Líder Técnico):} Verificación del circuito de inmutabilidad y firmas.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del módulo de revisión y firmas.
+    \item \textbf{Steeven Toala (Responsable EDT 3.13):} Desarrollo del servicio de firmas digitales, hashes y control de estados.
+    \item \textbf{Heidi Villavicencio (UI/UX):} Diseño e implementación del drawer lateral de observaciones y visor de revisión.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del flujo de revisión y cadena de responsabilidades.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Ley de Comercio Electrónico, Firmas Electrónicas y Mensajes de Datos de Ecuador.}
-    \item \textbf{Manual de Procedimientos de Evaluación Docente SGC - FISEI UTA.}
+    \item \textbf{Ley de Comercio Electrónico, Firmas Electrónicas y Mensajes de Datos, Art. 14 y 15:} Validez jurídica, eficacia y no repudio de firmas digitales.
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122:} Responsabilidad institucional de autoridades y docentes en la legalización académica.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9001:2015, Cláusula 7.5.3 (Control de la información documentada):} Procedimientos de revisión, aprobación y custodia.
+    \item \textbf{NIST SP 800-89 (Recommendation for Obtaining Assurances for Digital Signatures).}
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó un circuito de estados irreversible. En las Figuras \ref{fig:f3_13_rev} y \ref{fig:f3_13_firmas} se ilustran el flujo de revisión de comité y la cascada de firmas.
+\subsection{Enfoque Metodológico}
+Se diseñó un mecanismo de tres niveles de firma. Cada firma calcula un hash criptográfico compuesto a partir del identificador del documento, el contenido HTML de sus secciones, la identidad del firmante y la estampa de tiempo UTC:
+\begin{equation}
+    H_{\text{firma}} = \text{SHA-256}\Big(\text{plan\_id} \ \Vert \ H_{\text{contenido}} \ \Vert \ \text{usuario\_id} \ \Vert \ \text{timestamp}\Big)
+\end{equation}
+Cualquier intento de alteración posterior del texto invalida el hash registrado. El coordinador interactúa a través de una vista dividida (\textit{Split View}): a la izquierda el plan de trabajo A4 y a la derecha el drawer interactivo donde puede marcar secciones como conformes o ingresar observaciones con severidad (Leve, Grave, Bloqueante).
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_11_flujo_revision_comite.png}
-    \caption{Flujo Operativo del Panel de Comité y Ciclo de Observaciones.}
-    \label{fig:f3_13_rev}
-\end{figure}
+\subsection{Políticas de Calidad de la Cascada de Firmas}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Secuencia Ineludible:} El Coordinador no puede firmar si el Docente no ha firmado; el Subdecano no puede legalizar si el Coordinador no ha aprobado.
+    \item \textbf{Política de Congelamiento por Firma:} Al estampar la primera firma, el documento pasa a modo de solo lectura estricto, impidiendo cualquier edición salvo que sea devuelto formalmente a estado ``Observado''.
+    \item \textbf{Política de Resolución Obligatoria de Observaciones:} El sistema bloquea el botón de aprobación si existe al menos una observación sin marcar como ``Resuelta''.
+\end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s4_03_cascada_firmas.png}
-    \caption{Circuito Secuencial de Cascada de Firmas Digitales Institucionales.}
-    \label{fig:f3_13_firmas}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_coordinador_revision.png}
+    \caption{Captura Real del Panel de Revisión del Coordinador con Drawer de Observaciones en SIGE.}
+    \label{fig:coordinador_real}
 \end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f3_11_flujo_revision_comite.png}
+    \caption{Flujo Secuencial de Estados y Cascada de Firmas Digitales en el Sistema SIGE.}
+    \label{fig:cascada_firmas}
+\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Especificación de los 3 Niveles de la Cascada de Firmas}
-\begin{table}[htbp]
+\subsection{Matriz de la Cascada de Firmas Digitales Institucionales}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{2.5cm}|m{2.8cm}|X|X|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|m{2.8cm}|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Nivel} & \textbf{Acción} & \textbf{Actor Obligatorio} & \textbf{Precondiciones Requeridas} & \textbf{Efecto en el Documento} \\
+\textbf{Orden} & \textbf{Nivel de Firma} & \textbf{Actor Responsable} & \textbf{Efecto Jurídico y en el Sistema} & \textbf{Estado Resultante} \\
 \hline
-Nivel 1 & Elaborado por & Docente Elaborador & Sumatoria 100\%, evidencias en MinIO y secciones completas. & El documento se congela para edición y pasa a 'EN\_REVISION'. \\
+1 & Firma de Elaboración & Docente Titular / Ocasional & Certifica la veracidad de horas y actividades; bloquea edición. & \textbf{En Revisión} \\
 \hline
-Nivel 2 & Revisado por & Coordinador de Área & Nivel 1 firmado válido y cero observaciones pendientes. & Se legaliza la pertinencia técnica y pasa a Coordinación de Carrera. \\
+2 & Firma de Revisión & Coordinador de Área / Carrera & Certifica cumplimiento técnico SGC y ausencia de observaciones. & \textbf{Aprobado Comisión} \\
 \hline
-Nivel 3 & Aprobado por & Coordinador de Carrera & Nivel 2 firmado válido y verificación curricular. & El documento pasa a estado 'LEGALIZADO' para Consejo Directivo. \\
+3 & Firma de Aprobación & Subdecano de FISEI & Legalización oficial en Consejo Directivo; sella plan definitivo. & \textbf{Aprobado HCD (Final)} \\
 \hline
 \end{tabularx}
-\caption{Circuito de Tres Firmas de Responsabilidad Institucional.}
-\label{tab:cascada_firmas}
+\caption{Matriz oficial de la cascada de firmas digitales multinivel.}
+\label{tab:firmas_matrix}
 \end{table}
 
-\subsection{Inmutabilidad y Sello Digital}
-Al ejecutarse cada nivel de firma, el sistema almacena en la tabla \texttt{firmas\_documento}: UUID del firmante, cargo institucional, estampa de tiempo sincronizada con el servidor (NTP), dirección IP y el hash SHA-256 del documento al momento de la firma.
+\subsection{Matriz de Ciclo de Vida de las Observaciones Granulares}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{3.0cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Severidad} & \textbf{Impacto en Flujo} & \textbf{Tratamiento en la Interfaz} & \textbf{Acción del Docente} \\
+\hline
+Informativa & No bloqueante & Sugerencia tipográfica menor; no impide avance a firma. & Opcional \\
+\hline
+Revisión Técnica & Bloqueante & Exige corrección en sección de horas o medios de verificación. & Obligatoria \\
+\hline
+Rechazo Normativo & Bloqueante Mayor & Devuelve expediente a estado ``Observado'' de forma inmediata. & Reestructuración \\
+\hline
+\end{tabularx}
+\caption{Clasificación y comportamiento de observaciones de revisión.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -200,9 +258,9 @@ Al ejecutarse cada nivel de firma, el sistema almacena en la tabla \texttt{firma
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 07/10/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 06/10/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 07/10/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 06/10/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -219,15 +277,71 @@ Al ejecutarse cada nivel de firma, el sistema almacena en la tabla \texttt{firma
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 07/10/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 06/10/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Prueba de Rechazo de Firma por Intento de Salto de Nivel.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.13 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.13 \\
+\hline
+Nombre de la Tarjeta & Módulo de Revisión, Observaciones y Cascada de Firmas \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 02 de octubre al 06 de octubre de 2026 (3 días laborables) \\
+\hline
+Horas Asignadas & 24 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV) \\
+\hline
+Entregable Oficial & Panel de Comité y servicio de Firmas multinivel \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 4 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.13 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Verificación de Integridad de Firmas Digitales}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{2.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Prueba} & \textbf{Condición Forzada} & \textbf{Respuesta del Subsistema Criptográfico} & \textbf{Resultado} \\
+\hline
+P1 - Salto de Nivel & Coordinador intenta firmar plan sin firma de docente & \texttt{ERROR: Cascada violada. Requiere firma de Elaborador} & BLOQUEADO \\
+\hline
+P2 - Alteración Posterior & Modificación manual de texto en base de datos tras firma & \texttt{ALERTA: Hash de contenido no coincide con firma (Corrupción)} & DETECTADO \\
+\hline
+P3 - Firma Legítima & Secuencia en orden con observaciones resueltas & Estampado con hash SHA-256 e inserción inmutable & EXITOSO \\
+\hline
+\end{tabularx}
+\caption{Pruebas de integridad criptográfica y cascada de firmas.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{804a11f - feat(revision): modulo de revision comite, drawer de observaciones y cascada de firmas SHA-256}
+    \item \textbf{Archivos Afectados:} \texttt{backend/src/modules/revision/*}, \texttt{frontend/src/views/RevisionComiteView.jsx}, \texttt{Entregables\_Latex/Fase\_3/3.13*.tex}
 \end{itemize}
+
 
 \end{document}

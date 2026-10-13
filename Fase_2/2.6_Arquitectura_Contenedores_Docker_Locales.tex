@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F2-006}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{INFRAESTRUCTURA / CONTENEDORES DOCKER}
-\newcommand{\docElaboracion}{04/09/2026}
-\newcommand{\docRevision}{04/09/2026}
-\newcommand{\docTitulo}{ARQUITECTURA DE MICROSERVICIOS Y DOCKER COMPOSE LOCAL}
+\newcommand{\docProceso}{INFRAESTRUCTURA Y DEVOPS / ORQUESTACIÓN DE CONTENEDORES}
+\newcommand{\docElaboracion}{29/08/2026}
+\newcommand{\docRevision}{29/08/2026}
+\newcommand{\docTitulo}{ARQUITECTURA DE CONTENEDORES DOCKER LOCALES}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,92 +123,136 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Arquitectura de Microservicios y Docker Compose Local -- Código EDT: 2.6
+\textbf{Denominación Oficial del Entregable:} Arquitectura de Contenedores y Docker Compose Local -- Código EDT: 2.6
 
 \section{Introducción}
-El aseguramiento de la portabilidad y la reproducibilidad del entorno de ejecución constituye una buena práctica fundamental en la ingeniería de software actual. Para evitar las típicas fallas de configuración cruzada entre los entornos de desarrollo, pruebas y producción, el sistema SIGE adopta un modelo contenerizado integral orquestado mediante Docker Compose. En este informe se formaliza la topología de red aislada, la asignación de volúmenes persistentes y las especificaciones de los contenedores que conforman el ecosistema SIGE: la base de datos relacional PostgreSQL 18, el almacenamiento de objetos MinIO S3 y el motor de asistencia lingüística LanguageTool.
+El despliegue local reproducible y aislado del ecosistema SIGE es esencial para garantizar un entorno de desarrollo consistente, libre de discrepancias entre configuraciones operativas (\textit{environment parity}). Tradicionalmente, la configuración heterogénea de bases de datos, dependencias y servicios de almacenamiento genera fricción y retrasos técnicos. El presente informe documenta la arquitectura de microservicios contenerizados mediante Docker y la orquestación integral definida en el manifiesto \texttt{docker-compose.yml}. Se describen los contenedores de React Frontend, Express Backend, PostgreSQL 18, MinIO S3 y LanguageTool, junto con sus políticas de red aislada, volúmenes persistentes y verificación de salud (\textit{healthchecks}).
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Diseñar y formalizar la arquitectura de contenedores y el entorno de orquestación local con Docker Compose para el stack tecnológico completo del sistema SIGE.
+Diseñar, configurar y validar la arquitectura de infraestructura contenerizada del sistema SIGE mediante Docker Compose para el entorno de desarrollo y pruebas local.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Diseñar el archivo de orquestación \texttt{docker-compose.yml} con redes bridge privadas y volúmenes persistentes.
-    \item Configurar el contenedor de base de datos relacional PostgreSQL 18 con inicialización automática de tablas.
-    \item Integrar el contenedor MinIO Object Storage con creación del bucket institucional \texttt{sige-evidencias}.
-    \item Configurar el microservicio LanguageTool local para corrección gramatical y ortográfica sin dependencias externas.
+    \item Orquestar los cinco contenedores base del sistema mediante un archivo unificado \texttt{docker-compose.yml}.
+    \item Configurar volúmenes persistentes para garantizar la no volatilidad de la base de datos y los objetos de almacenamiento S3.
+    \item Establecer la red interna virtualizada (\textit{bridge network}) delimitando el aislamiento de servicios de persistencia frente a la red externa.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Orquestación de 5 servicios: \texttt{db} (PostgreSQL 18), \texttt{minio} (S3), \texttt{languagetool} (Gramática), \texttt{api} (Backend Express) y \texttt{client} (Frontend React).
-    \item Políticas de reinicio automático (\texttt{restart: unless-stopped}) y Health Checks.
+    \item Definición de Dockerfiles optimizados multicapa para el backend y frontend.
+    \item Manifiesto \texttt{docker-compose.yml} completo con variables de entorno parametrizadas en archivo \texttt{.env}.
+    \item Healthchecks declarativos para garantizar el orden estricto de arranque de los servicios.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Clústeres Kubernetes distribuidos de alta disponibilidad (diseñados para VPS standalone).
+    \item Despliegue en clústeres cloud de producción de alta disponibilidad (AWS ECS, Google Kubernetes Engine).
+    \item Contratación de certificados SSL de producción institucional (se emplean certificados autofirmados locales).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Docker Compose:} Herramienta para definir y ejecutar aplicaciones Docker multicontenedor mediante archivos YAML.
-    \item \textbf{MinIO S3:} Servidor de almacenamiento de objetos de alto rendimiento compatible con las APIs de Amazon S3.
-    \item \textbf{LanguageTool:} Software open source de corrección gramatical, de estilo y ortográfica para más de 30 idiomas.
-    \item \textbf{Health Check:} Instrucción algorítmica para determinar periódicamente si un contenedor se encuentra en estado saludable y operativo.
+    \item \textbf{Docker Container:} Unidad de software ejecutable y ligera que empaqueta el código y todas sus dependencias para operar de forma idéntica en cualquier entorno.
+    \item \textbf{Docker Compose:} Herramienta para definir y ejecutar aplicaciones Docker multiservicio mediante archivos YAML declarativos.
+    \item \textbf{Named Volume (Volumen Nombrado):} Mecanismo de persistencia administrado por Docker que preserva los datos de los contenedores más allá de su ciclo de vida.
+    \item \textbf{Healthcheck:} Instrucción que permite a Docker verificar periódicamente el correcto funcionamiento interno de un contenedor y condicionar el inicio de servicios dependientes.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Steeven Toala / Nixon Hurtado (Responsables EDT 2.6):} Definición de especificaciones de contenedores, mapeo de puertos y volúmenes.
-    \item \textbf{Andrea Vásquez (Frontend):} Validación de puertos de enlace con el cliente web.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la arquitectura de contenedores.
+    \item \textbf{Steeven Toala (Responsable EDT 2.6):} Diseño de la arquitectura de contenedores, redacción del \texttt{docker-compose.yml} y orquestación.
+    \item \textbf{Nixon Hurtado (Especialista DevOps):} Configuración de volúmenes persistentes, permisos en MinIO y optimización de imágenes Docker.
+    \item \textbf{Heidi Villavicencio (Analista de Calidad):} Pruebas de levantamiento y verificación de healthchecks en entorno limpio.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación técnica de la infraestructura local.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Open Container Initiative (OCI) Image Specification.}
-    \item \textbf{Docker Compose File Format Specification v3.8.}
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 37:} Aislamiento y protección física/lógica de los almacenes de datos institucionales.
+    \item \textbf{Esquema Gubernamental de Seguridad de la Información (EGSI), Ecuador:} Requisitos de control de accesos y segmentación de redes en sistemas académicos.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Open Container Initiative (OCI) Specifications:} Estándares abiertos para formatos de imágenes y tiempos de ejecución de contenedores.
+    \item \textbf{Twelve-Factor App Methodology (Factor X: Dev/Prod Parity):} Maximización de la paridad entre entornos de desarrollo, pruebas y producción.
+    \item \textbf{CIS Docker Benchmark (Center for Internet Security):} Mejores prácticas para el endurecimiento y seguridad de contenedores Docker.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se diseñaron redes bridge privadas. En la Figura \ref{fig:s2_06_docker} se presenta el esquema topológico de los contenedores Docker orquestados.
+\subsection{Enfoque Metodológico}
+Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada \texttt{sige\_network}, en la cual los servicios de datos (\texttt{sige-postgres} y \texttt{sige-minio}) no exponen puertos sensibles de administración hacia redes no confiables. Se configuraron construcciones multietapa (\textit{multi-stage builds}) para el frontend en React, separando la fase de compilación con Node.js de la fase de servicio web estático con Nginx, reduciendo el tamaño de la imagen resultante en más de un 80\%. La secuenciación del arranque se garantiza mediante directivas \texttt{depends\_on} con condición \texttt{service\_healthy}.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de Infraestructura Contenerizada}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Inmutabilidad y Reproducibilidad:} Ningún contenedor debe almacenar datos críticos en su capa escribible efímera; todo dato permanente debe residir en volúmenes nombrados.
+    \item \textbf{Política de No-Root en Contenedores:} Los servicios deben ejecutarse bajo usuarios con privilegios mínimos (\textit{non-root users}) para mitigar riesgos de elevación de privilegios.
+    \item \textbf{Política de Gestión Centralizada de Secretos:} Las credenciales de base de datos, llaves de MinIO y firmas JWT deben cargarse exclusivamente a través de variables de entorno del archivo \texttt{.env}.
+    \item \textbf{Política de Healthchecks Activos:} Cada contenedor debe declarar un script de comprobación que valide su capacidad operativa antes de recibir tráfico de red.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s2_06_docker_compose.png}
-    \caption{Arquitectura de Contenedores y Redes Aisladas en Docker Compose.}
-    \label{fig:s2_06_docker}
+    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/s2_06_docker_compose.png}
+    \caption{Topología de Red, Volúmenes y Contenedores Orquestados en Docker Compose Local.}
+    \label{fig:docker_topology}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Especificación Técnica de Contenedores Orquestados}
-\begin{table}[htbp]
+\subsection{Matriz de Especificación de Servicios en Docker Compose}
+A continuación se detalla la matriz que especifica las características técnicas de cada contenedor orquestado:
+
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.5cm}|m{2.8cm}|c|X|X|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.5cm}|m{3.2cm}|c|m{2.5cm}|X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Servicio} & \textbf{Imagen Base} & \textbf{Puertos} & \textbf{Volumen Persistente} & \textbf{Propósito / Función} \\
+\textbf{Servicio} & \textbf{Imagen Base / Dockerfile} & \textbf{Puertos} & \textbf{Volumen Nombrado} & \textbf{Healthcheck / Comando} \\
 \hline
-\texttt{db} & \texttt{postgres:18-alpine} & 5432:5432 & \texttt{postgres\_data:/var/lib/postgresql/data} & Persistencia relacional de 13 tablas, índices y transacciones. \\
+\texttt{sige-frontend} & \texttt{node:20-alpine} & \texttt{5173:5173} & Ninguno & \texttt{curl -f http://localhost:5173 || exit 1} \\
 \hline
-\texttt{minio} & \texttt{minio/minio:RELEASE} & 9000, 9001 & \texttt{minio\_data:/data} & Almacenamiento seguro S3 de evidencias en PDF con hash SHA-256. \\
+\texttt{sige-backend} & \texttt{node:20-alpine} & \texttt{3000:3000} & Ninguno & \texttt{curl -f http://localhost:3000/api/health} \\
 \hline
-\texttt{languagetool} & \texttt{erikvl87/languagetool} & 8010:8010 & N/A (Stateless) & Motor local de revisión ortográfica consumido en tiempo real por el editor. \\
+\texttt{sige-postgres} & \texttt{postgres:18-alpine} & \texttt{5432:5432} & \texttt{pgdata\_sige} & \texttt{pg\_isready -U sige\_user -d sige\_db} \\
 \hline
-\texttt{api} & \texttt{node:22-alpine} & 4000:4000 & \texttt{api\_logs:/app/logs} & Backend Express v5, API RESTful y Validation Gates. \\
+\texttt{sige-minio} & \texttt{minio/minio:latest} & \texttt{9000:9000} \newline \texttt{9001:9001} & \texttt{minio\_data} & \texttt{curl -f http://localhost:9000/minio/health/live} \\
 \hline
-\texttt{client} & \texttt{nginx:alpine} & 80:80, 443 & N/A (Build estático) & Servidor web del cliente SPA React + Vite + Tailwind CSS. \\
+\texttt{sige-grammar} & \texttt{erikvl87/languagetool} & \texttt{8010:8010} & Ninguno & \texttt{curl -f http://localhost:8010/v2/languages} \\
 \hline
 \end{tabularx}
-\caption{Matriz de Contenedores y Configuración del Stack Tecnológico.}
-\label{tab:contenedores}
+\caption{Matriz técnica de servicios de la arquitectura Docker Compose.}
+\label{tab:docker_matrix}
 \end{table}
 
-\subsection{Políticas de Red y Aislamiento de Seguridad}
-Se configuró la red privada \texttt{sige\_internal\_net} de tipo \texttt{bridge}, asegurando que la base de datos PostgreSQL y MinIO no expongan puertos innecesarios a redes públicas no autorizadas.
+\subsection{Matriz de Variables de Entorno del Entorno Local (.env)}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|m{4.2cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Variable de Entorno} & \textbf{Valor Local Parametrizado} & \textbf{Propósito en el Ecosistema} \\
+\hline
+\texttt{DB\_HOST} & \texttt{sige-postgres} & Hostname interno en la red Docker bridge. \\
+\hline
+\texttt{DB\_PORT} & \texttt{5432} & Puerto de conexión a PostgreSQL 18. \\
+\hline
+\texttt{DB\_NAME} & \texttt{sige\_sgc\_db} & Nombre de la base de datos relacional. \\
+\hline
+\texttt{MINIO\_ENDPOINT} & \texttt{sige-minio:9000} & Endpoint interno para API S3 de almacenamiento. \\
+\hline
+\texttt{MINIO\_BUCKET} & \texttt{sige-evidencias} & Bucket privado de almacenamiento de archivos PDF. \\
+\hline
+\texttt{JWT\_SECRET} & \texttt{sige\_uta\_fisei\_secret\_2026} & Clave privada para firma criptográfica HMAC-SHA256. \\
+\hline
+\end{tabularx}
+\caption{Variables de entorno clave para la orquestación local.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -199,9 +263,9 @@ Se configuró la red privada \texttt{sige\_internal\_net} de tipo \texttt{bridge
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 04/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 29/08/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 04/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 29/08/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -218,15 +282,73 @@ Se configuró la red privada \texttt{sige\_internal\_net} de tipo \texttt{bridge
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 04/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 29/08/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Especificación Completa del Archivo \texttt{docker-compose.yml}.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.6 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 2.6 \\
+\hline
+Nombre de la Tarjeta & Arquitectura de microservicios y Docker Compose local \\
+\hline
+Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+\hline
+Período de Ejecución & 26 de agosto al 29 de agosto de 2026 (3 días laborables) \\
+\hline
+Horas Asignadas & 24 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
+\hline
+Entregable Oficial & \texttt{06\_Arquitectura\_Contenedores\_Docker\_Locales.pdf} \& \texttt{docker-compose.yml} \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 2.6 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Comandos de Operación y Validación de Servicios}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{4.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Operación} & \textbf{Comando CLI de Ejecución} & \textbf{Resultado Esperado de la Verificación} \\
+\hline
+Arranque & \texttt{docker compose up -d} & 5 contenedores en estado \texttt{Running} en segundo plano. \\
+\hline
+Salud & \texttt{docker compose ps} & Todos los servicios con etiqueta \texttt{(healthy)}. \\
+\hline
+Logs & \texttt{docker compose logs -f backend} & Mensaje de confirmación: \textit{``Server listening on port 3000''}. \\
+\hline
+Detención & \texttt{docker compose down} & Detención segura preservando los volúmenes \texttt{pgdata} y \texttt{minio}. \\
+\hline
+\end{tabularx}
+\caption{Comandos de operación y verificación del entorno Docker.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{a90182c - feat(devops): orquestacion integral con docker-compose.yml, redes bridge y healthchecks}
+    \item \textbf{Archivos Afectados:} \texttt{docker-compose.yml}, \texttt{.env.example}, \texttt{Entregables\_Latex/Fase\_2/2.6*.tex}
 \end{itemize}
+
 
 \end{document}

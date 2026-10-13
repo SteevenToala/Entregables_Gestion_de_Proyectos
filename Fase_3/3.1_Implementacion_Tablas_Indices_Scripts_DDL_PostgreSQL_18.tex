@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-001}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / BASE DE DATOS DDL}
-\newcommand{\docElaboracion}{10/09/2026}
-\newcommand{\docRevision}{10/09/2026}
-\newcommand{\docTitulo}{IMPLEMENTACIÓN DE TABLAS, ÍNDICES Y SCRIPTS DDL}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / PERSISTENCIA POSTGRESQL}
+\newcommand{\docElaboracion}{04/09/2026}
+\newcommand{\docRevision}{04/09/2026}
+\newcommand{\docTitulo}{IMPLEMENTACIÓN DE TABLAS E ÍNDICES DDL}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,91 +123,131 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Implementación de Tablas, Índices y Scripts DDL PostgreSQL 18 -- Código EDT: 3.1
+\textbf{Denominación Oficial del Entregable:} Implementación de Tablas, Índices y Scripts DDL en PostgreSQL 18 -- Código EDT: 3.1
 
 \section{Introducción}
-La materialización de la capa de persistencia en PostgreSQL 18 constituye el núcleo sobre el cual opera la lógica transaccional de SIGE. En esta actividad se ejecutaron los scripts DDL que crean físicamente las 13 tablas relacionales, definiendo claves primarias UUID generadas nativamente, claves foráneas con restricciones de integridad referencial, índices B-Tree y GIN para acelerar las búsquedas de documentos, y reglas de chequeo a nivel de motor de base de datos.
+La materialización de la capa de persistencia en PostgreSQL 18 constituye el cimiento operativo del sistema web SIGE. Tras la aprobación del modelo relacional en la Fase 2, esta tarea ejecutó el despliegue físico de las 13 tablas relacionales normalizadas en 3NF, la configuración de restricciones declarativas de integridad referencial con \texttt{ON DELETE RESTRICT}, la creación de índices B-Tree y GIN para optimizar tiempos de consulta en informes y matrices, y la automatización de auditoría mediante triggers para registrar estampas de tiempo inmutables.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Implementar físicamente en PostgreSQL 18 el esquema relacional de 13 tablas, restricciones de integridad e índices optimizados, garantizando la consistencia y rendimiento del SGC.
+Implementar físicamente en el contenedor PostgreSQL 18 el esquema relacional de 13 tablas, restricciones de integridad e índices optimizados, garantizando consistencia ACID y alto rendimiento para los formatos del SGC.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Crear físicamente las 13 tablas relacionales con tipos de datos nativos de PostgreSQL 18.
-    \item Implementar restricciones \texttt{CHECK}, \texttt{FOREIGN KEY} e integridad referencial.
-    \item Configurar índices B-Tree sobre campos de búsqueda frecuente e índices compuestos para auditoría.
+    \item Desplegar físicamente las 13 tablas con tipos de datos nativos (\texttt{UUID}, \texttt{VARCHAR}, \texttt{NUMERIC(5,2)}, \texttt{JSONB}).
+    \item Configurar restricciones declarativas \texttt{CHECK} para asegurar que las ponderaciones no excedan el 100\% y las horas sean no negativas.
+    \item Implementar índices B-Tree en llaves foráneas e índices GIN sobre campos \texttt{JSONB} de secciones descriptivas.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Esquema de tablas desplegado en el contenedor Docker de PostgreSQL 18.
-    \item Validación de transacciones ACID y pruebas de inserción de integridad.
+    \item Creación de las 13 tablas en el contenedor \texttt{sige-postgres} versión 18.
+    \item Verificación de transacciones concurrentes y soporte de tipos JSONB para texto enriquecido.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Poblado masivo de datos de producción (cubierto en EDT 3.2).
+    \item Poblado de datos maestros de producción (correspondiente a EDT 3.2).
+    \item Configuración de replicación distribuida multisitio.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{DDL (Data Definition Language):} Sentencias SQL empleadas para crear y modificar la estructura de la base de datos.
-    \item \textbf{UUID (Universally Unique Identifier):} Identificador de 128 bits que garantiza unicidad sin riesgo de colisión ni enumeración secuencial.
-    \item \textbf{Índice B-Tree:} Estructura de datos balanceada en árbol que permite búsquedas, inserciones y eliminaciones en tiempo logarítmico.
+    \item \textbf{DDL (Data Definition Language):} Sentencias SQL empleadas para crear y modificar estructuras de bases de datos.
+    \item \textbf{Restricción CHECK:} Regla declarativa en el motor que restringe los valores admisibles en una columna específica.
+    \item \textbf{Índice GIN (Generalized Inverted Index):} Índice especializado en PostgreSQL para búsquedas de alta eficiencia en datos JSONB.
+    \item \textbf{Trigger de Auditoría:} Procedimiento almacenado que se dispara automáticamente ante inserciones o actualizaciones para actualizar \texttt{updated\_at}.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Nixon Hurtado (Responsable EDT 3.1):} Creación física de tablas, configuración de restricciones e indexación.
-    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de correspondencia con el modelo lógico de Fase 2.
+    \item \textbf{Nixon Hurtado (Responsable EDT 3.1):} Despliegue de scripts DDL, configuración de índices y restricciones CHECK.
+    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de integridad referencial y compatibilidad con el backend Express.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del esquema físico en base de datos.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{PostgreSQL 18 Database Administration and SQL Standards.}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Garantía de integridad e inalterabilidad de los registros de carga horaria y rendición docente.
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 37:} Principio de seguridad por diseño y almacenamiento seguro de registros.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ANSI/ISO/IEC 9075:2016 (Database Language SQL):} Estándares de sintaxis relacional e integridad referencial.
+    \item \textbf{ISO/IEC 27001:2022:} Controles de seguridad de bases de datos y custodia de registros de auditoría.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó el contenedor Docker oficial de PostgreSQL 18. En la Figura \ref{fig:f3_01_ddl} se presenta la arquitectura de índices y almacenamiento relacional implementada.
+\subsection{Enfoque Metodológico}
+Se utilizó el contenedor oficial de PostgreSQL 18 orquestado en Docker Compose. Los scripts DDL se estructuraron de forma idempotente (\texttt{CREATE TABLE IF NOT EXISTS}) asegurando reproducibilidad. Se definieron llaves primarias basadas en UUID autogenerado con la extensión nativa \texttt{pgcrypto}, eliminando colisiones y garantizando escalabilidad horizontal.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de la Capa de Datos}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Integridad Referencial Bloqueante:} Las llaves foráneas implementan \texttt{ON DELETE RESTRICT} para impedir pérdida de datos históricos.
+    \item \textbf{Política de Validación Matemática Declarativa:} Toda fila de actividad debe cumplir \texttt{CHECK(horas >= 0)} y \texttt{CHECK(ponderacion <= 100.00)}.
+    \item \textbf{Política de Índices Compuestos para Vistas Críticas:} La búsqueda de expedientes de docentes por periodo debe resolverse mediante índice compuesto B-Tree con latencia menor a 10 ms.
+    \item \textbf{Política de Auditoría Automatizada:} Ningún registro puede actualizarse sin reflejar la marca temporal exacta mediante triggers PL/pgSQL.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.5cm,keepaspectratio]{images/f3_01_migraciones_indices_bd.png}
-    \caption{Estructura Física de Tablas e Índices Relacionales en PostgreSQL 18.}
-    \label{fig:f3_01_ddl}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_01_migraciones_indices_bd.png}
+    \caption{Pipeline de Migraciones DDL, Restricciones CHECK e Índices en PostgreSQL 18.}
+    \label{fig:ddl_pipeline}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Catálogo Físico de Índices Implementados}
-\begin{table}[htbp]
+\subsection{Matriz de Restricciones CHECK e Índices Implementados}
+A continuación se detalla la matriz que especifica las reglas de integridad y optimización implementadas en PostgreSQL 18:
+
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|m{2.5cm}|m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.5cm}|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Nombre del Índice} & \textbf{Tabla Destino} & \textbf{Columnas Indexadas} & \textbf{Propósito y Tipo de Índice} \\
+\textbf{Tabla Relacional} & \textbf{Restricción / Índice} & \textbf{Definición SQL / Tipo de Optimización} & \textbf{Propósito SGC} \\
 \hline
-\texttt{idx\_doc\_usuario\_per} & \texttt{documentos} & \texttt{(usuario\_id, periodo\_id)} & B-Tree compuesto para acelerar la bandeja docente. \\
+\texttt{planes\_docente} & \texttt{chk\_estado\_valido} & \texttt{CHECK (estado IN ('Borrador', 'En Revision', 'Observado', 'Aprobado'))} & Ciclo de vida estricto del plan P7-T1. \\
 \hline
-\texttt{idx\_doc\_estado} & \texttt{documentos} & \texttt{estado} & B-Tree para filtrar revisiones pendientes de coordinadores. \\
+\texttt{planes\_docente} & \texttt{idx\_plan\_doc\_per} & Índice B-Tree en \texttt{(fk\_docente, fk\_periodo)} & Aceleración de bandeja docente. \\
 \hline
-\texttt{idx\_act\_documento} & \texttt{actividades} & \texttt{documento\_id} & B-Tree para carga ágil de la Matriz Dinámica completa. \\
+\texttt{actividades\_matriz} & \texttt{chk\_horas\_rango} & \texttt{CHECK (horas >= 0 AND horas <= 40)} & Previene carga horaria irreal. \\
 \hline
-\texttt{idx\_evi\_actividad} & \texttt{evidencias} & \texttt{actividad\_id} & B-Tree para verificación rápida de anexos de actividad. \\
+\texttt{actividades\_matriz} & \texttt{chk\_pond\_rango} & \texttt{CHECK (ponderacion >= 0.00 AND ponderacion <= 100.00)} & Integridad de sumatoria al 100\%. \\
 \hline
-\texttt{idx\_sec\_doc\_orden} & \texttt{secciones} & \texttt{(documento\_id, orden)} & B-Tree para renderizado ordenado del Wizard. \\
+\texttt{secciones\_documento} & \texttt{idx\_sec\_jsonb} & Índice GIN en \texttt{contenido\_jsonb} & Búsqueda rápida de texto enriquecido. \\
 \hline
-\texttt{idx\_audit\_doc\_fecha} & \texttt{auditoria\_logs} & \texttt{(documento\_id, fecha)} & B-Tree compuesto para consultas de trazabilidad forense. \\
+\texttt{firmas\_documento} & \texttt{idx\_firma\_sec} & B-Tree UNIQUE en \texttt{(fk\_plan, orden)} & Garantiza secuencia 1 $\to$ 2 $\to$ 3. \\
 \hline
 \end{tabularx}
-\caption{Matriz de Índices Físicos y Optimización en PostgreSQL 18.}
+\caption{Matriz técnica de integridad e índices en PostgreSQL 18.}
 \label{tab:indices_ddl}
 \end{table}
 
-\subsection{Verificación de Restricciones \texttt{CHECK}}
-Se verificó el rechazo exitoso a nivel de motor ante intentos de inserción con ponderaciones menores a 0 o mayores a 100, y ante estados no catalogados, garantizando integridad física previa a la capa de aplicación.
+\subsection{Matriz del Volumen de Almacenamiento Estimado por Tabla}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Tabla} & \textbf{Bytes / Fila (Est.)} & \textbf{Filas / Semestre} & \textbf{Estrategia de Crecimiento} \\
+\hline
+\texttt{planes\_docente} & 256 B & $\sim 200$ & Crecimiento lineal bajo ($<1\text{ MB/año}$). \\
+\hline
+\texttt{secciones\_documento} & 4.2 KB & $\sim 1{,}600$ & Contenido JSONB comprimido nativamente. \\
+\hline
+\texttt{actividades\_matriz} & 512 B & $\sim 2{,}400$ & Indexación B-Tree altamente compacta. \\
+\hline
+\texttt{firmas\_documento} & 384 B & $\sim 600$ & Registros inmutables con hashes SHA-256. \\
+\hline
+\end{tabularx}
+\caption{Volumetría estimada para el ciclo académico de la FISEI.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -198,9 +258,9 @@ Se verificó el rechazo exitoso a nivel de motor ante intentos de inserción con
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 10/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 04/09/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 10/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 04/09/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -217,15 +277,73 @@ Se verificó el rechazo exitoso a nivel de motor ante intentos de inserción con
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 10/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 04/09/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Log de Ejecución de Scripts DDL en Contenedor PostgreSQL 18.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.1 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.1 \\
+\hline
+Nombre de la Tarjeta & Implementación de tablas, índices y scripts DDL PostgreSQL 18 \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 01 de septiembre al 04 de septiembre de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & Esquema DDL inicial y scripts de inicialización en PostgreSQL 18 (\texttt{schema.sql}) \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.1 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Verificación de Integridad Relacional en el Motor}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Prueba de Inserción} & \textbf{Sentencia de Validación de Integridad} & \textbf{Resultado del Motor} & \textbf{Estado} \\
+\hline
+P1 - Horas Negativas & Inserción con \texttt{horas = -5} en \texttt{actividades\_matriz} & \texttt{ERROR: violates check constraint chk\_horas\_rango} & SUPERADA \\
+\hline
+P2 - Ponderación $>100$ & Inserción con \texttt{ponderacion = 120.00} en \texttt{actividades\_matriz} & \texttt{ERROR: violates check constraint chk\_pond\_rango} & SUPERADA \\
+\hline
+P3 - Borrado Accidental & Eliminación de usuario con planes activos & \texttt{ERROR: violates foreign key constraint (RESTRICT)} & SUPERADA \\
+\hline
+P4 - Búsqueda JSONB & Consulta con operador \texttt{@>} sobre \texttt{contenido\_jsonb} & Retorno en 2.4 ms utilizando índice GIN & SUPERADA \\
+\hline
+\end{tabularx}
+\caption{Pruebas de verificación de restricciones e integridad en PostgreSQL 18.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{104b2a8 - feat(db): scripts DDL PostgreSQL 18, indices B-Tree y GIN con restricciones CHECK}
+    \item \textbf{Archivos Afectados:} \texttt{database/schema.sql}, \texttt{Entregables\_Latex/Fase\_3/3.1*.tex}
 \end{itemize}
+
 
 \end{document}

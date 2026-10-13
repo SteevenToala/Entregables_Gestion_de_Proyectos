@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-010}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / MIDDLEWARES VALIDATION GATES}
-\newcommand{\docElaboracion}{29/09/2026}
-\newcommand{\docRevision}{29/09/2026}
-\newcommand{\docTitulo}{REGLAS DE NEGOCIO Y VALIDATION GATES EN EXPRESS V5}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / VALIDATION GATES Y MIDDLEWARES}
+\newcommand{\docElaboracion}{30/09/2026}
+\newcommand{\docRevision}{30/09/2026}
+\newcommand{\docTitulo}{REGLAS DE NEGOCIO Y VALIDATION GATES}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,90 +123,127 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Reglas de Negocio y Validation Gates con Middlewares Express v5 -- Código EDT: 3.10
+\textbf{Denominación Oficial del Entregable:} Reglas de Negocio y Validation Gates con Middlewares Express v5 -- Código EDT: 3.10
 
 \section{Introducción}
-Aunque la interfaz de usuario proporcione validaciones reactivas, la seguridad y confiabilidad de un sistema institucional exigen que la integridad de las reglas de negocio se aplique rigurosamente en el servidor (Server-Side Enforcement). En esta actividad se desarrolló el paquete de middlewares interceptores en Express v5 (\texttt{validation.middleware.js} y \texttt{documento.validator.js}), implementando los Validation Gates conceptualizados en la Fase 1 como compuertas lógicas inquebrantables que impiden el avance de documentos incompletos, sin evidencias o inconsistentes.
+La confiabilidad y estandarización del proceso de acreditación de la FISEI exigen que ningún documento incompleto, con horas incoherentes o sin los debidos respaldos pueda avanzar en el flujo de aprobación colegiada. Para garantizar esto de manera automatizada y no evadible, se implementó en el backend de Node.js con Express v5 una tubería (\textit{Pipeline}) de Middlewares secuenciales denominados \textit{Validation Gates}. Cada Gate actúa como una aduana lógica estricta que evalúa reglas de negocio declarativas y bloquea las peticiones no conformes antes de que impacten la base de datos o el estado del documento.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Implementar los middlewares de validación estricta y compuertas lógicas (Validation Gates) en Express v5, garantizando el cumplimiento irrestricto de las reglas SGC a nivel de servidor.
+Implementar la tubería de Validation Gates mediante Middlewares en Express v5 para garantizar el cumplimiento ineludible de las reglas de negocio del SGC.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Implementar el validador \texttt{validatePonderacion100} en endpoints de envío.
-    \item Construir la compuerta \texttt{gateEvidenciasObligatorias} que bloquea avances sin respaldo en MinIO.
-    \item Estructurar respuestas semánticas de error con códigos estandarizados y mensajes claros para la interfaz.
+    \item Codificar los 6 Validation Gates del sistema (\texttt{validation.middleware.js}).
+    \item Estandarizar las respuestas de error en formato JSON estructurado con códigos HTTP 400 y 422.
+    \item Validar transiciones de estado entre Borrador, En Revisión, Observado y Aprobado.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Interceptores de validación para las rutas de envío a revisión y suscripción de firmas.
-    \item Códigos de error semánticos: \texttt{ERR\_PONDERACION\_INVALIDA}, \texttt{ERR\_EVIDENCIA\_FALTANTE}.
+    \item Validación de: Gate 1 (Horas contractuales = 40h), Gate 2 (Ponderación = 100\%), Gate 3 (Evidencias obligatorias $>0$), Gate 4 (Fechas vigentes), Gate 5 (Firma previa), Gate 6 (Resolución de observaciones).
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Validación de interfaces cliente (cubierto en EDT 3.9).
+    \item Procesos de auditoría forense externa ajenos a la aplicación web.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Express Middleware:} Función con acceso al objeto de solicitud (\texttt{req}), al objeto de respuesta (\texttt{res}) y a la siguiente función de middleware (\texttt{next}) en el ciclo solicitud-respuesta.
-    \item \textbf{Server-Side Enforcement:} Principio de seguridad donde toda regla crítica se evalúa en el servidor, independientemente de las comprobaciones del navegador.
-    \item \textbf{HTTP 422 Unprocessable Entity:} Código de estado que indica que el servidor comprende el tipo de contenido pero no puede procesar las instrucciones contenidas debido a errores semánticos.
+    \item \textbf{Validation Gate:} Barrera lógica que verifica el cumplimiento de precondiciones necesarias antes de autorizar un cambio de estado en el sistema.
+    \item \textbf{Middleware (Express):} Función que tiene acceso al objeto de solicitud (\texttt{req}), al objeto de respuesta (\texttt{res}) y a la siguiente función middleware (\texttt{next}).
+    \item \textbf{HTTP 422 Unprocessable Entity:} Código de respuesta que indica que la sintaxis de la petición es correcta pero existen errores semánticos de negocio.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Nixon Hurtado / Steeven Toala (Responsables EDT 3.10):} Desarrollo del pipeline de middlewares de validación en Express v5.
-    \item \textbf{Andrea Vásquez (Frontend):} Manejo de respuestas 422 y visualización de errores semánticos en el cliente.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del rigor de las compuertas lógicas en el servidor.
+    \item \textbf{Steeven Toala (Responsable EDT 3.10):} Diseño e implementación del pipeline de Validation Gates en Express v5.
+    \item \textbf{Nixon Hurtado (Backend Developer):} Pruebas unitarias de casos de error y condiciones de borde.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la rigurosidad de los gates.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Express v5 Middleware Architecture.}
-    \item \textbf{RFC 4918 (HTTP Status Code 422 Unprocessable Entity).}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149.}
+    \item \textbf{Reglamento de Régimen Académico (RRA - CES), Art. 45 y 67.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 9001:2015, Cláusula 8.5.1 (Control de la producción y de la provisión del servicio):} Implementación de condiciones controladas.
+    \item \textbf{ISO/IEC 25010:2011:} Fiabilidad e integridad en la lógica de procesamiento.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó encadenamiento de middlewares en Express. En la Figura \ref{fig:f3_10_gates} se presenta el árbol de decisión algorítmico ejecutado por las compuertas en el backend.
+\subsection{Enfoque Metodológico}
+Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain of Responsibility}). Al invocarse el endpoint de envío a revisión (\texttt{POST /api/documentos/:id/solicitar-revision}), Express invoca consecutivamente cada Gate. Si una regla se incumple, la ejecución se interrumpe de inmediato retornando una respuesta HTTP 422 que incluye un array de objetos con el código de error, el campo afectado y el mensaje institucional correctivo. Si todos los Gates son superados, se invoca \texttt{next()} permitiendo la transición de estado.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de las Validation Gates}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Bloqueo Inmediato (Fail-Fast):} Si un Gate preliminar falla, los posteriores no se ejecutan innecesariamente, economizando lecturas a la base de datos.
+    \item \textbf{Política de Respuestas Estructuradas:} Las respuestas de error contienen información procesable por el frontend para resaltar la pestaña específica que requiere corrección.
+    \item \textbf{Política de Inmutabilidad de Validación:} Ningún usuario, inclusive con perfil Administrador, puede sobrepasar una Validation Gate sin registrar una prórroga formal.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.5cm,keepaspectratio]{images/f3_09_decision_validation_gates.png}
-    \caption{Árbol de Decisión Algorítmico y Middlewares de Validation Gates en Express v5.}
-    \label{fig:f3_10_gates}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_09_decision_validation_gates.png}
+    \caption{Diagrama de Flujo y Pipeline de Decisión de las 6 Validation Gates en Express v5.}
+    \label{fig:gates_pipeline}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz de Compuertas Lógicas y Errores Semánticos}
-\begin{table}[htbp]
+\subsection{Matriz de las 6 Validation Gates Implementadas}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.5cm}|X|c|X|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|c|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Compuerta} & \textbf{Condición de Evaluación en Backend} & \textbf{HTTP Status} & \textbf{Código de Error Semántico} \\
+\textbf{Gate} & \textbf{Nombre de la Regla} & \textbf{Condición Lógica Evaluada} & \textbf{Error HTTP} & \textbf{Acción del Sistema} \\
 \hline
-Gate 1: Ponderación & $|(\sum P_i) - 100.00| > 0.01$ en la matriz de actividades. & 422 & \texttt{ERR\_PONDERACION\_INVALIDA} \\
+\textbf{Gate 1} & Carga Horaria 40h & $\sum \text{horas\_actividades} = 40\text{ h}$ & 422 & Bloquea paso a revisión; exige cuadre exacto. \\
 \hline
-Gate 2: Evidencias & Actividad con $A_i > 0\%$ sin evidencia registrada en MinIO. & 422 & \texttt{ERR\_EVIDENCIA\_FALTANTE} \\
+\textbf{Gate 2} & Ponderación 100\% & $\sum \text{ponderacion} = 100.00\%$ & 422 & Bloquea envío; notifica diferencia porcentual. \\
 \hline
-Gate 3: Fechas & Fechas de actividad fuera del rango del período lectivo. & 400 & \texttt{ERR\_FECHA\_FUERA\_PERIODO} \\
+\textbf{Gate 3} & Evidencias $>0$ & Si avance $>0\%$, exige $\ge 1$ archivo MinIO & 422 & Impide reporte sin soporte auditable. \\
 \hline
-Gate 4: Extemporáneo & Documento enviado fuera de fecha límite sin token de desbloqueo. & 403 & \texttt{ERR\_ENVIO\_EXTEMPORANEO} \\
+\textbf{Gate 4} & Fechas Vigentes & Fecha actual $\le$ Fecha límite del periodo & 403 & Exige solicitud de prórroga extemporánea. \\
 \hline
-Gate 5: Cascada & Intento de firma de nivel 2 sin firma de nivel 1 validada. & 409 & \texttt{ERR\_CASCADA\_FIRMADA\_PREVIA} \\
+\textbf{Gate 5} & Cascada de Firmas & Firma Revisor exige firma previa Elaborador & 409 & Bloquea firma desordenada o fuera de turno. \\
+\hline
+\textbf{Gate 6} & Observaciones & Todas las observaciones deben estar resueltas & 422 & Impide aprobación con reclamos pendientes. \\
 \hline
 \end{tabularx}
-\caption{Especificación de Validation Gates y Respuestas Semánticas.}
-\label{tab:gates_backend}
+\caption{Matriz oficial de Validation Gates en el backend.}
+\label{tab:validation_gates_matrix}
 \end{table}
 
-\subsection{Protección Contra Evasión de Validaciones}
-Cualquier petición manual hacia los endpoints de envío que intente eludir el frontend es interceptada inmediatamente por el pipeline de Express, devolviendo una respuesta JSON explicativa que protege la integridad de la base de datos institucional.
+\subsection{Estructura del Mensaje de Error Retornado en Fallas de Gate}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Campo JSON} & \textbf{Tipo de Dato} & \textbf{Contenido Retornado en Fallo} \\
+\hline
+\texttt{gate} & String & Identificador de la regla insatisfecha (e.g., \texttt{"GATE\_02\_PONDERACION"}). \\
+\hline
+\texttt{campo} & String & Campo afectado para enlace con la pestaña (e.g., \texttt{"matriz\_actividades"}). \\
+\hline
+\texttt{valor\_actual} & Float & Valor numérico calculado actualmente en el sistema (e.g., \texttt{92.50}). \\
+\hline
+\texttt{valor\_esperado} & Float / String & Valor requerido según norma SGC (e.g., \texttt{100.00}). \\
+\hline
+\texttt{mensaje} & String & Mensaje instructivo: \textit{``La ponderación debe sumar exactamente 100\%''}. \\
+\hline
+\end{tabularx}
+\caption{Formato de error emitido ante violación de Validation Gates.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -197,9 +254,9 @@ Cualquier petición manual hacia los endpoints de envío que intente eludir el f
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 29/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 30/09/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 29/09/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 30/09/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -216,15 +273,75 @@ Cualquier petición manual hacia los endpoints de envío que intente eludir el f
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 29/09/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 30/09/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Registros de Bloqueo Exitoso en Pruebas de Carga Malformada.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.10 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.10 \\
+\hline
+Nombre de la Tarjeta & Reglas de negocio y Validation Gates con Middlewares Express v5 \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 25 de septiembre al 30 de septiembre de 2026 (4 días laborables) \\
+\hline
+Horas Asignadas & 32 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
+\hline
+Entregable Oficial & Middlewares de validación y reglas de negocio (\texttt{validation.middleware.js}) \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 3 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.10 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Pruebas de Bloqueo de Validation Gates}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{2.5cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Test ID} & \textbf{Gate Evaluado} & \textbf{Condición Forzada en Petición} & \textbf{HTTP} & \textbf{Resultado} \\
+\hline
+TC-G01 & Gate 1 (Horas) & Envío con 38 horas semanales acumuladas & 422 & BLOQUEO EXITOSO \\
+\hline
+TC-G02 & Gate 2 (Pond.) & Envío con ponderación sumando 105.00\% & 422 & BLOQUEO EXITOSO \\
+\hline
+TC-G03 & Gate 3 (Evid.) & Informe con avance 50\% sin archivos MinIO & 422 & BLOQUEO EXITOSO \\
+\hline
+TC-G04 & Gate 5 (Firmas) & Intento de firma de Revisor antes del Elaborador & 409 & BLOQUEO EXITOSO \\
+\hline
+TC-G05 & Todos OK & Expediente completo (40h, 100\%, evidencias, orden) & 200 & AVANCE AUTORIZADO \\
+\hline
+\end{tabularx}
+\caption{Matriz de pruebas unitarias sobre el pipeline de Middlewares.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{e1028bc - feat(gates): pipeline de 6 validation gates con middlewares Express v5 y HTTP 422}
+    \item \textbf{Archivos Afectados:} \texttt{backend/src/middlewares/validation.middleware.js}, \texttt{Entregables\_Latex/Fase\_3/3.10*.tex}
 \end{itemize}
+
 
 \end{document}

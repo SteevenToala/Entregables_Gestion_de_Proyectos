@@ -1,7 +1,10 @@
 import os, sys, subprocess, glob
 
 def compile_folder(folder_name):
-    target_dir = os.path.join("Entregables_Latex", folder_name)
+    if os.path.exists(folder_name):
+        target_dir = folder_name
+    else:
+        target_dir = os.path.join("Entregables_Latex", folder_name)
     tex_files = sorted(glob.glob(os.path.join(target_dir, "*.tex")))
     print(f"\n=======================================================")
     print(f"Compiling {len(tex_files)} documents in {folder_name}...")

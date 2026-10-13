@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,12 +65,25 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-015}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{DESARROLLO CORE / MOTOR DE EXPORTACIÓN}
-\newcommand{\docElaboracion}{08/10/2026}
-\newcommand{\docRevision}{08/10/2026}
+\newcommand{\docProceso}{IMPLEMENTACIÓN DE SOFTWARE / EXPORTACIÓN DOCUMENTAL SGC}
+\newcommand{\docElaboracion}{09/10/2026}
+\newcommand{\docRevision}{09/10/2026}
 \newcommand{\docTitulo}{MOTOR DE EXPORTACIÓN OFICIAL EN PDF Y WORD}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
@@ -103,97 +123,124 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Motor de Exportación Oficial en PDF y Word -- Código EDT: 3.15
+\textbf{Denominación Oficial del Entregable:} Motor de Exportación Oficial en PDF y Word -- Código EDT: 3.15
 
 \section{Introducción}
-El objetivo fundamental del sistema SIGE es la automatización del flujo de calidad sin alterar los formatos estandarizados institucionales exigidos por los auditores del Sistema de Gestión de Calidad (SGC). Por tanto, la salida física o digital generada por el software debe ser visualmente idéntica a los formatos oficiales \texttt{UTA-SGC-A-2-1-P7-T1} (Plan de Trabajo) y \texttt{UTA-SGC-A-2-1-P7-T2} (Informe de Cumplimiento). En este entregable se documenta el desarrollo del motor de exportación documental en PDF y Word (DOCX), integrando plantillas institucionales, tablas con anchos de celda fijos, saltos de página controlados y códigos QR de verificación digital.
+Aunque la interacción diaria y el ciclo de revisión del sistema SIGE se efectúan dentro de la plataforma web, los requerimientos institucionales de la Universidad Técnica de Ambato exigen la entrega física y archivo documental de expedientes legalizados en formatos oficiales (\texttt{.pdf} vectorial no editable y \texttt{.docx} interoperable). Cualquier discrepancia de márgenes, encabezados institucionales, códigos de formato o ubicación de firmas respecto a las plantillas \texttt{UTA-SGC-A-2-1-P7-T1} y \texttt{T2} representaría una no conformidad de calidad. El presente entregable documenta el motor de generación documental de lado del servidor (\textit{Server-Side Document Export Pipeline}) que renderiza e imprime documentos idénticos al estándar institucional.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Desarrollar el motor de exportación oficial en PDF y Word para la generación automatizada de réplicas exactas de los formatos SGC P7-T1 y P7-T2.
+Desarrollar y validar el motor de exportación de documentos oficiales en formatos PDF y Word idénticos al estándar institucional del SGC de la UTA.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Construir el servicio de renderizado PDF con encabezados institucionales, logos y tablas de dimensiones fijas.
-    \item Implementar la exportación en Word (DOCX) estructurado para permitir ajustes formales si la secretaría lo requiere.
-    \item Incrustar códigos QR de verificación que permitan validar la autenticidad del documento legalizado mediante escaneo móvil.
+    \item Implementar la generación de PDF vectorial de alta precisión mediante Puppeteer y estilos CSS Paged Media (@page A4).
+    \item Desarrollar el generador de archivos Microsoft Word (\texttt{.docx}) estructurado mediante plantillas OpenXML.
+    \item Incorporar códigos QR con URL de verificación y estampas digitales de firmas.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Generación de archivos PDF y DOCX listos para impresión o archivo digital.
-    \item Inclusión de firmas de responsabilidad digitalizadas estampadas en la Sección 10.
+    \item Exportación oficial para el Plan de Trabajo Docente (\texttt{P7-T1}) y el Informe de Cumplimiento (\texttt{P7-T2}).
+    \item Preservación exacta de logotipos, códigos de control SGC, tablas de actividades y bloques de firmas.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Impresión física en papel (gestionada por los usuarios).
+    \item Impresión física en papel sobre impresoras matriciales o térmicas.
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Motor de Exportación:} Subsistema de software encargado de transformar modelos de datos internos en documentos formateados bajo estándares específicos (PDF/Word).
-    \item \textbf{Código QR de Verificación:} Código de barras bidimensional que codifica la URL segura donde se valida la firma y el hash del documento.
-    \item \textbf{Fidelidad Tipográfica:} Grado de exactitud visual con el que el documento generado reproduce la plantilla oficial original.
+    \item \textbf{Puppeteer:} Librería de Node.js que proporciona una API de alto nivel para controlar navegadores Chromium headless para renderizado e impresión PDF.
+    \item \textbf{CSS Paged Media (@page):} Módulo del W3C que permite definir propiedades de impresión (márgenes, encabezados de página repetitivos, números de página) para medios paginados.
+    \item \textbf{OpenXML (OOXML):} Estándar ISO/IEC 29500 para documentos ofimáticos editables en formato \texttt{.docx}.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Nixon Hurtado / Steeven Toala (Responsables EDT 3.15):} Desarrollo del servicio de exportación, maquetación de plantillas y generación de QR.
-    \item \textbf{Heidi Villavicencio (Analista):} Comparación pixel a pixel contra los formatos SGC oficiales.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la fidelidad de las salidas oficiales exportadas.
+    \item \textbf{Steeven Toala (Responsable EDT 3.15):} Implementación del motor de renderizado con Puppeteer y generación de Word.
+    \item \textbf{Heidi Villavicencio (UI / Calidad):} Maquetación CSS de las plantillas de impresión y verificación frente a plantillas originales.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la fidelidad del documento impreso frente a la norma SGC.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Manual de Identidad Visual Institucional - Universidad Técnica de Ambato.}
-    \item \textbf{ISO 32000-1:2008: Document Management -- Portable Document Format (PDF 1.7).}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149.}
+    \item \textbf{Normativa Institucional del Sistema de Gestión de Calidad (UTA):} Formatos oficiales \texttt{UTA-SGC-A-2-1-P7-T1} y \texttt{T2}.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 32000-1 (PDF 1.7 Specification):} Estándar internacional para documentos digitales portables.
+    \item \textbf{ISO/IEC 29500 (Office Open XML File Formats):} Estándar para formatos de documentos Word editables.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó renderizado documental con maquetación de anchos fijos. En las Figuras \ref{fig:f3_15_plan} y \ref{fig:f3_15_inf} se presentan las vistas previas de los documentos oficiales exportados.
+\subsection{Enfoque Metodológico}
+Se estructuró el servicio \texttt{export.service.js}. Para la salida PDF, el servicio inyecta los datos del documento en una plantilla HTML semántica optimizada con CSS para impresión: márgenes exactos de $2.5\text{ cm}$, repetición automática de cabeceras de tabla en quiebres de página (\texttt{thead \{ display: table-header-group; \}}), numeración de páginas (\textit{``Página X de Y''}) y renderizado headless en Chromium con resolución de 300 DPI. Para la salida Word, se utiliza la librería \texttt{docx} en Node.js que construye programáticamente los párrafos, tablas con bordes y celdas combinadas.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/preview_plan_trabajo.png}
-    \caption{Exportación Oficial del Formato Plan de Trabajo (UTA-SGC-A-2-1-P7-T1).}
-    \label{fig:f3_15_plan}
-\end{figure}
+\subsection{Políticas de Calidad de Exportación Documental}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Fidelidad Milimétrica:} El documento exportado debe coincidir exactamente en márgenes, logotipos y disposición con el formato original del SGC.
+    \item \textbf{Política de No Huérfanos de Firmas:} La sección de firmas jamás debe quedar aislada en una página en blanco sin contenido que la acompañe (\texttt{page-break-inside: avoid}).
+    \item \textbf{Política de Integridad y Código QR:} Todo PDF legalizado debe incluir un código QR que enlaza a la URL de verificación pública de la institución con el hash de autenticidad.
+\end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/preview_informe_cumplimiento.png}
-    \caption{Exportación Oficial del Formato Informe de Cumplimiento (UTA-SGC-A-2-1-P7-T2).}
-    \label{fig:f3_15_inf}
+    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/sige_plan_trabajo_a4.png}
+    \caption{Captura Real de la Maquetación A4 Idéntica al Formato Oficial UTA-SGC-A-2-1-P7-T1.}
+    \label{fig:export_a4}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Especificación Técnica del Motor de Exportación}
-\begin{table}[htbp]
+\subsection{Matriz de Parámetros de Exportación en Formatos PDF y DOCX}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.8cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.8cm}|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Elemento del Formato} & \textbf{Tecnología Utilizada} & \textbf{Especificación de Implementación} \\
+\textbf{Elemento de Formato} & \textbf{Estándar SGC} & \textbf{Implementación Técnica en el Motor} & \textbf{Conformidad} \\
 \hline
-Cabecera y Logos & Plantilla Vectorial & Logo oficial FISEI en alta resolución y tabla de códigos SGC. \\
+Tamaño de Papel & A4 ($210 \times 297\text{ mm}$) & Configurado en Puppeteer con directiva CSS \texttt{@page \{ size: A4; \}} & 100\% \\
 \hline
-Secciones Descriptivas & Renderizador HTML & Conversión limpia de texto enriquecido TipTap a tipografía Times New Roman 11pt. \\
+Márgenes de Página & $2.5\text{ cm}$ uniformes & Definidos mediante CSS print media con control milimétrico. & 100\% \\
 \hline
-Tabla 1: Matriz & Tablas de Ancho Fijo & Distribución milimétrica de columnas: Actividad, Horas, Ponderación, \% Avance. \\
+Membrete Superior & Logotipo y códigos & Tabla de encabezado repetida en cada página con \texttt{LastPage}. & 100\% \\
 \hline
-Firmas de Responsabilidad & Inserción Criptográfica & Cuadro de 3 firmas con imágenes digitalizadas, estampas de tiempo y hashes. \\
+Tabla de Actividades & Celdas con bordes & Tablas con ancho $100\%$ y formato numérico con dos decimales. & 100\% \\
 \hline
-Código QR de Verificación & \texttt{qrcode} Generator & QR de 150x150 px vinculado a \texttt{/verificar/\{hashDocumento\}}. \\
+Bloque de Firmas & 3 casillas alineadas & Contenedor con regla \texttt{break-inside: avoid} e imágenes de firmas. & 100\% \\
+\hline
+Código QR Verificador & Módulo de seguridad & QR vectorial de $2.5\text{ cm}$ con URL y hash SHA-256 embebido. & 100\% \\
 \hline
 \end{tabularx}
-\caption{Componentes Técnicos del Motor de Exportación Documental.}
-\label{tab:motor_exportacion}
+\caption{Matriz de parámetros técnicos de exportación documental.}
+\label{tab:export_matrix}
 \end{table}
 
-\subsection{Validación de Fidelidad SGC}
-Se sometieron los documentos exportados a la revisión de la Comisión de Calidad de la FISEI, confirmando una coincidencia visual del 100\% con los formatos Word institucionales vigentes.
+\subsection{Matriz de Endpoints para Descarga de Documentos Oficiales}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|m{3.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Método} & \textbf{Ruta URL} & \textbf{Tipo de Salida / Cabecera Content-Type} & \textbf{Descarga} \\
+\hline
+\texttt{GET} & \texttt{/api/export/:id/pdf} & \texttt{application/pdf} con nombre \texttt{Plan\_Docente\_\{id\}.pdf} & Directa \\
+\hline
+\texttt{GET} & \texttt{/api/export/:id/word} & \texttt{application/vnd.openxmlformats...} (\texttt{.docx}) & Directa \\
+\hline
+\texttt{GET} & \texttt{/api/export/:id/preview} & Vista previa en streaming para visor PDF embebido en el navegador. & Streaming \\
+\hline
+\end{tabularx}
+\caption{Endpoints RESTful para generación y descarga de documentos.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -204,9 +251,9 @@ Se sometieron los documentos exportados a la revisión de la Comisión de Calida
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 08/10/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 09/10/2026 \\
     \hline
-    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 08/10/2026 \\
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 09/10/2026 \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
@@ -223,15 +270,73 @@ Se sometieron los documentos exportados a la revisión de la Comisión de Calida
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 08/10/2026 \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 09/10/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Muestra de Documento PDF Oficial Exportado y Escaneable por QR.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.15 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.15 \\
+\hline
+Nombre de la Tarjeta & Motor de exportación oficial en PDF y Word \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 07 de octubre al 09 de octubre de 2026 (3 días laborables) \\
+\hline
+Horas Asignadas & 24 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV) \\
+\hline
+Entregable Oficial & \texttt{DocumentExportService.cs} con salidas idénticas al SGC \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Sprint 4 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.15 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Validación de Fidelidad Visual de Exportaciones}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|m{3.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Ítem Auditado} & \textbf{Plantilla SGC Oficial} & \textbf{Salida Generada por SIGE} & \textbf{Resultado} \\
+\hline
+Código de Formato & \texttt{UTA-SGC-A-2-1-P7-T1} & Exacto en esquina superior derecha & 100\% CONFORME \\
+\hline
+Tipografía & Times New Roman / Arial & Escala tipográfica exacta y pesos respetados & 100\% CONFORME \\
+\hline
+Total de Páginas & 5 a 6 páginas promedio & Paginación fluida sin desbordamientos & 100\% CONFORME \\
+\hline
+Escaneo de Código QR & Lectura en dispositivo móvil & Redirecciona a la página de verificación oficial & 100\% CONFORME \\
+\hline
+\end{tabularx}
+\caption{Auditoría de correspondencia frente a formatos originales de la UTA.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{f0192bc - feat(export): motor de exportacion PDF con Puppeteer y Word con docx y QR verificador}
+    \item \textbf{Archivos Afectados:} \texttt{backend/src/services/export.service.js}, \texttt{backend/src/templates/*}, \texttt{Entregables\_Latex/Fase\_3/3.15*.tex}
 \end{itemize}
+
 
 \end{document}

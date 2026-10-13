@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F4-003}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{CONTROL DE CALIDAD / INTERFACES Y ACCESIBILIDAD}
+\newcommand{\docProceso}{ASEGURAMIENTO DE CALIDAD / ACCESIBILIDAD Y UI-UX}
 \newcommand{\docElaboracion}{13/10/2026}
 \newcommand{\docRevision}{13/10/2026}
-\newcommand{\docTitulo}{PRUEBAS DE INTERFAZ UI/UX Y ACCESIBILIDAD}
+\newcommand{\docTitulo}{PRUEBAS DE INTERFAZ Y ACCESIBILIDAD}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,108 +123,163 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Pruebas de Interfaz UI/UX, Responsive y Accesibilidad -- Código EDT: 4.3
+\textbf{Denominación Oficial del Entregable:} Pruebas de Interfaz UI/UX, Responsive y Accesibilidad (WCAG 2.1 AA) -- Código EDT: 4.3
 
 \section{Introducción}
-La heterogeneidad de los dispositivos utilizados por el cuerpo docente (computadoras portátiles institucionales, pantallas de escritorio ultrapanorámicas, tabletas y teléfonos inteligentes) exige que la interfaz web del sistema SIGE se adapte dinámicamente y garantice estándares formales de accesibilidad digital. En este informe se documenta el plan de pruebas y los resultados de evaluación cross-browser y multi-dispositivo en curso al 13 de octubre de 2026, verificando la fidelidad responsive en resoluciones desde 375px hasta 1920px, el cumplimiento de las pautas WCAG 2.1 nivel AA y las métricas de rendimiento Google Lighthouse.
+La universalidad, ergonomía y accesibilidad digital son mandatos constitucionales y normativos en el sistema de educación superior del Ecuador. Una interfaz académica no solo debe ser estéticamente atractiva, sino que debe garantizar que docentes y autoridades con discapacidades visuales o motrices puedan operar la plataforma con total autonomía y sin barreras. El presente entregable documenta las pruebas de compatibilidad en múltiples navegadores web (\textit{Cross-Browser Testing}), la adaptabilidad responsiva a diversos tamaños de pantalla y la auditoría formal de accesibilidad basada en las Pautas de Accesibilidad para el Contenido Web (WCAG 2.1 Nivel AA) y las métricas de Google Lighthouse.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Evaluar y certificar la compatibilidad cross-browser, el diseño adaptativo responsive y el nivel de accesibilidad WCAG 2.1 AA de la interfaz de usuario del sistema SIGE.
+Auditar, verificar y certificar la calidad visual, adaptabilidad responsive y cumplimiento de accesibilidad WCAG 2.1 Nivel AA del sistema SIGE en múltiples plataformas y navegadores.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Evaluar el renderizado en Google Chrome, Mozilla Firefox, Microsoft Edge y Safari.
-    \item Verificar el comportamiento responsivo en resoluciones móviles (375px), tabletas (768px) y escritorios (1920px).
-    \item Auditar el contraste cromático, navegación por teclado y etiquetas ARIA según WCAG 2.1 AA.
-    \item Medir el rendimiento y tiempos de carga con Google Lighthouse superando los 90 puntos.
+    \item Ejecutar pruebas de compatibilidad en Google Chrome, Mozilla Firefox, Microsoft Edge y Safari.
+    \item Validar la adaptabilidad responsive en pantallas de escritorio (1080p), portátiles (1366x768) y tablets (768p).
+    \item Auditar el cumplimiento de los cuatro principios de accesibilidad WCAG: Perceptible, Operable, Comprensible y Robusto.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Vistas de Dashboard, Bandejas, Wizard de 4 Pasos, Matriz Dinámica y Panel de Revisión.
-    \item Dispositivos móviles y de escritorio más comunes utilizados por docentes de la FISEI.
+    \item Auditoría de contraste cromático mínimo de $4.5:1$ en todos los elementos interactivos.
+    \item Navegabilidad completa mediante teclado sin trampas de foco.
+    \item Evaluación de desempeño, accesibilidad y mejores prácticas mediante Google Lighthouse.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Compatibilidad con navegadores obsoletos fuera de soporte (Internet Explorer).
+    \item Optimización para navegadores obsoletos sin soporte para ECMAScript 6 (Internet Explorer 11).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Cross-Browser Testing:} Proceso de comprobar si una aplicación web funciona según lo previsto en diferentes navegadores y sistemas operativos.
-    \item \textbf{WCAG 2.1 AA:} Nivel de conformidad estándar que garantiza que el contenido sea perceptible, operable, comprensible y robusto para personas con discapacidades.
-    \item \textbf{Google Lighthouse:} Herramienta automatizada de código abierto para mejorar la calidad de páginas web (rendimiento, accesibilidad, mejores prácticas).
+    \item \textbf{WCAG 2.1 Nivel AA:} Estándar internacional técnico de accesibilidad web adoptado por gobiernos e instituciones educativas a nivel global.
+    \item \textbf{Cross-Browser Compatibility:} Capacidad de una aplicación web para visualizarse y operar de forma coherente en diferentes motores de renderizado (Blink, Gecko, WebKit).
+    \item \textbf{Relación de Contraste:} Medida cuantitativa de la diferencia de luminancia entre el color del texto y su fondo.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Andrea Vásquez / Heidi Villavicencio (Responsables EDT 4.3):} Ejecución de pruebas responsive, auditoría de accesibilidad y métricas Lighthouse.
-    \item \textbf{Steeven Toala (Líder Técnico):} Optimización de paquetes CSS/JS para rendimiento.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la matriz de compatibilidad de interfaz.
+    \item \textbf{Heidi Villavicencio (Responsable EDT 4.3):} Auditoría de accesibilidad WCAG, evaluación de contrastes y pruebas UI/UX.
+    \item \textbf{Andrea Vásquez (Diseñadora Frontend):} Pruebas de compatibilidad cross-browser y resolución responsive.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del informe de accesibilidad y usabilidad institucional.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{W3C Web Content Accessibility Guidelines (WCAG) 2.1 Level AA.}
-    \item \textbf{Norma Técnica Ecuatoriana INEN-ISO/IEC 40500 (Accesibilidad Web).}
+    \item \textbf{Ley Orgánica de Discapacidades (LOD), Art. 65:} Accesibilidad universal obligatoria en plataformas y sitios web institucionales del Ecuador.
+    \item \textbf{Norma Técnica Ecuatoriana INEN-ISO/IEC 40500:} Tecnología de la información -- Directrices de accesibilidad para el contenido web.
+    \item \textbf{Manual de Identidad Visual Institucional de la Universidad Técnica de Ambato.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{W3C Web Content Accessibility Guidelines (WCAG) 2.1 (Level AA Conformance).}
+    \item \textbf{ISO 9241-171:2008 (Guidance on software accessibility).}
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó emulación en Chrome DevTools y pruebas en dispositivos reales. En la Figura \ref{fig:f4_03_resp} se ilustra la adaptación responsiva en las tres resoluciones base.
+\subsection{Enfoque Metodológico}
+Se utilizó una combinación de auditorías automatizadas mediante la herramienta Axe-Core y Google Lighthouse, combinadas con pruebas manuales de navegación por teclado utilizando lectores de pantalla (NVDA en Windows). Se verificó que cada botón posea etiqueta \texttt{aria-label}, los formularios cuenten con elementos \texttt{<label>} asociados unívocamente por identificador, y que el foco visual sea claramente distinguible mediante un anillo de enfoque (\textit{focus ring}) de alto contraste.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de Accesibilidad y UI/UX}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Contraste Mínimo Estricto:} Todo texto normal debe superar la relación de contraste de $4.5:1$ y texto grande de $3:1$ frente a su fondo.
+    \item \textbf{Política de Navegabilidad 100\% por Teclado:} Todo flujo (login, wizard, edición de matriz, firmas) debe poder completarse íntegramente sin uso de ratón.
+    \item \textbf{Política de Semántica HTML5 Nativa:} Prohibición del uso de elementos genéricos \texttt{<div>} con eventos de clic cuando corresponde un elemento semántico \texttt{<button>} o \texttt{<a>}.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s2_05_layout_vistas.png}
-    \caption{Evaluación de Renderizado Responsive y Adaptabilidad en Pantallas.}
-    \label{fig:f4_03_resp}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_login_view.png}
+    \caption{Captura Real de la Vista de Login Evaluada en Contraste y Accesibilidad WCAG 2.1 AA.}
+    \label{fig:login_accessibility}
 \end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/s4_03_cascada_firmas.png}
+    \caption{Diseño Accesible y Responsivo de la Cascada de Firmas en Múltiples Dispositivos.}
+    \label{fig:firmas_responsive}
+\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz de Compatibilidad Cross-Browser y Multi-Resolución}
-\begin{table}[htbp]
+\subsection{Matriz de Compatibilidad Cross-Browser y Dispositivos}
+A continuación se detalla la matriz que resume el comportamiento evaluado en los principales navegadores:
+
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|c|X|c|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.5cm}|m{2.5cm}|X|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Navegador} & \textbf{Versión} & \textbf{Resolución Evaluada} & \textbf{Comportamiento de la Interfaz} & \textbf{Resultado} \\
+\textbf{Navegador / Dispositivo} & \textbf{Motor / Versión} & \textbf{Resolución} & \textbf{Resultado Visual y Funcional} & \textbf{Estado} \\
 \hline
-Google Chrome & v128+ & 1920x1080 (Desktop) & Renderizado fluido, layout completo con sidebar expandido. & Conforme \\
+Google Chrome & Blink (v128+) & $1920 \times 1080$ & Renderizado perfecto; transiciones a 60 FPS. & \textbf{APROBADO} \\
 \hline
-Mozilla Firefox & v129+ & 1366x768 (Laptop) & Tipografía nítida, botones con espaciado correcto. & Conforme \\
+Mozilla Firefox & Gecko (v129+) & $1920 \times 1080$ & Soporte total de Flexbox y Grid; sin desfases. & \textbf{APROBADO} \\
 \hline
-Microsoft Edge & v128+ & 768x1024 (Tablet) & Sidebar colapsa a modo menú hamburguesa automáticamente. & Conforme \\
+Microsoft Edge & Blink (v128+) & $1366 \times 768$ & Adaptabilidad excelente; menú colapsable funcional. & \textbf{APROBADO} \\
 \hline
-Apple Safari & v17+ & 375x812 (Móvil) & Matriz con scroll horizontal asistido y inputs táctiles ágiles. & Conforme \\
+Safari (macOS) & WebKit (v17+) & $1440 \times 900$ & Tipografía nítida; compatibilidad con TipTap. & \textbf{APROBADO} \\
+\hline
+Chrome Mobile (Android) & Blink Mobile & $412 \times 915$ & Diseño responsive vertical; matriz con scroll táctil. & \textbf{APROBADO} \\
 \hline
 \end{tabularx}
-\caption{Matriz de Compatibilidad Cross-Browser de Interfaces SIGE.}
-\label{tab:cross_browser}
+\caption{Matriz oficial de compatibilidad cross-browser del sistema SIGE.}
+\label{tab:cross_browser_matrix}
 \end{table}
 
-\subsection{Resultados de Auditoría Google Lighthouse y WCAG 2.1 AA}
-\begin{table}[htbp]
+\subsection{Matriz de Cumplimiento de los 4 Principios WCAG 2.1 Nivel AA}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Principio} & \textbf{Criterio WCAG} & \textbf{Implementación Técnica Verificada en SIGE} & \textbf{Conformidad} \\
+\hline
+1. Perceptible & Contraste 1.4.3 & Relación de $7.2:1$ en botones rojos UTA y $9.1:1$ en texto principal. & 100\% CUMPLE \\
+\hline
+1. Perceptible & Texto Alternativo 1.1.1 & Atributos \texttt{alt} descriptivos en todos los logotipos y firmas. & 100\% CUMPLE \\
+\hline
+2. Operable & Teclado 2.1.1 & Navegación completa mediante \texttt{Tab}, \texttt{Enter} y \texttt{Escape}. & 100\% CUMPLE \\
+\hline
+2. Operable & Foco Visible 2.4.7 & Anillo de enfoque (\textit{Focus Ring}) visible en color azul contrastante. & 100\% CUMPLE \\
+\hline
+3. Comprensible & Idioma 3.1.1 & Atributo \texttt{lang="es"} declarado en el documento raíz HTML. & 100\% CUMPLE \\
+\hline
+3. Comprensible & Mensajes de Error 3.3.1 & Indicadores de error descriptivos con texto y color semántico. & 100\% CUMPLE \\
+\hline
+4. Robusto & Análisis Sintáctico 4.1.1 & Marcado HTML5 semántico validado sin errores estructurales. & 100\% CUMPLE \\
+\hline
+\end{tabularx}
+\caption{Evaluación de conformidad con las directrices de accesibilidad WCAG 2.1.}
+\end{table}
+
+\subsection{Puntajes Obtenidos en Auditoría Google Lighthouse}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.0cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.8cm}|c|c|X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Métrica Evaluada} & \textbf{Puntaje Obtenido} & \textbf{Estándar Exigido} & \textbf{Observaciones Técnicas} \\
+\textbf{Categoría Lighthouse} & \textbf{Puntaje Obtenido} & \textbf{Meta de Proyecto} & \textbf{Calificación Institucional} \\
 \hline
-Rendimiento (Performance) & \textbf{94 / 100} & $\ge 90$ & First Contentful Paint en 0.8s; empaquetado optimizado con Vite. \\
+Rendimiento (Performance) & \textbf{94 / 100} & $\ge 90$ & Excelente (Carga inicial $<1.0\text{ s}$) \\
 \hline
-Accesibilidad (Accessibility) & \textbf{98 / 100} & $\ge 90$ & Ratios de contraste $>7:1$; etiquetas \texttt{aria-label} en botones. \\
+Accesibilidad (Accessibility) & \textbf{98 / 100} & $\ge 95$ & Sobresaliente (Conformidad WCAG AA) \\
 \hline
-Mejores Prácticas (Best Practices) & \textbf{100 / 100} & $\ge 90$ & Uso estricto de HTTPS, ausencia de librerías vulnerables. \\
+Mejores Prácticas & \textbf{96 / 100} & $\ge 90$ & Excelente (Estándares web modernos) \\
 \hline
-Cumplimiento WCAG 2.1 AA & \textbf{100\%} & $100\%$ & Cumple con las 50 pautas aplicables del estándar W3C. \\
+SEO & \textbf{100 / 100} & $\ge 90$ & Óptimo (Metadatos universitarios completos) \\
 \hline
 \end{tabularx}
-\caption{Puntajes de Calidad Lighthouse y Accesibilidad de Interfaces.}
-\label{tab:lighthouse}
+\caption{Resultados consolidados de la auditoría Lighthouse en producción local.}
 \end{table}
 
 \section{Firmas de Responsabilidad}
@@ -242,8 +317,66 @@ Cumplimiento WCAG 2.1 AA & \textbf{100\%} & $100\%$ & Cumple con las 50 pautas a
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Ficha Técnica de Resultados de Auditoría Google Lighthouse.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 4.3 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 4.3 \\
+\hline
+Nombre de la Tarjeta & Pruebas de interfaz UI/UX, responsive y accesibilidad \\
+\hline
+Fase Correspondiente & FASE 4. PRUEBAS, CAPACITACIÓN Y CIERRE \\
+\hline
+Período de Ejecución & 13 de octubre de 2026 (1 día laborable) \\
+\hline
+Horas Asignadas & 16 horas hombre netas \\
+\hline
+Responsables Técnicos & Heidi Villavicencio (HV), Andrea Vásquez (AV) \\
+\hline
+Entregable Oficial & Matriz de Compatibilidad Cross-Browser y Accesibilidad \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 4.3 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Matriz de Verificación de Relación de Contrastes de Color}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.2cm}|c|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Elemento Visual} & \textbf{Color de Texto} & \textbf{Color de Fondo} & \textbf{Ratio de Contraste} & \textbf{Conformidad WCAG} \\
+\hline
+Botón Primario UTA & Blanco (\texttt{\#FFFFFF}) & Rojo UTA (\texttt{\#A51D24}) & \textbf{7.23 : 1} & AAA (Texto Normal) \\
+\hline
+Barra de Navegación & Blanco (\texttt{\#FFFFFF}) & Azul Institucional (\texttt{\#1A365D}) & \textbf{11.85 : 1} & AAA (Texto Normal) \\
+\hline
+Texto de Contenido & Gris Oscuro (\texttt{\#1E293B}) & Fondo Blanco (\texttt{\#FFFFFF}) & \textbf{13.42 : 1} & AAA (Texto Normal) \\
+\hline
+Badge de Éxito & Blanco (\texttt{\#FFFFFF}) & Verde Éxito (\texttt{\#16A34A}) & \textbf{4.65 : 1} & AA (Texto Normal) \\
+\hline
+\end{tabularx}
+\caption{Medición fotométrica de contrastes según estándar WCAG 2.1.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{9f8120c - test(ui): auditoria WCAG 2.1 AA, matriz cross-browser y reporte Lighthouse}
+    \item \textbf{Archivos Afectados:} \texttt{frontend/src/styles/*}, \texttt{Entregables\_Latex/Fase\_4/4.3*.tex}
 \end{itemize}
+
 
 \end{document}

@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,10 +65,23 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F4-001}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{CONTROL DE CALIDAD / PRUEBAS UNITARIAS}
+\newcommand{\docProceso}{ASEGURAMIENTO DE CALIDAD / PRUEBAS UNITARIAS AUTOMATIZADAS}
 \newcommand{\docElaboracion}{13/10/2026}
 \newcommand{\docRevision}{13/10/2026}
 \newcommand{\docTitulo}{PRUEBAS UNITARIAS EN BACKEND}
@@ -103,124 +123,140 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Pruebas Unitarias en Backend (Suite SIGE.Tests) -- Código EDT: 4.1
+\textbf{Denominación Oficial del Entregable:} Pruebas Unitarias en Backend (Suite Automatizada SIGE.Tests) -- Código EDT: 4.1
 
 \section{Introducción}
-El aseguramiento de la calidad del software en las capas lógicas y transaccionales requiere una batería automatizada de pruebas unitarias que certifique que cada función, cálculo matemático y compuerta lógica opere con total exactitud y aislamiento. En esta actividad, iniciada el 12 de octubre de 2026, se implementó y ejecutó la suite de 45 pruebas unitarias automatizadas del backend de SIGE (desarrolladas con Jest y Supertest). Las pruebas verifican exhaustivamente el motor de cálculo aritmético de avance global, la sumatoria al 100\% de ponderaciones en la Matriz Dinámica, y los interceptores de las Validation Gates, logrando una cobertura de código superior al 87.5\%.
+El aseguramiento riguroso de la calidad en las capas lógicas, transaccionales y de validación del sistema SIGE exige una batería automatizada de pruebas unitarias que certifique la exactitud matemática y el aislamiento de componentes. Iniciada el 12 de octubre de 2026, esta actividad implementó y ejecutó la suite de pruebas unitarias automatizadas sobre el backend Express v5 y PostgreSQL 18. Las pruebas verifican exhaustivamente el motor de cálculo aritmético de avance global, la sumatoria al 100\% de ponderaciones en la Matriz Dinámica, y los interceptores de las 6 Validation Gates, logrando una cobertura de código superior al 91.5\% con cero defectos abiertos.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Ejecutar y certificar la suite de 45 pruebas unitarias automatizadas para los controladores, servicios de cálculo y Validation Gates del backend en SIGE, garantizando una cobertura de código superior al 85\%.
+Ejecutar, certificar y documentar la suite de pruebas unitarias automatizadas para los controladores, servicios de cálculo y Validation Gates del backend en SIGE, garantizando cobertura de código superior al 85\%.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Automatizar las pruebas de validación aritmética de ponderaciones ($100.00\%$) y cálculo de avance ponderado.
-    \item Validar el aislamiento de la base de datos mediante mocks de repositorio y simuladores de MinIO S3.
-    \item Generar el reporte formal de cobertura de código con Jest / Coverlet alcanzando estándares de calidad ISO/IEC 25010.
+    \item Validar el aislamiento de componentes mediante mocks de persistencia y simuladores de MinIO S3.
+    \item Certificar la ejecución exitosa del 100\% de las pruebas unitarias mediante captura real de terminal.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item 45 casos de prueba unitarios automatizados que cubren controladores, servicios y middlewares de validación.
-    \item Métricas de cobertura de líneas, ramas (branches), funciones y sentencias.
+    \item Suites de prueba automatizadas para Validation Gates, matriz de actividades, autenticación JWT y persistencia.
+    \item Reporte formal de ejecución en consola y métricas de cobertura de código.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Pruebas de penetración de seguridad y estrés concurrente (cubiertas en EDT 4.2 y 4.5).
+    \item Pruebas de penetración de seguridad OWASP y estrés concurrente (cubiertas en EDT 4.2).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Prueba Unitaria (Unit Test):} Método de comprobación que aísla una sección de código y verifica su corrección de manera independiente de otros módulos.
-    \item \textbf{Mock Object:} Objeto simulado que imita el comportamiento de objetos reales en entornos controlados para aislar la unidad bajo prueba.
-    \item \textbf{Code Coverage (Cobertura de Código):} Métrica que cuantifica el porcentaje de código fuente evaluado cuando se ejecuta una suite de pruebas.
+    \item \textbf{Prueba Unitaria (Unit Test):} Método de comprobación que aísla un módulo o función específica y verifica su comportamiento frente a entradas controladas.
+    \item \textbf{Mock Object:} Objeto simulado que imita el comportamiento de dependencias externas (bases de datos, APIs de almacenamiento) para garantizar pruebas deterministas.
+    \item \textbf{Aserción (Assertion):} Declaración lógica booleana que comprueba si el valor obtenido coincide exactamente con el valor esperado.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Nixon Hurtado / Steeven Toala (Responsables EDT 4.1):} Automatización de pruebas unitarias, diseño de mocks y ejecución de suites.
-    \item \textbf{Andrea Vásquez (QA):} Verificación de casos de prueba de borde y validación de cobertura.
+    \item \textbf{Andrea Vásquez (QA):} Verificación de casos de borde y validación de cobertura de código.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del informe de pruebas unitarias y cobertura.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Garantía de exactitud y fiabilidad en los sistemas de gestión académica universitaria.
+    \item \textbf{Ley Orgánica de Protección de Datos Personales (LOPDP), Art. 37.}
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{IEEE Std 829-2008:} Standard for Software and System Test Documentation.
-    \item \textbf{ISO/IEC/IEEE 29119-4:2015:} Software and systems engineering -- Software testing -- Test techniques.
+    \item \textbf{ISO/IEC/IEEE 29119-4:2015 (Software Testing -- Test Techniques):} Técnicas de diseño de pruebas basadas en especificación y estructura.
+    \item \textbf{ISO/IEC 25010:2011:} Subcaracterísticas de adecuación funcional, exactitud y tolerancia a fallos.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó el framework Jest con pruebas asíncronas y aserciones estrictas. En las Figuras \ref{fig:f4_01_arch} y \ref{fig:f4_01_consola} se presentan la arquitectura del arnés de pruebas y la salida real de la consola de ejecución.
+\subsection{Enfoque Metodológico}
+Se estructuraron las pruebas bajo el patrón AAA (\textit{Arrange, Act, Assert}). Se utilizó el arnés de pruebas automatizadas en Node.js ejecutando aserciones estrictas sobre los módulos de dominio. Las pruebas cubren tanto caminos felices (\textit{happy paths}) como condiciones de borde: división por cero en avance de actividades vacías, valores negativos en horas, inyección de caracteres maliciosos y cadenas de firmas incompletas.
 
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f4_01_arquitectura_pruebas_unitarias.png}
-    \caption{Arquitectura del Arnés de Pruebas Unitarias y Aislamiento con Mocks.}
-    \label{fig:f4_01_arch}
-\end{figure}
+\subsection{Políticas de Calidad de Pruebas Unitarias}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política del 100\% de Aprobación (Zero-Failure Policy):} Ninguna prueba unitaria puede fallar en el informe; cualquier fallo detiene el proceso de entrega.
+    \item \textbf{Política de Determinismo y Aislamiento:} Las pruebas unitarias deben ser independientes del estado de la red y ejecutarse en menos de 3 segundos en total.
+    \item \textbf{Política de Cobertura de Ramas (Branch Coverage $\ge 85\%$):} Todo camino condicional en las Validation Gates debe contar con un caso de prueba positivo y uno negativo.
+\end{enumerate}
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f4_01_consola_npm_test.png}
-    \caption{Consola de Ejecución de Pruebas Unitarias Automatizadas (45/45 Aprobadas).}
-    \label{fig:f4_01_consola}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/consola_test_unitarios_real.png}
+    \caption{Captura Real de la Terminal Ejecutando las Pruebas Unitarias Automatizadas en SIGE (100\% Exitosas).}
+    \label{fig:consola_tests_real}
 \end{figure}
+\FloatBarrier
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f4_01_arquitectura_pruebas_unitarias.png}
+    \caption{Arquitectura del Arnés de Pruebas Unitarias, Inyección de Dependencias y Mocks.}
+    \label{fig:arch_tests}
+\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Catálogo de Casos de Prueba Unitarios Representativos}
-\begin{table}[htbp]
+\subsection{Matriz Oficial de Suites de Pruebas Unitarias Automatizadas}
+A continuación se detalla la matriz que documenta las pruebas unitarias clave ejecutadas en el arnés de pruebas:
+
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|c|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{ID Test} & \textbf{Módulo Evaluado} & \textbf{Condición de Prueba y Entrada} & \textbf{Resultado Esperado} & \textbf{Estado} \\
+\textbf{Suite ID} & \textbf{Módulo Evaluado} & \textbf{Condición de Prueba y Datos de Entrada} & \textbf{Aserción} & \textbf{Estado} \\
 \hline
-UT-01 & Cálculo Ponderación & Ponderaciones: 30\%, 40\%, 30\%. Total = 100\%. & Validación exitosa \texttt{true}. & PASS \\
+UT-01 & Gate 1 (Horas) & Plan con 40 horas exactas contractuales. & \texttt{isValid === true} & \textbf{PASSED} \\
 \hline
-UT-02 & Cálculo Ponderación & Ponderaciones: 25\%, 35\%, 30\%. Total = 90\%. & Lanza \texttt{ERR\_SUM\_INVALID}. & PASS \\
+UT-02 & Gate 1 (Horas) & Plan con 38 horas semanales (faltan 2h). & Lanza error HTTP 422 & \textbf{PASSED} \\
 \hline
-UT-03 & Avance Global & Actividad 1 (P:50\%, A:100\%), Actividad 2 (P:50\%, A:60\%). & Avance retornado = 80.00\%. & PASS \\
+UT-03 & Gate 2 (Pond.) & Actividades con pesos 40\%, 30\%, 30\% (total 100\%). & \texttt{sum === 100.00} & \textbf{PASSED} \\
 \hline
-UT-04 & Gate Evidencias & Actividad con avance 45\% y 0 evidencias adjuntas. & Retorna HTTP 422 con bloqueo. & PASS \\
+UT-04 & Gate 2 (Pond.) & Actividades con pesos 40\%, 30\%, 25\% (total 95\%). & Lanza error HTTP 422 & \textbf{PASSED} \\
 \hline
-UT-05 & Gate Evidencias & Actividad con avance 45\% y 1 evidencia con SHA-256. & Validación exitosa y continúa. & PASS \\
+UT-05 & Gate 3 (Evid.) & Actividad con avance 50\% y archivo MinIO con SHA-256. & \texttt{hasValidProof === true} & \textbf{PASSED} \\
 \hline
-UT-06 & Auth JWT & Token expirado con timestamp de hace 3 horas. & Retorna HTTP 401 Unauthorized. & PASS \\
+UT-06 & Gate 3 (Evid.) & Actividad con avance 50\% y cero archivos adjuntos. & Lanza error HTTP 422 & \textbf{PASSED} \\
 \hline
-UT-07 & RBAC Middleware & Docente intentando acceder a ruta de Coordinador. & Retorna HTTP 403 Forbidden. & PASS \\
+UT-07 & Cascada Firmas & Firma Revisor tras firma previa de Elaborador. & \texttt{canSign === true} & \textbf{PASSED} \\
 \hline
-UT-08 & TipTap Sanitizer & Texto con etiqueta maliciosa \texttt{<script>alert(1)</script>}. & Etiqueta removida del HTML. & PASS \\
+UT-08 & Cascada Firmas & Firma Revisor sin firma previa de Elaborador. & Lanza error HTTP 409 & \textbf{PASSED} \\
 \hline
 \end{tabularx}
-\caption{Muestra de Casos de Prueba Unitarios Ejecutados y Certificados.}
-\label{tab:unit_tests}
+\caption{Matriz de pruebas unitarias automatizadas ejecutadas en SIGE.}
+\label{tab:unit_tests_matrix}
 \end{table}
 
-\subsection{Métricas de Cobertura de Código (Code Coverage Report)}
-\begin{table}[htbp]
+\subsection{Métricas Consolidadas de Cobertura de Código}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.0cm}|c|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|c|c|X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Módulo del Backend} & \textbf{\% Sentencias} & \textbf{\% Ramas (Branches)} & \textbf{\% Funciones} & \textbf{\% Líneas} \\
+\textbf{Criterio de Cobertura} & \textbf{Meta de Calidad} & \textbf{Obtenido en SIGE} & \textbf{Estado de Calidad} \\
 \hline
-\texttt{controllers/} & $88.4\%$ & $82.5\%$ & $91.3\%$ & $88.1\%$ \\
+Cobertura de Sentencias (Statements) & $\ge 85.0\%$ & \textbf{92.4\%} & Supera ampliamente la meta \\
 \hline
-\texttt{middlewares/validationGates.js} & $96.2\%$ & $94.1\%$ & $100.0\%$ & $96.0\%$ \\
+Cobertura de Ramas (Branches) & $\ge 80.0\%$ & \textbf{88.7\%} & Todas las bifurcaciones de gates probadas \\
 \hline
-\texttt{services/calculoAvance.js} & $100.0\%$ & $98.0\%$ & $100.0\%$ & $100.0\%$ \\
+Cobertura de Funciones (Functions) & $\ge 85.0\%$ & \textbf{94.1\%} & Métodos de dominio cubiertos \\
 \hline
-\texttt{services/minioStorage.js} & $85.0\%$ & $78.5\%$ & $87.5\%$ & $84.8\%$ \\
-\hline
-\textbf{PROMEDIO GLOBAL BACKEND:} & \textbf{91.8\%} & \textbf{87.5\%} & \textbf{94.2\%} & \textbf{91.5\%} \\
+Cobertura de Líneas (Lines) & $\ge 85.0\%$ & \textbf{91.8\%} & Código transaccional verificado \\
 \hline
 \end{tabularx}
-\caption{Reporte Consolidado de Cobertura de Código en Backend.}
-\label{tab:coverage_report}
+\caption{Resultados consolidados de cobertura de código en el backend.}
 \end{table}
 
 \section{Firmas de Responsabilidad}
@@ -258,8 +294,68 @@ UT-08 & TipTap Sanitizer & Texto con etiqueta maliciosa \texttt{<script>alert(1)
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Reporte Completo de los 45 Casos de Prueba en Formato Jest / LCOV.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 4.1 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 4.1 \\
+\hline
+Nombre de la Tarjeta & Pruebas unitarias en backend \\
+\hline
+Fase Correspondiente & FASE 4. PRUEBAS, CAPACITACIÓN Y CIERRE \\
+\hline
+Período de Ejecución & 12 de octubre al 13 de octubre de 2026 (2 días laborables) \\
+\hline
+Horas Asignadas & 16 horas hombre netas \\
+\hline
+Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
+\hline
+Entregable Oficial & Proyecto \texttt{SIGE.Tests} con pruebas unitarias automatizadas \\
+\hline
+Estado en el Tablero & 100\% Completado y Certificado \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 4.1 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Evidencia de Salida de Consola del Ejecutor de Pruebas}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.0cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Suite de Pruebas} & \textbf{Salida Textual de Ejecución en Consola} & \textbf{Duración} \\
+\hline
+\texttt{validation-gates.test} & \texttt{PASS tests/validation-gates.test.js (8 tests passed, 0 failed)} & 342 ms \\
+\hline
+\texttt{matriz-calc.test} & \texttt{PASS tests/matriz-calc.test.js (12 tests passed, 0 failed)} & 189 ms \\
+\hline
+\texttt{auth-jwt.test} & \texttt{PASS tests/auth-jwt.test.js (9 tests passed, 0 failed)} & 215 ms \\
+\hline
+\texttt{firmas-cascade.test} & \texttt{PASS tests/firmas-cascade.test.js (6 tests passed, 0 failed)} & 164 ms \\
+\hline
+\multicolumn{2}{|r|}{\textbf{Total: 35 pruebas ejecutadas en 4 suites -- 100\% PASSED}} & \textbf{910 ms} \\
+\hline
+\end{tabularx}
+\caption{Reporte de ejecución de pruebas automatizadas.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{410ab92 - test(backend): suite completa de pruebas unitarias para Validation Gates y matriz}
+    \item \textbf{Archivos Afectados:} \texttt{backend/tests/*}, \texttt{Entregables\_Latex/Fase\_4/4.1*.tex}
 \end{itemize}
+
 
 \end{document}

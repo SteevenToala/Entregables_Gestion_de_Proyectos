@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,6 +65,19 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F1-007}
 \newcommand{\docVersion}{1.0}
@@ -103,7 +123,7 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} Planificación del Proyecto, Cronograma de Trabajo y EDT -- Código EDT: 1.7
+\textbf{Denominación Oficial del Entregable:} Planificación del Proyecto y Cronograma de Trabajo -- Código EDT: 1.7
 
 \section{Introducción}
 El aseguramiento del plazo de entrega en proyectos de software requiere una disciplina estricta de descomposición jerárquica del trabajo y secuenciación lógica de actividades. Tomando como base los lineamientos del Project Management Institute (PMI) y la metodología ágil Scrum, este informe formaliza la Estructura de Desglose del Trabajo (EDT / WBS) compuesta por 49 tareas estructuradas en 5 fases, y el Cronograma Maestro oficial configurado en Microsoft Project bajo el calendario laboral de la ciudad de Ambato, totalizando 57 días laborables y 456 horas netas de ingeniería.
@@ -114,8 +134,8 @@ Estructurar la planificación temporal y metodológica integral del proyecto SIG
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Descomponer el proyecto en 49 tareas organizadas en 5 fases secuenciales e iterativas.
-    \item Configurar el calendario laboral oficial de Ambato/Ecuador (lunes a viernes, 8 horas/día, excluyendo feriados nacionales).
-    \item Determinar el camino crítico (Critical Path), las holguras y la asignación del 100\% de recursos del equipo.
+    \item Configurar el calendario laboral oficial de Ambato/Ecuador (lunes a viernes, 8 horas/día, excluyendo feriados nacionales como el 9 de Octubre).
+    \item Determinar el camino crítico (\textit{Critical Path Method}), las holguras y la asignación del 100\% de recursos del equipo.
 \end{itemize}
 
 \section{Alcance}
@@ -144,31 +164,32 @@ Estructurar la planificación temporal y metodológica integral del proyecto SIG
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Practice Standard for Work Breakdown Structures (PMI).}
-    \item \textbf{Ley Orgánica del Servicio Público (LOSEP) y Código de Trabajo de Ecuador:} Calendario de feriados nacionales obligatorios.
+    \item \textbf{Código del Trabajo de Ecuador y LOSEP:} Regulación de la jornada laboral de 8 horas diarias y calendario oficial de feriados nacionales obligatorios.
+\end{itemize}
+
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Practice Standard for Work Breakdown Structures (PMI):} Buenas prácticas para la creación y diccionario de la EDT.
+    \item \textbf{Guía PMBOK (7ma Edición), Dominio de Planificación:} Métodos de ruta crítica y secuenciación con precedencias.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se utilizó Microsoft Project con calendario laboral de 40 horas semanales. En las Figuras \ref{fig:s1_07_gantt} y \ref{fig:s1_07_cronograma} se aprecian el diagrama general por fases y el cronograma detallado.
+\subsection{Cronograma Maestro y Ruta Crítica}
+El cronograma se configuró en Microsoft Project Professional con calendario de lunes a viernes (08:00 a 17:00, 1 hora de almuerzo). En la Figura \ref{fig:s1_07_gantt_real} se presenta la captura directa del diagrama de Gantt oficial del proyecto.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/gantt_fases_sige.png}
-    \caption{Diagrama Gantt de las 5 Fases del Proyecto SIGE.}
-    \label{fig:s1_07_gantt}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/trello_gantt_cronograma.png}
+    \caption{Diagrama de Gantt Oficial del Proyecto SIGE en Microsoft Project (57 Días Laborables / 456 Horas).}
+    \label{fig:s1_07_gantt_real}
 \end{figure}
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.5cm,keepaspectratio]{images/cronograma_detallado_sige.png}
-    \caption{Cronograma Maestro Detallado y Ruta Crítica del Proyecto SIGE.}
-    \label{fig:s1_07_cronograma}
-\end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
 \subsection{Resumen de Fases y Distribución de Esfuerzo}
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
@@ -187,22 +208,29 @@ Se utilizó Microsoft Project con calendario laboral de 40 horas semanales. En l
 \hline
 \textbf{Fase 5} & Despliegue y Cierre & 26 oct - 30 oct & 5 & 40 h & $8.8\%$ \\
 \hline
-\multicolumn{2}{|r|}{\textbf{TOTAL GENERAL:}} & \textbf{12 ago - 30 oct} & \textbf{57} & \textbf{456 h} & \textbf{100.0\%} \\
+\multicolumn{2}{|r|}{\textbf{TOTAL GENERAL CONSOLIDADO:}} & \textbf{12 ago - 30 oct} & \textbf{57} & \textbf{456 h} & \textbf{100.0\%} \\
 \hline
 \end{tabularx}
-\caption{Distribución de Esfuerzo y Tiempos por Fase del Proyecto.}
-\label{tab:fases}
+\caption{Distribución Oficial de Esfuerzo y Tiempos por Fase del Proyecto.}
+\label{tab:fases_resumen}
 \end{table}
+\FloatBarrier
 
-\subsection{Hitos Clave del Proyecto (Milestones)}
+\subsection{Hitos Principales de Control (Milestones)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Hito 1 (24 ago):} Aprobación de Fase 1 y Paquete Entregables Semana 1.
-    \item \textbf{Hito 2 (04 sep):} Aprobación de Arquitectura y Entregable General Semana 2.
-    \item \textbf{Hito 3 (22 sep):} Sprint 2 Review: Wizard y Persistencia Operativa.
-    \item \textbf{Hito 4 (30 sep):} Sprint 3 Review: Matriz Dinámica y Evidencias MinIO.
-    \item \textbf{Hito 5 (08 oct):} Sistema Core Completado (Code Freeze previo a feriado de 9 de octubre).
-    \item \textbf{Hito 6 (23 oct):} Aceptación de QA y Release Candidate v1.0-RC.
-    \item \textbf{Hito 7 (30 oct):} Cierre Formal del Proyecto y Sistema en Producción.
+    \item \textbf{Hito 1 (24 de agosto):} Aprobación de Fase 1 y Entregable General Semana 1 (EDT 1.8).
+    \item \textbf{Hito 2 (04 de septiembre):} Aprobación de Arquitectura y Entregable General Semana 2 (EDT 2.7).
+    \item \textbf{Hito 3 (22 de septiembre):} Sprint 2 Review: Wizard y Persistencia Operativa (EDT 3.8).
+    \item \textbf{Hito 4 (30 de septiembre):} Sprint 3 Review: Matriz Dinámica y Evidencias MinIO (EDT 3.12).
+    \item \textbf{Hito 5 (08 de octubre):} Sistema Core Completado previo a Feriado (EDT 3.16).
+    \item \textbf{Hito 6 (23 de octubre):} Aceptación de QA y Release Candidate v1.0-RC (EDT 4.6).
+    \item \textbf{Hito 7 (30 de octubre):} Cierre Formal y Despliegue en Servidor Institucional (EDT 5.5).
+\end{itemize}
+
+\section{Conclusiones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item El cronograma maestro establece un ritmo balanceado con 456 horas distribuidas estrictamente en días laborables.
+    \item La identificación de la ruta crítica permite al equipo concentrar el esfuerzo de testing en los componentes de persistencia de matriz y compuertas lógicas.
 \end{itemize}
 
 \section{Firmas de Responsabilidad}
@@ -240,8 +268,47 @@ Se utilizó Microsoft Project con calendario laboral de 40 horas semanales. En l
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Archivo Oficial \texttt{Cronograma\_SIGE\_Oficial.mpp} (Microsoft Project).
+
+\subsection*{Anexo 1: Ficha de Registro y Control en el Tablero Oficial de Gestión (EDT Trello)}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 1.7 \\
+\hline
+Nombre de la Tarjeta & Planificación del proyecto y cronograma de trabajo \\
+\hline
+Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+\hline
+Período de Ejecución & 20 de agosto al 24 de agosto de 2026 (3 días laborables) \\
+\hline
+Horas Asignadas & 24 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST) \\
+\hline
+Entregable Oficial & \texttt{07\_Planificacion\_Proyecto\_Cronograma\_EDT.pdf} \\
+\hline
+Estado en el Tablero & 100\% Completado y Verificado en Reunión de Hito 1 \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 1.7 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Evidencia de Programación en Microsoft Project}
+Archivo fuente maestro versionado: \texttt{Proyecto\_SIGE\_EDT.mpp} (352,256 bytes) con línea base aprobada y 49 tareas enlazadas.
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Commit de Consolidación:} \texttt{9d32a0c - chore(schedule): cronograma maestro MS Project oficial y tablero EDT Trello}
+    \item \textbf{Archivos Afectados:} \texttt{AlcanceInforme/Tablero\_EDT\_Trello.html}, \texttt{Entregables\_Latex/Fase\_1/1.7*.tex}
 \end{itemize}
+
 
 \end{document}

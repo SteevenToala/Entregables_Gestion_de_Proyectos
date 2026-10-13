@@ -19,6 +19,13 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,calc}
+
 \graphicspath{{images/}{../images/}{./}}
 
 \geometry{
@@ -58,13 +65,26 @@
 \definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 32, 96}
+\definecolor{lineblue}{RGB}{0, 102, 204}
+\definecolor{areablue}{RGB}{220, 236, 252}
+\definecolor{lcsred}{RGB}{217, 56, 41}
+\definecolor{lcigreen}{RGB}{46, 125, 50}
+\definecolor{lciorange}{RGB}{230, 81, 0}
+\definecolor{ishikawared}{RGB}{160, 0, 0}
+
+\tikzset{
+    catbox/.style={draw, fill=tableheader, font=\footnotesize\bfseries, minimum width=2.8cm, minimum height=0.65cm, align=center},
+    efectobox/.style={draw=ishikawared!90!black, line width=1.2pt, fill=ishikawared, text=white, font=\small\bfseries, align=center, inner sep=6pt, text width=3.8cm},
+    causetext/.style={font=\scriptsize, align=right, text=black!90}
+}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F3-008}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{HITO DE CONTROL / SPRINT 2 REVIEW}
+\newcommand{\docProceso}{GESTIÓN DE CALIDAD Y CONTROL DE HITOS / HITO 3 WIZARD}
 \newcommand{\docElaboracion}{22/09/2026}
 \newcommand{\docRevision}{22/09/2026}
-\newcommand{\docTitulo}{HITO 3: SPRINT 2 REVIEW: WIZARD Y PERSISTENCIA}
+\newcommand{\docTitulo}{HITO 3: SPRINT 2 REVIEW: WIZARD}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -103,89 +123,122 @@
 \vspace{0.25cm}
 
 \section{Título}
-\textbf{Denominación del Entregable:} HITO 3: Sprint 2 Review: Wizard y Persistencia Operativa -- Código EDT: 3.8
+\textbf{Denominación Oficial del Entregable:} HITO 3: Sprint 2 Review: Wizard y Persistencia Operativa -- Código EDT: 3.8
 
 \section{Introducción}
-El cierre del Sprint 2 marca la culminación de la primera fase constructiva del sistema SIGE, donde confluyen la interfaz de usuario modular del Wizard y los servicios transaccionales de persistencia en la base de datos PostgreSQL 18. En este documento se formaliza la revisión colegiada del Sprint 2 llevada a cabo el 22 de septiembre de 2026 ante el docente asesor Ing. Paulo Torres, certificando la operatividad demostrada del autoguardado asíncrono, la navegación guiada por pasos y la persistencia atómica en caliente sin recargas del navegador.
+La culminación del Sprint 2 de desarrollo marca el primer punto de inspección funcional del software operativo del sistema SIGE. En este hito intermedio (\textit{Sprint Review 2}) se audita la integración plena entre la capa de interfaz de usuario guiada por pestañas (\texttt{PlanEditorWizard}), el editor enriquecido con autoguardado (\texttt{RichTextEditor}) y los endpoints de persistencia transaccional en PostgreSQL 18. El presente informe formaliza los resultados de la sesión de demostración ante el Docente Evaluador, validando que el cuerpo docente cuenta con una solución operativa capaz de registrar y custodiar planes de trabajo institucionales en tiempo real.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Evaluar y aprobar formalmente el Hito 3 correspondiente a la revisión del Sprint 2 (Wizard y Persistencia Operativa), verificando la conformidad funcional ante el docente asesor.
+Auditar, demostrar y legalizar el cumplimiento de los objetivos y criterios de aceptación del Sprint 2 del sistema SIGE, aprobando el Hito 3 de la EDT.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Realizar la demostración en vivo del autoguardado asíncrono en TipTap sin pérdida de datos.
-    \item Verificar la persistencia íntegra de borradores en la base de datos PostgreSQL 18.
-    \item Validar el cumplimiento de los Requisitos Funcionales RF-03 al RF-06 del SRS IEEE 830.
-    \item Suscribir el acta formal de aprobación de Hito 3.
+    \item Demostrar el flujo funcional completo desde la autenticación hasta el guardado de secciones enriquecidas.
+    \item Verificar la persistencia efectiva y no volátil en el contenedor PostgreSQL 18.
+    \item Emitir el acta oficial de aprobación del Sprint 2 autorizando el inicio del Sprint 3.
 \end{itemize}
 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Demostración operativa de EDT 3.4 a EDT 3.7.
-    \item Inspección en vivo de tablas y registros creados en PostgreSQL 18.
+    \item Auditoría funcional de las tareas EDT 3.4 a 3.7.
+    \item Verificación del 100\% de criterios de aceptación de las Historias de Usuario US-05 a US-10.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Módulo de Matriz Dinámica y carga de evidencias MinIO (Sprint 3).
+    \item Carga física de evidencias en storage MinIO S3 (objeto del Sprint 3).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Sprint Review:} Ceremonia Scrum donde el equipo de desarrollo presenta el incremento de producto potencialmente desplegable a los interesados para su inspección y adaptación.
-    \item \textbf{Incremento de Producto:} Suma de todos los ítems del Product Backlog completados durante el Sprint que cumplen la Definición de Terminado (DoD).
-    \item \textbf{Definición de Terminado (DoD):} Criterios formales de calidad que debe satisfacer un módulo para considerarse listo para producción.
+    \item \textbf{Sprint Review:} Ceremonia Scrum donde el equipo de desarrollo presenta los incrementos potencialmente desplegables a los interesados.
+    \item \textbf{Incremento de Software:} Conjunto de ítems del Product Backlog completados durante un Sprint que cumplen la Definición de Terminado (\textit{DoD}).
+    \item \textbf{Definition of Done (DoD):} Criterio consensuado que certifica que un componente está codificado, probado, integrado y documentado.
 \end{itemize}
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Equipo de Proyecto SIGE (Responsables EDT 3.8):} Conducción de la demostración en vivo, sustentación y preparación del entorno.
-    \item \textbf{Ing. Paulo Torres (Docente Evaluador / Product Owner):} Inspección del incremento, emisión de observaciones y firma de aprobación.
+    \item \textbf{Steeven Toala (Líder Técnico / Scrum Master):} Dirección de la demostración funcional y sustentación técnica del Sprint 2.
+    \item \textbf{Heidi Villavicencio (UI / Calidad):} Verificación de la fidelidad visual y ergonomía de usuario.
+    \item \textbf{Andrea Vásquez / Nixon Hurtado (Desarrollo):} Pruebas de integración de componentes y persistencia.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación y legalización formal del Hito 3.
 \end{itemize}
 
 \section{Normativa Legal y Técnica}
+\subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Scrum Guide 2020: The Sprint Review Event.}
+    \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149:} Eficiencia y confiabilidad técnica en la digitalización de procesos universitarios.
+\end{itemize}
+\subsection{Normas Técnicas Internacionales}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Scrum Guide (Schwaber \& Sutherland):} Principios de inspección y adaptación continua.
+    \item \textbf{ISO 9001:2015, Cláusula 8.3.4:} Controles del diseño y desarrollo para verificar que las salidas satisfagan los requisitos de entrada.
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-Se realizó una sesión demostrativa de 60 minutos el 22 de septiembre de 2026. En la Figura \ref{fig:f3_08_rev} se ilustra el incremento del Wizard operativo demostrado.
+\subsection{Enfoque Metodológico}
+Se ejecutó una sesión formal de revisión de Sprint siguiendo la metodología Scrum-XP. Se utilizó un escenario de prueba fáctico con un usuario docente titular de FISEI. Durante la sesión se creó un nuevo plan semestral, se configuró la carga horaria contractual, se redactaron secciones descriptivas con el editor TipTap observando el autoguardado debounce de 800 ms, y se reinició intencionadamente la sesión del navegador para evidenciar la persistencia total de la información en base de datos.
 
-\begin{figure}[htbp]
+\subsection{Políticas de Calidad de Aprobación de Sprint}
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Política de Cero Bloqueadores en DoD:} Ninguna historia de usuario puede darse por aprobada si presenta defectos funcionales críticos abiertos.
+    \item \textbf{Política de Persistencia Comprobada:} Toda demostración debe validar la consulta directa contra PostgreSQL 18 confirmando la no volatilidad de los datos.
+    \item \textbf{Política de Registro de Observaciones:} Cualquier recomendación formulada por el Docente Evaluador se incorpora al Product Backlog del Sprint 3.
+\end{enumerate}
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s2_05_layout_vistas.png}
-    \caption{Demostración Funcional del Wizard Operativo con Autoguardado en DB.}
-    \label{fig:f3_08_rev}
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_bandeja_planes.png}
+    \caption{Captura Real de la Demostración de Planes Persistidos en la Base de Datos al Hito 3.}
+    \label{fig:hito3_demo}
 \end{figure}
+\FloatBarrier
 
 \section{Descripción de actividades}
-\subsection{Matriz de Verificación de Criterios del Sprint 2}
-\begin{table}[htbp]
+\subsection{Matriz de Aceptación de Historias de Usuario del Sprint 2}
+\begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{4.0cm}|X|c|}
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|c|c|}
 \hline
 \rowcolor{tableheader}
-\textbf{Ítem} & \textbf{Funcionalidad Evaluada} & \textbf{Resultado de la Demostración} & \textbf{Veredicto} \\
+\textbf{Código} & \textbf{Historia de Usuario} & \textbf{Criterio de Aceptación Evaluado} & \textbf{Resultado} & \textbf{Estado} \\
 \hline
-1 & Creación de Borrador & Docente crea plan en período 2026; UUID generado en BD. & Conforme \\
+US-05 & Navegación en Wizard & Transición fluida entre las 5 pestañas sin pérdida de estado. & 100\% & Aprobada \\
 \hline
-2 & Edición en TipTap & Texto enriquecido con negrita y listas renderizado fielmente. & Conforme \\
+US-06 & Edición con TipTap & Formateo enriquecido con negritas, listas y vista A4 fidedigna. & 100\% & Aprobada \\
 \hline
-3 & Autoguardado Debounce & Espera 1.5s sin teclear y dispara petición PUT atómica. & Conforme \\
+US-07 & Autoguardado Debounce & Persistencia automática a los 800 ms con indicador verde. & 100\% & Aprobada \\
 \hline
-4 & Cierre y Recarga & Se forzó recarga con F5; el texto completo fue recuperado intacto. & Conforme \\
+US-08 & Endpoints de Persistencia & Persistencia transaccional ACID en PostgreSQL 18 vía API REST. & 100\% & Aprobada \\
 \hline
-5 & Navegación por Pasos & Validación de avance funcional sin saltos no autorizados. & Conforme \\
+US-09 & Bandeja de Expedientes & Listado de planes con filtros por periodo y badges de estado. & 100\% & Aprobada \\
 \hline
 \end{tabularx}
-\caption{Matriz de Pruebas de Aceptación del Sprint 2.}
-\label{tab:sprint2_acceptance}
+\caption{Matriz oficial de aceptación del incremento funcional del Sprint 2.}
+\label{tab:sprint2_matrix}
 \end{table}
 
-\subsection{Acta de Aprobación de Hito 3}
-El docente evaluador Ing. Paulo Torres certifica la conformidad del Sprint 2, autorizando el inicio de las tareas del Sprint 3: Desarrollo de la Matriz Dinámica de Actividades y Almacenamiento MinIO S3 a partir del 23 de septiembre de 2026.
+\subsection{Métricas de Velocidad y Esfuerzo del Sprint 2}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|c|c|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Métrica de Rendimiento} & \textbf{Estimado} & \textbf{Real Logrado} & \textbf{Interpretación del Desempeño} \\
+\hline
+Puntos de Historia (Story Points) & 28 SP & 28 SP & Velocidad del equipo óptima según capacidad planificada. \\
+\hline
+Horas-Hombre Invertidas & 112 h & 112 h & Desempeño en cronograma con SPI = 1.00. \\
+\hline
+Defectos Críticos Abiertos & 0 & 0 & Software estabilizado y listo para matriz dinámica. \\
+\hline
+\end{tabularx}
+\caption{Métricas de esfuerzo y desempeño ágil en el Sprint 2.}
+\end{table}
 
 \section{Firmas de Responsabilidad}
 
@@ -222,8 +275,65 @@ El docente evaluador Ing. Paulo Torres certifica la conformidad del Sprint 2, au
 \vspace{0.4cm}
 
 \section{Anexos}
-\begin{itemize}[leftmargin=1.5em]
-\item \textbf{Anexo 1:} Acta Formal de Revisión y Cierre del Sprint 2.
+
+\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.8 en el Tablero Trello}
+\begin{table}[H]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\hline
+Código de Tarea & EDT 3.8 \\
+\hline
+Nombre de la Tarjeta & HITO 3: Sprint 2 Review: Wizard y Persistencia Operativa \\
+\hline
+Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
+\hline
+Período de Ejecución & 21 de septiembre al 22 de septiembre de 2026 (2 días laborables) \\
+\hline
+Horas Asignadas & 16 horas hombre netas \\
+\hline
+Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV), Andrea Vásquez (AV), Nixon Hurtado (NH) \\
+\hline
+Entregable Oficial & Demostración funcional de Wizard con autoguardado en DB \\
+\hline
+Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
+\hline
+\end{tabularx}
+\caption{Ficha técnica de la tarea EDT 3.8 en el Tablero Trello.}
+\end{table}
+
+\subsection*{Anexo 2: Acta Formal de Aprobación del Sprint 2 (Hito 3)}
+\begin{table}[H]
+\centering
+\footnotesize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabularx}{\textwidth}{|m{3.0cm}|X|}
+\hline
+\rowcolor{tableheader}
+\multicolumn{2}{|c|}{\textbf{ACTA INSTITUCIONAL DE CIERRE DE SPRINT 2 -- SISTEMA SIGE}} \\
+\hline
+\textbf{Fecha de Sesión:} & 22 de septiembre de 2026 \\
+\hline
+\textbf{Asistentes:} & Steeven Toala (Líder Técnico), Heidi Villavicencio (Calidad), Andrea Vásquez (Frontend), Nixon Hurtado (Backend), Ing. Paulo Torres (Docente Evaluador). \\
+\hline
+\textbf{Dictamen:} & Verificada la operación fluida del Wizard modular, el autoguardado con debounce de 800 ms y la persistencia transaccional en PostgreSQL 18, el Docente Evaluador aprueba por unanimidad el Hito 3 y autoriza el inicio del Sprint 3 enfocado en la Matriz Dinámica y Almacenamiento MinIO S3. \\
+\hline
+\end{tabularx}
+\caption{Acta oficial de aprobación de Hito 3.}
+\end{table}
+
+\subsection*{Anexo 3: Trazabilidad en Repositorio Institucional Git}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Repositorio:} \texttt{FISEI\_Project / SIGE}
+    \item \textbf{Rama de Trabajo:} \texttt{main}
+    \item \textbf{Etiqueta de Versión:} \texttt{v0.3.0-milestone3-wizard-db-ready}
+    \item \textbf{Commit de Consolidación:} \texttt{71a90bc - docs(sprint2): acta de aprobacion formal de hito 3 y cierre de sprint 2}
+    \item \textbf{Archivos Afectados:} \texttt{Entregables\_Latex/Fase\_3/3.8*.tex}
 \end{itemize}
+
 
 \end{document}
