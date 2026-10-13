@@ -1,0 +1,308 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla,es-noquoting]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{listings}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=blue!70!black,
+    urlcolor=blue!70!black
+}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerred}{RGB}{180, 0, 0}
+\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+\definecolor{navyheader}{RGB}{0, 52, 94}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F3-014}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{INGENIERÍA DE SOFTWARE / GENERACIÓN DOCUMENTAL OFICIAL}
+\newcommand{\docElaboracion}{09/10/2026}
+\newcommand{\docRevision}{09/10/2026}
+\newcommand{\docTitulo}{MOTOR DE EXPORTACIÓN OFICIAL EN FORMATOS PDF Y MICROSOFT WORD}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\lstset{
+  basicstyle=\ttfamily\scriptsize,
+  backgroundcolor=\color{lightgraybg},
+  frame=single,
+  breaklines=true,
+  tabsize=2,
+  showstringspaces=false
+}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Motor de Exportación Oficial en Formatos PDF e Intercambio Word según Estándares SGC -- Código EDT: 3.14 (Fase 3: Desarrollo Iterativo Core).
+
+\section{Introducción}
+Aunque la plataforma SIGE digitaliza íntegramente la carga, persistencia y validación de los datos académicos, el entorno normativo de la Universidad Técnica de Ambato exige que los expedientes de acreditación puedan descargarse e imprimirse en los formatos estandarizados del Sistema de Gestión de Calidad (SGC). Estos formatos corresponden a las codificaciones institucionales oficiales \texttt{UTA-SGC-A-2-1-P7-T1} (Plan de Trabajo Docente) y \texttt{UTA-SGC-A-2-1-P7-T2} (Informe Semestral de Cumplimiento).
+
+Para dar respuesta a esta exigencia regulatoria, se desarrolló en el backend de SIGE un motor de generación documental de alta fidelidad. Este componente transforma los registros relacionales de la base de datos en documentos PDF vectoriales idénticos a los formatos institucionales y en documentos de Microsoft Word (\texttt{.docx}), preservando tablas de doble entrada, cálculos de sumatorias, sellos de control y cajas de firma criptográfica compatibles con el software nacional FirmaEC.
+
+\section{Objetivo}
+
+\subsection{Objetivo General}
+Construir y verificar el motor de exportación documental multiplataforma en PDF y Word para los planes de trabajo e informes de cumplimiento en SIGE, garantizando fidelidad milimétrica frente a las plantillas oficiales del SGC de la UTA.
+
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Implementar el generador de PDF vectorial con paginación dinámica, repetición de encabezados de tabla (\textit{table headers}) y marcas institucionales.
+    \item Desarrollar el generador en formato Office Open XML (\texttt{.docx}) para permitir descargas editables en caso de auditorías requeridas.
+    \item Integrar hipervínculos seguros con URLs prefirmadas de MinIO S3 en la columna de evidencias de los documentos exportados.
+\end{itemize}
+
+\section{Alcance}
+
+\subsection{Límites de Implementación (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Generación de Planes de Trabajo (\texttt{P7-T1}) e Informes de Cumplimiento (\texttt{P7-T2}) desde cualquier estado aprobado o borrador.
+    \item Inclusión automática de metadatos de emisión: fecha, hora de generación, identificador único de expediente y código de verificación.
+    \item Descarga directa por streaming HTTP sin sobrecargar el almacenamiento en disco local del servidor.
+\end{itemize}
+
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=1.5pt]
+    \item Generación de formatos no académicos correspondientes a trámites de compras públicas o nómina docente.
+    \item Conversión a formatos de maquetación libres como LaTeX por parte del usuario final (la salida al docente es exclusivamente PDF / Word).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Fidelidad Tipográfica SGC:} Correspondencia visual exacta en márgenes, fuentes, anchos de columna y logotipos respecto a la plantilla física oficial.
+    \item \textbf{PDF Vectorial (ISO 32000-1):} Formato de documento portátil que almacena texto y formas geométricas con calidad de renderizado independiente de la resolución.
+    \item \textbf{Office Open XML (ISO/IEC 29500):} Formato comprimido basado en XML estándar para procesadores de texto Microsoft Word (\texttt{.docx}).
+    \item \textbf{Streaming HTTP Documental:} Mecanismo de envío de bytes directos al cliente web con encabezados \texttt{Content-Type: application/pdf} y \texttt{Content-Disposition: attachment}.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Analista de Requisitos / UI-UX (Heidi Villavicencio):} Relevamiento y modelado de necesidades, especificaciones funcionales, diseño de interfaces de usuario y verificación de usabilidad.
+    \item \textbf{Líder de Proyecto / Arquitecto de Software (Steeven Toala):} Arquitectura de software, gobierno técnico, cumplimiento metodológico del cronograma y control de calidad integral.
+    \item \textbf{Desarrollador Backend / DBA (Nixon Hurtado):} Modelo de base de datos PostgreSQL, persistencia de datos, seguridad por roles y reglas lógicas de validación.
+    \item \textbf{Desarrolladora Frontend / QA (Andrea Vásquez):} Implementación de componentes React, manejo de estado global, integración de APIs y ejecución de pruebas de aceptación.
+    \item \textbf{Docente Evaluador / Tutor (Ing. Paulo Torres, Mg.):} Dirección académica, asesoría metodológica, revisión de suficiencia técnica y validación institucional de los entregables.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{ISO 32000-1 / PDF/A:} Estándar internacional para preservación y archivo digital de documentos electrónicos a largo plazo.
+    \item \textbf{Manual de Gestión Documental y Archivo SGC UTA:} Requisitos para la estructura del encabezado, numeración y legalización de informes semestrales.
+    \item \textbf{Ley de Comercio Electrónico, Firmas Electrónicas y Mensajes de Datos (Ecuador):} Validez jurídica de los documentos digitales descargados con certificados electrónicos.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+El servicio de exportación opera bajo las siguientes políticas:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Generación Dinámica sin Almacenamiento Residual:} Los documentos se compilan en memoria RAM mediante flujos de datos (\textit{Node.js Streams}) y se transmiten al cliente sin dejar archivos temporales huérfanos en disco.
+    \item \textbf{Protección contra Inyección de Texto:} Todos los campos provenientes de editores TipTap se desinfectan (\textit{sanitize}) eliminando scripts HTML antes de la interpolación en el motor PDF.
+    \item \textbf{Preservación de Enlaces de Evidencias:} Los hipervínculos a los archivos de evidencia en MinIO S3 se configuran con expiración renovable para auditorías externas.
+\end{enumerate}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/preview_informe_cumplimiento.png}
+    \caption{Previsualización del Informe de Cumplimiento Oficial Generado por el Motor de SIGE.}
+    \label{fig:preview_informe_motor}
+\end{figure}
+
+\section{Descripción de actividades}
+
+\subsection{Estructura del Servicio Exportador (export.service.js)}
+El servicio backend utiliza \texttt{pdfmake} y fuentes vectoriales empotradas para producir el documento:
+\begin{lstlisting}[language=JavaScript]
+// backend/src/services/export.service.js
+const PdfPrinter = require('pdfmake');
+
+const fonts = {
+  Roboto: {
+    normal: 'fonts/Roboto-Regular.ttf',
+    bold: 'fonts/Roboto-Medium.ttf',
+    italics: 'fonts/Roboto-Italic.ttf'
+  }
+};
+
+exports.generarPdfInforme = async (datosDocumento) => {
+  const docDefinition = {
+    pageSize: 'A4',
+    pageMargins: [40, 60, 40, 60],
+    header: (currentPage) => ({
+      text: 'FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL - UTA',
+      alignment: 'center',
+      fontSize: 8,
+      margin: [0, 20, 0, 0]
+    }),
+    footer: (currentPage, pageCount) => ({
+      text: `Página ${currentPage} de ${pageCount} - Formato UTA-SGC-A-2-1-P7-T2`,
+      alignment: 'center',
+      fontSize: 8
+    }),
+    content: [
+      { text: 'INFORME DE CUMPLIMIENTO DEL PLAN DE TRABAJO DOCENTE', style: 'header' },
+      { text: `Docente: ${datosDocumento.docente}`, style: 'subheader' },
+      { text: `Período Académico: ${datosDocumento.periodo}`, margin: [0, 0, 0, 10] },
+      // Renderizado dinámico de la matriz de 100% de ponderación
+      renderMatrizPdf(datosDocumento.actividades)
+    ]
+  };
+
+  const printer = new PdfPrinter(fonts);
+  return printer.createPdfKitDocument(docDefinition);
+};
+\end{lstlisting}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,keepaspectratio]{images/informe_page_1.png}
+    \caption{Primera Página del Formato Oficial UTA-SGC-A-2-1-P7-T2 Renderizado en PDF.}
+    \label{fig:informe_page_1_motor}
+\end{figure}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Requisitos / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 09/10/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 09/10/2026 \\
+    \hline
+    \textbf{Revisado por:} & Nixon Hurtado\newline Desarrollador Backend / DBA & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{[ FIRMADO ELECTRÓNICAMENTE ]}\vspace{8pt}} & 09/10/2026 \\
+    \hline
+    \textbf{Revisado por:} & Andrea Vásquez\newline Desarrolladora Frontend / QA & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{[ FIRMADO ELECTRÓNICAMENTE ]}\vspace{8pt}} & 09/10/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Desarrollo del motor de exportación oficial en PDF y Word con ajuste milimétrico a formatos SGC P7-T1 y P7-T2. & Steeven Toala / Andrea Vásquez & 09/10/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+
+\subsection*{Anexo 1: Comparativa de Fidelidad Visual entre Formato Original y Generado}
+\begin{table}[H]
+\centering
+\small
+\begin{tabularx}{\textwidth}{|l|l|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Elemento del Formato} & \textbf{Especificación SGC UTA} & \textbf{Cumplimiento en Motor SIGE} \\ \hline
+Encabezado Institucional & Logo UTA escudo y código documental & Idéntico (imagen vectorial en cabecera) \\ \hline
+Matriz de Actividades & Tabla con columnas fijas y total 100\% & Cumplido (cálculo aritmético exacto) \\ \hline
+Espacio de Firmas & Bloques para Elaborado, Revisado y Aprobado & Cumplido (compatible con firma digital FirmaEC) \\ \hline
+Paginación & Formato ``Página X de Y'' & Cumplido (cálculo dinámico en pie de página) \\ \hline
+\end{tabularx}
+\caption{Matriz de Verificación de Requisitos de Formato Oficial en el Motor Exportador.}
+\label{tab:cumplimiento_formato}
+\end{table}
+
+\end{document}
