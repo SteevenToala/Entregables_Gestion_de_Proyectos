@@ -17,9 +17,10 @@ def verify_all():
     total_pdf = 0
     all_passed = True
 
+    base_dir = "." if os.path.exists("Fase_1") else "Entregables_Latex"
     for phase, expected_count in phases.items():
-        tex_files = sorted(glob.glob(os.path.join("Entregables_Latex", phase, "*.tex")))
-        pdf_files = sorted(glob.glob(os.path.join("Entregables_Latex", phase, "*.pdf")))
+        tex_files = sorted(glob.glob(os.path.join(base_dir, phase, "*.tex")))
+        pdf_files = sorted(glob.glob(os.path.join(base_dir, phase, "*.pdf")))
         print(f"[{phase}]")
         print(f"  Archivos .tex encontrados: {len(tex_files)} (Esperados: {expected_count})")
         print(f"  Archivos .pdf generados:   {len(pdf_files)} (Esperados: {expected_count})")
