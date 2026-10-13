@@ -1,0 +1,247 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F1-007}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{GESTIÓN DEL TIEMPO / CRONOGRAMA MAESTRO EDT}
+\newcommand{\docElaboracion}{24/08/2026}
+\newcommand{\docRevision}{24/08/2026}
+\newcommand{\docTitulo}{PLANIFICACIÓN DEL PROYECTO Y CRONOGRAMA DE TRABAJO}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Planificación del Proyecto, Cronograma de Trabajo y EDT -- Código EDT: 1.7
+
+\section{Introducción}
+El aseguramiento del plazo de entrega en proyectos de software requiere una disciplina estricta de descomposición jerárquica del trabajo y secuenciación lógica de actividades. Tomando como base los lineamientos del Project Management Institute (PMI) y la metodología ágil Scrum, este informe formaliza la Estructura de Desglose del Trabajo (EDT / WBS) compuesta por 49 tareas estructuradas en 5 fases, y el Cronograma Maestro oficial configurado en Microsoft Project bajo el calendario laboral de la ciudad de Ambato, totalizando 57 días laborables y 456 horas netas de ingeniería.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Estructurar la planificación temporal y metodológica integral del proyecto SIGE mediante una Estructura de Desglose del Trabajo (EDT) de 49 tareas y el Cronograma Maestro en Microsoft Project, estableciendo la línea base del proyecto.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Descomponer el proyecto en 49 tareas organizadas en 5 fases secuenciales e iterativas.
+    \item Configurar el calendario laboral oficial de Ambato/Ecuador (lunes a viernes, 8 horas/día, excluyendo feriados nacionales).
+    \item Determinar el camino crítico (Critical Path), las holguras y la asignación del 100\% de recursos del equipo.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Planificación desde el 12 de agosto de 2026 hasta el 30 de octubre de 2026.
+    \item 5 fases: Análisis, Arquitectura, Desarrollo Core, Pruebas/QA y Cierre/Despliegue.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Mantenimientos evolutivos posteriores a la fecha de entrega-recepción del 30 de octubre de 2026.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{EDT (Estructura de Desglose del Trabajo):} Descomposición jerárquica orientada a entregables del trabajo que ejecutará el equipo del proyecto.
+    \item \textbf{Línea Base del Cronograma:} Versión aprobada del modelo de programación que solo puede modificarse mediante procedimientos formales de control de cambios.
+    \item \textbf{Ruta Crítica (CPM):} Secuencia de actividades que determina la duración total mínima del proyecto; no tiene holgura.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Steeven Toala (Responsable EDT 1.7):} Elaboración del cronograma en Microsoft Project, cálculo de holguras y gestión del tiempo.
+    \item \textbf{Equipo SIGE (HV, NH, AV):} Estimación de esfuerzo por paquete de trabajo y compromiso de entregas.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la línea base del cronograma.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Practice Standard for Work Breakdown Structures (PMI).}
+    \item \textbf{Ley Orgánica del Servicio Público (LOSEP) y Código de Trabajo de Ecuador:} Calendario de feriados nacionales obligatorios.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se utilizó Microsoft Project con calendario laboral de 40 horas semanales. En las Figuras \ref{fig:s1_07_gantt} y \ref{fig:s1_07_cronograma} se aprecian el diagrama general por fases y el cronograma detallado.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/gantt_fases_sige.png}
+    \caption{Diagrama Gantt de las 5 Fases del Proyecto SIGE.}
+    \label{fig:s1_07_gantt}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.5cm,keepaspectratio]{images/cronograma_detallado_sige.png}
+    \caption{Cronograma Maestro Detallado y Ruta Crítica del Proyecto SIGE.}
+    \label{fig:s1_07_cronograma}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Resumen de Fases y Distribución de Esfuerzo}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{4.2cm}|c|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Fase} & \textbf{Denominación de Fase} & \textbf{Fechas} & \textbf{Días} & \textbf{Horas} & \textbf{\% Esfuerzo} \\
+\hline
+\textbf{Fase 1} & Análisis y Planificación & 12 ago - 24 ago & 9 & 72 h & $15.8\%$ \\
+\hline
+\textbf{Fase 2} & Diseño y Arquitectura & 25 ago - 04 sep & 9 & 72 h & $15.8\%$ \\
+\hline
+\textbf{Fase 3} & Desarrollo Core & 07 sep - 08 oct & 24 & 192 h & $42.1\%$ \\
+\hline
+\textbf{Fase 4} & Pruebas y Control de Calidad & 12 oct - 23 oct & 10 & 80 h & $17.5\%$ \\
+\hline
+\textbf{Fase 5} & Despliegue y Cierre & 26 oct - 30 oct & 5 & 40 h & $8.8\%$ \\
+\hline
+\multicolumn{2}{|r|}{\textbf{TOTAL GENERAL:}} & \textbf{12 ago - 30 oct} & \textbf{57} & \textbf{456 h} & \textbf{100.0\%} \\
+\hline
+\end{tabularx}
+\caption{Distribución de Esfuerzo y Tiempos por Fase del Proyecto.}
+\label{tab:fases}
+\end{table}
+
+\subsection{Hitos Clave del Proyecto (Milestones)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Hito 1 (24 ago):} Aprobación de Fase 1 y Paquete Entregables Semana 1.
+    \item \textbf{Hito 2 (04 sep):} Aprobación de Arquitectura y Entregable General Semana 2.
+    \item \textbf{Hito 3 (22 sep):} Sprint 2 Review: Wizard y Persistencia Operativa.
+    \item \textbf{Hito 4 (30 sep):} Sprint 3 Review: Matriz Dinámica y Evidencias MinIO.
+    \item \textbf{Hito 5 (08 oct):} Sistema Core Completado (Code Freeze previo a feriado de 9 de octubre).
+    \item \textbf{Hito 6 (23 oct):} Aceptación de QA y Release Candidate v1.0-RC.
+    \item \textbf{Hito 7 (30 oct):} Cierre Formal del Proyecto y Sistema en Producción.
+\end{itemize}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 24/08/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 24/08/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 24/08/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Archivo Oficial \texttt{Cronograma\_SIGE\_Oficial.mpp} (Microsoft Project).
+\end{itemize}
+
+\end{document}

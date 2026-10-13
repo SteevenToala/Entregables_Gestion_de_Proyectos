@@ -1,0 +1,269 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F1-008}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{HITO DE CONTROL / APROBACIÓN DE FASE 1}
+\newcommand{\docElaboracion}{24/08/2026}
+\newcommand{\docRevision}{24/08/2026}
+\newcommand{\docTitulo}{HITO 1: APROBACIÓN DE FASE 1 Y ENTREGABLE GENERAL}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} HITO 1: Aprobación de Fase 1 y Entregable General Semana 1 -- Código EDT: 1.8
+
+\section{Introducción}
+El cierre formal de la Fase 1: Análisis y Planificación del proyecto SIGE representa la culminación exitosa de las actividades de diagnóstico, ingeniería de requerimientos, modelado de compuertas lógicas y formulación presupuestaria. El presente informe formaliza la revisión colegiada y aprobación del Hito 1 ante el docente asesor y evaluador Ing. Paulo Torres. Se consolida la trazabilidad de los 7 entregables predecesores (1.1 a 1.7) y se incorporan las herramientas analíticas de control de calidad institucional: Diagrama de Causa-Efecto de Ishikawa, Gráfica de Comportamiento (Run Chart) y Gráfica de Trabajo Completado (Burnup Chart), demostrando el cumplimiento estricto del 100\% de los objetivos de la primera semana de gestión.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Consolidar, evaluar y aprobar formalmente el paquete de entregables de la Fase 1: Análisis y Planificación (Hito 1), certificando la conformidad técnica y metodológica para el paso a la Fase 2 de Arquitectura y Diseño.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Verificar el cumplimiento y calidad técnica de los entregables EDT 1.1 al 1.7.
+    \item Documentar el análisis de causa-efecto mediante el Diagrama de Ishikawa de cuellos de botella SGC.
+    \item Evaluar el comportamiento estadístico de errores con el Run Chart y el ritmo de trabajo con el Burnup Chart.
+    \item Suscribir el acta formal de aprobación de Hito 1 por parte del docente evaluador.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Consolidado de los 8 entregables de Fase 1 ejecutados entre el 12 y el 24 de agosto de 2026.
+    \item Certificación de requisitos SRS IEEE 830 y línea base del cronograma.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Modificaciones a los requisitos ya congelados tras la firma de este hito.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Hito de Control (Milestone):} Evento significativo en el proyecto con duración de 0 días que marca la finalización de una fase o entrega crítica.
+    \item \textbf{Diagrama de Ishikawa (Causa-Efecto):} Herramienta visual para identificar y clasificar las causas raíz de un problema específico.
+    \item \textbf{Run Chart (Gráfica de Comportamiento):} Gráfico temporal para monitorear tendencias, medias y variabilidad de un proceso.
+    \item \textbf{Burnup Chart:} Gráfico que muestra el trabajo completado frente al alcance total a lo largo del tiempo.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Equipo de Proyecto SIGE (Responsables EDT 1.8):} Consolidación del informe, sustentación técnica y demostración de artefactos.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador / Patrocinador):} Revisión exhaustiva de conformidad, retroalimentación y suscripción formal de aprobación.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Guía PMBOK (7ma Edición):} Gestión de la Calidad del Proyecto y Cierre de Fase.
+    \item \textbf{Norma ISO 9001:2015 (Cláusula 9.1):} Seguimiento, medición, análisis y evaluación.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se realizó una sesión formal de revisión de calidad y sustentación técnica el 24 de agosto de 2026. En la Figura \ref{fig:s1_08_cons} se presenta el mapa consolidado de entregables de Fase 1.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth,height=5.2cm,keepaspectratio]{images/s1_07_consolidado_s1.png}
+    \caption{Mapa Consolidado de la Fase 1: Análisis y Planificación.}
+    \label{fig:s1_08_cons}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Matriz de Verificación y Conformidad de Entregables de Fase 1}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{4.0cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{EDT} & \textbf{Entregable Oficial} & \textbf{Artefacto Verificado} & \textbf{Horas} & \textbf{Estado} \\
+\hline
+1.1 & Diagnóstico As-Is & Mapeo As-Is y matriz de problemas P-01 a P-06 & 24 h & Aprobado \\
+\hline
+1.2 & Actores y Procesos & Matriz de Stakeholders y análisis de cuadrantes & 32 h & Aprobado \\
+\hline
+1.3 & Especificación SRS & 24 RFs y 10 RNFs bajo IEEE 830 e ISO 25010 & 40 h & Aprobado \\
+\hline
+1.4 & Alcance y Restricciones & Fronteras del sistema y objetivos SMART & 32 h & Aprobado \\
+\hline
+1.5 & Reglas y Validation Gates & Especificación formal de compuertas lógicas & 32 h & Aprobado \\
+\hline
+1.6 & Caso de Negocio y ROI & Presupuesto (\$630.30), ROI (+3,660\%) y Charter & 24 h & Aprobado \\
+\hline
+1.7 & Cronograma Maestro & EDT 49 tareas, MS Project (57 días, 456h) & 24 h & Aprobado \\
+\hline
+1.8 & Hito 1: Aprobación Fase 1 & Paquete Completo Aprobado y Análisis Calidad & 0 h & Aprobado \\
+\hline
+\multicolumn{3}{|r|}{\textbf{TOTAL HORAS INVERTIDAS EN FASE 1:}} & \textbf{208 h} & \textbf{100\%} \\
+\hline
+\end{tabularx}
+\caption{Matriz de Conformidad y Cierre de Entregables de Fase 1.}
+\label{tab:cierre_fase1}
+\end{table}
+
+\subsection{Herramientas Analíticas de Calidad SGC}
+Como parte de la rigurosidad analítica exigida para la aprobación de la Fase 1, se ejecutaron tres análisis formales de aseguramiento de la calidad:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Diagrama de Ishikawa (Análisis Causa-Efecto):} Se identificaron las causas raíz de la ineficiencia en la gestión documental SGC en 6 dimensiones: Métodos, Personas, Tecnología, Entorno, Medición y Materiales (ver Figura \ref{fig:ishikawa}).
+    \item \textbf{Gráfica de Comportamiento (Run Chart):} Monitoreo de la tasa de reprocesos por informe a lo largo de 10 ciclos académicos, evidenciando una media histórica inaceptable de 3.8 rondas de corrección por documento (ver Figura \ref{fig:runchart}).
+    \item \textbf{Gráfica de Trabajo Completado (Burnup Chart):} Registro del avance de horas y entregables planificados vs reales en la Fase 1, demostrando convergencia total al día 24 de agosto de 2026 (ver Figura \ref{fig:burnup}).
+\end{enumerate}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.5cm,keepaspectratio]{images/pdf_page_ishikawa.png}
+    \caption{Diagrama de Causa y Efecto (Ishikawa) de Ineficiencias en el Proceso Actual SGC.}
+    \label{fig:ishikawa}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth,height=5.2cm,keepaspectratio]{images/pdf_page_runchart.png}
+    \caption{Gráfica de Comportamiento (Run Chart) de Ciclos de Reproceso Históricos.}
+    \label{fig:runchart}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth,height=5.2cm,keepaspectratio]{images/pdf_page_burnup.png}
+    \caption{Gráfica de Trabajo Completado (Burnup Chart) de la Fase 1.}
+    \label{fig:burnup}
+\end{figure}
+
+\subsection{Acta de Declaración de Conformidad}
+El docente evaluador Ing. Paulo Torres, tras revisar el pliego de requerimientos y la línea base del proyecto, certifica la aprobación formal del Hito 1, autorizando el inicio inmediato de la Fase 2: Diseño y Arquitectura a partir del 25 de agosto de 2026.
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 24/08/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 24/08/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 24/08/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Acta de Aprobación de Hito 1 (Semana 1).
+\item \textbf{Anexo 2:} Informe de Conformidad Metodológica SGC.
+\end{itemize}
+
+\end{document}

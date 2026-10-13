@@ -1,0 +1,225 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F2-003}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DISEÑO DE SOFTWARE / COMPORTAMIENTO DINÁMICO}
+\newcommand{\docElaboracion}{02/09/2026}
+\newcommand{\docRevision}{02/09/2026}
+\newcommand{\docTitulo}{DIAGRAMAS DE SECUENCIA, ACTIVIDADES Y CLASES DE DOMINIO}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Diagramas de Secuencia, Actividades y Clases de Dominio -- Código EDT: 2.3
+
+\section{Introducción}
+El comportamiento dinámico y la estructura estática de las entidades de software requieren una especificación formal y no ambigua que oriente a los desarrolladores durante la construcción. El presente entregable documenta tres perspectivas esenciales del modelado UML: la secuencia temporal de intercambio de mensajes en la Cascada de Firmas, el flujo de control y toma de decisiones en el ciclo de vida del informe mediante Diagramas de Actividades, y la estructura de clases del dominio SGC que sustentará los modelos de datos y objetos de negocio.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Especificar formalmente el comportamiento dinámico y las estructuras de clases del sistema SIGE mediante diagramas UML de secuencia, actividades y clases de dominio.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Modelar la interacción temporal y validaciones en la Cascada de Firmas multinivel (Secuencia).
+    \item Representar el ciclo de vida completo de elaboración, revisión y aprobación del informe (Actividades).
+    \item Diseñar el diagrama de clases de dominio con relaciones de agregación, composición y multiplicidades.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Secuencia de firmas con validación criptográfica y bloqueo de edición.
+    \item Máquina de estados documental: Borrador $\to$ En Revisión $\to$ Observado $\to$ Firmado $\to$ Legalizado.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Interfaces de usuario finales y controladores frontend.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Diagrama de Secuencia:} Diagrama que muestra las interacciones entre objetos ordenadas en secuencia temporal.
+    \item \textbf{Diagrama de Actividades:} Diagrama que describe el flujo de control procedimental entre actividades concurrentes y secuenciales.
+    \item \textbf{Clase de Dominio:} Representación de un concepto del negocio institucional con atributos y responsabilidades.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Steeven Toala / Heidi Villavicencio (Responsables EDT 2.3):} Modelado de diagramas de secuencia, actividades y clases UML.
+    \item \textbf{Nixon Hurtado (DBA):} Revisión de correspondencia entre clases de dominio y el modelo de datos.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación técnica de los modelos dinámicos.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{OMG UML 2.5 Specification (Behavioral \& Structural Diagrams).}
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se utilizó Enterprise Architect y Mermaid. En las Figuras \ref{fig:s2_03_sec}, \ref{fig:s2_03_act} y \ref{fig:s2_03_cla} se aprecian los tres diagramas formalizados.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s2_03_secuencia_validation.png}
+    \caption{Diagrama de Secuencia: Validación y Flujo de Firmas en Cascada.}
+    \label{fig:s2_03_sec}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth,height=5.2cm,keepaspectratio]{images/s2_03_actividades_ciclo.png}
+    \caption{Diagrama de Actividades: Ciclo de Vida del Informe Institucional SGC.}
+    \label{fig:s2_03_act}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s2_03_clases_uml.png}
+    \caption{Diagrama de Clases de Dominio del Sistema SIGE.}
+    \label{fig:s2_03_cla}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Especificación del Circuito de Firmas en Cascada}
+El diagrama de secuencia estipula el siguiente intercambio ordenado:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item El Docente invoca \texttt{POST /firmar} con su certificado digital.
+    \item El \texttt{ValidationGateService} verifica que $\sum P_i = 100\%$ y que todas las actividades posean evidencias en MinIO.
+    \item Si es válido, se estampa la Firma 1 (Elaborador), se calcula el hash SHA-256 inmutable y el documento se bloquea para edición.
+    \item El Coordinador de Área revisa y estampa la Firma 2 (Revisor).
+    \item El Coordinador de Carrera verifica y estampa la Firma 3 (Aprobador), legalizando el documento para Consejo Directivo.
+\end{enumerate}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 02/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 02/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 02/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Diccionario de Mensajes y Parámetros del Flujo de Secuencia.
+\end{itemize}
+
+\end{document}

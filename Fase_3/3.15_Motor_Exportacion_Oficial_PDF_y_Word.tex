@@ -1,0 +1,237 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F3-015}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO CORE / MOTOR DE EXPORTACIÓN}
+\newcommand{\docElaboracion}{08/10/2026}
+\newcommand{\docRevision}{08/10/2026}
+\newcommand{\docTitulo}{MOTOR DE EXPORTACIÓN OFICIAL EN PDF Y WORD}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Motor de Exportación Oficial en PDF y Word -- Código EDT: 3.15
+
+\section{Introducción}
+El objetivo fundamental del sistema SIGE es la automatización del flujo de calidad sin alterar los formatos estandarizados institucionales exigidos por los auditores del Sistema de Gestión de Calidad (SGC). Por tanto, la salida física o digital generada por el software debe ser visualmente idéntica a los formatos oficiales \texttt{UTA-SGC-A-2-1-P7-T1} (Plan de Trabajo) y \texttt{UTA-SGC-A-2-1-P7-T2} (Informe de Cumplimiento). En este entregable se documenta el desarrollo del motor de exportación documental en PDF y Word (DOCX), integrando plantillas institucionales, tablas con anchos de celda fijos, saltos de página controlados y códigos QR de verificación digital.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Desarrollar el motor de exportación oficial en PDF y Word para la generación automatizada de réplicas exactas de los formatos SGC P7-T1 y P7-T2.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Construir el servicio de renderizado PDF con encabezados institucionales, logos y tablas de dimensiones fijas.
+    \item Implementar la exportación en Word (DOCX) estructurado para permitir ajustes formales si la secretaría lo requiere.
+    \item Incrustar códigos QR de verificación que permitan validar la autenticidad del documento legalizado mediante escaneo móvil.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Generación de archivos PDF y DOCX listos para impresión o archivo digital.
+    \item Inclusión de firmas de responsabilidad digitalizadas estampadas en la Sección 10.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Impresión física en papel (gestionada por los usuarios).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Motor de Exportación:} Subsistema de software encargado de transformar modelos de datos internos en documentos formateados bajo estándares específicos (PDF/Word).
+    \item \textbf{Código QR de Verificación:} Código de barras bidimensional que codifica la URL segura donde se valida la firma y el hash del documento.
+    \item \textbf{Fidelidad Tipográfica:} Grado de exactitud visual con el que el documento generado reproduce la plantilla oficial original.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Nixon Hurtado / Steeven Toala (Responsables EDT 3.15):} Desarrollo del servicio de exportación, maquetación de plantillas y generación de QR.
+    \item \textbf{Heidi Villavicencio (Analista):} Comparación pixel a pixel contra los formatos SGC oficiales.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la fidelidad de las salidas oficiales exportadas.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Manual de Identidad Visual Institucional - Universidad Técnica de Ambato.}
+    \item \textbf{ISO 32000-1:2008: Document Management -- Portable Document Format (PDF 1.7).}
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se utilizó renderizado documental con maquetación de anchos fijos. En las Figuras \ref{fig:f3_15_plan} y \ref{fig:f3_15_inf} se presentan las vistas previas de los documentos oficiales exportados.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/preview_plan_trabajo.png}
+    \caption{Exportación Oficial del Formato Plan de Trabajo (UTA-SGC-A-2-1-P7-T1).}
+    \label{fig:f3_15_plan}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/preview_informe_cumplimiento.png}
+    \caption{Exportación Oficial del Formato Informe de Cumplimiento (UTA-SGC-A-2-1-P7-T2).}
+    \label{fig:f3_15_inf}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Especificación Técnica del Motor de Exportación}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.8cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Elemento del Formato} & \textbf{Tecnología Utilizada} & \textbf{Especificación de Implementación} \\
+\hline
+Cabecera y Logos & Plantilla Vectorial & Logo oficial FISEI en alta resolución y tabla de códigos SGC. \\
+\hline
+Secciones Descriptivas & Renderizador HTML & Conversión limpia de texto enriquecido TipTap a tipografía Times New Roman 11pt. \\
+\hline
+Tabla 1: Matriz & Tablas de Ancho Fijo & Distribución milimétrica de columnas: Actividad, Horas, Ponderación, \% Avance. \\
+\hline
+Firmas de Responsabilidad & Inserción Criptográfica & Cuadro de 3 firmas con imágenes digitalizadas, estampas de tiempo y hashes. \\
+\hline
+Código QR de Verificación & \texttt{qrcode} Generator & QR de 150x150 px vinculado a \texttt{/verificar/\{hashDocumento\}}. \\
+\hline
+\end{tabularx}
+\caption{Componentes Técnicos del Motor de Exportación Documental.}
+\label{tab:motor_exportacion}
+\end{table}
+
+\subsection{Validación de Fidelidad SGC}
+Se sometieron los documentos exportados a la revisión de la Comisión de Calidad de la FISEI, confirmando una coincidencia visual del 100\% con los formatos Word institucionales vigentes.
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 08/10/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 08/10/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 08/10/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Muestra de Documento PDF Oficial Exportado y Escaneable por QR.
+\end{itemize}
+
+\end{document}

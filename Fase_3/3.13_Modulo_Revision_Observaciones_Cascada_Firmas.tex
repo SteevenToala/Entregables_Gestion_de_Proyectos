@@ -1,0 +1,233 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F3-013}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO CORE / REVISIÓN Y FIRMAS}
+\newcommand{\docElaboracion}{07/10/2026}
+\newcommand{\docRevision}{07/10/2026}
+\newcommand{\docTitulo}{MÓDULO DE REVISIÓN Y CASCADA DE FIRMAS}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Módulo de Revisión, Observaciones y Cascada de Firmas -- Código EDT: 3.13
+
+\section{Introducción}
+La evaluación colegiada y la legalización de los planes de trabajo e informes constituyen el eje institucional de la rendición de cuentas en la FISEI. Para sustituir las cadenas informales de correo electrónico y las observaciones verbales, se desarrolló el Módulo de Revisión para Coordinadores de Área y Carrera, junto con el servicio de Cascada de Firmas Digitales multinivel. Este módulo permite registrar observaciones granulares a nivel de sección o actividad específica, impidiendo la legalización hasta que todas sean solventadas, y formaliza el circuito secuencial de firmas: Elaborador, Revisor y Aprobador.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Implementar el módulo de revisión colegiada, gestión de observaciones granulares y el circuito de firmas digitales en cascada para la legalización formal de los documentos SGC.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Construir el Panel de Comité para Coordinadores con bandeja de documentos 'En Revisión'.
+    \item Implementar el sistema de observaciones granulares por sección con estados 'Abierta' y 'Resuelta'.
+    \item Diseñar el circuito de 3 firmas secuenciales con sellado de hash SHA-256 e inmutabilidad total.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Vistas de revisión, componentes de marcación de observaciones y diálogo de firma con certificado digital.
+    \item Bloqueo absoluto de edición del documento tras el estampado de la firma del Elaborador.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Integración con tokens criptográficos físicos USB no estándares (se emplean certificados PKCS\#12 estándar).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Cascada de Firmas:} Proceso formal donde el documento avanza secuencialmente a través de 3 niveles jerárquicos: Elaborador $\to$ Revisor $\to$ Aprobador.
+    \item \textbf{Observación Granular:} Anotación formal vinculada a un elemento específico (sección o fila de actividad) que detalla una no conformidad que debe ser corregida.
+    \item \textbf{Sellado Criptográfico:} Operación matemática que calcula el hash inmutable del documento al firmar, garantizando que no sufra alteraciones posteriores.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Andrea Vásquez / Nixon Hurtado (Responsables EDT 3.13):} Desarrollo del panel de revisión, motor de observaciones y endpoints de firma.
+    \item \textbf{Steeven Toala (Líder Técnico):} Verificación del circuito de inmutabilidad y firmas.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del módulo de revisión y firmas.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Ley de Comercio Electrónico, Firmas Electrónicas y Mensajes de Datos de Ecuador.}
+    \item \textbf{Manual de Procedimientos de Evaluación Docente SGC - FISEI UTA.}
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se utilizó un circuito de estados irreversible. En las Figuras \ref{fig:f3_13_rev} y \ref{fig:f3_13_firmas} se ilustran el flujo de revisión de comité y la cascada de firmas.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_11_flujo_revision_comite.png}
+    \caption{Flujo Operativo del Panel de Comité y Ciclo de Observaciones.}
+    \label{fig:f3_13_rev}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s4_03_cascada_firmas.png}
+    \caption{Circuito Secuencial de Cascada de Firmas Digitales Institucionales.}
+    \label{fig:f3_13_firmas}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Especificación de los 3 Niveles de la Cascada de Firmas}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{2.5cm}|m{2.8cm}|X|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Nivel} & \textbf{Acción} & \textbf{Actor Obligatorio} & \textbf{Precondiciones Requeridas} & \textbf{Efecto en el Documento} \\
+\hline
+Nivel 1 & Elaborado por & Docente Elaborador & Sumatoria 100\%, evidencias en MinIO y secciones completas. & El documento se congela para edición y pasa a 'EN\_REVISION'. \\
+\hline
+Nivel 2 & Revisado por & Coordinador de Área & Nivel 1 firmado válido y cero observaciones pendientes. & Se legaliza la pertinencia técnica y pasa a Coordinación de Carrera. \\
+\hline
+Nivel 3 & Aprobado por & Coordinador de Carrera & Nivel 2 firmado válido y verificación curricular. & El documento pasa a estado 'LEGALIZADO' para Consejo Directivo. \\
+\hline
+\end{tabularx}
+\caption{Circuito de Tres Firmas de Responsabilidad Institucional.}
+\label{tab:cascada_firmas}
+\end{table}
+
+\subsection{Inmutabilidad y Sello Digital}
+Al ejecutarse cada nivel de firma, el sistema almacena en la tabla \texttt{firmas\_documento}: UUID del firmante, cargo institucional, estampa de tiempo sincronizada con el servidor (NTP), dirección IP y el hash SHA-256 del documento al momento de la firma.
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 07/10/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 07/10/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 07/10/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Prueba de Rechazo de Firma por Intento de Salto de Nivel.
+\end{itemize}
+
+\end{document}

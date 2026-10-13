@@ -1,0 +1,580 @@
+[
+  {
+    "code": "1.1",
+    "phase": "fase1",
+    "folder": "Fase_1",
+    "title": "Levantamiento de información del proceso actual",
+    "filename": "1.1_Levantamiento_de_informacion_del_proceso_actual.tex",
+    "dates": "12 ago - 14 ago",
+    "hours": 24,
+    "assigneeName": "Nixon Hurtado / Steeven Toala",
+    "deliverable": "01_Levantamiento_Informacion_Proceso_Actual.md (Mapeo As-Is)",
+    "desc": "Diagnóstico exhaustivo del flujo actual de elaboración de planes de trabajo e informes institucionales del Sistema de Gestión de Calidad (SGC). Mapeo de formatos UTA-SGC-A-2-1-P7-T1 y T2.",
+    "subtasks": [
+      "Mapeo de pasos manuales en Word y Excel de planes de trabajo",
+      "Identificación de inconsistencias en versiones y pérdidas de firmas",
+      "Entrevistas con docentes elaboradores y coordinadores de área"
+    ]
+  },
+  {
+    "code": "1.2",
+    "phase": "fase1",
+    "folder": "Fase_1",
+    "title": "Identificación de actores y procesos",
+    "filename": "1.2_Identificacion_de_actores_y_procesos.tex",
+    "dates": "13 ago - 18 ago",
+    "hours": 32,
+    "assigneeName": "Heidy Villavicencio (Analista)",
+    "deliverable": "02_Identificacion_Actores_Procesos.md (Matriz de Stakeholders)",
+    "desc": "Mapeo riguroso de interesados, niveles de poder e interés, roles institucionales (Docente Elaborador, Coordinador de Área, Coordinador de Carrera, Subdecano y Administrador SGC).",
+    "subtasks": [
+      "Matriz de poder vs impacto de cada rol",
+      "Definición de expectativas y requerimientos de información",
+      "Formalización de la cascada de 3 firmas de responsabilidad"
+    ]
+  },
+  {
+    "code": "1.3",
+    "phase": "fase1",
+    "folder": "Fase_1",
+    "title": "Definición de requisitos funcionales y no funcionales",
+    "filename": "1.3_Definicion_de_requisitos_funcionales_y_no_funcionales.tex",
+    "dates": "17 ago - 21 ago",
+    "hours": 40,
+    "assigneeName": "Heidy Villavicencio / Andrea Vasquez",
+    "deliverable": "03_Definicion_Requisitos_Funcionales_No_Funcionales.md (SRS)",
+    "desc": "Especificación formal de lunes a viernes bajo estándar IEEE 830 con 24 requisitos funcionales (RF-01 a RF-24) y 10 no funcionales (RNF-01 a RNF-10).",
+    "subtasks": [
+      "Redacción de 24 Requerimientos Funcionales clasificados",
+      "Especificación de Requerimientos No Funcionales (ISO 25010)",
+      "Matriz de trazabilidad inicial de requisitos"
+    ]
+  },
+  {
+    "code": "1.4",
+    "phase": "fase1",
+    "folder": "Fase_1",
+    "title": "Definición del alcance, restricciones y objetivos SGC",
+    "filename": "1.4_Definicion_del_alcance_restricciones_y_objetivos_SGC.tex",
+    "dates": "18 ago - 21 ago",
+    "hours": 32,
+    "assigneeName": "Steeven Toala / Heidy Villavicencio",
+    "deliverable": "04_Definicion_Alcance_Restricciones_Objetivos.md",
+    "desc": "Delimitación del alcance incluido y exclusiones del sistema, objetivos SMART del proyecto, hitos de control de calidad institucional y cumplimiento del SGC UTA.",
+    "subtasks": [
+      "Definición de fronteras del sistema e integraciones SI UTA",
+      "Establecimiento de límites, supuestos y restricciones técnicas",
+      "Objetivo general y objetivos específicos del software SIGE"
+    ]
+  },
+  {
+    "code": "1.5",
+    "phase": "fase1",
+    "folder": "Fase_1",
+    "title": "Reglas de negocio y Validation Gates lógicas",
+    "filename": "1.5_Reglas_de_negocio_y_Validation_Gates_logicas.tex",
+    "dates": "19 ago - 24 ago",
+    "hours": 32,
+    "assigneeName": "Steeven Toala / Nixon Hurtado",
+    "deliverable": "05_Reglas_Negocio_Validation_Gates.md",
+    "desc": "Formalización matemática de los Validation Gates: bloqueo de avance si evidencia < 100% sin justificación, cálculo de ponderaciones de actividades y bloqueo extemporáneo.",
+    "subtasks": [
+      "Fórmula matemática de porcentaje de avance consolidado",
+      "Regla de bloqueo por evidencias no subidas a MinIO",
+      "Especificación del circuito de firmas obligatorias"
+    ]
+  },
+  {
+    "code": "1.6",
+    "phase": "fase1",
+    "folder": "Fase_1",
+    "title": "Elaboración de Caso de Negocio, ROI y Project Charter",
+    "filename": "1.6_Elaboracion_de_Caso_de_Negocio_ROI_y_Project_Charter.tex",
+    "dates": "20 ago - 24 ago",
+    "hours": 24,
+    "assigneeName": "ST, HV, NH, AV (Equipo Completo)",
+    "deliverable": "06_Caso_de_Negocio.md & Project Charter Oficial",
+    "desc": "Evaluación financiera y técnica: Presupuesto total ($630.30), Ahorro anual estimado ($23,700), Retorno de Inversión ROI (+3,660%), VAN ($84,212) y período de recuperación de 1.8 meses.",
+    "subtasks": [
+      "Cálculo de costos directos de equipo y licencias Open Source",
+      "Análisis de ahorro de horas-docente por automatización",
+      "Redacción del Acta de Constitución del Proyecto (Charter)"
+    ]
+  },
+  {
+    "code": "1.7",
+    "phase": "fase1",
+    "folder": "Fase_1",
+    "title": "Planificación del proyecto y cronograma de trabajo",
+    "filename": "1.7_Planificacion_del_proyecto_y_cronograma_de_trabajo.tex",
+    "dates": "20 ago - 24 ago",
+    "hours": 24,
+    "assigneeName": "Steeven Toala (Líder / Arquitecto)",
+    "deliverable": "07_Planificacion_Proyecto_Cronograma_EDT.md & Cronograma MS Project",
+    "desc": "Estructuración formal del plan de gestión del proyecto, descomposición EDT de 49 tareas, cronograma maestro en Microsoft Project con calendario laboral de Ambato (57 días laborables, 456 horas), dependencias y asignación de recursos.",
+    "subtasks": [
+      "Elaboración de la Estructura de Desglose del Trabajo (EDT) de 49 tareas",
+      "Configuración del cronograma maestro en Microsoft Project con calendario de Ecuador",
+      "Asignación de recursos del equipo y estimación de esfuerzo en horas"
+    ]
+  },
+  {
+    "code": "1.8",
+    "phase": "fase1",
+    "folder": "Fase_1",
+    "title": "HITO 1: Aprobación de Fase 1 y Entregable General Semana 1",
+    "filename": "1.8_HITO_1_Aprobacion_de_Fase_1_y_Entregable_General_Semana_1.tex",
+    "dates": "24 ago",
+    "hours": 0,
+    "assigneeName": "Equipo SIGE / Ing. Paulo Torres",
+    "deliverable": "08_Entregable_General_Semana_1.md (Paquete Completo Aprobado)",
+    "desc": "Hito formal de revisión y aprobación de la Fase 1 por el docente asesor Ing. Paulo Torres el lunes 24 de agosto de 2026.",
+    "subtasks": [
+      "Consolidación del informe semanal 1 en LaTeX",
+      "Validación de conformidad de requerimientos",
+      "Firma de aprobación de avance de Fase 1"
+    ]
+  },
+  {
+    "code": "2.1",
+    "phase": "fase2",
+    "folder": "Fase_2",
+    "title": "Diagramas general y detallado de casos de uso",
+    "filename": "2.1_Diagramas_general_y_detallado_de_casos_de_uso.tex",
+    "dates": "25 ago - 27 ago",
+    "hours": 24,
+    "assigneeName": "Heidy Villavicencio (Analista / UI-UX)",
+    "deliverable": "01_Diagrama_General_Detallado_Casos_de_Uso.md",
+    "desc": "Modelado UML de todas las interacciones de los actores institucionales: Elaborar Plan, Validar Matriz, Cargar Evidencia, Revisar en Comité, Firmar Digitalmente y Generar Informe.",
+    "subtasks": [
+      "Diagrama de Casos de Uso General del Sistema SIGE",
+      "Especificación textual de escenarios primarios y alternos",
+      "Modelado de casos de uso de gestión extemporánea"
+    ]
+  },
+  {
+    "code": "2.2",
+    "phase": "fase2",
+    "folder": "Fase_2",
+    "title": "Diseño de arquitectura de la solución",
+    "filename": "2.2_Diseno_de_arquitectura_de_la_solucion.tex",
+    "dates": "25 ago - 28 ago",
+    "hours": 32,
+    "assigneeName": "Steeven Toala (Líder / Arquitecto)",
+    "deliverable": "02_Diseno_Arquitectura_Solucion.md (SAD & C4 Model)",
+    "desc": "Definición de capas Domain, Application, Infrastructure y WebAPI. Patrones Mediator, Repository y CQRS. Integración desacoplada para MinIO y LanguageTool.",
+    "subtasks": [
+      "Definir capas, controladores, middlewares y rutas en Express v5",
+      "Elaborar diagramas C4 (Contexto, Contenedores, Componentes)",
+      "Estrategia de inmutabilidad y firmas digitales"
+    ]
+  },
+  {
+    "code": "2.3",
+    "phase": "fase2",
+    "folder": "Fase_2",
+    "title": "Diagramas de secuencia, actividades y clases de dominio",
+    "filename": "2.3_Diagramas_de_secuencia_actividades_y_clases_de_dominio.tex",
+    "dates": "27 ago - 02 sep",
+    "hours": 40,
+    "assigneeName": "Steeven Toala / Heidy Villavicencio",
+    "deliverable": "03_Diagramas_Secuencia_Actividades_Clases.md",
+    "desc": "Jueves 27 y Viernes 28 de agosto, pausa sábado 29 y domingo 30, continúa Lunes 31 de agosto al Miércoles 02 de septiembre (5 días hábiles netos).",
+    "subtasks": [
+      "Diagrama de secuencia del flujo de firmas multinivel",
+      "Diagrama de actividades del ciclo de vida del informe",
+      "Diagrama de clases de entidades del SGC"
+    ]
+  },
+  {
+    "code": "2.4",
+    "phase": "fase2",
+    "folder": "Fase_2",
+    "title": "Diseño de base de datos relacional",
+    "filename": "2.4_Diseno_de_base_de_datos_relacional.tex",
+    "dates": "28 ago - 03 sep",
+    "hours": 40,
+    "assigneeName": "Nixon Hurtado / Steeven Toala",
+    "deliverable": "04_Diseno_Base_de_Datos_ER_Logico.md & schema.sql",
+    "desc": "Estructuración de las 13 tablas relacionales con índices, constraints y DDL oficial.",
+    "subtasks": [
+      "Diagrama Entidad-Relación en Notación Crow's Foot",
+      "Diccionario de datos completo con tipos y constraints",
+      "Generación de scripts DDL PostgreSQL 18 (schema.sql, seed.sql, init.js)"
+    ]
+  },
+  {
+    "code": "2.5",
+    "phase": "fase2",
+    "folder": "Fase_2",
+    "title": "Diseño de interfaces y experiencia de usuario",
+    "filename": "2.5_Diseno_de_interfaces_y_experiencia_de_usuario.tex",
+    "dates": "28 ago - 03 sep",
+    "hours": 40,
+    "assigneeName": "Heidy Villavicencio / Andrea Vasquez",
+    "deliverable": "05_Diseno_Interfaces_Wireframes_UX.md & Prototipo Figma",
+    "desc": "Diseño de alta fidelidad: Wizard paso a paso para el elaborador, tabla dinámica de actividades y visor de observaciones.",
+    "subtasks": [
+      "Wireframes de Wizard modular de secciones",
+      "Diseño de componentes de tabla de actividades responsive",
+      "Flujo interactivo de comité y cambio de estados"
+    ]
+  },
+  {
+    "code": "2.6",
+    "phase": "fase2",
+    "folder": "Fase_2",
+    "title": "Arquitectura de microservicios y Docker Compose local",
+    "filename": "2.6_Arquitectura_de_microservicios_y_Docker_Compose_local.tex",
+    "dates": "01 sep - 04 sep",
+    "hours": 32,
+    "assigneeName": "Steeven Toala / Nixon Hurtado",
+    "deliverable": "06_Arquitectura_Contenedores_Docker_Locales.md & docker-compose.yml",
+    "desc": "Orquestación con Docker Compose de PostgreSQL 18 con volúmenes persistentes, MinIO Object Storage y servicio LanguageTool local.",
+    "subtasks": [
+      "Crear docker-compose.yml con redes aisladas",
+      "Configurar bucket privado 'sige-evidencias' en MinIO",
+      "Verificar arranque saludable (Health Checks) de servicios"
+    ]
+  },
+  {
+    "code": "2.7",
+    "phase": "fase2",
+    "folder": "Fase_2",
+    "title": "HITO 2: Aprobación de Arquitectura y Entregable General Semana 2",
+    "filename": "2.7_HITO_2_Aprobacion_de_Arquitectura_y_Entregable_General_Semana_2.tex",
+    "dates": "04 sep",
+    "hours": 0,
+    "assigneeName": "Equipo SIGE / Ing. Paulo Torres",
+    "deliverable": "07_Entregable_General_Semana_2.md (Paquete Arquitectura Aprobado)",
+    "desc": "Hito formal de aprobación de diseño y arquitectura técnica el viernes 04 de septiembre de 2026.",
+    "subtasks": [
+      "Consolidación del informe técnico semanal 2 en LaTeX",
+      "Demostración del prototipo interactivo Figma",
+      "Revisión y firma de inicio de desarrollo Core"
+    ]
+  },
+  {
+    "code": "3.1",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Implementación de tablas, índices y scripts DDL PostgreSQL 18",
+    "filename": "3.1_Implementacion_de_tablas_indices_y_scripts_DDL_PostgreSQL_18.tex",
+    "dates": "07 sep - 10 sep",
+    "hours": 32,
+    "assigneeName": "Nixon Hurtado (Backend / DBA)",
+    "deliverable": "Esquema DDL inicial y scripts de inicialización en PostgreSQL 18 (schema.sql, init.js)",
+    "desc": "Definición de tablas, índices relacionales y pool de conexiones pg en PostgreSQL 18 con restricciones de integridad.",
+    "subtasks": [
+      "Mapeo de DbContext con 13 entidades del dominio",
+      "Ejecución de Add-Migration e índices de optimización",
+      "Prueba de integridad referencial en PostgreSQL"
+    ]
+  },
+  {
+    "code": "3.2",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Datos iniciales y catálogos institucionales",
+    "filename": "3.2_Datos_iniciales_y_catalogos_institucionales.tex",
+    "dates": "10 sep - 14 sep",
+    "hours": 24,
+    "assigneeName": "Nixon Hurtado (Backend / DBA)",
+    "deliverable": "DbInitializer con usuarios y catálogos institucionales",
+    "desc": "Inyección de carreras FISEI, roles institucionales, catálogo de actividades típicas y usuario administrador inicial.",
+    "subtasks": [
+      "Poblado de carreras y unidades académicas FISEI",
+      "Inserción de roles y permisos del SGC",
+      "Carga de catálogo estándar de actividades de docencia y APE"
+    ]
+  },
+  {
+    "code": "3.3",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Autenticación y autorización de usuarios",
+    "filename": "3.3_Autenticacion_y_autorizacion_de_usuarios.tex",
+    "dates": "09 sep - 14 sep",
+    "hours": 32,
+    "assigneeName": "Nixon Hurtado / Steeven Toala",
+    "deliverable": "Auth Endpoints con JWT y decoradores [Authorize(Roles=...)]",
+    "desc": "Servicio de emisión de tokens JWT firmados con HMAC-SHA256, Refresh Tokens, caducidad y políticas de acceso por rol.",
+    "subtasks": [
+      "Controlador AuthController (Login, Refresh, Me)",
+      "Middleware de manejo global de excepciones y claims",
+      "Políticas de autorización por rol institucional"
+    ]
+  },
+  {
+    "code": "3.4",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Cliente base y diseño de layouts",
+    "filename": "3.4_Cliente_base_y_diseno_de_layouts.tex",
+    "dates": "08 sep - 14 sep",
+    "hours": 40,
+    "assigneeName": "Andrea Vasquez (Frontend / QA)",
+    "deliverable": "SPA SIGE Frontend (React + Vite) funcional con navegación y rutas",
+    "desc": "Inicialización de Vite, Tailwind CSS, sistema de tokens de color UTA, componentes de navegación y consumo de API con Axios.",
+    "subtasks": [
+      "Configuración de TypeScript, ESLint y Tailwind CSS",
+      "Rutas protegidas con React Router DOM",
+      "Componentes de Header, Sidebar y Login institucional"
+    ]
+  },
+  {
+    "code": "3.5",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Layout del Wizard modular en pestañas",
+    "filename": "3.5_Layout_del_Wizard_modular_en_pestanas.tex",
+    "dates": "15 sep - 18 sep",
+    "hours": 32,
+    "assigneeName": "Andrea Vasquez (Frontend / QA)",
+    "deliverable": "PlanEditorWizard.tsx modular con navegación por pasos",
+    "desc": "Componente asistente paso a paso: Datos Informativos, Justificación, Matriz, Anexos y Cascada de Firmas.",
+    "subtasks": [
+      "Estructura de pestañas con estado local en React",
+      "Validación de avance entre pasos obligatorios",
+      "Indicador de completitud porcentual del documento"
+    ]
+  },
+  {
+    "code": "3.6",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Integración del Editor TipTap con autoguardado debounce",
+    "filename": "3.6_Integracion_del_Editor_TipTap_con_autoguardado_debounce.tex",
+    "dates": "17 sep - 22 sep",
+    "hours": 32,
+    "assigneeName": "Andrea Vasquez (Frontend / QA)",
+    "deliverable": "RichTextEditor con autoguardado y formato HTML limpio",
+    "desc": "Editor de texto enriquecido con extensiones de formato y guardado asíncrono con debounce de 1.5s.",
+    "subtasks": [
+      "Configurar TipTap con extensiones requeridas",
+      "Implementar hook useDebounce para autoguardado",
+      "Manejo de estado 'Guardando...' y 'Guardado' en tiempo real"
+    ]
+  },
+  {
+    "code": "3.7",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Endpoints de persistencia de secciones y documentos",
+    "filename": "3.7_Endpoints_de_persistencia_de_secciones_y_documentos.tex",
+    "dates": "15 sep - 22 sep",
+    "hours": 48,
+    "assigneeName": "Nixon Hurtado (Backend / DBA)",
+    "deliverable": "Controladores RESTful Express v5 (documentos.controller.js y secciones.controller.js)",
+    "desc": "Controladores RESTful en Node.js + Express (v5) para CRUD de planes e informes, versionamiento y guardado atómico con transacciones PostgreSQL.",
+    "subtasks": [
+      "POST /api/documentos (Creación de borrador)",
+      "PUT /api/documentos/{id}/secciones (Persistencia de contenido)",
+      "GET /api/documentos/mis-documentos con filtros"
+    ]
+  },
+  {
+    "code": "3.8",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "HITO 3: Sprint 2 Review: Wizard y Persistencia Operativa",
+    "filename": "3.8_HITO_3_Sprint_2_Review_Wizard_y_Persistencia_Operativa.tex",
+    "dates": "22 sep",
+    "hours": 0,
+    "assigneeName": "Equipo SIGE / Ing. Paulo Torres",
+    "deliverable": "Demostración funcional de Wizard con autoguardado en DB",
+    "desc": "Hito de cierre de Sprint 2 el martes 22 de septiembre de 2026.",
+    "subtasks": [
+      "Demostración de autoguardado sin recargar página",
+      "Verificación de datos en base de datos PostgreSQL",
+      "Aprobación de Sprint 2 por el equipo"
+    ]
+  },
+  {
+    "code": "3.9",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Desarrollo de la Matriz Dinámica de Actividades",
+    "filename": "3.9_Desarrollo_de_la_Matriz_Dinamica_de_Actividades.tex",
+    "dates": "23 sep - 29 sep",
+    "hours": 40,
+    "assigneeName": "Andrea Vasquez (Frontend / QA)",
+    "deliverable": "Componente MatrizActividadesTable.tsx interactivo",
+    "desc": "Tabla interactiva que reproduce la Tabla 1 del formato SGC con cálculo automático de avance.",
+    "subtasks": [
+      "Agregar, editar y eliminar actividades dinámicamente",
+      "Suma automática de ponderaciones para validar 100%",
+      "Cálculo ponderado del avance global del documento"
+    ]
+  },
+  {
+    "code": "3.10",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Reglas de negocio y Validation Gates con Middlewares Express v5",
+    "filename": "3.10_Reglas_de_negocio_y_Validation_Gates_con_Middlewares_Express_v5.tex",
+    "dates": "23 sep - 29 sep",
+    "hours": 40,
+    "assigneeName": "Nixon Hurtado / Steeven Toala",
+    "deliverable": "Middlewares de validación y reglas de negocio para documentos y actividades (validation.middleware.js)",
+    "desc": "Implementación estricta de Validation Gates en Express v5 para bloqueo preventivo si falta evidencia o justificación.",
+    "subtasks": [
+      "Validador DocumentoValidator con reglas SGC",
+      "Validador ActividadMatrizValidator con chequeo de fechas",
+      "Mensajes de error semánticos devueltos al frontend"
+    ]
+  },
+  {
+    "code": "3.11",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Integración de MinIO S3 para evidencias y URLs prefirmadas",
+    "filename": "3.11_Integracion_de_MinIO_S3_para_evidencias_y_URLs_prefirmadas.tex",
+    "dates": "25 sep - 30 sep",
+    "hours": 32,
+    "assigneeName": "Nixon Hurtado / Andrea Vasquez",
+    "deliverable": "MinioStorageService.cs y componente de upload de evidencias",
+    "desc": "Viernes 25, Lunes 28, Martes 29 y Miércoles 30 de septiembre (4 días hábiles netos). Servicio seguro de almacenamiento.",
+    "subtasks": [
+      "Subida en streaming con comprobación de tamaño máximo",
+      "Cálculo y guardado de hash SHA-256 inmutable",
+      "Generación de URLs de descarga segura con expiración de 60 min"
+    ]
+  },
+  {
+    "code": "3.12",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "HITO 4: Sprint 3 Review: Matriz Dinámica y Evidencias MinIO",
+    "filename": "3.12_HITO_4_Sprint_3_Review_Matriz_Dinamica_y_Evidencias_MinIO.tex",
+    "dates": "30 sep",
+    "hours": 0,
+    "assigneeName": "Equipo SIGE / Ing. Paulo Torres",
+    "deliverable": "Demostración funcional de matriz con evidencias MinIO",
+    "desc": "Hito de cierre de Sprint 3 el miércoles 30 de septiembre de 2026.",
+    "subtasks": [
+      "Prueba de subida de PDF con hash SHA-256",
+      "Intento de envío sin evidencia para verificar bloqueo",
+      "Aprobación de Sprint 3 por el equipo"
+    ]
+  },
+  {
+    "code": "3.13",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Módulo de Revisión, Observaciones y Cascada de Firmas",
+    "filename": "3.13_Modulo_de_Revision_Observaciones_y_Cascada_de_Firmas.tex",
+    "dates": "01 oct - 07 oct",
+    "hours": 40,
+    "assigneeName": "Andrea Vasquez / Nixon Hurtado",
+    "deliverable": "Panel de Comité y servicio de Firmas multinivel",
+    "desc": "Panel para Coordinadores de Área y de Carrera: observaciones granulares y legalización de firmas en cascada.",
+    "subtasks": [
+      "Panel de revisión con estado 'En Revisión'",
+      "Marcado y solución de observaciones por sección",
+      "Circuito de 3 firmas consecutivas con sellado criptográfico"
+    ]
+  },
+  {
+    "code": "3.14",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Capa de asistencia y corrección ortográfica local",
+    "filename": "3.14_Capa_de_asistencia_y_correccion_ortografica_local.tex",
+    "dates": "02 oct - 07 oct",
+    "hours": 32,
+    "assigneeName": "Steeven Toala / Andrea Vasquez",
+    "deliverable": "Servicio local de corrección gramatical y ortográfica",
+    "desc": "Conexión desde el frontend con el microservicio LanguageTool en Docker para sugerir correcciones en tiempo real.",
+    "subtasks": [
+      "Consumo de API /v2/check de LanguageTool",
+      "Resaltado visual de errores en el editor TipTap",
+      "Pop-up de reemplazo de palabra con un clic"
+    ]
+  },
+  {
+    "code": "3.15",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "Motor de exportación oficial en PDF y Word",
+    "filename": "3.15_Motor_de_exportacion_oficial_en_PDF_y_Word.tex",
+    "dates": "05 oct - 08 oct",
+    "hours": 32,
+    "assigneeName": "Nixon Hurtado / Steeven Toala",
+    "deliverable": "DocumentExportService.cs con salidas idénticas al SGC",
+    "desc": "Generación de archivos PDF y Word idénticos al formato oficial UTA-SGC-A-2-1-P7-T1 y T2.",
+    "subtasks": [
+      "Plantilla de cabeceras, logos oficiales y numeración SGC",
+      "Renderizado de matriz de actividades con anchos de celda fijos",
+      "Incrustación de códigos QR de verificación digital"
+    ]
+  },
+  {
+    "code": "3.16",
+    "phase": "fase3",
+    "folder": "Fase_3",
+    "title": "HITO 5: Sistema Core Completado",
+    "filename": "3.16_HITO_5_Sistema_Core_Completado.tex",
+    "dates": "08 oct",
+    "hours": 0,
+    "assigneeName": "Equipo SIGE / Ing. Paulo Torres",
+    "deliverable": "Versión funcional v0.9 con todas las funciones del SRS",
+    "desc": "Hito de congelamiento de código (Code Freeze) el jueves 08 de octubre de 2026, previo al feriado nacional del viernes 9 de octubre (Independencia de Guayaquil).",
+    "subtasks": [
+      "Cierre de Pull Requests de funcionalidades principales",
+      "Generación de tag Git 'v0.9-beta-freeze'",
+      "Revisión general de cobertura con Ing. Paulo Torres"
+    ]
+  },
+  {
+    "code": "4.1",
+    "phase": "fase4",
+    "folder": "Fase_4",
+    "title": "Pruebas unitarias en backend",
+    "filename": "4.1_Pruebas_unitarias_en_backend.tex",
+    "dates": "12 oct - 15 oct",
+    "hours": 32,
+    "assigneeName": "Nixon Hurtado / Steeven Toala",
+    "deliverable": "Proyecto SIGE.Tests con 45 pruebas unitarias automatizadas",
+    "desc": "Automatización de pruebas unitarias para controladores, servicios de ponderación y Validation Gates.",
+    "subtasks": [
+      "Pruebas unitarias de cálculo matemático de ponderaciones",
+      "Mocks de repositorio y MinIO con la librería Moq",
+      "Reporte de cobertura de código con Coverlet"
+    ]
+  },
+  {
+    "code": "4.2",
+    "phase": "fase4",
+    "folder": "Fase_4",
+    "title": "Pruebas de integración y seguridad",
+    "filename": "4.2_Pruebas_de_integracion_y_seguridad.tex",
+    "dates": "13 oct - 16 oct",
+    "hours": 32,
+    "assigneeName": "Steeven Toala / Nixon Hurtado",
+    "deliverable": "Informe de Auditoría de Seguridad y Pentesting OWASP",
+    "desc": "Validación de expiración de tokens, sanitización de inputs contra XSS y prevención de SQL Injection.",
+    "subtasks": [
+      "Escaneo de vulnerabilidades con herramientas de análisis estático",
+      "Pruebas de escalación de privilegios cambiando claims de rol",
+      "Verificación de encabezados de seguridad HTTP"
+    ]
+  },
+  {
+    "code": "4.3",
+    "phase": "fase4",
+    "folder": "Fase_4",
+    "title": "Pruebas de interfaz UI/UX, responsive y accesibilidad",
+    "filename": "4.3_Pruebas_de_interfaz_UIUX_responsive_y_accesibilidad.tex",
+    "dates": "12 oct - 19 oct",
+    "hours": 48,
+    "assigneeName": "Andrea Vasquez / Heidy Villavicencio",
+    "deliverable": "Matriz de Compatibilidad Cross-Browser y Accesibilidad",
+    "desc": "Verificación en Chrome, Firefox, Edge y pantallas móviles. Cumplimiento de estándares WCAG 2.1.",
+    "subtasks": [
+      "Pruebas de diseño responsivo en resoluciones de 375px a 1920px",
+      "Validación de contraste y lectura accesible en modo oscuro",
+      "Pruebas de rendimiento Lighthouse (score > 90 en Performance)"
+    ]
+  }
+]

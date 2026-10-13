@@ -18,16 +18,6 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
-\usepackage{listings}
-
-\lstset{
-  basicstyle=\ttfamily\scriptsize,
-  backgroundcolor=\color{gray!8},
-  frame=single,
-  breaklines=true,
-  tabsize=2,
-  showstringspaces=false
-}
 
 \graphicspath{{images/}{../images/}{./}}
 
@@ -64,17 +54,17 @@
 \newcolumntype{L}{>{\raggedright\arraybackslash}X}
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 
-\definecolor{headerred}{RGB}{180, 0, 0}
-\definecolor{darkred}{RGB}{140, 0, 0}
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
 \definecolor{lightgraybg}{RGB}{248, 248, 248}
 \definecolor{tableheader}{RGB}{232, 238, 246}
 
 \newcommand{\docCodigo}{TI-SIGE-ENT-F2-006}
 \newcommand{\docVersion}{1.0}
-\newcommand{\docProceso}{INGENIERÍA DE SOFTWARE / DEVOPS E INFRAESTRUCTURA}
+\newcommand{\docProceso}{INFRAESTRUCTURA / CONTENEDORES DOCKER}
 \newcommand{\docElaboracion}{04/09/2026}
 \newcommand{\docRevision}{04/09/2026}
-\newcommand{\docTitulo}{ARQUITECTURA DE CONTENEDORES, ORQUESTACIÓN CON DOCKER COMPOSE Y DESPLIEGUE LOCAL}
+\newcommand{\docTitulo}{ARQUITECTURA DE MICROSERVICIOS Y DOCKER COMPOSE LOCAL}
 \newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
 \newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
 
@@ -111,249 +101,95 @@
 \noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
 
 \vspace{0.25cm}
+
 \section{Título}
-\textbf{Denominación del Entregable:} Configuración de Infraestructura como Código (IaC), Contenedores y Docker Compose (EDT 2.6)
-
-
+\textbf{Denominación del Entregable:} Arquitectura de Microservicios y Docker Compose Local -- Código EDT: 2.6
 
 \section{Introducción}
-Para garantizar reproducibilidad en los entornos de desarrollo, pruebas y producción sin incurrir en costos de licencias comerciales ni saturar los recursos de hardware, el sistema \textbf{SIGE} implementa una arquitectura eficiente y desacoplada mediante \textbf{Docker Compose}: servicios locales contenerizados (\textbf{PostgreSQL 18}, MinIO, LanguageTool, \textbf{Backend Node.js + Express v5}, \textbf{Frontend React + Vite}) e inferencia semántica delegada a la \textbf{API de Google Gemini} a través de HTTPS sin costo de GPU local.
+El aseguramiento de la portabilidad y la reproducibilidad del entorno de ejecución constituye una buena práctica fundamental en la ingeniería de software actual. Para evitar las típicas fallas de configuración cruzada entre los entornos de desarrollo, pruebas y producción, el sistema SIGE adopta un modelo contenerizado integral orquestado mediante Docker Compose. En este informe se formaliza la topología de red aislada, la asignación de volúmenes persistentes y las especificaciones de los contenedores que conforman el ecosistema SIGE: la base de datos relacional PostgreSQL 18, el almacenamiento de objetos MinIO S3 y el motor de asistencia lingüística LanguageTool.
 
 \section{Objetivo}
-
 \subsection{Objetivo General}
-Diseñar, configurar y orquestar la arquitectura de contenedores Docker locales para el ecosistema completo de SIGE, asegurando reproducibilidad y despliegue automatizado en la FISEI UTA.
-
+Diseñar y formalizar la arquitectura de contenedores y el entorno de orquestación local con Docker Compose para el stack tecnológico completo del sistema SIGE.
 \subsection{Objetivos Específicos}
-\begin{enumerate}[leftmargin=1.5em, itemsep=2pt, topsep=2pt]
-    \item Configurar los 6 servicios del \texttt{docker-compose.yml} (PostgreSQL 18, MinIO, MinIO-Init, LanguageTool, Backend Node.js Express v5 y Frontend React + Vite).
-    \item Establecer las redes virtuales internas y políticas de persistencia en volúmenes nombrados.
-    \item Parametrizar las variables de entorno y definir los endpoints de Health Check.
-\end{enumerate}
-
-\section{Alcance}
-
-\subsection{Límites del Despliegue (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Orquestación local para desarrollo y producción On-Premise en un host con Docker Engine 24+.
+    \item Diseñar el archivo de orquestación \texttt{docker-compose.yml} con redes bridge privadas y volúmenes persistentes.
+    \item Configurar el contenedor de base de datos relacional PostgreSQL 18 con inicialización automática de tablas.
+    \item Integrar el contenedor MinIO Object Storage con creación del bucket institucional \texttt{sige-evidencias}.
+    \item Configurar el microservicio LanguageTool local para corrección gramatical y ortográfica sin dependencias externas.
 \end{itemize}
 
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Orquestación de 5 servicios: \texttt{db} (PostgreSQL 18), \texttt{minio} (S3), \texttt{languagetool} (Gramática), \texttt{api} (Backend Express) y \texttt{client} (Frontend React).
+    \item Políticas de reinicio automático (\texttt{restart: unless-stopped}) y Health Checks.
+\end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Clústeres Kubernetes distribuidos en múltiples nodos de nubes comerciales de pago.
+    \item Clústeres Kubernetes distribuidos de alta disponibilidad (diseñados para VPS standalone).
 \end{itemize}
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Docker Compose:} Herramienta para definir y ejecutar aplicaciones multi-contenedor mediante archivos YAML.
-    \item \textbf{Named Volume:} Mecanismo de persistencia de datos gestionado por Docker independiente del ciclo de vida del contenedor.
-    \item \textbf{Healthcheck:} Instrucción que comprueba periódicamente el estado operativo interno de un servicio.
+    \item \textbf{Docker Compose:} Herramienta para definir y ejecutar aplicaciones Docker multicontenedor mediante archivos YAML.
+    \item \textbf{MinIO S3:} Servidor de almacenamiento de objetos de alto rendimiento compatible con las APIs de Amazon S3.
+    \item \textbf{LanguageTool:} Software open source de corrección gramatical, de estilo y ortográfica para más de 30 idiomas.
+    \item \textbf{Health Check:} Instrucción algorítmica para determinar periódicamente si un contenedor se encuentra en estado saludable y operativo.
 \end{itemize}
 
 \section{Responsabilidades}
-\begin{table}[htbp]
-\centering
-\small
-\begin{tabularx}{\textwidth}{|>{\hsize=0.65\hsize\bfseries}X|>{\hsize=0.85\hsize}X|>{\hsize=1.5\hsize}X|}
-    \hline
-    \rowcolor{tableheader}
-    Integrante & Rol en el Entregable & Responsabilidad Específica \\
-    \hline
-    Steeven Toala & Líder / Arquitecto & Diseño de Dockerfiles, archivo \texttt{docker-compose.yml} y configuración de redes. \\
-    \hline
-    Nixon Hurtado & Backend / DBA & Configuración del contenedor de PostgreSQL 18 y persistencia de volúmenes. \\
-    \hline
-    Ing. Paulo Torres & Docente Tutor & Validación y prueba del despliegue en un único comando. \\
-    \hline
-\end{tabularx}
-\caption{Matriz de Responsabilidades del Entregable EDT 2.6.}
-\end{table}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Steeven Toala / Nixon Hurtado (Responsables EDT 2.6):} Definición de especificaciones de contenedores, mapeo de puertos y volúmenes.
+    \item \textbf{Andrea Vásquez (Frontend):} Validación de puertos de enlace con el cliente web.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la arquitectura de contenedores.
+\end{itemize}
 
 \section{Normativa Legal y Técnica}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Open Container Initiative (OCI) Image Specification v1.1.}
-    \item \textbf{CIS Docker Benchmark v1.6.0:} Guía de endurecimiento de seguridad en contenedores.
+    \item \textbf{Open Container Initiative (OCI) Image Specification.}
+    \item \textbf{Docker Compose File Format Specification v3.8.}
 \end{itemize}
 
 \section{Método, Políticas y Contenidos}
-La topología de servicios contenerizados conectados bajo la red puente \texttt{sige-network} se estructura de la siguiente manera:
-
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Servicios Locales Contenerizados:} Base de datos relacional (\textbf{PostgreSQL 18}), almacenamiento de objetos S3 (\textbf{MinIO}), corrector ortográfico/gramatical local de alta velocidad (\textbf{LanguageTool}), backend REST (\textbf{Node.js + Express v5}) y cliente web (\textbf{React + Vite + Nginx}).
-    \item \textbf{Asistencia Semántica de Inteligencia Artificial:} La inferencia semántica para redacción institucional se delega a la \textbf{API de Google Gemini} a través de peticiones seguras HTTPS (REST API), optimizando la infraestructura local a cero sobrecosto de hardware.
-\end{itemize}
+Se diseñaron redes bridge privadas. En la Figura \ref{fig:s2_06_docker} se presenta el esquema topológico de los contenedores Docker orquestados.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.82\textwidth,height=5.2cm,keepaspectratio]{images/s2_06_docker_compose.png}
-    \caption{Arquitectura de Contenedores y Mapeo de Puertos en Docker Compose.}
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/s2_06_docker_compose.png}
+    \caption{Arquitectura de Contenedores y Redes Aisladas en Docker Compose.}
     \label{fig:s2_06_docker}
 \end{figure}
 
 \section{Descripción de actividades}
+\subsection{Especificación Técnica de Contenedores Orquestados}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.5cm}|m{2.8cm}|c|X|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Servicio} & \textbf{Imagen Base} & \textbf{Puertos} & \textbf{Volumen Persistente} & \textbf{Propósito / Función} \\
+\hline
+\texttt{db} & \texttt{postgres:18-alpine} & 5432:5432 & \texttt{postgres\_data:/var/lib/postgresql/data} & Persistencia relacional de 13 tablas, índices y transacciones. \\
+\hline
+\texttt{minio} & \texttt{minio/minio:RELEASE} & 9000, 9001 & \texttt{minio\_data:/data} & Almacenamiento seguro S3 de evidencias en PDF con hash SHA-256. \\
+\hline
+\texttt{languagetool} & \texttt{erikvl87/languagetool} & 8010:8010 & N/A (Stateless) & Motor local de revisión ortográfica consumido en tiempo real por el editor. \\
+\hline
+\texttt{api} & \texttt{node:22-alpine} & 4000:4000 & \texttt{api\_logs:/app/logs} & Backend Express v5, API RESTful y Validation Gates. \\
+\hline
+\texttt{client} & \texttt{nginx:alpine} & 80:80, 443 & N/A (Build estático) & Servidor web del cliente SPA React + Vite + Tailwind CSS. \\
+\hline
+\end{tabularx}
+\caption{Matriz de Contenedores y Configuración del Stack Tecnológico.}
+\label{tab:contenedores}
+\end{table}
 
-\subsection{Especificación del Archivo \texttt{docker-compose.yml}}
-\begin{lstlisting}[language=XML]
-version: '3.8'
+\subsection{Políticas de Red y Aislamiento de Seguridad}
+Se configuró la red privada \texttt{sige\_internal\_net} de tipo \texttt{bridge}, asegurando que la base de datos PostgreSQL y MinIO no expongan puertos innecesarios a redes públicas no autorizadas.
 
-services:
-  # 1. Base de Datos Relacional PostgreSQL 18
-  sige-postgres:
-    image: postgres:18-alpine
-    container_name: sige-postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: sige_db
-      POSTGRES_USER: sige_admin
-      POSTGRES_PASSWORD: SigeSecurePassword2026!
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - sige-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sige_admin -d sige_db"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # 2. Servidor de Objetos MinIO (Almacenamiento Seguro S3)
-  sige-minio:
-    image: minio/minio:RELEASE.2024-05-10T01-41-38Z
-    container_name: sige-minio
-    restart: unless-stopped
-    command: server /data --console-address ":9001"
-    environment:
-      MINIO_ROOT_USER: sige_minio_admin
-      MINIO_ROOT_PASSWORD: SigeMinioSecretKey2026!
-    ports:
-      - "9000:9000"   # API S3 Endpoint
-      - "9001:9001"   # Consola Web de Administracion
-    volumes:
-      - minio_data:/data
-    networks:
-      - sige-network
-
-  # 3. Inicializador de Bucket MinIO (Crea el bucket de evidencias automaticamente)
-  sige-minio-init:
-    image: minio/mc:latest
-    container_name: sige-minio-init
-    depends_on:
-      - sige-minio
-    entrypoint: >
-      /bin/sh -c "
-      until (/usr/bin/mc config host add sigeMinio http://sige-minio:9000 sige_minio_admin SigeMinioSecretKey2026!) do echo 'Esperando a MinIO...' && sleep 2; done;
-      /usr/bin/mc mb sigeMinio/sige-evidencias-bucket --ignore-existing;
-      /usr/bin/mc anonymous set download sigeMinio/sige-evidencias-bucket;
-      exit 0;
-      "
-    networks:
-      - sige-network
-
-  # 4. Servidor Local LanguageTool (Corrector Ortografico en Espanol)
-  sige-languagetool:
-    image: erikvl87/languagetool:latest
-    container_name: sige-languagetool
-    restart: unless-stopped
-    environment:
-      langtool_languageModel: "/ngrams"
-      Java_Xms: "512m"
-      Java_Xmx: "1g"
-    ports:
-      - "8010:8010"
-    networks:
-      - sige-network
-
-  # 5. Backend REST API (Node.js + Express v5)
-  sige-backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    container_name: sige-backend
-    restart: unless-stopped
-    depends_on:
-      sige-postgres:
-        condition: service_healthy
-      sige-minio:
-        condition: service_started
-      sige-languagetool:
-        condition: service_started
-    environment:
-      - NODE_ENV=development
-      - PORT=5000
-      - DB_HOST=sige-postgres
-      - DB_PORT=5432
-      - DB_NAME=sige_db
-      - DB_USER=sige_admin
-      - DB_PASSWORD=SigeSecurePassword2026!
-      - MINIO_ENDPOINT=sige-minio
-      - MINIO_PORT=9000
-      - MINIO_ACCESS_KEY=sige_minio_admin
-      - MINIO_SECRET_KEY=SigeMinioSecretKey2026!
-      - MINIO_BUCKET=sige-evidencias-bucket
-      - LANGUAGETOOL_URL=http://sige-languagetool:8010
-      - GEMINI_API_KEY=${GEMINI_API_KEY}
-      - JWT_SECRET=SigeSuperSecretKeyForTokenSigning2026UTAFISEISoftwareEngineering!
-      - JWT_EXPIRES_IN=30m
-    ports:
-      - "5000:5000"
-    networks:
-      - sige-network
-
-  # 6. Frontend React + Vite (Servido con Nginx)
-  sige-frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: sige-frontend
-    restart: unless-stopped
-    depends_on:
-      - sige-backend
-    ports:
-      - "80:80"
-    networks:
-      - sige-network
-
-networks:
-  sige-network:
-    driver: bridge
-
-volumes:
-  postgres_data:
-    driver: local
-  minio_data:
-    driver: local
-\end{lstlisting}
-
-\subsection{Comandos de Despliegue y Verificación Local}
-
-\subsection{Inicio de Servicios}
-\begin{lstlisting}[language=bash]
-# 1. Clonar el repositorio y posicionarse en la raiz
-cd d:/2Proyectos/GESTION_DE_PROYECTOS_DE_SOFTWARE/FISEI_Project
-
-# 2. Levantar todos los contenedores en segundo plano
-docker compose up -d
-
-# 3. Verificar estado operativo de los servicios
-docker compose ps
-\end{lstlisting}
-
-\subsection{Endpoints de Verificación de Salud (Health Checks)}
-\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Frontend Web:} \texttt{http://localhost:80}
-    \item \textbf{Backend REST API:} \texttt{http://localhost:5000/api/health}
-    \item \textbf{Consola MinIO:} \texttt{http://localhost:9001} (User: \texttt{sige\_minio\_admin} / Pass: \texttt{SigeMinioSecretKey2026!})
-    \item \textbf{API LanguageTool:} \texttt{http://localhost:8010/v2/check?text=Hola\%20mundo\&language=es}
-    \item \textbf{Asistente Gemini AI:} Conectividad HTTPS directa con \texttt{https://generativelanguage.googleapis.com} (verificable vía \texttt{/api/ia/status} en backend con API Key institucional).
-\end{itemize}
-
-\vspace{0.3cm}
-
-% =============================================================
-% FIRMAS DE RESPONSABILIDAD
-% =============================================================
 \section{Firmas de Responsabilidad}
 
 \noindent
@@ -363,7 +199,7 @@ docker compose ps
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
     \hline
-    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Requisitos / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 04/09/2026 \\
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 04/09/2026 \\
     \hline
     \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 04/09/2026 \\
     \hline
@@ -382,14 +218,15 @@ docker compose ps
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Configuración de docker-compose.yml con los 6 servicios y comandos de verificación / Pendiente de revisión & Steeven Toala & \textbf{\textcolor{gray!90}{Pendiente de Revisión}} \\
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 04/09/2026 \\
     \hline
 \end{tabularx}
 
 \vspace{0.4cm}
 
 \section{Anexos}
-\subsection*{Anexo 1: Script de Inicialización de Redes y Volúmenes de Docker}
-Comandos \texttt{docker volume inspect} y políticas de reinicio automático ante fallos de contenedor.
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Especificación Completa del Archivo \texttt{docker-compose.yml}.
+\end{itemize}
 
 \end{document}

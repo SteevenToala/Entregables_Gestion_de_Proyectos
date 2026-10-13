@@ -1,0 +1,345 @@
+Total tasks in EDT_TASKS: 49
+
+ID: edt-1-0 | CODE: 1 | SUMMARY: True
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: FASE 1. AN├üLISIS Y PLANIFICACI├ôN
+DATES: 12 ago - 24 ago | %DONE: 100%
+DELIVERABLE: Aprobaci├│n de Fase 1 y Paquete Entregables Semana 1
+DESC: Fase inicial de levantamiento institucional, especificaci├│n formal SRS IEEE 830, reglas de negocio y caso de negocio del proyecto SIGE. Calendario laboral: lunes a viernes 8h/d├¡a.
+--------------------------------------------------------------------------------
+ID: edt-1-1 | CODE: 1.1 | SUMMARY: False
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: Levantamiento de informaci├│n del proceso actual
+DATES: 12 ago - 14 ago | %DONE: 100%
+DELIVERABLE: 01_Levantamiento_Informacion_Proceso_Actual.md (Mapeo As-Is)
+DESC: Diagn├│stico exhaustivo del flujo actual de elaboraci├│n de planes de trabajo e informes institucionales del Sistema de Gesti├│n de Calidad (SGC). Mapeo de formatos UTA-SGC-A-2-1-P7-T1 y T2.
+--------------------------------------------------------------------------------
+ID: edt-1-2 | CODE: 1.2 | SUMMARY: False
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: Identificaci├│n de actores y procesos
+DATES: 13 ago - 18 ago | %DONE: 100%
+DELIVERABLE: 02_Identificacion_Actores_Procesos.md (Matriz de Stakeholders)
+DESC: Mapeo riguroso de interesados, niveles de poder e inter├®s, roles institucionales (Docente Elaborador, Coordinador de ├ürea, Coordinador de Carrera, Subdecano y Administrador SGC).
+--------------------------------------------------------------------------------
+ID: edt-1-3 | CODE: 1.3 | SUMMARY: False
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: Definici├│n de requisitos funcionales y no funcionales
+DATES: 17 ago - 21 ago | %DONE: 100%
+DELIVERABLE: 03_Definicion_Requisitos_Funcionales_No_Funcionales.md (SRS)
+DESC: Especificaci├│n formal de lunes a viernes bajo est├índar IEEE 830 con 24 requisitos funcionales (RF-01 a RF-24) y 10 no funcionales (RNF-01 a RNF-10).
+--------------------------------------------------------------------------------
+ID: edt-1-4 | CODE: 1.4 | SUMMARY: False
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: Definici├│n del alcance, restricciones y objetivos SGC
+DATES: 18 ago - 21 ago | %DONE: 100%
+DELIVERABLE: 04_Definicion_Alcance_Restricciones_Objetivos.md
+DESC: Delimitaci├│n del alcance incluido y exclusiones del sistema, objetivos SMART del proyecto, hitos de control de calidad institucional y cumplimiento del SGC UTA.
+--------------------------------------------------------------------------------
+ID: edt-1-5 | CODE: 1.5 | SUMMARY: False
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: Reglas de negocio y Validation Gates l├│gicas
+DATES: 19 ago - 24 ago | %DONE: 100%
+DELIVERABLE: 05_Reglas_Negocio_Validation_Gates.md
+DESC: Formalizaci├│n matem├ítica de los Validation Gates: bloqueo de avance si evidencia < 100% sin justificaci├│n, c├ílculo de ponderaciones de actividades y bloqueo extempor├íneo.
+--------------------------------------------------------------------------------
+ID: edt-1-6 | CODE: 1.6 | SUMMARY: False
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: Elaboraci├│n de Caso de Negocio, ROI y Project Charter
+DATES: 20 ago - 24 ago | %DONE: 100%
+DELIVERABLE: 06_Caso_de_Negocio.md & Project Charter Oficial
+DESC: Evaluaci├│n financiera y t├®cnica: Presupuesto total ($630.30), Ahorro anual estimado ($23,700), Retorno de Inversi├│n ROI (+3,660%), VAN ($84,212) y per├¡odo de recuperaci├│n de 1.8 meses.
+--------------------------------------------------------------------------------
+ID: edt-1-7 | CODE: 1.7 | SUMMARY: False
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: Planificaci├│n del proyecto y cronograma de trabajo
+DATES: 20 ago - 24 ago | %DONE: 100%
+DELIVERABLE: 07_Planificacion_Proyecto_Cronograma_EDT.md & Cronograma MS Project
+DESC: Estructuraci├│n formal del plan de gesti├│n del proyecto, descomposici├│n EDT de 49 tareas, cronograma maestro en Microsoft Project con calendario laboral de Ambato (57 d├¡as laborables, 456 horas), dependencias y asignaci├│n de recursos.
+--------------------------------------------------------------------------------
+ID: edt-1-8 | CODE: 1.8 | SUMMARY: False
+PHASE: fase1 (FASE 1: AN├üLISIS Y PLANIFICACI├ôN)
+TITLE: HITO 1: Aprobaci├│n de Fase 1 y Entregable General Semana 1
+DATES: 24 ago | %DONE: 100%
+DELIVERABLE: 08_Entregable_General_Semana_1.md (Paquete Completo Aprobado)
+DESC: Hito formal de revisi├│n y aprobaci├│n de la Fase 1 por el docente asesor Ing. Paulo Torres el lunes 24 de agosto de 2026.
+--------------------------------------------------------------------------------
+ID: edt-2-0 | CODE: 2 | SUMMARY: True
+PHASE: fase2 (FASE 2: DISE├æO Y ARQUITECTURA)
+TITLE: FASE 2. DISE├æO R├üPIDO Y ARQUITECTURA
+DATES: 25 ago - 04 sep | %DONE: 100%
+DELIVERABLE: Aprobaci├│n de Arquitectura y Paquete Entregables Semana 2
+DESC: Fase de especificaci├│n de arquitectura modular en Node.js + Express (v5), modelado de base de datos relacional PostgreSQL 18, prototipos Figma y contenedores locales Docker (9 d├¡as h├íbiles).
+--------------------------------------------------------------------------------
+ID: edt-2-1 | CODE: 2.1 | SUMMARY: False
+PHASE: fase2 (FASE 2: DISE├æO Y ARQUITECTURA)
+TITLE: Diagramas general y detallado de casos de uso
+DATES: 25 ago - 27 ago | %DONE: 100%
+DELIVERABLE: 01_Diagrama_General_Detallado_Casos_de_Uso.md
+DESC: Modelado UML de todas las interacciones de los actores institucionales: Elaborar Plan, Validar Matriz, Cargar Evidencia, Revisar en Comit├®, Firmar Digitalmente y Generar Informe.
+--------------------------------------------------------------------------------
+ID: edt-2-2 | CODE: 2.2 | SUMMARY: False
+PHASE: fase2 (FASE 2: DISE├æO Y ARQUITECTURA)
+TITLE: Dise├▒o de arquitectura de la soluci├│n
+DATES: 25 ago - 28 ago | %DONE: 100%
+DELIVERABLE: 02_Diseno_Arquitectura_Solucion.md (SAD & C4 Model)
+DESC: Definici├│n de capas Domain, Application, Infrastructure y WebAPI. Patrones Mediator, Repository y CQRS. Integraci├│n desacoplada para MinIO y LanguageTool.
+--------------------------------------------------------------------------------
+ID: edt-2-3 | CODE: 2.3 | SUMMARY: False
+PHASE: fase2 (FASE 2: DISE├æO Y ARQUITECTURA)
+TITLE: Diagramas de secuencia, actividades y clases de dominio
+DATES: 27 ago - 02 sep | %DONE: 100%
+DELIVERABLE: 03_Diagramas_Secuencia_Actividades_Clases.md
+DESC: Jueves 27 y Viernes 28 de agosto, pausa s├íbado 29 y domingo 30, contin├║a Lunes 31 de agosto al Mi├®rcoles 02 de septiembre (5 d├¡as h├íbiles netos).
+--------------------------------------------------------------------------------
+ID: edt-2-4 | CODE: 2.4 | SUMMARY: False
+PHASE: fase2 (FASE 2: DISE├æO Y ARQUITECTURA)
+TITLE: Dise├▒o de base de datos relacional
+DATES: 28 ago - 03 sep | %DONE: 100%
+DELIVERABLE: 04_Diseno_Base_de_Datos_ER_Logico.md & schema.sql
+DESC: Estructuraci├│n de las 13 tablas relacionales con ├¡ndices, constraints y DDL oficial.
+--------------------------------------------------------------------------------
+ID: edt-2-5 | CODE: 2.5 | SUMMARY: False
+PHASE: fase2 (FASE 2: DISE├æO Y ARQUITECTURA)
+TITLE: Dise├▒o de interfaces y experiencia de usuario
+DATES: 28 ago - 03 sep | %DONE: 100%
+DELIVERABLE: 05_Diseno_Interfaces_Wireframes_UX.md & Prototipo Figma
+DESC: Dise├▒o de alta fidelidad: Wizard paso a paso para el elaborador, tabla din├ímica de actividades y visor de observaciones.
+--------------------------------------------------------------------------------
+ID: edt-2-6 | CODE: 2.6 | SUMMARY: False
+PHASE: fase2 (FASE 2: DISE├æO Y ARQUITECTURA)
+TITLE: Arquitectura de microservicios y Docker Compose local
+DATES: 01 sep - 04 sep | %DONE: 100%
+DELIVERABLE: 06_Arquitectura_Contenedores_Docker_Locales.md & docker-compose.yml
+DESC: Orquestaci├│n con Docker Compose de PostgreSQL 18 con vol├║menes persistentes, MinIO Object Storage y servicio LanguageTool local.
+--------------------------------------------------------------------------------
+ID: edt-2-7 | CODE: 2.7 | SUMMARY: False
+PHASE: fase2 (FASE 2: DISE├æO Y ARQUITECTURA)
+TITLE: HITO 2: Aprobaci├│n de Arquitectura y Entregable General Semana 2
+DATES: 04 sep | %DONE: 100%
+DELIVERABLE: 07_Entregable_General_Semana_2.md (Paquete Arquitectura Aprobado)
+DESC: Hito formal de aprobaci├│n de dise├▒o y arquitectura t├®cnica el viernes 04 de septiembre de 2026.
+--------------------------------------------------------------------------------
+ID: edt-3-0 | CODE: 3 | SUMMARY: True
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: FASE 3. DESARROLLO ITERATIVO CORE
+DATES: 07 sep - 08 oct | %DONE: 100%
+DELIVERABLE: C├│digo Fuente del Sistema SIGE Completo (Node.js + Express v5 + React + Vite)
+DESC: Construcci├│n iterativa de los 4 Sprints en 24 d├¡as laborables netos (192 horas h├íbiles), culminando el jueves 08 de octubre previo al feriado nacional del 9 de octubre.
+--------------------------------------------------------------------------------
+ID: edt-3-1 | CODE: 3.1 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Implementaci├│n de tablas, ├¡ndices y scripts DDL PostgreSQL 18
+DATES: 07 sep - 10 sep | %DONE: 100%
+DELIVERABLE: Esquema DDL inicial y scripts de inicializaci├│n en PostgreSQL 18 (schema.sql, init.js)
+DESC: Definici├│n de tablas, ├¡ndices relacionales y pool de conexiones pg en PostgreSQL 18 con restricciones de integridad.
+--------------------------------------------------------------------------------
+ID: edt-3-2 | CODE: 3.2 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Datos iniciales y cat├ílogos institucionales
+DATES: 10 sep - 14 sep | %DONE: 100%
+DELIVERABLE: DbInitializer con usuarios y cat├ílogos institucionales
+DESC: Inyecci├│n de carreras FISEI, roles institucionales, cat├ílogo de actividades t├¡picas y usuario administrador inicial.
+--------------------------------------------------------------------------------
+ID: edt-3-3 | CODE: 3.3 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Autenticaci├│n y autorizaci├│n de usuarios
+DATES: 09 sep - 14 sep | %DONE: 100%
+DELIVERABLE: Auth Endpoints con JWT y decoradores [Authorize(Roles=...)]
+DESC: Servicio de emisi├│n de tokens JWT firmados con HMAC-SHA256, Refresh Tokens, caducidad y pol├¡ticas de acceso por rol.
+--------------------------------------------------------------------------------
+ID: edt-3-4 | CODE: 3.4 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Cliente base y dise├▒o de layouts
+DATES: 08 sep - 14 sep | %DONE: 100%
+DELIVERABLE: SPA SIGE Frontend (React + Vite) funcional con navegaci├│n y rutas
+DESC: Inicializaci├│n de Vite, Tailwind CSS, sistema de tokens de color UTA, componentes de navegaci├│n y consumo de API con Axios.
+--------------------------------------------------------------------------------
+ID: edt-3-5 | CODE: 3.5 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Layout del Wizard modular en pesta├▒as
+DATES: 15 sep - 18 sep | %DONE: 100%
+DELIVERABLE: PlanEditorWizard.tsx modular con navegaci├│n por pasos
+DESC: Componente asistente paso a paso: Datos Informativos, Justificaci├│n, Matriz, Anexos y Cascada de Firmas.
+--------------------------------------------------------------------------------
+ID: edt-3-6 | CODE: 3.6 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Integraci├│n del Editor TipTap con autoguardado debounce
+DATES: 17 sep - 22 sep | %DONE: 100%
+DELIVERABLE: RichTextEditor con autoguardado y formato HTML limpio
+DESC: Editor de texto enriquecido con extensiones de formato y guardado as├¡ncrono con debounce de 1.5s.
+--------------------------------------------------------------------------------
+ID: edt-3-7 | CODE: 3.7 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Endpoints de persistencia de secciones y documentos
+DATES: 15 sep - 22 sep | %DONE: 100%
+DELIVERABLE: Controladores RESTful Express v5 (documentos.controller.js y secciones.controller.js)
+DESC: Controladores RESTful en Node.js + Express (v5) para CRUD de planes e informes, versionamiento y guardado at├│mico con transacciones PostgreSQL.
+--------------------------------------------------------------------------------
+ID: edt-3-8 | CODE: 3.8 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: HITO 3: Sprint 2 Review: Wizard y Persistencia Operativa
+DATES: 22 sep | %DONE: 100%
+DELIVERABLE: Demostraci├│n funcional de Wizard con autoguardado en DB
+DESC: Hito de cierre de Sprint 2 el martes 22 de septiembre de 2026.
+--------------------------------------------------------------------------------
+ID: edt-3-9 | CODE: 3.9 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Desarrollo de la Matriz Din├ímica de Actividades
+DATES: 23 sep - 29 sep | %DONE: 100%
+DELIVERABLE: Componente MatrizActividadesTable.tsx interactivo
+DESC: Tabla interactiva que reproduce la Tabla 1 del formato SGC con c├ílculo autom├ítico de avance.
+--------------------------------------------------------------------------------
+ID: edt-3-10 | CODE: 3.10 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Reglas de negocio y Validation Gates con Middlewares Express v5
+DATES: 23 sep - 29 sep | %DONE: 100%
+DELIVERABLE: Middlewares de validaci├│n y reglas de negocio para documentos y actividades (validation.middleware.js)
+DESC: Implementaci├│n estricta de Validation Gates en Express v5 para bloqueo preventivo si falta evidencia o justificaci├│n.
+--------------------------------------------------------------------------------
+ID: edt-3-11 | CODE: 3.11 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Integraci├│n de MinIO S3 para evidencias y URLs prefirmadas
+DATES: 25 sep - 30 sep | %DONE: 100%
+DELIVERABLE: MinioStorageService.cs y componente de upload de evidencias
+DESC: Viernes 25, Lunes 28, Martes 29 y Mi├®rcoles 30 de septiembre (4 d├¡as h├íbiles netos). Servicio seguro de almacenamiento.
+--------------------------------------------------------------------------------
+ID: edt-3-12 | CODE: 3.12 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: HITO 4: Sprint 3 Review: Matriz Din├ímica y Evidencias MinIO
+DATES: 30 sep | %DONE: 100%
+DELIVERABLE: Demostraci├│n funcional de matriz con evidencias MinIO
+DESC: Hito de cierre de Sprint 3 el mi├®rcoles 30 de septiembre de 2026.
+--------------------------------------------------------------------------------
+ID: edt-3-13 | CODE: 3.13 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: M├│dulo de Revisi├│n, Observaciones y Cascada de Firmas
+DATES: 01 oct - 07 oct | %DONE: 100%
+DELIVERABLE: Panel de Comit├® y servicio de Firmas multinivel
+DESC: Panel para Coordinadores de ├ürea y de Carrera: observaciones granulares y legalizaci├│n de firmas en cascada.
+--------------------------------------------------------------------------------
+ID: edt-3-14 | CODE: 3.14 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Capa de asistencia y correcci├│n ortogr├ífica local
+DATES: 02 oct - 07 oct | %DONE: 100%
+DELIVERABLE: Servicio local de correcci├│n gramatical y ortogr├ífica
+DESC: Conexi├│n desde el frontend con el microservicio LanguageTool en Docker para sugerir correcciones en tiempo real.
+--------------------------------------------------------------------------------
+ID: edt-3-15 | CODE: 3.15 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: Motor de exportaci├│n oficial en PDF y Word
+DATES: 05 oct - 08 oct | %DONE: 100%
+DELIVERABLE: DocumentExportService.cs con salidas id├®nticas al SGC
+DESC: Generaci├│n de archivos PDF y Word id├®nticos al formato oficial UTA-SGC-A-2-1-P7-T1 y T2.
+--------------------------------------------------------------------------------
+ID: edt-3-16 | CODE: 3.16 | SUMMARY: False
+PHASE: fase3 (FASE 3: DESARROLLO ITERATIVO CORE)
+TITLE: HITO 5: Sistema Core Completado
+DATES: 08 oct | %DONE: 100%
+DELIVERABLE: Versi├│n funcional v0.9 con todas las funciones del SRS
+DESC: Hito de congelamiento de c├│digo (Code Freeze) el jueves 08 de octubre de 2026, previo al feriado nacional del viernes 9 de octubre (Independencia de Guayaquil).
+--------------------------------------------------------------------------------
+ID: edt-4-0 | CODE: 4 | SUMMARY: True
+PHASE: fase4 (FASE 4: PRUEBAS QA Y SEGURIDAD)
+TITLE: FASE 4. PRUEBAS QA, SEGURIDAD E INTEGRACI├ôN
+DATES: 12 oct - 23 oct | %DONE: 100%
+DELIVERABLE: Informe de QA, Casos de Prueba y Release Candidate v1.0-RC
+DESC: Fase exhaustiva de QA en exactamente 10 d├¡as h├íbiles netos (80 horas), iniciando el lunes 12 de octubre tras el feriado nacional del 9 de octubre.
+--------------------------------------------------------------------------------
+ID: edt-4-1 | CODE: 4.1 | SUMMARY: False
+PHASE: fase4 (FASE 4: PRUEBAS QA Y SEGURIDAD)
+TITLE: Pruebas unitarias en backend
+DATES: 12 oct - 15 oct | %DONE: 100%
+DELIVERABLE: Proyecto SIGE.Tests con 45 pruebas unitarias automatizadas
+DESC: Automatizaci├│n de pruebas unitarias para controladores, servicios de ponderaci├│n y Validation Gates.
+--------------------------------------------------------------------------------
+ID: edt-4-2 | CODE: 4.2 | SUMMARY: False
+PHASE: fase4 (FASE 4: PRUEBAS QA Y SEGURIDAD)
+TITLE: Pruebas de integraci├│n y seguridad
+DATES: 13 oct - 16 oct | %DONE: 100%
+DELIVERABLE: Informe de Auditor├¡a de Seguridad y Pentesting OWASP
+DESC: Validaci├│n de expiraci├│n de tokens, sanitizaci├│n de inputs contra XSS y prevenci├│n de SQL Injection.
+--------------------------------------------------------------------------------
+ID: edt-4-3 | CODE: 4.3 | SUMMARY: False
+PHASE: fase4 (FASE 4: PRUEBAS QA Y SEGURIDAD)
+TITLE: Pruebas de interfaz UI/UX, responsive y accesibilidad
+DATES: 12 oct - 19 oct | %DONE: 100%
+DELIVERABLE: Matriz de Compatibilidad Cross-Browser y Accesibilidad
+DESC: Verificaci├│n en Chrome, Firefox, Edge y pantallas m├│viles. Cumplimiento de est├índares WCAG 2.1.
+--------------------------------------------------------------------------------
+ID: edt-4-4 | CODE: 4.4 | SUMMARY: False
+PHASE: fase4 (FASE 4: PRUEBAS QA Y SEGURIDAD)
+TITLE: Pruebas de flujo extremo a extremo
+DATES: 16 oct - 22 oct | %DONE: 100%
+DELIVERABLE: Casos de Prueba E2E Ejecutados y Certificado de Calidad
+DESC: Viernes 16, Lunes 19, Martes 20, Mi├®rcoles 21 y Jueves 22 de octubre (5 d├¡as h├íbiles netos).
+--------------------------------------------------------------------------------
+ID: edt-4-5 | CODE: 4.5 | SUMMARY: False
+PHASE: fase4 (FASE 4: PRUEBAS QA Y SEGURIDAD)
+TITLE: Pruebas de carga y estr├®s concurrente en MinIO y PDF
+DATES: 19 oct - 22 oct | %DONE: 100%
+DELIVERABLE: Reporte de Pruebas de Carga y Tiempos de Respuesta
+DESC: Simulaci├│n de accesos concurrentes de 50 docentes subiendo evidencias pesadas simult├íneamente.
+--------------------------------------------------------------------------------
+ID: edt-4-6 | CODE: 4.6 | SUMMARY: False
+PHASE: fase4 (FASE 4: PRUEBAS QA Y SEGURIDAD)
+TITLE: Correcci├│n de bugs y versi├│n Release Candidate
+DATES: 21 oct - 23 oct | %DONE: 100%
+DELIVERABLE: Versi├│n candidata a producci├│n v1.0-RC lista para despliegue
+DESC: Mi├®rcoles 21 a Viernes 23 de octubre (3 d├¡as h├íbiles netos). Resoluci├│n de incidencias y congelamiento de versi├│n Release Candidate.
+--------------------------------------------------------------------------------
+ID: edt-4-7 | CODE: 4.7 | SUMMARY: False
+PHASE: fase4 (FASE 4: PRUEBAS QA Y SEGURIDAD)
+TITLE: HITO 6: Aceptaci├│n de QA y Release Candidate v1.0-RC
+DATES: 23 oct | %DONE: 100%
+DELIVERABLE: Acta de Certificaci├│n de Pruebas y Aprobaci├│n de QA
+DESC: Hito formal de aprobaci├│n de calidad y auditor├¡a el viernes 23 de octubre de 2026.
+--------------------------------------------------------------------------------
+ID: edt-5-0 | CODE: 5 | SUMMARY: True
+PHASE: fase5 (FASE 5: DESPLIEGUE FINAL Y CIERRE)
+TITLE: FASE 5. DESPLIEGUE FINAL, CAPACITACI├ôN Y CIERRE
+DATES: 26 oct - 30 oct | %DONE: 100%
+DELIVERABLE: Sistema en Producci├│n, Manuales y Acta de Cierre Firmada
+DESC: Semana final de 5 d├¡as h├íbiles exactos (Lunes 26 a Viernes 30 de octubre de 2026 | 40 horas). Cierre formal previo a los asuetos de noviembre en Ambato.
+--------------------------------------------------------------------------------
+ID: edt-5-1 | CODE: 5.1 | SUMMARY: False
+PHASE: fase5 (FASE 5: DESPLIEGUE FINAL Y CIERRE)
+TITLE: Configuraci├│n de entorno de producci├│n VPS Linux y Docker
+DATES: 26 oct - 27 oct | %DONE: 100%
+DELIVERABLE: Servidor VPS Linux en l├¡nea con stack Docker de producci├│n
+DESC: Aprovisionamiento de servidor Linux con Docker Compose, Nginx Proxy Inverso y pol├¡ticas UFW.
+--------------------------------------------------------------------------------
+ID: edt-5-2 | CODE: 5.2 | SUMMARY: False
+PHASE: fase5 (FASE 5: DESPLIEGUE FINAL Y CIERRE)
+TITLE: Aseguramiento de dominio, SSL HTTPS Let's Encrypt y SMTP
+DATES: 27 oct - 28 oct | %DONE: 100%
+DELIVERABLE: Dominio institucional con candado verde HTTPS y correo SMTP
+DESC: Emisi├│n e instalaci├│n de certificado SSL Let's Encrypt y servicio SMTP para notificaciones.
+--------------------------------------------------------------------------------
+ID: edt-5-3 | CODE: 5.3 | SUMMARY: False
+PHASE: fase5 (FASE 5: DESPLIEGUE FINAL Y CIERRE)
+TITLE: Elaboraci├│n de manuales de usuario por rol
+DATES: 26 oct - 29 oct | %DONE: 100%
+DELIVERABLE: Manual de Usuario Oficial del Sistema SIGE (PDF / Web)
+DESC: Gu├¡a pedag├│gica paso a paso con capturas de pantalla para Docente Elaborador, Coordinadores de ├ürea y Administrador SGC.
+--------------------------------------------------------------------------------
+ID: edt-5-4 | CODE: 5.4 | SUMMARY: False
+PHASE: fase5 (FASE 5: DESPLIEGUE FINAL Y CIERRE)
+TITLE: Elaboraci├│n de Manual T├®cnico, API y BD y Plan de Contingencias
+DATES: 27 oct - 30 oct | %DONE: 100%
+DELIVERABLE: Manual T├®cnico de Despliegue, Mantenimiento y Backups
+DESC: Documentaci├│n de arquitectura, endpoints Swagger, scripts de backups y plan de contingencia.
+--------------------------------------------------------------------------------
+ID: edt-5-5 | CODE: 5.5 | SUMMARY: False
+PHASE: fase5 (FASE 5: DESPLIEGUE FINAL Y CIERRE)
+TITLE: Capacitaci├│n a usuarios, sustentaci├│n y firma de Acta de Cierre
+DATES: 29 oct - 30 oct | %DONE: 100%
+DELIVERABLE: Acta de Entrega-Recepci├│n y Capacitaci├│n Docente
+DESC: Jueves 29 y Viernes 30 de octubre (2 d├¡as h├íbiles netos). Taller de capacitaci├│n y firma formal del Acta de Cierre.
+--------------------------------------------------------------------------------
+ID: edt-5-6 | CODE: 5.6 | SUMMARY: False
+PHASE: fase5 (FASE 5: DESPLIEGUE FINAL Y CIERRE)
+TITLE: HITO 7: Cierre Formal del Proyecto y Sistema en Producci├│n
+DATES: 30 oct | %DONE: 100%
+DELIVERABLE: Sistema SIGE Oficialmente Operativo en Producci├│n
+DESC: Cierre formal el viernes 30 de octubre de 2026 (57 d├¡as laborables netos / 456 horas h├íbiles). Sistema 100% operativo en la FISEI UTA.
+--------------------------------------------------------------------------------

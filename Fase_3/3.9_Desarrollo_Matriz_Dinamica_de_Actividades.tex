@@ -1,0 +1,235 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F3-009}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO CORE / MATRIZ DINÁMICA}
+\newcommand{\docElaboracion}{29/09/2026}
+\newcommand{\docRevision}{29/09/2026}
+\newcommand{\docTitulo}{DESARROLLO DE LA MATRIZ DINÁMICA DE ACTIVIDADES}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Desarrollo de la Matriz Dinámica de Actividades -- Código EDT: 3.9
+
+\section{Introducción}
+La Tabla 1 del formato institucional del Sistema de Gestión de Calidad (Planificación y Control de Actividades Docentes) representa el núcleo aritmético de la evaluación semestral. Históricamente, esta tabla en procesadores de texto era propensa a errores manuales de suma de ponderación y discrepancias entre horas y porcentajes. En esta actividad se desarrolló el componente \\textbf{MatrizActividadesTable.jsx}, una tabla interactiva reactiva que permite agregar, editar y eliminar actividades en tiempo real, calculando automáticamente la suma de ponderación ($\sum P_i = 100\%$) y el avance ponderado global del documento.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Desarrollar el componente interactivo de Matriz Dinámica de Actividades para el registro, edición y cálculo automático de ponderaciones y avance global bajo normas SGC.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Implementar la tabla reactiva con adición y eliminación dinámica de filas.
+    \item Programar el validador en tiempo real de sumatoria de ponderaciones al $100.00\%$.
+    \item Implementar el cálculo matemático ponderado del porcentaje de avance global.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Componente \texttt{MatrizActividadesTable.jsx} integrado en el Paso 3 del Wizard.
+    \item Clasificación por categorías SGC: Docencia, Investigación, Vinculación y Gestión.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Carga física de archivos binarios de evidencias (cubierto en EDT 3.11).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Matriz Dinámica:} Componente de interfaz tipo hoja de cálculo ligera que ejecuta validaciones y cálculos matemáticos reactivos en el cliente.
+    \item \textbf{Ponderación Horaria ($P_i$):} Peso porcentual asignado a una actividad en relación a la dedicación horaria global.
+    \item \textbf{Avance Ponderado Global ($A_G$):} Suma acumulada de los avances individuales multiplicados por su ponderación relativa.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Andrea Vásquez (Responsable EDT 3.9):} Desarrollo del componente interactivo de la matriz y algoritmos de cálculo.
+    \item \textbf{Steeven Toala (Líder Técnico):} Verificación de fórmulas matemáticas de ponderación.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la fidelidad con la Tabla 1 del formato SGC.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Formato Oficial UTA-SGC-A-2-1-P7-T1 y T2 (Tabla 1: Matriz de Actividades).}
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se utilizó el hook \texttt{useReducer} para gestión inmutable de filas. En la Figura \ref{fig:f3_09_matriz} se aprecia la vista previa del componente de matriz de actividades.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/preview_plan_trabajo.png}
+    \caption{Componente Interactivo de la Matriz Dinámica de Actividades SGC.}
+    \label{fig:f3_09_matriz}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Algoritmo Matemático de Cálculo en Tiempo Real}
+Para cada modificación en las filas de la matriz, el componente recalcula instantáneamente:
+\begin{equation}
+    P_{\text{total}} = \sum_{i=1}^{n} P_i, \qquad A_G = \sum_{i=1}^{n} \left( \frac{P_i}{100} \times A_i \right)
+\end{equation}
+Si $P_{\text{total}} = 100.00\%$, el indicador de estado se torna verde (\texttt{Success}) y se habilita la transición. Si $P_{\text{total}} \ne 100.00\%$, el badge muestra la diferencia exacta en rojo y notifica al docente.
+
+\subsection{Estructura de Columnas de la Matriz Dinámica}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.0cm}|m{2.5cm}|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Col.} & \textbf{Campo} & \textbf{Tipo de Entrada} & \textbf{Regla de Validación / Comportamiento} \\
+\hline
+1 & Actividad SGC & Dropdown catálogo & Obligatorio; clasificado según áreas de formación. \\
+\hline
+2 & Descripción / Meta & Texto multilínea & Descripción precisa de los productos o resultados esperados. \\
+\hline
+3 & Horas Asignadas & Numérico entero & Mayor a 0; suma validada contra dedicación docente. \\
+\hline
+4 & Ponderación ($P_i$) & Numérico decimal & Rango $0.01$ a $100.00$; la suma total debe ser $100.00\%$. \\
+\hline
+5 & \% Avance ($A_i$) & Slider / Input & Rango $0$ a $100$; si $>0$, exige evidencia probatoria. \\
+\hline
+6 & Evidencias Adjuntas & Botón de carga & Muestra contador de PDFs en MinIO y estado de hash. \\
+\hline
+\end{tabularx}
+\caption{Columnas y Reglas de la Matriz Dinámica de Actividades.}
+\label{tab:columnas_matriz}
+\end{table}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 29/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 29/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 29/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Casos de Prueba de Sumatoria Aritmética con Decimales en la Matriz.
+\end{itemize}
+
+\end{document}

@@ -1,0 +1,228 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F3-012}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{HITO DE CONTROL / SPRINT 3 REVIEW}
+\newcommand{\docElaboracion}{30/09/2026}
+\newcommand{\docRevision}{30/09/2026}
+\newcommand{\docTitulo}{HITO 4: SPRINT 3 REVIEW: MATRIZ Y EVIDENCIAS}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} HITO 4: Sprint 3 Review: Matriz Dinámica y Evidencias MinIO -- Código EDT: 3.12
+
+\section{Introducción}
+El cierre del Sprint 3 marca la integración exitosa de los dos componentes más críticos del Sistema de Gestión de Calidad en SIGE: la Matriz Dinámica con cálculo automático de ponderaciones y el repositorio seguro de evidencias en MinIO S3 con hashing SHA-256. El presente informe formaliza la revisión técnica y aprobación del Hito 4 ante el docente evaluador Ing. Paulo Torres el miércoles 30 de septiembre de 2026, certificando la demostración práctica del bloqueo preventivo ante falta de evidencias y la aprobación del incremento.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Evaluar y aprobar formalmente el Hito 4 correspondiente al cierre del Sprint 3 (Matriz Dinámica y Evidencias MinIO), validando el bloqueo de Validation Gates ante el docente asesor.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Demostrar en vivo el cálculo reactivo de sumatoria del 100\% y avance en la Matriz Dinámica.
+    \item Cargar archivos PDF reales a MinIO S3 y verificar la inmutabilidad de los hashes SHA-256.
+    \item Ejecutar pruebas de estrés intentando enviar un informe sin evidencias para comprobar el bloqueo estricto del Validation Gate.
+    \item Suscribir el acta formal de aprobación de Hito 4.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Demostración operativa de EDT 3.9 a EDT 3.11.
+    \item Inspección del bucket \texttt{sige-evidencias} y verificación de enlaces de 60 minutos.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Cascada de firmas y motor de exportación documental (Sprint 4).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Sprint 3 Review:} Hito formal de inspección del incremento funcional correspondiente a la lógica matemática y de evidencias del SGC.
+    \item \textbf{Bloqueo Preventivo:} Acción del sistema que imposibilita avanzar a la fase de revisión si las evidencias obligatorias no han sido suministradas.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Equipo de Proyecto SIGE (Responsables EDT 3.12):} Demostración práctica de casos de prueba y sustentación ante el asesor.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador / Product Owner):} Verificación de conformidad, auditoría de hashes y firma de aprobación.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Scrum Guide 2020: Review and Acceptance Criteria.}
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se ejecutó una sesión demostrativa de 60 minutos el 30 de septiembre de 2026. En la Figura \ref{fig:f3_12_rev} se ilustra el incremento de la Matriz y evidencias aprobado.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_09_decision_validation_gates.png}
+    \caption{Demostración de Bloqueo Preventivo de Validation Gate en Sprint 3.}
+    \label{fig:f3_12_rev}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Matriz de Casos de Prueba Ejecutados en el Sprint 3 Review}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.5cm}|X|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Prueba} & \textbf{Escenario Evaluado} & \textbf{Comportamiento Observado del Sistema} & \textbf{Estado} \\
+\hline
+TC-01 & Ponderación al 95\% & El sistema muestra badge rojo y bloquea el botón 'Enviar a Revisión'. & Aprobado \\
+\hline
+TC-02 & Ponderación al 100\% & El badge cambia a verde y se habilita la verificación de evidencias. & Aprobado \\
+\hline
+TC-03 & Avance $>0\%$ sin PDF & El Validation Gate rechaza el envío con error semántico HTTP 422. & Aprobado \\
+\hline
+TC-04 & Subida PDF a MinIO & El archivo se guarda en bucket S3 y se genera el hash SHA-256. & Aprobado \\
+\hline
+TC-05 & Descarga Prefirmada & Se descarga el archivo mediante URL temporal de 60 minutos con éxito. & Aprobado \\
+\hline
+\end{tabularx}
+\caption{Resultados de Pruebas Demostrativas del Sprint 3 Review.}
+\label{tab:sprint3_tests}
+\end{table}
+
+\subsection{Acta de Aprobación de Hito 4}
+El docente evaluador Ing. Paulo Torres certifica la conformidad del Sprint 3 y autoriza el inicio del Sprint 4: Módulo de Revisión, Firmas en Cascada, Asistencia Textual y Motor de Exportación a partir del 01 de octubre de 2026.
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 30/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 30/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 30/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Acta Formal de Revisión y Cierre del Sprint 3.
+\end{itemize}
+
+\end{document}

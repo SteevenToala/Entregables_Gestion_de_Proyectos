@@ -1,0 +1,239 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F1-002}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{INGENIERÍA DE REQUERIMIENTOS / GESTIÓN DE INTERESADOS}
+\newcommand{\docElaboracion}{18/08/2026}
+\newcommand{\docRevision}{18/08/2026}
+\newcommand{\docTitulo}{IDENTIFICACIÓN DE ACTORES Y PROCESOS}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Identificación de Actores y Procesos (Matriz de Stakeholders) -- Código EDT: 1.2
+
+\section{Introducción}
+El éxito en la adopción del sistema SIGE dentro de la FISEI requiere un análisis riguroso de los actores organizacionales que intervienen en el ciclo de vida de los planes de trabajo e informes institucionales. El Sistema de Gestión de Calidad establece una cadena jerárquica con responsabilidades claramente delimitadas, desde la docencia de aula hasta las autoridades de facultad. El presente informe formaliza el mapa de macroprocesos institucionales y la matriz de interesados (Stakeholders), clasificando a cada actor según su nivel de poder e interés para orientar el diseño de roles en la plataforma.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Identificar, mapear y caracterizar formalmente a los actores organizacionales y los macroprocesos institucionales que interactúan con el Sistema de Gestión de Calidad en la FISEI, estructurando la Matriz de Stakeholders del proyecto SIGE.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Identificar las funciones institucionales de los roles: Docente Elaborador, Coordinador de Área, Coordinador de Carrera, Subdecano y Administrador SGC.
+    \item Analizar la matriz de Poder versus Interés según la metodología estándar del PMBOK.
+    \item Modelar la taxonomía de macroprocesos académicos y de gestión de la facultad.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Comunidad académica de la FISEI: cuerpo docente titular y ocasional, directores de área y autoridades.
+    \item Mapeo de expectativas, canales de comunicación y requerimientos clave por actor.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Entidades externas fuera del organigrama de la Universidad Técnica de Ambato.
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Stakeholder (Interesado):} Individuo o grupo que puede afectar, verse afectado o percibirse afectado por las decisiones o resultados del proyecto.
+    \item \textbf{Docente Elaborador:} Profesor responsable de la carga horaria semestral y de registrar sus avances y evidencias.
+    \item \textbf{Coordinador de Área:} Autoridad académica intermedia que revisa la pertinencia técnica de las asignaturas afines.
+    \item \textbf{Coordinador de Carrera:} Máxima autoridad de la carrera responsable de la consolidación curricular y aprobación previa.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Heidi Villavicencio (Responsable EDT 1.2):} Elaboración de la matriz de interesados, diagramación de cuadrantes y mapeo de roles.
+    \item \textbf{Steeven Toala (Líder Técnico):} Revisión de coherencia arquitectónica y asignación de permisos preliminares.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación de la matriz institucional de actores.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Estatuto Orgánico de la Universidad Técnica de Ambato:} Estructura orgánica y funciones de directores, coordinadores y docentes.
+    \item \textbf{Guía del PMBOK (7ma Edición):} Gestión del involucramiento de las partes interesadas.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se utilizó el modelo bidimensional de Poder e Interés. Se realizaron talleres de alineación con directores de área para verificar responsabilidades y evitar solapamientos funcionales.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.85\textwidth,height=5.2cm,keepaspectratio]{images/s1_02_macroprocesos.png}
+    \caption{Mapa de Macroprocesos Institucionales de la FISEI y Articulación con SIGE.}
+    \label{fig:s1_02_macro}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.75\textwidth,height=5.0cm,keepaspectratio]{images/s1_02_quadrant_chart.png}
+    \caption{Matriz de Cuadrantes Poder vs. Interés para Interesados del Proyecto SIGE.}
+    \label{fig:s1_02_quad}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Matriz Detallada de Actores y Roles Organizacionales}
+
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.8cm}|c|c|X|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Rol Institucional} & \textbf{Poder} & \textbf{Interés} & \textbf{Estrategia de Gestión} & \textbf{Requerimiento Central en SIGE} \\
+\hline
+Docente Elaborador & Medio & Alto & Mantener Informado / Facilitar Trabajo & Interfaz ágil, autoguardado, cálculo automático y alertas de entrega. \\
+\hline
+Coordinador de Área & Alto & Alto & Gestionar de Cerca & Panel de observaciones granulares por sección y devolución ágil. \\
+\hline
+Coordinador de Carrera & Alto & Alto & Gestionar de Cerca & Vista consolidada de la carrera, métricas de avance y firma digital. \\
+\hline
+Subdecano / Consejo Directivo & Muy Alto & Medio & Mantener Satisfecho & Reportes consolidados ejecutivos, exportación oficial SGC y actas. \\
+\hline
+Administrador SGC & Alto & Alto & Colaborar Estrechamente & Parametrización de catálogos, fechas límite y auditoría de cambios. \\
+\hline
+\end{tabularx}
+\caption{Matriz de Caracterización y Estrategia de Interesados.}
+\label{tab:stakeholders}
+\end{table}
+
+\subsection{Definición de Canales de Interacción y Estados}
+Se definieron tres fases secuenciales de interacción: Elaboración Docente, Evaluación Colegiada y Legalización Institucional.
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 18/08/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 18/08/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Ficha de Caracterización de Roles de la FISEI.
+\end{itemize}
+
+\end{document}

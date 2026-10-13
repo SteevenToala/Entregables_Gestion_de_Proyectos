@@ -1,0 +1,227 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F3-005}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{DESARROLLO CORE / INTERFAZ WIZARD}
+\newcommand{\docElaboracion}{18/09/2026}
+\newcommand{\docRevision}{18/09/2026}
+\newcommand{\docTitulo}{LAYOUT DEL WIZARD MODULAR EN PESTAÑAS}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Layout del Wizard Modular en Pestañas -- Código EDT: 3.5
+
+\section{Introducción}
+La elaboración de planes e informes bajo el formato del SGC involucra una cantidad sustancial de datos divididos en secciones narrativas, matrices de horas y anexos probatorios. Para evitar formularios extensos y confusos que propician la pérdida de datos y el error humano, se desarrolló el componente \textbf{PlanEditorWizard}. Este asistente descompone la elaboración en 4 pasos lógicos organizados en pestañas secuenciales, implementando una máquina de estados que valida los requisitos mínimos antes de autorizar el paso a la pestaña siguiente.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Desarrollar el componente asistente modular en pestañas (Wizard) para la elaboración guiada de documentos SGC, garantizando una navegación secuencial validada.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Implementar el componente \texttt{PlanEditorWizard} con 4 pestañas interactivas.
+    \item Diseñar la máquina de estados de navegación que previene el avance si faltan campos críticos.
+    \item Integrar indicadores visuales de progreso y completitud por cada sección del documento.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Navegación por pasos: Paso 1 (Datos Generales), Paso 2 (Secciones SGC), Paso 3 (Matriz Dinámica), Paso 4 (Resumen y Firma).
+    \item Persistencia del paso activo en almacenamiento de sesión para evitar reinicios accidentales.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Lógica interna del editor TipTap (cubierto en EDT 3.6).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Wizard Pattern:} Patrón de diseño que guía al usuario en una secuencia lineal para completar una tarea extensa.
+    \item \textbf{State Machine (Máquina de Estados):} Modelo computacional que define los estados válidos y las transiciones permitidas entre ellos.
+    \item \textbf{Step Validation:} Validación previa ejecutada antes de permitir la transición hacia el siguiente paso del flujo.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Andrea Vásquez (Responsable EDT 3.5):} Desarrollo del componente Wizard, control de estados y transiciones.
+    \item \textbf{Heidi Villavicencio (Analista):} Validación de usabilidad y verificación de campos obligatorios.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del flujo de navegación modular.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Manual de Usabilidad y Buenas Prácticas UI/UX en Sistemas Web.}
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se utilizó el hook \texttt{useState} y transiciones animadas con CSS. En la Figura \ref{fig:f3_05_wiz} se representa el flujo secuencial de validación del Wizard.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f3_05_wizard_modular_flujo.png}
+    \caption{Diagrama de Flujo y Máquina de Estados del Wizard Modular.}
+    \label{fig:f3_05_wiz}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Matriz de Reglas de Transición del Wizard}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{2.5cm}|X|X|}
+\hline
+\rowcolor{tableheader}
+\textbf{Paso} & \textbf{Nombre} & \textbf{Requisitos para Habilitar Paso Siguiente} & \textbf{Acción en Caso de Incumplimiento} \\
+\hline
+1 & Datos Generales & Selección de período lectivo, carrera y al menos 1 asignatura. & Muestra tooltip rojo y bloquea botón 'Siguiente'. \\
+\hline
+2 & Secciones SGC & Llenado de Objetivos, Alcance y Metodología con texto real. & Alerta de sección incompleta (mínimo 50 caracteres). \\
+\hline
+3 & Matriz Dinámica & Ponderación total exactamente igual al $100.00\%$. & Bloqueo absoluto de paso con mensaje de Validation Gate. \\
+\hline
+4 & Resumen y Envío & Validación de evidencias adjuntas para actividades con avance. & Botón 'Firmar y Enviar' deshabilitado hasta cumplir. \\
+\hline
+\end{tabularx}
+\caption{Condiciones de Transición y Validación por Paso del Wizard.}
+\label{tab:wizard_rules}
+\end{table}
+
+\subsection{Persistencia de Progreso}
+El Wizard almacena el estado local de manera atómica, permitiendo que el docente cierre la sesión o navegue a otra vista sin perder la posición ni el borrador de su trabajo.
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 18/09/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 18/09/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/09/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Pruebas de Transición de Estados y Prevención de Saltos No Autorizados.
+\end{itemize}
+
+\end{document}

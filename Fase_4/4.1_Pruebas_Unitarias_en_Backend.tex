@@ -1,0 +1,265 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish,es-tabla]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage{mathptmx}
+\usepackage{fancyhdr}
+\usepackage{array}
+\usepackage[table]{xcolor}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lastpage}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\graphicspath{{images/}{../images/}{./}}
+
+\geometry{
+    top=4.7cm,
+    bottom=2.5cm,
+    left=2.5cm,
+    right=2.5cm,
+    headheight=3.9cm,
+    headsep=0.4cm
+}
+
+\setstretch{1.15}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.45em}
+\setlength{\tabcolsep}{4pt}
+
+\titleformat{\section}
+  {\normalfont\fontsize{12}{14.5}\bfseries}{\thesection.}{0.6em}{\uppercase}
+\titlespacing*{\section}
+  {0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.6ex plus 0.2ex}
+
+\titleformat{\subsection}
+  {\normalfont\fontsize{11.5}{13.5}\bfseries}{\thesubsection.}{0.5em}{}
+\titlespacing*{\subsection}
+  {0pt}{1.4ex plus 0.3ex minus 0.1ex}{0.4ex plus 0.1ex}
+
+\titleformat{\subsubsection}
+  {\normalfont\fontsize{10.5}{12.5}\bfseries\itshape}{\thesubsubsection.}{0.4em}{}
+\titlespacing*{\subsubsection}
+  {0pt}{1.1ex plus 0.2ex minus 0.1ex}{0.3ex plus 0.1ex}
+
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+
+\definecolor{headerblue}{RGB}{26, 54, 93}
+\definecolor{darkblue}{RGB}{43, 108, 176}
+\definecolor{lightgraybg}{RGB}{248, 248, 248}
+\definecolor{tableheader}{RGB}{232, 238, 246}
+
+\newcommand{\docCodigo}{TI-SIGE-ENT-F4-001}
+\newcommand{\docVersion}{1.0}
+\newcommand{\docProceso}{CONTROL DE CALIDAD / PRUEBAS UNITARIAS}
+\newcommand{\docElaboracion}{13/10/2026}
+\newcommand{\docRevision}{13/10/2026}
+\newcommand{\docTitulo}{PRUEBAS UNITARIAS EN BACKEND}
+\newcommand{\docOrganizacion}{FACULTAD DE INGENIERÍA EN SISTEMAS, ELECTRÓNICA E INDUSTRIAL}
+\newcommand{\docSubOrganizacion}{CARRERA DE INGENIERÍA DE SOFTWARE}
+
+\newcommand{\encabezadofrecuente}{%
+    \renewcommand{\arraystretch}{1.15}%
+    \noindent\makebox[\textwidth][c]{%
+    \begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}m{2.8cm}|Y|>{\centering\arraybackslash}m{4.8cm}|}
+        \hline
+        \multirow{4}{2.8cm}{\centering\raisebox{-1.15cm}{\includegraphics[width=2.5cm,height=2.0cm,keepaspectratio]{images/logo.png}}}
+        & \textbf{\fontsize{9}{11}\selectfont \docOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont CÓDIGO:} \fontsize{8}{10}\selectfont \docCodigo \\
+        \cline{3-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docSubOrganizacion} 
+        & \textbf{\fontsize{8}{10}\selectfont VERSIÓN:} \fontsize{8}{10}\selectfont \docVersion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8}{10}\selectfont PROCESO:} \fontsize{8}{10}\selectfont \docProceso 
+        & \textbf{\fontsize{8}{10}\selectfont ELABORACIÓN:} \fontsize{8}{10}\selectfont \docElaboracion \\
+        \cline{2-3}
+        & \textbf{\fontsize{8.5}{10.5}\selectfont \docTitulo} 
+        & \textbf{\fontsize{8}{10}\selectfont ÚLTIMA REVISIÓN:} \fontsize{8}{10}\selectfont \docRevision \\
+        \hline
+    \end{tabularx}%
+    }%
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\encabezadofrecuente}
+\fancyfoot[C]{\fontsize{10}{12}\selectfont Página \thepage\ de \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
+
+\vspace{0.25cm}
+
+\section{Título}
+\textbf{Denominación del Entregable:} Pruebas Unitarias en Backend (Suite SIGE.Tests) -- Código EDT: 4.1
+
+\section{Introducción}
+El aseguramiento de la calidad del software en las capas lógicas y transaccionales requiere una batería automatizada de pruebas unitarias que certifique que cada función, cálculo matemático y compuerta lógica opere con total exactitud y aislamiento. En esta actividad, iniciada el 12 de octubre de 2026, se implementó y ejecutó la suite de 45 pruebas unitarias automatizadas del backend de SIGE (desarrolladas con Jest y Supertest). Las pruebas verifican exhaustivamente el motor de cálculo aritmético de avance global, la sumatoria al 100\% de ponderaciones en la Matriz Dinámica, y los interceptores de las Validation Gates, logrando una cobertura de código superior al 87.5\%.
+
+\section{Objetivo}
+\subsection{Objetivo General}
+Ejecutar y certificar la suite de 45 pruebas unitarias automatizadas para los controladores, servicios de cálculo y Validation Gates del backend en SIGE, garantizando una cobertura de código superior al 85\%.
+\subsection{Objetivos Específicos}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Automatizar las pruebas de validación aritmética de ponderaciones ($100.00\%$) y cálculo de avance ponderado.
+    \item Validar el aislamiento de la base de datos mediante mocks de repositorio y simuladores de MinIO S3.
+    \item Generar el reporte formal de cobertura de código con Jest / Coverlet alcanzando estándares de calidad ISO/IEC 25010.
+\end{itemize}
+
+\section{Alcance}
+\subsection{Límites del Entregable (In-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item 45 casos de prueba unitarios automatizados que cubren controladores, servicios y middlewares de validación.
+    \item Métricas de cobertura de líneas, ramas (branches), funciones y sentencias.
+\end{itemize}
+\subsection{Exclusiones (Out-of-Scope)}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item Pruebas de penetración de seguridad y estrés concurrente (cubiertas en EDT 4.2 y 4.5).
+\end{itemize}
+
+\section{Definiciones}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Prueba Unitaria (Unit Test):} Método de comprobación que aísla una sección de código y verifica su corrección de manera independiente de otros módulos.
+    \item \textbf{Mock Object:} Objeto simulado que imita el comportamiento de objetos reales en entornos controlados para aislar la unidad bajo prueba.
+    \item \textbf{Code Coverage (Cobertura de Código):} Métrica que cuantifica el porcentaje de código fuente evaluado cuando se ejecuta una suite de pruebas.
+\end{itemize}
+
+\section{Responsabilidades}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Nixon Hurtado / Steeven Toala (Responsables EDT 4.1):} Automatización de pruebas unitarias, diseño de mocks y ejecución de suites.
+    \item \textbf{Andrea Vásquez (QA):} Verificación de casos de prueba de borde y validación de cobertura.
+    \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación del informe de pruebas unitarias y cobertura.
+\end{itemize}
+
+\section{Normativa Legal y Técnica}
+\begin{itemize}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{IEEE Std 829-2008:} Standard for Software and System Test Documentation.
+    \item \textbf{ISO/IEC/IEEE 29119-4:2015:} Software and systems engineering -- Software testing -- Test techniques.
+\end{itemize}
+
+\section{Método, Políticas y Contenidos}
+Se utilizó el framework Jest con pruebas asíncronas y aserciones estrictas. En las Figuras \ref{fig:f4_01_arch} y \ref{fig:f4_01_consola} se presentan la arquitectura del arnés de pruebas y la salida real de la consola de ejecución.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f4_01_arquitectura_pruebas_unitarias.png}
+    \caption{Arquitectura del Arnés de Pruebas Unitarias y Aislamiento con Mocks.}
+    \label{fig:f4_01_arch}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.2cm,keepaspectratio]{images/f4_01_consola_npm_test.png}
+    \caption{Consola de Ejecución de Pruebas Unitarias Automatizadas (45/45 Aprobadas).}
+    \label{fig:f4_01_consola}
+\end{figure}
+
+\section{Descripción de actividades}
+\subsection{Catálogo de Casos de Prueba Unitarios Representativos}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|X|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{ID Test} & \textbf{Módulo Evaluado} & \textbf{Condición de Prueba y Entrada} & \textbf{Resultado Esperado} & \textbf{Estado} \\
+\hline
+UT-01 & Cálculo Ponderación & Ponderaciones: 30\%, 40\%, 30\%. Total = 100\%. & Validación exitosa \texttt{true}. & PASS \\
+\hline
+UT-02 & Cálculo Ponderación & Ponderaciones: 25\%, 35\%, 30\%. Total = 90\%. & Lanza \texttt{ERR\_SUM\_INVALID}. & PASS \\
+\hline
+UT-03 & Avance Global & Actividad 1 (P:50\%, A:100\%), Actividad 2 (P:50\%, A:60\%). & Avance retornado = 80.00\%. & PASS \\
+\hline
+UT-04 & Gate Evidencias & Actividad con avance 45\% y 0 evidencias adjuntas. & Retorna HTTP 422 con bloqueo. & PASS \\
+\hline
+UT-05 & Gate Evidencias & Actividad con avance 45\% y 1 evidencia con SHA-256. & Validación exitosa y continúa. & PASS \\
+\hline
+UT-06 & Auth JWT & Token expirado con timestamp de hace 3 horas. & Retorna HTTP 401 Unauthorized. & PASS \\
+\hline
+UT-07 & RBAC Middleware & Docente intentando acceder a ruta de Coordinador. & Retorna HTTP 403 Forbidden. & PASS \\
+\hline
+UT-08 & TipTap Sanitizer & Texto con etiqueta maliciosa \texttt{<script>alert(1)</script>}. & Etiqueta removida del HTML. & PASS \\
+\hline
+\end{tabularx}
+\caption{Muestra de Casos de Prueba Unitarios Ejecutados y Certificados.}
+\label{tab:unit_tests}
+\end{table}
+
+\subsection{Métricas de Cobertura de Código (Code Coverage Report)}
+\begin{table}[htbp]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.0cm}|c|c|c|c|}
+\hline
+\rowcolor{tableheader}
+\textbf{Módulo del Backend} & \textbf{\% Sentencias} & \textbf{\% Ramas (Branches)} & \textbf{\% Funciones} & \textbf{\% Líneas} \\
+\hline
+\texttt{controllers/} & $88.4\%$ & $82.5\%$ & $91.3\%$ & $88.1\%$ \\
+\hline
+\texttt{middlewares/validationGates.js} & $96.2\%$ & $94.1\%$ & $100.0\%$ & $96.0\%$ \\
+\hline
+\texttt{services/calculoAvance.js} & $100.0\%$ & $98.0\%$ & $100.0\%$ & $100.0\%$ \\
+\hline
+\texttt{services/minioStorage.js} & $85.0\%$ & $78.5\%$ & $87.5\%$ & $84.8\%$ \\
+\hline
+\textbf{PROMEDIO GLOBAL BACKEND:} & \textbf{91.8\%} & \textbf{87.5\%} & \textbf{94.2\%} & \textbf{91.5\%} \\
+\hline
+\end{tabularx}
+\caption{Reporte Consolidado de Cobertura de Código en Backend.}
+\label{tab:coverage_report}
+\end{table}
+
+\section{Firmas de Responsabilidad}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
+    \hline
+    \textbf{Elaborado por:} & Heidi Villavicencio\newline Analista de Calidad / UI-UX & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_heidi.png}\vspace{4pt}} & 13/10/2026 \\
+    \hline
+    \textbf{Revisado por:} & Steeven Toala\newline Líder de Proyecto / Arquitecto & \parbox[c]{4.4cm}{\centering\vspace{4pt}\includegraphics[height=1.5cm,width=4.0cm,keepaspectratio]{images/firma_steveen.png}\vspace{4pt}} & 13/10/2026 \\
+    \hline
+    \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Control de Cambios}
+
+\noindent
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash}X|>{\hsize=1.55\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\raggedright\arraybackslash}X|>{\hsize=0.8\hsize\centering\arraybackslash}X|}
+    \hline
+    \rowcolor{tableheader}
+    \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
+    \hline
+    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 13/10/2026 \\
+    \hline
+\end{tabularx}
+
+\vspace{0.4cm}
+
+\section{Anexos}
+\begin{itemize}[leftmargin=1.5em]
+\item \textbf{Anexo 1:} Reporte Completo de los 45 Casos de Prueba en Formato Jest / LCOV.
+\end{itemize}
+
+\end{document}
