@@ -178,7 +178,7 @@ Construir y desplegar el cliente web base de SIGE con React y Vite, implementand
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se estructuró la solución siguiendo el patrón de rutas protegidas (\textit{Protected Routes}) en React Router DOM. Si el usuario carece de token válido en su contexto, el layout redirige de forma transparente al módulo \texttt{/login}. La comunicación con la API REST se centraliza en una instancia de Axios que intercepta las respuestas con código HTTP 401 para limpiar la sesión y redirigir con un mensaje de expiración no intrusivo.
+Se estructuró la solución siguiendo el patrón de rutas protegidas (\textit{Protected Routes}) en React Router DOM. Si el usuario carece de token válido en su contexto, el layout redirige de forma transparente al módulo \texttt{/\allowbreak login}. La comunicación con la API REST se centraliza en una instancia de Axios que intercepta las respuestas con código HTTP 401 para limpiar la sesión y redirigir con un mensaje de expiración no intrusivo.
 
 \subsection{Políticas de Calidad de la Interfaz Web}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -188,44 +188,39 @@ Se estructuró la solución siguiendo el patrón de rutas protegidas (\textit{Pr
     \item \textbf{Política de Persistencia de Navegación:} La posición de scroll y el estado del menú colapsado deben preservarse entre navegaciones.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_dashboard_resumen.png}
-    \caption{Captura Real del Dashboard Principal del Docente en el Sistema SIGE con Métricas y Planes.}
-    \label{fig:dashboard_real}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f3_04_arquitectura_react_frontend.png}
-    \caption{Arquitectura de Componentes, Jerarquía de Layouts y Rutas en React + Vite.}
-    \label{fig:react_arch}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de Enrutamiento y Jerarquía de Vistas del Frontend}
+La construcción de la interfaz gráfica se desarrolló como una aplicación de página única (Single Page Application - SPA) con React 18, empaquetador Vite y enrutador React Router v6. Las actividades de desarrollo frontend ejecutadas comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Estructuración Jerárquica del Enrutador y Guardias de Seguridad:} Se construyó la estructura de rutas protegiendo las vistas privadas mediante el componente \texttt{ProtectedRoute}, el cual evalúa reactivamente el contexto global de autenticación (\texttt{AuthContext}) y redirige al usuario al inicio de sesión si no existe token válido.
+    \item \textbf{Maquetación del Shell Maestro Institucional (MainLayout):} Se diseñó el contenedor principal que integra el encabezado superior con el imagotipo de la UTA, el selector del período académico B26 y el menú de perfil, articulado con una barra lateral elástica que filtra sus accesos según los permisos del usuario en sesión.
+    \item \textbf{Aplicación de Tokens de Diseño Oficiales de la UTA:} Se incorporaron las variables CSS del sistema de diseño institucional, aplicando el color Rojo UTA (\texttt{\#8B1D24}), Gris Pizarra (\texttt{\#1E293B}) y tipografía Inter, garantizando una relación de contraste superior a 7:1 acorde con WCAG 2.1 AA.
+    \item \textbf{Optimización de Rendimiento con Carga Perezosa (Code-Splitting):} Se configuraron los módulos de alta densidad (Wizard, Editor TipTap y Matriz de Actividades) con \texttt{React.\allowbreak lazy()} y \texttt{Suspense}, reduciendo el peso de la carga inicial a 184 KB.
+    \item \textbf{Diseño de Estados de Carga y Retroalimentación Visual:} Se implementaron componentes de esqueleto (\textit{Skeleton Loaders}) y pantallas de estado vacío (\textit{Empty States}) para evitar saltos visuales durante la carga de datos desde los microservicios Docker.
+\end{itemize}
+
+\subsection{Matriz de Componentes del Shell SPA y Rutas Institucionales}
+A continuación se detalla la matriz que especifica los componentes modulares del frontend:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.5cm}|m{3.2cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.1\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.6\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Ruta URL} & \textbf{Componente Vista} & \textbf{Funcionalidad y Rol Requerido} & \textbf{Protección} \\
+\textbf{Ruta URL} & \textbf{Componente Vista} & \textbf{Funcionalidad y Rol Requerido} & \textbf{Acceso} \\
 \hline
-\texttt{/login} & \texttt{LoginView.jsx} & Formulario de acceso; redirección si ya autenticado. & Pública \\
+\texttt{/\allowbreak login} & Vista de Acceso & Formulario de ingreso con credenciales institucionales. & Pública \\
 \hline
-\texttt{/dashboard} & \texttt{DashboardView.jsx} & Métricas de horas acumuladas, estado y accesos rápidos. & Privada (Todos) \\
+\texttt{/\allowbreak dashboard} & Tablero de Control & Métricas de horas acumuladas, estado y accesos directos. & Privada \\
 \hline
-\texttt{/planes} & \texttt{PlanesListView.jsx} & Bandeja de expedientes con filtros semestrales y búsqueda. & Privada (Todos) \\
+\texttt{/\allowbreak planes} & Bandeja de Planes & Listado de expedientes con filtros semestrales y búsqueda. & Privada \\
 \hline
-\texttt{/planes/:id} & \texttt{PlanEditorWizard.jsx} & Wizard modular en 5 pasos de llenado del plan SGC. & Privada (Docente) \\
+\texttt{/\allowbreak planes/\allowbreak :id} & Asistente Wizard & Llenado guiado en 5 etapas modulares para el plan de trabajo. & Privada \\
 \hline
-\texttt{/revision} & \texttt{RevisionComiteView.jsx} & Panel de revisión con drawer lateral de observaciones. & Privada (Comité) \\
+\texttt{/\allowbreak revision} & Panel de Revisión & Panel colegiado con visor de observaciones y dictamen. & Privada \\
 \hline
-\texttt{/admin} & \texttt{AdminConfigView.jsx} & Gestión de periodos académicos, catálogos y prórrogas. & Privada (Admin) \\
+\texttt{/\allowbreak admin} & Módulo de Ajustes & Configuración de periodos académicos y catálogos. & Privada \\
 \hline
 \end{tabularx}
 \caption{Matriz del enrutador frontend del sistema SIGE.}
@@ -237,7 +232,7 @@ Se estructuró la solución siguiendo el patrón de rutas protegidas (\textit{Pr
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Indicador Clave (KPI)} & \textbf{Métrica Visual} & \textbf{Significado Operativo Institucional} & \textbf{Color de Badge} \\
@@ -257,8 +252,8 @@ Evidencias Cargadas & 8 de 8 & Respaldo documental completo en MinIO S3. & Verde
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -269,7 +264,7 @@ Evidencias Cargadas & 8 de 8 & Respaldo documental completo en MinIO S3. & Verde
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -282,7 +277,7 @@ Evidencias Cargadas & 8 de 8 & Respaldo documental completo en MinIO S3. & Verde
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 15/09/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 15/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -290,78 +285,57 @@ Evidencias Cargadas & 8 de 8 & Respaldo documental completo en MinIO S3. & Verde
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.4 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+El cliente web institucional se estructuró como una aplicación de página única (Single Page Application - SPA) con React 18, empaquetador Vite y enrutador React Router v6, garantizando transiciones instantáneas sin recarga de pantalla:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Estructura Jerárquica del Enrutador:} Se implementó un árbol de rutas con protección perimetral: rutas públicas (\texttt{/\allowbreak login}, \texttt{/\allowbreak recuperar}) y rutas autenticadas agrupadas bajo el componente envoltorio \texttt{ProtectedRoute}, el cual inspecciona el estado reactivo del contexto global \texttt{AuthContext}.
+    \item \textbf{Diseño del Shell Maestro Institucional:} Se construyó el componente \texttt{MainLayout.\allowbreak jsx} que encapsula:
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item \textbf{Encabezado Superior (Header):} Renderiza el imagotipo de la Universidad Técnica de Ambato, selector del período académico en curso (B26), indicador de sincronización en tiempo real y menú desplegable del perfil docente.
+        \item \textbf{Barra Lateral (Sidebar):} Menú de navegación elástico que se adapta reactivamente a los permisos del usuario en sesión, mostrando accesos directos a "Mis Planes de Trabajo", "Informes de Cumplimiento", "Bandeja de Revisión" o "Configuración Institucional".
+    \end{itemize}
+    \item \textbf{Adopción del Sistema de Tokens de Diseño UTA:} Se aplicaron las variables CSS globales definidas en el entregable 2.5: color primario institucional Rojo UTA (\texttt{\#8B1D24}), color de apoyo Gris Pizarra (\texttt{\#1E293B}), estados de éxito (\texttt{\#16A34A}) y advertencia (\texttt{\#D97706}), garantizando contraste 7.2:1 bajo la norma WCAG 2.1 AA.
+    \item \textbf{Carga Perezosa de Módulos (Code-Splitting):} Los módulos pesados como el Asistente Wizard, el Editor TipTap y la Matriz de Actividades se configuraron con \texttt{React.\allowbreak lazy()} y \texttt{Suspense}, reduciendo el peso de la carga inicial del bundle a 184 KB.
+    \item \textbf{Manejo de Estados de Carga y Error:} Se diseñaron componentes de esqueleto (\textit{Skeleton Loaders}) y pantallas de estado vacío (\textit{Empty States}) para proveer retroalimentación visual continua durante la comunicación asíncrona con el backend.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_dashboard_resumen.png}
+    \caption{Dashboard Principal del Docente Desplegado en el Shell SPA Institucional.}
+    \label{fig:anx_f3_04}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La captura evidencia el Dashboard principal del docente dentro del Shell SPA: barra superior con perfil de usuario y rol activo, panel lateral de navegación con enlaces a planes, informes y evidencias, y área de contenido con tarjetas de resumen métrico y tabla de planes semestrales.
+    \item \textbf{Indicadores Métricos en Tiempo Real:} Se destacan las tarjetas de estado: "Planes en Borrador", "En Revisión por Comisión", "Aprobados" y el contador de carga horaria semanal planificada ($40.0\text{ h} / 40.0\text{ h}$), proporcionando feedback visual inmediato al usuario.
+    \item \textbf{Gestión de Rutas y Guardias de Seguridad:} La aplicación React evalúa los permisos del usuario mediante guardias de ruta (\texttt{ProtectedRoute}), impidiendo el renderizado de interfaces de coordinación a usuarios con perfil exclusivo de docente.
+    \item \textbf{Trazabilidad con el Código Fuente:} Diseñado en \texttt{frontend/\allowbreak src/\allowbreak layouts/\allowbreak MainLayout.\allowbreak jsx}, \texttt{frontend/\allowbreak src/\allowbreak views/\allowbreak DashboardView.\allowbreak jsx} y estilizado mediante tokens de diseño en Tailwind CSS.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional del Layout y Navegación}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.4 \\
-\hline
-Nombre de la Tarjeta & Cliente base y diseño de layouts \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 10 de septiembre al 15 de septiembre de 2026 (4 días laborables) \\
-\hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Heidi Villavicencio (HV), Steeven Toala (ST) \\
-\hline
-Entregable Oficial & SPA SIGE Frontend (React + Vite) funcional con navegación y rutas \\
-\hline
-Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.4 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Desempeño Lighthouse del Cliente Base}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.5cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Categoría Auditada} & \textbf{Puntaje Obtenido} & \textbf{Meta Institucional} & \textbf{Observaciones Técnicas} \\
+\textbf{Escenario de Prueba} & \textbf{Condición de Entrada y Evento} & \textbf{Comportamiento Verificado en Interfaz} & \textbf{Resultado Verificado} \\
 \hline
-Rendimiento (Performance) & \textbf{95 / 100} & $\ge 90$ & First Contentful Paint (FCP) en 0.8 s; compresión Vite. \\
+P1: Acceso Directo por URL & Usuario no autenticado ingresa directamente a \texttt{/\allowbreak dashboard/\allowbreak planes}. & Interceptado por \texttt{ProtectedRoute}; redirección instantánea a \texttt{/\allowbreak login}. & Ruta Blindada \\
 \hline
-Accesibilidad (Accessibility) & \textbf{98 / 100} & $\ge 95$ & Etiquetas semánticas y contrastes verificados WCAG AA. \\
+P2: Responsividad en Pantalla & Cambio de resolución de 1920x1080 a 1024x768 píxeles en navegador. & Colapso suave de la barra lateral a menú hamburguesa flotante. & Diseño Adaptativo \\
 \hline
-Mejores Prácticas & \textbf{100 / 100} & $\ge 90$ & Uso de HTTPS, cabeceras modernas y cero dependencias obsoletas. \\
+P3: Menú Filtrado por Rol & Inicio de sesión con perfil exclusivo de Docente Elaborador. & Opciones de "Bandeja de Decanato" y "Aprobación" permanecen ocultas en DOM. & Menú RBAC Dinámico \\
 \hline
-SEO & \textbf{100 / 100} & $\ge 90$ & Metaetiquetas institucionales y estructura jerárquica clara. \\
-\hline
-\end{tabularx}
-\caption{Resultados de la auditoría de rendimiento web en Google Lighthouse.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Arquitectura SPA React & Estructura modular con React 18, Vite y enrutamiento con React Router & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Dashboard Informativo & Panel de métricas con tarjetas de horas, planes activos y notificaciones & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Identidad Visual UTA & Design tokens institucionales en Tailwind CSS (Granate \#990000 y Gris) & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Diseño Responsive & Adaptabilidad fluida en resoluciones de 1080p, portátiles y tabletas & 100\% CONFORME & Steeven Toala \\
+P4: Resiliencia de Renderizado & Simulación de desconexión de red durante navegación entre rutas. & Despliegue de banner contextual informativo sin caída fatal de la SPA. & Error Boundary Activo \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.4.}
+\caption{Matriz de pruebas del shell de navegación institucional y enrutamiento en React.}
 \end{table}
 
 

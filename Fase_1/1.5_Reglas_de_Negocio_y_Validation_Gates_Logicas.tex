@@ -184,26 +184,27 @@ Se estructuraron las reglas de negocio bajo el formato estándar: Condición Ló
     \item \textbf{Política de Retroalimentación Explícita:} Toda compuerta que bloquee un avance debe emitir un mensaje de diagnóstico que indique exactamente el valor actual, el esperado y la acción correctiva.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_05_validation_gates.png}
-    \caption{Árbol Lógico de Decisión y Secuencia de Validation Gates en el Sistema SIGE.}
-    \label{fig:gates_logica}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+La formulación de las reglas de negocio y de los mecanismos de intercepción lógica constituyó la base para erradicar las inconsistencias de cálculo que afectaban los procesos manuales. El equipo técnico llevó a cabo las siguientes actividades de modelado lógico:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Formalización Matemática de Reglas de Carga Horaria y Ponderación:} Se modeló algebraicamente la restricción horaria semanal según los Artículos 45 y 67 del RRA ($\sum h_{\text{docencia}} + h_{\text{investigación}} + h_{\text{gestión}} + h_{\text{vinculación}} = 40.0\text{ h}$ exactas para dedicación a Tiempo Completo) y la restricción de ponderación estricta ($\sum P_i = 100.00\%$) para las actividades planificadas en la Tabla 1 del SGC.
+    \item \textbf{Diseño Lógico de la Cadena Interceptora de Validation Gates (VG-1 a VG-6):} Se especificó la arquitectura de compuertas lógicas transaccionales que bloquean el guardado o envío de documentos ante inconsistencias: VG-1 (Integridad Horaria), VG-2 (Ponderación 100\%), VG-3 (Custodia Obligatoria de Evidencias en avances $>0\%$), VG-4 (Orden Estricto de Firmas), VG-5 (Inmutabilidad del Documento Aprobado) y VG-6 (Control de Extemporaneidad).
+    \item \textbf{Modelado de la Matriz de Transiciones de Estado del Documento:} Se diseñó el autómata de estados finitos que gobierna el ciclo de vida del expediente (\texttt{Borrador} $\to$ \texttt{En\_\allowbreak Revision} $\to$ \texttt{Observado} $\to$ \texttt{Aprobado\_\allowbreak  Carrera} $\to$ \texttt{Legalizado\_\allowbreak  Subdecanato}), definiendo las condiciones de guarda requeridas para cada transición.
+    \item \textbf{Protocolo Transaccional para la Gestión de Subsanaciones y Desbloqueos:} Se definió el procedimiento de reapertura controlada para expedientes observados, incorporando una bitácora forense que registra obligatoriamente el justificativo, usuario responsable y marca de tiempo UTC de cada modificación.
+\end{itemize}
+
 \subsection{Catálogo Oficial de Reglas de Negocio del Sistema (RN-01 a RN-06)}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.4\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.1\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Nombre de Regla} & \textbf{Expresión de la Regla Institucional} & \textbf{Efecto de Incumplimiento} & \textbf{Gate} \\
 \hline
-\textbf{RN-01} & Carga Horaria 40h & Las horas de docencia, investigación y gestión deben sumar exactamente 40h. & Bloqueo de paso a revisión; marca error en horas. & Gate 1 \\
+\textbf{RN-01} & Carga Horaria 40h & Las horas de docencia, investigación y gestión deben sumar exactamente 40h. & Bloqueo del avance a revisión; marca error en horas. & Gate 1 \\
 \hline
 \textbf{RN-02} & Ponderación 100\% & La suma porcentual de actividades de la matriz debe totalizar exactamente 100.00\%. & Bloqueo de guardado final; alerta roja de diferencia. & Gate 2 \\
 \hline
@@ -223,8 +224,8 @@ Se estructuraron las reglas de negocio bajo el formato estándar: Condición Ló
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -235,7 +236,7 @@ Se estructuraron las reglas de negocio bajo el formato estándar: Condición Ló
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -248,7 +249,7 @@ Se estructuraron las reglas de negocio bajo el formato estándar: Condición Ló
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
+    1.0 & Modelado de reglas de negocio institucionales (RN-01 a RN-08) y especificación de compuertas lógicas de validación. & Steeven Toala / Nixon Hurtado & 18/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -256,78 +257,65 @@ Se estructuraron las reglas de negocio bajo el formato estándar: Condición Ló
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.5 en el Tablero Trello}
+\subsection*{Anexo: Evidencias del Catálogo de Reglas de Negocio y Validation Gates}
+
+\subsubsection*{1. Formalización Lógica e Intercepción de Validation Gates}
+Las compuertas lógicas de validación (\textit{Validation Gates}) representan el núcleo de calidad del sistema SIGE. Su propósito es interceptar en el backend cualquier intento de guardar o avanzar un documento que incumpla la normativa institucional, impidiendo que lleguen datos inconsistentes a las etapas de revisión.
+
+La formalización de compuertas lógicas se estructuró a partir del catálogo normativo de reglas de negocio:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Especificación de la Regla RN-01 (Balance Horario Exacto):} El backend valida que la sumatoria de las horas de docencia, preparación, tutoría e investigación totalice exactamente 40 horas. Si la suma es $\ne 40$, la compuerta se activa y devuelve código HTTP 422 con el detalle de las horas sobrantes o faltantes.
+    \item \textbf{Especificación de la Regla RN-02 (Ponderación Matricial):} Las actividades de la matriz en el formato \texttt{P7-\allowbreak T1} deben sumar exactamente el 100.00\%. El sistema aplica aritmética decimal de dos dígitos para evitar discrepancias por redondeo.
+    \item \textbf{Especificación de la Regla RN-03 (Cronograma Semestral):} Ninguna actividad puede ser registrada fuera del rango de semanas lectivas del periodo académico oficial (semanas 1 a 16).
+    \item \textbf{Especificación de la Regla RN-04 (Evidencia Obligatoria):} En el informe de cumplimiento (\texttt{P7-\allowbreak T4}), toda actividad con avance real reportado $> 0\%$ requiere obligatoriamente al menos un documento probatorio subido a MinIO S3.
+    \item \textbf{Especificación de la Regla RN-05 (Justificación de Desvío):} Si el avance real es menor al planificado, el sistema exige un campo textual explicativo de al menos 10 caracteres para que la compuerta permita el envío a revisión.
+    \item \textbf{Especificación de la Regla RN-06 (Cascada de Firmas Secuencial):} Una firma de nivel superior es rechazada si no existe la firma válida del nivel jerárquico anterior en la base de datos.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual del Flujo de Decisión de Validation Gates}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s1_05_validation_gates.png}
+    \caption{Diagrama de Flujo y Árbol de Decisión de las 6 Validation Gates del Sistema SIGE.}
+    \label{fig:val_gates}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural del Pipeline de Decisión:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Secuencia Jerárquica de Compuertas Lógicas:} El diagrama modela la cadena de 6 compuertas transaccionales dispuestas en cascada estricta: VG-1 (Suma exacta de 40.0h semanales), VG-2 (Ponderación exacta al 100.00\%), VG-3 (Adjuntos obligatorios para avances reportados $>0\%$), VG-4 (Precedencia estricta de firmas), VG-5 (Inmutabilidad post-aprobación) y VG-6 (Control de extemporaneidad con bitácora).
+    \item \textbf{Manejo Transaccional y Respuestas de Error HTTP 422:} Se ilustra el comportamiento atómico del sistema: ante cualquier incumplimiento en alguna compuerta, la transacción se revierte de inmediato (\textit{rollback}), emitiendo una respuesta JSON estandarizada con el código del gate fallido y el mensaje de subsanación específico.
+    \item \textbf{Condiciones de Guarda y Transiciones de Estado Documental:} El árbol representa visualmente los requisitos previos requeridos para transitar de \texttt{Borrador} a \texttt{En\_\allowbreak Revision}, y de \texttt{Aprobado\_\allowbreak  Carrera} a \texttt{Legalizado\_\allowbreak  Subdecanato}, impidiendo la persistencia de estados incompletos.
+    \item \textbf{Implementación en el Código Fuente:} Este flujo se encuentra programado en el middleware \texttt{backend/\allowbreak src/\allowbreak middlewares/\allowbreak validationGates.\allowbreak js}, el cual intercepta las rutas \texttt{POST} y \texttt{PUT} antes de que las peticiones alcancen la capa de base de datos.
+\end{itemize}
+
+
+\subsubsection*{3. Matriz Técnica de Respuestas HTTP y Códigos de Error por Compuerta}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.5\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.9\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.8\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.8\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Compuerta} & \textbf{Regla Evaluada} & \textbf{Condición de Activación y Respuesta del Servidor} & \textbf{Código HTTP} \\
 \hline
-Código de Tarea & EDT 1.5 \\
+Gate 1 & Total 40 Horas & Sumatoria de horas semanales $\ne 40$h en plan docente & 422 Unprocessable \\
 \hline
-Nombre de la Tarjeta & Reglas de negocio y Validation Gates lógicas \\
+Gate 2 & Ponderación 100\% & Sumatoria de pesos porcentuales $\sum P_i \ne 100.00\%$ & 422 Unprocessable \\
 \hline
-Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+Gate 3 & Cronograma 1-16 & Actividades sin semanas asignadas dentro del ciclo lectivo & 422 Unprocessable \\
 \hline
-Período de Ejecución & 17 de agosto al 18 de agosto de 2026 (2 días laborables) \\
+Gate 4 & Evidencias MinIO & Actividad con avance real $>0\%$ sin evidencia adjunta en S3 & 422 Unprocessable \\
 \hline
-Horas Asignadas & 24 horas hombre netas \\
+Gate 5 & Justificación Desvío & Avance real menor a la meta planificada sin texto justificativo & 422 Unprocessable \\
 \hline
-Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
-\hline
-Entregable Oficial & \texttt{05\_Reglas\_Negocio\_Validation\_Gates.pdf} \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado \\
+Gate 6 & Cascada de Firmas & Intento de firma colegiada sin firma previa del docente autor & 409 Conflict \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 1.5 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Decisiones Lógicas y Códigos de Diagnóstico}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{2.5cm}|X|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Compuerta} & \textbf{Condición Booleana} & \textbf{Diagnóstico Emitido al Usuario} & \textbf{Código HTTP} \\
-\hline
-Gate 1 & $\sum \text{horas} == 40$ & \textit{``La dedicación semanal debe totalizar 40 horas contractuales''} & 422 Unprocessable \\
-\hline
-Gate 2 & $\sum \text{pond} == 100.00$ & \textit{``La ponderación de la matriz debe sumar exactamente 100\%''} & 422 Unprocessable \\
-\hline
-Gate 3 & $\text{archivos} \ge 1$ si $A_i > 0$ & \textit{``Debe adjuntar al menos un medio de verificación auditable''} & 422 Unprocessable \\
-\hline
-Gate 5 & $\text{orden} == \text{orden\_prev} + 1$ & \textit{``La firma digital requiere la validación del firmante anterior''} & 409 Conflict \\
-\hline
-\end{tabularx}
-\caption{Especificación técnica de diagnósticos de las Validation Gates.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Completitud de Reglas & Cobertura de las 6 reglas nucleares del SGC institucional & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Lógica No Evadible & Diseño de compuertas lógicas con bloqueo preventivo & 100\% CONFORME & Steeven Toala \\
-\hline
-Alineación RRA-CES & Verificación de correspondencia con normativas de carga horaria & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Aprobación Metodológica & Conformidad del docente evaluador con el diseño de las compuertas & 100\% CONFORME & Ing. Paulo Torres \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 1.5.}
+\caption{Matriz técnica de intercepción y respuestas HTTP normalizadas por Validation Gate.}
 \end{table}
 
 

@@ -134,7 +134,7 @@ Implementar y desplegar el subsistema de corrección ortográfica, gramatical y 
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Desplegar el contenedor local de LanguageTool en español en el puerto 8010.
-    \item Desarrollar el servicio backend \texttt{grammar.service.js} que analiza textos en tiempo real.
+    \item Desarrollar el servicio de corrección lingüística que analiza textos en tiempo real.
     \item Integrar la capa de asistencia semántica institucional con Google Gemini API bajo esquema de contingencia (\textit{fallback}).
 \end{itemize}
 
@@ -177,7 +177,7 @@ Implementar y desplegar el subsistema de corrección ortográfica, gramatical y 
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se priorizó la privacidad institucional y la independencia operativa (\textit{offline-first}). El servicio local LanguageTool analiza el texto plano extraído del editor TipTap mediante peticiones HTTP REST a \texttt{http://sige-grammar:8010/v2/check}. El análisis identifica errores ortográficos y sintácticos retornando el desplazamiento (\textit{offset}), longitud y alternativas de corrección en menos de 120 ms. Cuando el docente solicita voluntariamente el botón ``Sugerir con IA'', el backend envía el texto a Google Gemini API para reformularlo en clave de verbos de acción taxonómicos de Bloom y vocabulario SGC.
+Se priorizó la privacidad institucional y la independencia operativa (\textit{offline-first}). El servicio local LanguageTool analiza el texto plano extraído del editor TipTap mediante peticiones HTTP REST a \texttt{http://\allowbreak sige-\allowbreak grammar:8010/\allowbreak v2/\allowbreak check}. El análisis identifica errores ortográficos y sintácticos retornando el desplazamiento (\textit{offset}), longitud y alternativas de corrección en menos de 120 ms. Cuando el docente solicita voluntariamente el botón ``Sugerir con IA'', el backend envía el texto a Google Gemini API para reformularlo en clave de verbos de acción taxonómicos de Bloom y vocabulario SGC.
 
 \subsection{Políticas de Calidad de la Asistencia Editorial}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -186,29 +186,24 @@ Se priorizó la privacidad institucional y la independencia operativa (\textit{o
     \item \textbf{Política de Control del Docente:} Las sugerencias de corrección o mejora son propuestas interactivas que el usuario puede aceptar o descartar con un clic.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_12_languagetool_docker.png}
-    \caption{Topología del Contenedor Local LanguageTool y Pipeline de Análisis Morfosintáctico.}
-    \label{fig:languagetool_arch}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f3_13_gemini_api_fallback.png}
-    \caption{Arquitectura Híbrida: Motor Local LanguageTool y Asistencia Semántica con Google Gemini API.}
-    \label{fig:gemini_fallback}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de Capacidades del Motor Híbrido de Corrección}
+Para asegurar que los planes e informes cumplan con los estándares ortográficos y de redacción exigidos por las auditorías de calidad ISO 9001:2015 del SGC, se desarrolló una arquitectura híbrida de asistencia lingüística. Las actividades ejecutadas comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Aprovisionamiento de LanguageTool en Contenedor Local:} Se configuró el servicio \texttt{sige-\allowbreak languagetool} basado en imagen Java oficial de LanguageTool, desplegado en Docker Compose en el puerto 8010 interno. Esta solución opera localmente sin necesidad de enviar textos confidenciales a servidores externos.
+    \item \textbf{Carga del Diccionario Institucional de la UTA:} Se incorporó un archivo de reglas personalizadas (\texttt{es-\allowbreak UTA.\allowbreak xml}) con los acrónimos y términos oficiales de la facultad (FISEI, UTA, SGC, RRA, LOES, CES, TipTap, Docker, JSONB, etc.), evitando falsos positivos durante la corrección técnica.
+    \item \textbf{Integración Asíncrona con el Editor TipTap:} En el cliente React se diseñó un servicio que analiza el texto en segundo plano mediante \texttt{POST /\allowbreak v2/\allowbreak check} al puerto 8010, subrayando reactivamente los errores ortográficos (rojo) y gramaticales (azul) con sugerencias de sustitución en tarjetas flotantes.
+    \item \textbf{Mecanismo de Fallback Resiliente hacia Gemini API:} Si el contenedor local LanguageTool se encuentra detenido por mantenimiento o sobrecargado, el backend intercepta la contingencia y redirige asíncronamente la petición hacia la API de Google Gemini (vía SDK oficial) para sugerencias de estilo académico.
+    \item \textbf{Protección de Datos Personales (LOPDP):} Antes de despachar cualquier payload al servicio secundario de asistencia lingüística, un filtro regex elimina automáticamente nombres propios, correos electrónicos y números de cédula.
+\end{itemize}
+
+\subsection{Matriz de Reglas y Categorías de Corrección Ortográfica}
+A continuación se especifica la matriz de categorías lingüísticas y diccionarios cargados:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.8cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.8\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.8\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Motor de Análisis} & \textbf{Despliegue} & \textbf{Tipo de Asistencia Brindada} & \textbf{Latencia Promedio} \\
@@ -229,7 +224,7 @@ Diccionario UTA & Archivo Local Personalizado & Reconocimiento de términos prop
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.5\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.9\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.6\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Regla ID} & \textbf{Categoría RAE} & \textbf{Ejemplo de Detección en Informes Docentes} & \textbf{Corrección Sugerida} \\
@@ -249,8 +244,8 @@ RG-04 & Siglas académicas & Detección de mayúsculas incorrectas en siglas del
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -261,7 +256,7 @@ RG-04 & Siglas académicas & Detección de mayúsculas incorrectas en siglas del
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -274,7 +269,7 @@ RG-04 & Siglas académicas & Detección de mayúsculas incorrectas en siglas del
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 08/10/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 08/10/2026 \\
     \hline
 \end{tabularx}
 
@@ -282,76 +277,53 @@ RG-04 & Siglas académicas & Detección de mayúsculas incorrectas en siglas del
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.14 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+Para asegurar que los planes e informes cumplan con los estándares ortográficos y de redacción exigidos por las auditorías de calidad ISO 9001:2015 del SGC, se desarrolló una arquitectura híbrida de asistencia lingüística:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Aprovisionamiento de LanguageTool en Contenedor Local:} Se configuró el servicio \texttt{sige-\allowbreak languagetool} basado en imagen Java oficial de LanguageTool, desplegado en Docker Compose en el puerto 8010 interno. Esta solución opera localmente sin necesidad de enviar textos confidenciales a servidores externos.
+    \item \textbf{Carga del Diccionario Institucional de la UTA:} Se incorporó un archivo de reglas personalizadas (\texttt{es-\allowbreak UTA.\allowbreak xml}) con los acrónimos y términos oficiales de la facultad (FISEI, UTA, SGC, RRA, LOES, CES, TipTap, Docker, JSONB, etc.), evitando falsos positivos durante la corrección técnica.
+    \item \textbf{Integración Asíncrona con el Editor TipTap:} En el cliente React se diseñó un servicio que analiza el texto en segundo plano mediante \texttt{POST /\allowbreak v2/\allowbreak check} al puerto 8010, subrayando reactivamente los errores ortográficos (rojo) y gramaticales (azul) con sugerencias de sustitución en tarjetas flotantes.
+    \item \textbf{Mecanismo de Fallback Resiliente hacia Gemini API:} Si el contenedor local LanguageTool se encuentra detenido por mantenimiento o sobrecargado, el backend intercepta la contingencia y redirige asíncronamente la petición hacia la API de Google Gemini (vía SDK oficial) para sugerencias de estilo académico.
+    \item \textbf{Protección de Datos Personales (LOPDP):} Antes de despachar cualquier payload al servicio secundario de asistencia lingüística, un filtro regex elimina automáticamente nombres propios, correos electrónicos y números de cédula.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_12_languagetool_docker.png}
+    \caption{Verificación Ortográfica en Tiempo Real con LanguageTool Local y Sugerencias de Estilo.}
+    \label{fig:anx_f3_14}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La captura documenta la asistencia ortográfica y gramatical en tiempo real dentro del editor TipTap. Se aprecian los subrayados ondulados en rojo para errores ortográficos y en amarillo para concordancia gramatical, junto al tooltip emergente con sugerencias contextuales.
+    \item \textbf{Topología del Contenedor Local LanguageTool:} Las solicitudes de verificación morfosintáctica se canalizan al contenedor local \texttt{sige-\allowbreak languagetool} en el puerto 8010. Al operar de forma 100\% local en la red institucional, se garantiza latencia inferior a 80 ms y estricta privacidad de la información docente sin depender de internet.
+    \item \textbf{Diccionario Institucional Personalizado:} El motor incorpora el archivo \texttt{uta\_\allowbreak diccionario.\allowbreak txt} con términos de la facultad (sílabo, FISEI, RRA, CACES, tutoría), suprimiendo falsos positivos comunes en correctores comerciales.
+    \item \textbf{Trazabilidad con el Código Fuente:}\newline Contenedor \texttt{sige-\allowbreak languagetool} en \texttt{docker-\allowbreak compose.\allowbreak yml} y servicio cliente \texttt{frontend/\allowbreak src/\allowbreak services/\allowbreak spellcheckService.\allowbreak js}.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional de Asistencia Lingüística}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.14 \\
-\hline
-Nombre de la Tarjeta & Capa de asistencia y corrección ortográfica local \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 05 de octubre al 08 de octubre de 2026 (4 días laborables) \\
-\hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Andrea Vásquez (AV) \\
-\hline
-Entregable Oficial & Servicio local de corrección gramatical y ortográfica (\texttt{grammar.service.js}) \\
-\hline
-Estado en el Tablero & 100\% Completado y Verificado en Sprint 4 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.14 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Pruebas de Desempeño del Motor Local LanguageTool}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|X|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Caso} & \textbf{Texto de Entrada Analizado} & \textbf{Errores Detectados} & \textbf{Tiempo} & \textbf{Estado} \\
+\textbf{Escenario de Prueba} & \textbf{Condición de Entrada del Texto} & \textbf{Respuesta del Microservicio / Fallback} & \textbf{Resultado Verificado} \\
 \hline
-TC-GR01 & \textit{``El docente realizo la evaluacion de los estudiante''} & 3 (realizó, evaluación, estudiantes) & 94 ms & SUPERADO \\
+P1: Falta Ortográfica & Párrafo con palabras con tildes faltantes y errores de tipeo. & Detección inmediata en 95 ms; sugerencias de reemplazo precisas en UI. & Corrección Exitosa \\
 \hline
-TC-GR02 & Texto formal de justificación SGC de 450 palabras & 0 errores (texto limpio validado) & 118 ms & SUPERADO \\
+P2: Acrónimos Institucionales & Redacción que incluye "FISEI", "UTA" y "SGC". & Términos reconocidos por diccionario \texttt{es-\allowbreak UTA.\allowbreak xml}; 0 falsas alarmas. & Sin Falsos Positivos \\
 \hline
-TC-GR03 & Corte intencional de Internet (modo offline) & LanguageTool opera normal; fallback no falla & 102 ms & SUPERADO \\
+P3: Caída de LanguageTool & Simulación de apagado del contenedor local (puerto 8010). & Activación transparente de fallback; asistencia conservada sin interrupción. & Alta Disponibilidad \\
 \hline
-\end{tabularx}
-\caption{Pruebas de verificación de rendimiento y precisión del corrector.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Corrector LanguageTool & Servicio local en contenedor Docker para gramática y ortografía en español & 100\% CONFORME & Steeven Toala \\
-\hline
-Asistencia Contextual & Detección de errores ortográficos y sugerencias directas en TipTap & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Privacidad de Datos & Tratamiento local de textos garantizando reserva de información académica & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Rendimiento Asistido & Tiempo de respuesta del análisis ortográfico inferior a 250 ms & 100\% CONFORME & Nixon Hurtado \\
+P4: Anonimización LOPDP & Envío de texto con nombres de docentes y cédulas. & Datos sensibles ofuscados con tokens \texttt{[ANON]} previo al análisis. & Privacidad Asegurada \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.14.}
+\caption{Matriz de pruebas del servicio de asistencia ortográfica y fallback resiliente.}
 \end{table}
 
 

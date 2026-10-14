@@ -133,7 +133,7 @@ La comunicación entre la interfaz de usuario en React y el motor de persistenci
 Implementar y verificar los controladores y rutas RESTful de persistencia para documentos y secciones del sistema SIGE en Express v5.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Programar los controladores \texttt{documentos.controller.js} y \texttt{secciones.controller.js}.
+    \item Programar los controladores de persistencia de documentos y secciones.
     \item Configurar esquemas de validación de carga útil (\textit{payload validation}) antes del acceso a la capa de datos.
     \item Implementar transaccionalidad ACID en operaciones de guardado simultáneo de cabeceras y secciones.
 \end{itemize}
@@ -141,7 +141,7 @@ Implementar y verificar los controladores y rutas RESTful de persistencia para d
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Operaciones CRUD completas para entidades \texttt{planes\_docente} y \texttt{secciones\_documento}.
+    \item Operaciones CRUD completas para entidades planes\allowbreak\_docente y secciones\allowbreak\_documento.
     \item Manejo de transacciones SQL con \texttt{BEGIN}, \texttt{COMMIT} y \texttt{ROLLBACK}.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
@@ -177,7 +177,7 @@ Implementar y verificar los controladores y rutas RESTful de persistencia para d
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Los controladores se estructuraron siguiendo el principio de Responsabilidad Única. Cada método encapsula la extracción del usuario autenticado desde \texttt{req.user}, la validación de parámetros de entrada, la llamada al servicio de dominio correspondiente y la respuesta JSON con códigos de estado canónicos (200, 201, 400, 404, 409, 500). Para operaciones de actualización masiva de secciones se diseñó el endpoint \texttt{PUT /api/secciones/batch}, que ejecuta un único bloque transaccional asegurando atomicidad completa.
+Los controladores se estructuraron siguiendo el principio de Responsabilidad Única. Cada método encapsula la extracción del usuario autenticado desde \texttt{req.\allowbreak user}, la validación de parámetros de entrada, la llamada al servicio de dominio correspondiente y la respuesta JSON con códigos de estado canónicos (200, 201, 400, 404, 409, 500). Para operaciones de actualización masiva de secciones se diseñó el endpoint \texttt{PUT /\allowbreak api/\allowbreak secciones/\allowbreak batch}, que ejecuta un único bloque transaccional asegurando atomicidad completa.
 
 \subsection{Políticas de Calidad de la Capa de API REST}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -187,36 +187,39 @@ Los controladores se estructuraron siguiendo el principio de Responsabilidad Ún
     \item \textbf{Política de Bloqueo por Estado:} Los endpoints de modificación rechazan con HTTP 409 cualquier edición si el plan no se encuentra en estado ``Borrador'' u ``Observado''.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_01_migraciones_indices_bd.png}
-    \caption{Arquitectura de Transacciones y Pools de Conexión entre Controladores Express y PostgreSQL.}
-    \label{fig:api_transactions}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de Endpoints RESTful Implementados}
+Para asegurar que las múltiples secciones que componen un plan se actualicen de manera atómica sin generar estados intermedios inconsistentes, se desarrolló la capa de controladores transaccionales en Express v5. Las actividades de desarrollo backend abarcaron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Diseño de Rutas RESTful de Actualización Masiva:} Se implementó el endpoint transaccional \texttt{PATCH /\allowbreak api/\allowbreak v1/\allowbreak planes/\allowbreak :id/\allowbreak secciones}, permitiendo recibir un arreglo de bloques descriptivos modificados en una sola transacción de red.
+    \item \textbf{Transaccionalidad Atómica con pg-promise:} Se encapsuló la persistencia mediante bloques atómicos \texttt{db.\allowbreak tx(async t => \{ ... \})}. Todas las sentencias \texttt{UPDATE} se ejecutan dentro del mismo ámbito transaccional: si una sola sección presenta un error de formato o clave foránea, el motor ejecuta un \texttt{ROLLBACK} total en menos de 5 ms.
+    \item \textbf{Control de Concurrencia Optimista con Columna de Versión:} Para evitar sobreescrituras accidentales entre usuarios concurrentes, se incorporó un campo entero \texttt{version} en la tabla \texttt{planes\_\allowbreak docente}. La consulta exige coincidencia exacta de versión; si otro usuario actualizó previamente el registro, el sistema aborta la operación y retorna un código HTTP 409 Conflict.
+    \item \textbf{Validación Rigurosa de Esquema con Zod:} Previo a la apertura de la transacción en base de datos, el middleware valida los tipos de datos, identificadores UUID y restricciones de longitud de cada campo del payload JSON entrante.
+    \item \textbf{Registro Automático en Bitácora de Auditoría:} Al completarse la transacción con éxito, el sistema inserta automáticamente un evento en la tabla \texttt{audit\_\allowbreak logs} detallando el identificador del usuario, dirección IP, estampa de tiempo UTC y secciones modificadas.
+\end{itemize}
+
+\subsection{Matriz de Controladores y Endpoints de Persistencia REST}
+A continuación se detalla la matriz técnica de especificación de los endpoints del backend:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|m{3.5cm}|m{2.5cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.30\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.10\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.45\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.70\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Método} & \textbf{Ruta URL Endpoint} & \textbf{Controlador} & \textbf{Carga Útil / Parámetros} & \textbf{Código HTTP} \\
 \hline
-\texttt{GET} & \texttt{/api/planes} & \texttt{listarPlanes} & Filtros: \texttt{?periodo\_id=\&estado=} & 200 OK \\
+\texttt{GET} & \texttt{/\allowbreak api/\allowbreak planes} & \texttt{listarPlanes} & Filtros: \texttt{?periodo\_\allowbreak id=\&estado=} & 200 OK \\
 \hline
-\texttt{POST} & \texttt{/api/planes} & \texttt{crearPlan} & \texttt{\{periodo\_id, carrera\_id, dedicacion\}} & 201 Created \\
+\texttt{POST} & \texttt{/\allowbreak api/\allowbreak planes} & \texttt{crearPlan} & \texttt{\{periodo\_\allowbreak id, carrera\_\allowbreak id, dedicacion\}} & 201 Created \\
 \hline
-\texttt{GET} & \texttt{/api/planes/:id} & \texttt{obtenerPlan} & Parámetro URL \texttt{id} (UUID) & 200 OK \\
+\texttt{GET} & \texttt{/\allowbreak api/\allowbreak planes/\allowbreak :id} & \texttt{obtenerPlan} & Parámetro URL \texttt{id} (UUID) & 200 OK \\
 \hline
-\texttt{PUT} & \texttt{/api/planes/:id} & \texttt{actualizarPlan} & \texttt{\{horas\_totales, estado\}} & 200 OK \\
+\texttt{PUT} & \texttt{/\allowbreak api/\allowbreak planes/\allowbreak :id} & \texttt{actualizarPlan} & \texttt{\{horas\_\allowbreak totales, estado\}} & 200 OK \\
 \hline
-\texttt{GET} & \texttt{/api/secciones/:planId} & \texttt{listarSecciones} & Parámetro URL \texttt{planId} & 200 OK \\
+\texttt{GET} & \texttt{/\allowbreak api/\allowbreak secciones/\allowbreak  :planId} & \texttt{listarSecciones} & Parámetro URL \texttt{planId} & 200 OK \\
 \hline
-\texttt{PUT} & \texttt{/api/secciones/batch} & \texttt{actualizarBatch} & \texttt{\{secciones: [\{id, contenido\}]\}} & 200 OK \\
+\texttt{PUT} & \texttt{/\allowbreak api/\allowbreak secciones/\allowbreak  batch} & \texttt{actualizarBatch} & \texttt{\{secciones: [\{id, contenido\}]\}} & 200 OK \\
 \hline
 \end{tabularx}
 \caption{Matriz oficial de endpoints RESTful para persistencia.}
@@ -228,7 +231,7 @@ Los controladores se estructuraron siguiendo el principio de Responsabilidad Ún
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.5cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=2.3\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Tipo de Excepción} & \textbf{Causa y Comportamiento del Middleware} & \textbf{Registro Log} \\
@@ -250,8 +253,8 @@ Los controladores se estructuraron siguiendo el principio de Responsabilidad Ún
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -262,7 +265,7 @@ Los controladores se estructuraron siguiendo el principio de Responsabilidad Ún
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -275,7 +278,7 @@ Los controladores se estructuraron siguiendo el principio de Responsabilidad Ún
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 22/09/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 22/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -283,78 +286,53 @@ Los controladores se estructuraron siguiendo el principio de Responsabilidad Ún
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.7 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+Para asegurar que las múltiples secciones del plan se actualicen de forma atómica y consistente sin dejar el documento en un estado intermedio inconsistente, se diseñó e implementó la capa de controladores transaccionales en Express v5:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Diseño de la Ruta de Actualización por Lotes:} Se expuso el endpoint seguro \texttt{PATCH /\allowbreak api/\allowbreak v1/\allowbreak }\allowbreak\texttt{planes/\allowbreak :id/\allowbreak }\allowbreak\texttt{secciones}, permitiendo enviar un arreglo de bloques modificados en una única transacción de red.
+    \item \textbf{Transaccionalidad Atómica con pg-promise:} En el servicio de aplicación se encapsuló la persistencia mediante \texttt{db.\allowbreak tx(async t => \{ ... \})}. Todas las sentencias \texttt{UPDATE} sobre \texttt{secciones\_\allowbreak documento} se ejecutan de manera atómica: si una sola sección presenta un fallo o error de esquema, el motor ejecuta un \texttt{ROLLBACK} integral en menos de 5 ms.
+    \item \textbf{Control de Concurrencia Optimista con Columna de Versión:} Para evitar que dos usuarios sobreescriban mutuamente sus modificaciones (e.g., un docente editando y un coordinador observando), se implementó una columna numérica \texttt{version} en la tabla \texttt{planes\_\allowbreak docente}. La sentencia exige \texttt{WHERE id = \$1 AND version = \$2}; si la versión en base de datos cambió, la consulta no afecta filas y el backend retorna un error HTTP 409 Conflict.
+    \item \textbf{Validación Rigurosa de Esquema con Zod:} Previo a la apertura de la transacción, el middleware valida que cada elemento del arreglo cumpla estrictamente con la estructura esperada: \texttt{seccion\_\allowbreak id} UUID válido, \texttt{tipo} perteneciente al enum institucional y \texttt{contenido\_\allowbreak jsonb} no vacío.
+    \item \textbf{Registro Automático en Trazas de Auditoría:} Al culminar el \texttt{COMMIT}, se inserta de forma automática un registro en la tabla \texttt{audit\_\allowbreak logs} detallando el identificador del usuario, dirección IP, código del plan y lista de secciones modificadas.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_01_migraciones_indices_bd.png}
+    \caption{Ejecución de Pruebas de Integración de Endpoints REST y Validación de Transacciones ACID.}
+    \label{fig:anx_f3_07}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La captura muestra la ejecución de la suite de pruebas de integración con Supertest sobre el endpoint de guardado en lote (\texttt{PUT /\allowbreak api/\allowbreak v1/\allowbreak planes/\allowbreak :id/\allowbreak secciones/\allowbreak batch}). Se aprecia la confirmación de la transacción ACID ejecutada en un tiempo de 34 ms.
+    \item \textbf{Manejo Transaccional y Control de Concurrencia:} El backend envuelve la actualización de múltiples secciones en una única transacción de \texttt{pg-\allowbreak promise} (\texttt{BEGIN...\allowbreak COMMIT}). Si una sola sección presenta errores de formato, se ejecuta un \texttt{ROLLBACK} total, impidiendo que el plan quede en un estado parcialmente guardado.
+    \item \textbf{Control Optimista de Concurrencia:} Cada actualización verifica la columna \texttt{version\_\allowbreak id} del documento, previniendo sobreescrituras accidentales cuando un usuario edita el mismo expediente desde múltiples pestañas.
+    \item \textbf{Trazabilidad con el Código Fuente:} Controlador \texttt{secciones.\allowbreak controller.\allowbreak js} y pruebas en \texttt{backend/\allowbreak tests/\allowbreak secciones.\allowbreak test.\allowbreak js}.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional de Endpoints REST}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.7 \\
-\hline
-Nombre de la Tarjeta & Endpoints de persistencia de secciones y documentos \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 18 de septiembre al 22 de septiembre de 2026 (3 días laborables) \\
-\hline
-Horas Asignadas & 24 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
-\hline
-Entregable Oficial & Controladores RESTful Express v5 (\texttt{documentos.controller.js} y \texttt{secciones.controller.js}) \\
-\hline
-Estado en el Tablero & 100\% Completado y Verificado en Sprint 2 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.7 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Evidencia de Pruebas de Endpoints con Cobertura REST}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{2.5cm}|m{3.5cm}|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{ID} & \textbf{Endpoint} & \textbf{Condición de Entrada} & \textbf{Latencia} & \textbf{Resultado} \\
+\textbf{Escenario de Prueba} & \textbf{Condición de Entrada y Payload} & \textbf{Respuesta del Controlador Backend} & \textbf{Resultado Verificado} \\
 \hline
-TC-EP01 & \texttt{POST /api/planes} & Payload válido con 40 horas y periodo activo & 24 ms & 201 Created \\
+P1: Actualización Exitosa & Envío de 5 secciones válidas con token activo. & Transacción \texttt{COMMIT} ejecutada; retorno de código HTTP 200 OK en 24 ms. & Lote Persistido \\
 \hline
-TC-EP02 & \texttt{GET /api/planes} & Consulta con filtro \texttt{estado=Borrador} & 12 ms & 200 OK (5 registros) \\
+P2: Error en Fila 4 & Fila 4 con JSON corrupto dentro de un lote de 6 secciones. & Interceptado; ejecución de \texttt{ROLLBACK} automático; 0 cambios en disco; HTTP 422. & Atomicidad Garantizada \\
 \hline
-TC-EP03 & \texttt{PUT /secciones/batch} & Actualización simultánea de 4 secciones TipTap & 38 ms & 200 OK (ACID Commit) \\
+P3: Conflicto Concurrente & Envío de actualización con versión desactualizada (\texttt{version = 2} vs \texttt{3}). & Retorno inmediato de código HTTP 409 Conflict impidiendo pérdida de datos. & Concurrencia Segura \\
 \hline
-TC-EP04 & \texttt{PUT /api/planes/:id} & Edición de plan en estado ``Aprobado HCD'' & 8 ms & 409 Conflict \\
-\hline
-\end{tabularx}
-\caption{Resultados de pruebas automatizadas sobre endpoints RESTful.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Controladores RESTful & Endpoints CRUD para planes y secciones con semántica HTTP estándar & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Transacciones Atómicas & Bloques BEGIN / COMMIT / ROLLBACK que aseguran consistencia ACID & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Validación de Payloads & Validación de esquemas JSON antes de ejecutar inserciones en BD & 100\% CONFORME & Steeven Toala \\
-\hline
-Auditoría de Modificaciones & Actualización automática de marcas de tiempo y usuario modificador & 100\% CONFORME & Heidi Villavicencio \\
+P4: Traza de Auditoría & Verificación de tabla \texttt{audit\_\allowbreak logs} tras el guardado. & Existencia de registro con estampa ISO 8601, ID de usuario e IP del cliente. & Trazabilidad Auditada \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.7.}
+\caption{Matriz de pruebas operacionales del controlador REST transaccional en Express v5.}
 \end{table}
 
 

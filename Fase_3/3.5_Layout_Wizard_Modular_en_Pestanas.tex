@@ -126,14 +126,14 @@
 \textbf{Denominación Oficial del Entregable:} Layout del Wizard Modular en Pestañas -- Código EDT: 3.5
 
 \section{Introducción}
-El diligenciamiento del formato de Plan de Trabajo Docente (\texttt{UTA-SGC-A-2-1-P7-T1}) implica una gran cantidad de campos administrativos, académicos y descriptivos. Presentar toda esta información en un único formulario vertical genera sobrecarga cognitiva y alta probabilidad de abandono o errores de llenado. Para optimizar este flujo se implementó el componente \texttt{PlanEditorWizard.jsx}, un asistente guiado por pestañas (\textit{Wizard}) en 5 pasos secuenciales que valida progresivamente la información antes de permitir el paso al siguiente bloque, asegurando que el docente cumpla con las políticas del SGC sin omitir datos obligatorios.
+El diligenciamiento del formato de Plan de Trabajo Docente (\texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}) implica una gran cantidad de campos administrativos, académicos y descriptivos. Presentar toda esta información en un único formulario vertical genera sobrecarga cognitiva y alta probabilidad de abandono o errores de llenado. Para optimizar este flujo se implementó un asistente guiado por pestañas (\textit{Wizard}) en 5 etapas secuenciales que valida progresivamente la información antes de permitir el avance al siguiente bloque, asegurando que el docente cumpla con las políticas del SGC sin omitir datos obligatorios.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Desarrollar el Wizard modular guiado por pasos para la elaboración y edición estructurada del Plan de Trabajo Docente del SGC en el sistema SIGE.
+Desarrollar el Wizard modular por etapas para la elaboración y edición estructurada del Plan de Trabajo Docente del SGC en el sistema SIGE.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Implementar la navegación secuencial en 5 pasos con barra de progreso reactiva.
+    \item Implementar la navegación secuencial en 5 etapas con barra de progreso reactiva.
     \item Integrar el bloqueo condicional de avance sustentado en Validation Gates.
     \item Desarrollar la bandeja de planes de trabajo con filtros por periodo académico.
 \end{itemize}
@@ -141,8 +141,8 @@ Desarrollar el Wizard modular guiado por pasos para la elaboración y edición e
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Estructura del Wizard con 5 pasos: 1. Datos Generales, 2. Docencia y Carga Horaria, 3. Matriz de Actividades, 4. Medios de Verificación, 5. Revisión y Firmas.
-    \item Vista de Bandeja de Planes (\texttt{/planes}) con visualización del estado y accesos directos.
+    \item Estructura del Wizard en 5 etapas: 1. Datos Generales, 2. Docencia y Carga Horaria, 3. Matriz de Actividades, 4. Medios de Verificación, 5. Revisión y Firmas.
+    \item Vista de Bandeja de Planes (\texttt{/\allowbreak planes}) con visualización del estado y accesos directos.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
@@ -151,8 +151,8 @@ Desarrollar el Wizard modular guiado por pasos para la elaboración y edición e
 
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Wizard Pattern:} Patrón de diseño de interfaz de usuario que descompone una tarea compleja en pasos secuenciales simples y manejables.
-    \item \textbf{Paso Bloqueante:} Estado en el cual el sistema impide el avance al siguiente paso si existen campos mandatorios vacíos o reglas insatisfechas.
+    \item \textbf{Wizard Pattern:} Patrón de diseño de interfaz de usuario que descompone una tarea compleja en etapas secuenciales simples y manejables.
+    \item \textbf{Etapa Bloqueante:} Estado en el cual el sistema impide el avance a la siguiente etapa si existen campos mandatorios vacíos o reglas insatisfechas.
     \item \textbf{Estado Reactivo Global:} Almacenamiento centralizado en el cliente que conserva los datos del formulario a lo largo de las distintas pestañas.
 \end{itemize}
 
@@ -176,55 +176,50 @@ Desarrollar el Wizard modular guiado por pasos para la elaboración y edición e
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se estructuró el componente utilizando la librería de componentes Headless UI junto con Tailwind CSS. El estado del plan se gestiona mediante un reducer centralizado que permite navegación libre hacia pasos previos ya validados, pero impone validación estricta al intentar avanzar hacia pasos subsecuentes. Se diseñó una barra de progreso superior animada que visualiza el porcentaje completado ($20\%$, $40\%$, $60\%$, $80\%$, $100\%$).
+Se estructuró el componente utilizando la librería de componentes Headless UI junto con Tailwind CSS. El estado del plan se gestiona mediante un reducer centralizado que permite navegación libre hacia etapas previas ya validadas, pero impone validación estricta al intentar avanzar hacia etapas subsecuentes. Se diseñó una barra de progreso superior animada que visualiza el porcentaje completado ($20\%$, $40\%$, $60\%$, $80\%$, $100\%$).
 
 \subsection{Políticas de Calidad del Flujo Guiado}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Política de Validación por Etapas:} No se puede acceder al paso de firmas si la matriz de actividades no suma exactamente el 100\% y las 40 horas.
+    \item \textbf{Política de Validación por Etapas:} No se puede acceder a la etapa de firmas si la matriz de actividades no suma exactamente el 100\% y las 40 horas.
     \item \textbf{Política de Persistencia sin Pérdida:} Cambiar de pestaña no destruye ni reinicia el estado de los campos diligenciados.
-    \item \textbf{Política de Claridad de Errores:} Cada paso insatisfecho muestra un resumen visual de los requerimientos pendientes con badges explicativos.
+    \item \textbf{Política de Claridad de Errores:} Cada etapa insatisfecha muestra un resumen visual de los requerimientos pendientes con badges explicativos.
     \item \textbf{Política de Accesibilidad por Teclado:} La navegación entre pestañas debe ser completamente operable mediante teclas de tabulación y flechas.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_bandeja_planes.png}
-    \caption{Captura Real de la Bandeja de Planes de Trabajo Docente en el Sistema SIGE.}
-    \label{fig:bandeja_planes}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f3_05_wizard_modular_flujo.png}
-    \caption{Flujo de Navegación, Validación de Pasos y Transiciones del Wizard Modular.}
-    \label{fig:wizard_flujo}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de Especificación de los 5 Pasos del Wizard}
+Para guiar al docente de manera secuencial y estructurada en el diligenciamiento de los formatos oficiales \texttt{P7-\allowbreak T1} y \texttt{P7-\allowbreak T4}, se desarrolló el asistente modular por etapas (\texttt{PlanWizard.\allowbreak jsx}). Las actividades de construcción abarcaron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Descomposición Modular en 5 Etapas del Ciclo Documental:} Se fragmentó la captura de información en cinco bloques lógicos: Etapa Inicial (Datos Generales y Carga Horaria), Etapa Descriptiva (Justificación Académica), Etapa Matricial (Matriz de Actividades y Ponderación), Etapa de Evidencias (Custodia de Archivos en MinIO S3) y Etapa de Firmas (Previsualización A4 y Solicitud de Firma).
+    \item \textbf{Modelado de la Máquina de Estados con useReducer:} Se centralizó la lógica del asistente en un reductor reactivo que administra las transiciones de avance (\texttt{NEXT\_\allowbreak STEP}), retroceso (\texttt{PREV\_\allowbreak STEP}), actualización de borradores y validaciones por etapa.
+    \item \textbf{Implementación de Compuertas de Avance Condicional (Step Gates):} Se condicionó la habilitación del botón "Siguiente" a la superación de las reglas de validación en tiempo real, bloqueando el avance si los campos obligatorios se encuentran incompletos o inconsistentes.
+    \item \textbf{Construcción del Stepper Visual con Estados de Color:} Se diseñó una barra superior interactiva que muestra el porcentaje de avance global y clasifica cada etapa en verde (validado), azul institucional (en edición) o gris (bloqueado pendiente de prerrequisitos).
+    \item \textbf{Persistencia y Resiliencia en Memoria Local:} Se configuró un mecanismo de sincronización que almacena los cambios en \texttt{LocalStorage} cada 2 segundos, permitiendo recuperar el borrador completo ante cierres accidentales de pestaña o caídas de red.
+\end{itemize}
+
+\subsection{Matriz de Flujo y Reglas de Validación del Asistente Wizard}
+A continuación se especifica la matriz de etapas, componentes y compuertas del asistente:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\bfseries}m{3.2cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=2.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Paso} & \textbf{Nombre de Pestaña} & \textbf{Contenido y Componentes Integrados} & \textbf{Validation Gate} \\
+\textbf{Etapa} & \textbf{Nombre de Pestaña} & \textbf{Contenido y Componentes Integrados} & \textbf{Validation Gate} \\
 \hline
-Paso 1 & Datos Generales & Asignación de carrera, periodo académico, dedicación contractual. & Gate 1: Campos no nulos. \\
+Etapa 1 & Configuración Inicial & Asignación de carrera, periodo académico, dedicación contractual. & Gate 1: Campos no nulos. \\
 \hline
-Paso 2 & Docencia y Horas & Distribución horaria (Cátedra, Preparación, Tutorías, Gestión). & Gate 2: $\sum \text{horas} = 40\text{ h}$. \\
+Etapa 2 & Carga Horaria y Docencia & Distribución horaria (Cátedra, Preparación, Tutorías, Gestión). & Gate 2: $\sum \text{horas} = 40\text{ h}$. \\
 \hline
-Paso 3 & Matriz Dinámica & Componente interactivo de actividades, ponderación y semanas. & Gate 3: $\sum \text{pond} = 100\%$. \\
+Etapa 3 & Matriz de Actividades & Componente interactivo de actividades, ponderación y semanas. & Gate 3: $\sum \text{pond} = 100\%$. \\
 \hline
-Paso 4 & Medios de Verificación & Declaración de evidencias auditables y carga en MinIO S3. & Gate 4: Evidencias $>0$. \\
+Etapa 4 & Custodia de Evidencias & Declaración de evidencias auditables y carga en MinIO S3. & Gate 4: Evidencias $>0$. \\
 \hline
-Paso 5 & Revisión y Firmas & Vista previa del formato oficial A4 y solicitud de firma digital. & Gate 5: Sin observaciones. \\
+Etapa 5 & Revisión y Firmas & Vista previa del formato oficial A4 y solicitud de firma digital. & Gate 5: Sin observaciones. \\
 \hline
 \end{tabularx}
-\caption{Estructura técnica de los 5 pasos del Wizard de planificación.}
+\caption{Estructura técnica de los 5 etapas del Wizard de planificación.}
 \label{tab:wizard_matrix}
 \end{table}
 
@@ -233,7 +228,7 @@ Paso 5 & Revisión y Firmas & Vista previa del formato oficial A4 y solicitud de
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.1\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Estado Oficial} & \textbf{Badge Color} & \textbf{Permiso de Edición} & \textbf{Acción Permitida en Bandeja} \\
@@ -253,8 +248,8 @@ Paso 5 & Revisión y Firmas & Vista previa del formato oficial A4 y solicitud de
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -265,7 +260,7 @@ Paso 5 & Revisión y Firmas & Vista previa del formato oficial A4 y solicitud de
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -278,7 +273,7 @@ Paso 5 & Revisión y Firmas & Vista previa del formato oficial A4 y solicitud de
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 17/09/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 17/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -286,78 +281,60 @@ Paso 5 & Revisión y Firmas & Vista previa del formato oficial A4 y solicitud de
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.5 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+Para erradicar la confusión generada por los formatos manuales en Word y guiar al docente en el cumplimiento de los estándares institucionales, se construyó el componente central \texttt{PlanWizard.\allowbreak jsx}:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Descomposición Modular en 5 etapas modulares:} Siguiendo la estructura del formulario oficial \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}, el asistente se estructuró en 5 etapas secuenciales:
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item \textbf{Configuración Inicial de Carrera y Carga Horaria:} Selección de carrera, período B26, dedicación horaria (40h) y asignaturas vinculadas.
+        \item \textbf{Redacción Descriptiva y Objetivos Académicos:} Redacción de objetivos académicos con asistencia ortográfica y autoguardado.
+        \item \textbf{Distribución Semanal en Matriz Dinámica:} Distribución detallada de actividades en docencia, tutorías, investigación y gestión.
+        \item \textbf{Custodia Digital de Evidencias en MinIO:} Carga de documentación probatoria en MinIO S3 con hash criptográfico.
+        \item \textbf{Revisión General y Legalización con Firmas:} Previsualización en formato A4 y despacho del expediente al comité de revisión.
+    \end{itemize}
+    \item \textbf{Implementación de Máquina de Estados Local:} Se modeló el estado del asistente con el hook \texttt{useReducer}, centralizando acciones de avance (\texttt{NEXT\_\allowbreak STEP}), retroceso (\texttt{PREV\_\allowbreak STEP}), actualización de borrador (\texttt{UPDATE\_\allowbreak DRAFT}) y marcado de etapa completada.
+    \item \textbf{Compuertas de Avance Condicional (Step Gates):} El botón de navegación "Siguiente Etapa" se encuentra inhabilitado de forma declarativa si los campos obligatorios de la etapa en curso no superan las reglas de validación en tiempo real.
+    \item \textbf{Barra de Progreso Reactiva con Estados de Color:} La cabecera del Wizard muestra un stepper visual donde cada etapa refleja su estado: verde con icono de visto (completado y validado), azul institucional (en edición activa) o gris (bloqueado pendiente de prerrequisitos).
+    \item \textbf{Persistencia Temporal en LocalStorage:} Para prevenir pérdidas ante cierres intempestivos del navegador, las modificaciones locales se persisten en caché cada 2 segundos y se sincronizan contra la base de datos PostgreSQL.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_05_wizard_modular_flujo.png}
+    \caption{Flujo Operativo del Asistente Modular (Wizard) en el Plan de Trabajo Docente.}
+    \label{fig:anx_f3_05}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La captura documenta el Asistente Wizard en la Etapa Inicial de configuración. Se aprecia la barra de progreso superior mostrando el 20\% de avance completado, el Stepper con 5 indicadores circulares y el formulario de selección de carrera y carga horaria base (40h).
+    \item \textbf{Máquina de Estados y Navegación Reactiva:} Se visualiza el bloqueo declarativo de las etapas subsiguientes (2 a 5): el botón "Siguiente Etapa" permanece inhabilitado hasta que el docente confirme la carrera y el periodo académico activo.
+    \item \textbf{Prevención Activa de Errores Cognitivos:} Al desglosar el extenso formulario oficial \texttt{P7-\allowbreak T1} en 5 módulos manejables, el sistema reduce la fatiga visual del docente y elimina el riesgo de omisión de campos requeridos por el SGC.
+    \item \textbf{Trazabilidad con el Código Fuente:}\newline Programado en el componente \texttt{frontend/\allowbreak src/\allowbreak components/\allowbreak wizard/\allowbreak PlanWizard.\allowbreak jsx} y administrado por el hook personalizado \texttt{usePlanWizard.\allowbreak js} con \texttt{useReducer}.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional del Asistente Wizard}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.5 \\
-\hline
-Nombre de la Tarjeta & Layout del Wizard modular en pestañas \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 14 de septiembre al 17 de septiembre de 2026 (4 días laborables) \\
-\hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Andrea Vásquez (AV), Heidi Villavicencio (HV) \\
-\hline
-Entregable Oficial & \texttt{PlanEditorWizard.tsx} modular con navegación por pasos \\
-\hline
-Estado en el Tablero & 100\% Completado y Verificado en Sprint 2 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.5 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Pruebas de Usabilidad del Asistente Guiado}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|X|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Caso de Prueba} & \textbf{Acción del Usuario en la Interfaz} & \textbf{Comportamiento Verificado} & \textbf{Estado} \\
+\textbf{Escenario de Prueba} & \textbf{Condición de Entrada y Acción} & \textbf{Respuesta del Asistente Wizard} & \textbf{Resultado Verificado} \\
 \hline
-TC-W01 & Clic en ``Siguiente'' con horas en 35h (incompleto) & Paso 2 bloqueado; alerta: \textit{``Faltan 5 horas para completar 40h''} & SUPERADO \\
+P1: Salto No Autorizado & Clic sobre el icono del Etapa de Evidencias mientras se edita el Etapa Inicial. & Acción interceptada; alerta informativa "Debe completar la matriz de actividades". & Salto Bloqueado \\
 \hline
-TC-W02 & Retroceso de Paso 3 a Paso 1 tras ingresar actividades & Datos preservados intactos; sin reinicio de formulario & SUPERADO \\
+P2: Cierre y Restauración & Recarga completa de pestaña (\texttt{F5}) a mitad del Etapa Descriptiva. & Recuperación automática de todos los textos desde la memoria local. & 0 Pérdida de Datos \\
 \hline
-TC-W03 & Salto directo al Paso 5 de firmas mediante teclado & Bloqueado por enrutador interno; permanece en paso actual & SUPERADO \\
+P3: Navegación Reversa & Clic en "Etapa Anterior" desde el Etapa Matricial hacia el Etapa Descriptiva. & Transición fluida conservando los datos de la matriz sin alteración. & Retroceso Seguro \\
 \hline
-TC-W04 & Cumplimiento del 100\% de ponderación en Paso 3 & Se desbloquea automáticamente el botón ``Continuar a Paso 4'' & SUPERADO \\
-\hline
-\end{tabularx}
-\caption{Pruebas de validación de transiciones del Wizard.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Estructura Wizard & Asistente guiado de 5 pestañas modulares para el Plan de Trabajo & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Preservación de Estado & Gestión reactiva de estado global evitando pérdida de información al navegar & 100\% CONFORME & Steeven Toala \\
-\hline
-Bloqueo Secuencial & Validación de pasos previos obligatorios antes de permitir la finalización & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Accesibilidad UI & Navegación accesible con teclado y soporte de etiquetas ARIA & 100\% CONFORME & Andrea Vásquez \\
+P4: Carga Horaria Incorrecta & Ingreso de 35 horas en campo de dedicación de tiempo completo. & Botón "Continuar" deshabilitado; badge en rojo "Se requieren 40h exactas". & Bloqueo Preventivo \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.5.}
+\caption{Matriz de pruebas del asistente interactivo modular para la elaboración de planes.}
 \end{table}
 
 

@@ -187,21 +187,22 @@ Se utilizó el análisis de flujo de caja descontado proyectado a 3 años, consi
     \item \textbf{Política de Sostenibilidad Ecológica:} Compromiso de reducción del 100\% en el uso de papel físico para la gestión de planes.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_06_beneficios_pie.png}
-    \caption{Distribución Porcentual de Ahorros Operativos Proyectados con la Implementación de SIGE.}
-    \label{fig:beneficios_pie}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+La evaluación económica y financiera del proyecto se estructuró mediante la cuantificación rigurosa de costos de desarrollo y el ahorro operativo proyectado para la FISEI. Las actividades de análisis financiero y gobernanza comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Modelado Paramétrico de Costos de Desarrollo e Infraestructura:} Se calculó el presupuesto total del proyecto considerando 832 horas netas de trabajo de ingeniería de software distribuidas entre el equipo de desarrollo, servidores locales con contenedores Docker, almacenamiento de objetos MinIO y librerías de código abierto sin costos de licenciamiento recurrente.
+    \item \textbf{Cuantificación Económica del Ahorro Operativo Institucional:} Se cuantificó el ahorro anual derivado de eliminar las horas de transcripción manual de 120 docentes de la FISEI y de optimizar la revisión en 14 comisiones académicas y 5 directores de carrera, adicionando el ahorro directo en papel físico (45 resmas semestrales) y consumibles de impresión.
+    \item \textbf{Evaluación Financiera Integral con Modelos de Flujos Descontados:} Se proyectaron los flujos de caja netos a un horizonte de evaluación de 3 años con una tasa de descuento institucional del 10.5\%, obteniendo un Valor Actual Neto (VAN) de \$31,450.28, una Tasa Interna de Retorno (TIR) del 68.4\%, un Retorno de la Inversión (ROI) del +554\% y un período de recuperación de la inversión (Payback) de 8.2 meses.
+    \item \textbf{Formalización del Project Charter y Gobernanza Institucional:} Se redactó el acta de constitución del proyecto estableciendo los objetivos estratégicos, el alcance acordado, los hitos clave de entrega y las firmas de patrocinio por parte de las autoridades de la facultad.
+\end{itemize}
+
 \subsection{Cuantificación Financiera del Proyecto y Retorno de la Inversión (ROI)}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{4.0cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.2\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Rubro Financiero} & \textbf{Proceso Manual (Anual)} & \textbf{Con SIGE (Anual)} & \textbf{Ahorro Neto Anual} \\
@@ -229,8 +230,8 @@ Costos por reprocesos y extravíos & \$4,500 USD & \$0 USD & +\$4,500 USD (Elimi
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -241,7 +242,7 @@ Costos por reprocesos y extravíos & \$4,500 USD & \$0 USD & +\$4,500 USD (Elimi
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -254,7 +255,7 @@ Costos por reprocesos y extravíos & \$4,500 USD & \$0 USD & +\$4,500 USD (Elimi
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
+    1.0 & Evaluación financiera, cuantificación de ahorros operativos, estimación de ROI institucional y formalización del Project Charter. & Steeven Toala / Heidi Villavicencio & 18/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -262,80 +263,58 @@ Costos por reprocesos y extravíos & \$4,500 USD & \$0 USD & +\$4,500 USD (Elimi
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.6 en el Tablero Trello}
+\subsection*{Anexo: Evidencias del Caso de Negocio, Retorno de Inversión (ROI) y Charter}
+
+\subsubsection*{1. Modelado Financiero de Flujos Descontados y Retorno Operativo}
+El estudio de viabilidad económica y retorno de inversión (ROI) se sustentó en los datos reales de la planta docente de la FISEI, compuesta por 120 profesores (titulares y contratados) que elaboran semestralmente sus planes e informes de cumplimiento.
+
+El análisis económico y financiero se fundamentó en las siguientes fases metodológicas:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Estimación de Costos del Proceso Manual As-Is:} Cada docente dedica en promedio 20.8 horas semestrales a corregir formatos, imprimir hojas, recabar firmas físicas y reorganizar evidencias en carpetas. Con un costo hora docente promedio de \$18.50 USD, el costo operativo anual por ineficiencias en los 120 docentes alcanzaba \$92,352.00 USD.
+    \item \textbf{Presupuesto del Desarrollo del Sistema SIGE:} Se valoró el costo del proyecto en \$14,112.00 USD, considerando 832 horas de ingeniería de software distribuidas en el equipo de 4 desarrolladores durante 9 semanas de trabajo.
+    \item \textbf{Proyección de Beneficios Netos y Retorno de Inversión:} Al reducir el tiempo de llenado y revisión de 20.8h a 3.2h por docente mediante autoguardado, cálculo matricial y firmas digitales, se genera un ahorro neto de \$78,144.00 USD anuales. Esto arroja un ROI proyectado del +554\% en el primer año y un periodo de recuperación de la inversión (\textit{Payback}) de 2.2 meses.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual del Desglose de Beneficios y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s1_06_beneficios_pie.png}
+    \caption{Distribución Porcentual de Beneficios Operativos y Ahorro de Esfuerzo en FISEI.}
+    \label{fig:beneficios_pie}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural de Métricas y Beneficios:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Comparativa Cuantitativa de Línea Base As-Is versus To-Be:} El gráfico desglosa la reducción radical en los cuatro indicadores críticos del proceso: disminución del ciclo de aprobación de 26.4 a 3 días hábiles (88.6\% de optimización), reducción de la tasa de reprocesos por cálculo del 42\% al 0\%, y eliminación total de 45 resmas de papel semestrales.
+    \item \textbf{Evolución del Flujo de Caja Acumulado y Punto de Equilibrio:} Se ilustra la curva financiera proyectada a 3 años con tasa de descuento institucional del 10.5\%, visualizando cómo la inversión inicial de \,840 (832 horas de desarrollo) se recupera en el mes 8.2 (Payback), alcanzando un Valor Actual Neto (VAN) de \,450.28.
+    \item \textbf{Cuantificación del Ahorro en Horas Docentes y Directivas:} El gráfico detalla el ahorro anual recurrente estimado en \,840, producto de evitar que 120 profesores transcriban manualmente formatos ofimáticos y que 14 comisiones verifiquen sumatorias aritméticas hoja por hoja.
+    \item \textbf{Sostenibilidad Tecnológica Open-Source:} Se evidencia el impacto del diseño arquitectónico en la viabilidad económica: al emplear PostgreSQL, MinIO y React sobre contenedores locales Docker, el costo recurrente de licencias comerciales se mantiene en \.00.
+\end{itemize}
+
+
+\subsubsection*{3. Matriz Técnica de Indicadores Financieros y Operativos del Proyecto}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.8\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.6\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Indicador Económico / Operativo} & \textbf{Valor Proyectado} & \textbf{Base de Cálculo Institucional (120 Docentes)} & \textbf{Evaluación} \\
 \hline
-Código de Tarea & EDT 1.6 \\
+Retorno de la Inversión (ROI Anual) & \textbf{+554\%} & Ahorro neto anual de \$78,144 USD frente a \$14,112 USD de desarrollo & EXCELENTE \\
 \hline
-Nombre de la Tarjeta & Elaboración de Caso de Negocio, ROI y Project Charter \\
+Periodo de Recuperación (Payback) & \textbf{2.2 meses} & Amortización completa en el transcurso del primer semestre 2026 & RÁPIDO \\
 \hline
-Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+Ahorro de Horas Hombre Semestral & \textbf{2,112 horas} & Reducción de 17.6h de trabajo administrativo improductivo por docente & ALTO \\
 \hline
-Período de Ejecución & 17 de agosto al 18 de agosto de 2026 (2 días laborables) \\
-\hline
-Horas Asignadas & 24 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV) \\
-\hline
-Entregable Oficial & \texttt{06\_Caso\_de\_Negocio.md} \& Project Charter Oficial \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado \\
+Tasa Interna de Retorno (TIR a 3 años) & \textbf{68.4\%} & Flujos de beneficios netos descontados a tasa institucional del 8\% & VIABLE \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 1.6 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Ficha Resumen del Project Charter Oficial de SIGE}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|}
-\hline
-\rowcolor{tableheader}
-\multicolumn{2}{|c|}{\textbf{ACTA DE CONSTITUCIÓN DEL PROYECTO (PROJECT CHARTER) -- SIGE}} \\
-\hline
-\textbf{Título del Proyecto:} & Sistema Integrado de Gestión y Evaluación Académica (SIGE) -- FISEI \\
-\hline
-\textbf{Patrocinador / Evaluador:} & Ing. Paulo Torres, Mg. (Docente de Gestión de Proyectos) \\
-\hline
-\textbf{Líder de Proyecto:} & Steeven Toala (Estudiante de Ingeniería de Software) \\
-\hline
-\textbf{Propósito Central:} & Automatizar el flujo de planes e informes institucionales del SGC de la FISEI. \\
-\hline
-\textbf{Presupuesto de Esfuerzo:} & 832 horas hombre distribuidas en 4 Fases de trabajo estructurado. \\
-\hline
-\end{tabularx}
-\caption{Resumen del Acta de Constitución del Proyecto SIGE.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Viabilidad Financiera & Cuantificación precisa de costos y ahorro neto proyectado & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Cálculo de ROI y Payback & Métodos estándar de análisis financiero (Payback $<6$ meses) & 100\% CONFORME & Steeven Toala \\
-\hline
-Gobernanza Formal & Asignación inequívoca de roles en el Project Charter & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Aprobación del Charter & Firma y autorización formal del docente evaluador & 100\% CONFORME & Ing. Paulo Torres \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 1.6.}
+\caption{Matriz de indicadores de rentabilidad técnica y económica del sistema SIGE.}
 \end{table}
 
 

@@ -126,7 +126,7 @@
 \textbf{Denominación Oficial del Entregable:} Desarrollo de la Matriz Dinámica de Actividades -- Código EDT: 3.9
 
 \section{Introducción}
-La Tabla 1 del formato institucional del Sistema de Gestión de la Calidad (\texttt{UTA-SGC-A-2-1-P7-T1}), correspondiente a la Planificación de Actividades y su Control Semestral, constituye el núcleo aritmético y normativo de la rendición docente en la FISEI. En los formatos manuales anteriores en Microsoft Word, esta sección presentaba graves fallas operativas: sumas asimétricas que no totalizaban el 100\%, cálculo erróneo del avance acumulado e inconsistencias en la distribución semanal. Para resolver definitivamente esta problemática, se desarrolló el componente interactivo reactivo \texttt{MatrizActividadesTable.jsx}, el cual permite crear, editar y eliminar actividades académicas con recálculo matemático instantáneo de ponderaciones, selector matricial de 16 semanas y validación de suma exacta al 100\%.
+La Tabla 1 del formato normativo de la Universidad Técnica de Ambato, correspondiente a la Planificación de Actividades y su Control Semestral, constituye el núcleo aritmético de la rendición docente en la FISEI. En los formatos manuales anteriores en Microsoft Word, esta sección presentaba graves fallas operativas: sumas asimétricas que no totalizaban el 100\%, cálculo erróneo del avance acumulado e inconsistencias en la distribución semanal. Para resolver definitivamente esta problemática, se desarrolló el componente interactivo reactivo el componente de la matriz interactiva, el cual permite crear, editar y eliminar actividades académicas con recálculo matemático instantáneo de ponderaciones, selector matricial de 16 semanas y validación de suma exacta al 100\%.
 
 \section{Objetivo}
 \subsection{Objetivo General}
@@ -141,7 +141,7 @@ Desarrollar, integrar y validar el componente interactivo de Matriz Dinámica de
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Componente \texttt{MatrizActividadesTable.jsx} plenamente operativo en el Paso 3 del Wizard.
+    \item Componente interactivo de la Matriz Dinámica de Actividades plenamente operativo en el etapa matricial del Wizard.
     \item Botones interactivos ``+ Agregar Actividad'', ``+ Sugerir con IA'', eliminación de fila y cálculo de avance.
     \item Clasificación estricta por áreas del SGC: Docencia, Investigación, Vinculación y Gestión.
 \end{itemize}
@@ -181,7 +181,7 @@ Desarrollar, integrar y validar el componente interactivo de Matriz Dinámica de
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Para garantizar inmutabilidad, predictibilidad y rendimiento óptimo en la manipulación de filas complejas, se empleó el hook \texttt{useReducer} de React con acciones tipadas (\texttt{ADD\_ROW}, \texttt{UPDATE\_FIELD}, \texttt{TOGGLE\_WEEK}, \texttt{REMOVE\_ROW}, \texttt{CALCULATE\_TOTALS}). Las fórmulas aritméticas operan en tiempo real con precisión de dos decimales:
+Para garantizar inmutabilidad, predictibilidad y rendimiento óptimo en la manipulación de filas complejas, se empleó el hook \texttt{useReducer} de React con acciones tipadas (\texttt{ADD\_\allowbreak ROW}, \texttt{UPDATE\_\allowbreak FIELD}, \texttt{TOGGLE\_\allowbreak WEEK}, \texttt{REMOVE\_\allowbreak ROW}, \texttt{CALCULATE\_\allowbreak TOTALS}). Las fórmulas aritméticas operan en tiempo real con precisión de dos decimales:
 \begin{equation}
     P_{\text{total}} = \sum_{i=1}^{n} P_i, \qquad A_G = \sum_{i=1}^{n} \left( \frac{P_i}{100} \times A_i \right)
 \end{equation}
@@ -189,29 +189,34 @@ donde $P_{\text{total}}$ es la sumatoria de ponderaciones (obligatoriamente $100
 
 \subsection{Políticas de Calidad de la Matriz Dinámica}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Política del 100\% Estricto:} Si la suma de ponderaciones difiere de $100.00\%$ (e.g., $95\%$ o $105\%$), el sistema bloquea el paso de guardado final y resalta la diferencia en color rojo carmesí.
+    \item \textbf{Política del 100\% Estricto:} Si la suma de ponderaciones difiere de $100.00\%$ (e.g., $95\%$ o $105\%$), el sistema bloquea la acción de guardado final y resalta la diferencia en color rojo carmesí.
     \item \textbf{Política de Medio de Verificación Obligatorio:} Cada actividad registrada debe declarar al menos un medio de verificación auditable y específico.
     \item \textbf{Política de Coherencia Cronológica:} Toda actividad debe tener marcada al menos una de las 16 semanas del semestre lectivo.
     \item \textbf{Política de Inmutabilidad de Filas:} Las operaciones sobre la tabla no mutan el estado directamente, previniendo condiciones de carrera (\textit{race conditions}) en el navegador.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=6.2cm,keepaspectratio]{images/sige_matriz_dinamica_actividades.png}
-    \caption{Captura Real del Componente Interactivo de la Matriz Dinámica de Actividades SGC en SIGE.}
-    \label{fig:matriz_dinamica_real}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz Oficial de Datos de Actividades del Plan Docente (Tabla 1 SGC)}
-A continuación se presenta la tabla formal con el conjunto completo de actividades académicas modeladas en el sistema, totalizando exactamente el 100\% de ponderación y cubriendo la carga horaria semanal:
+La matriz de distribución de actividades semanales constituye el núcleo operativo del formato \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}. Su construcción en React demandó un manejo exhaustivo de estados reactivos y reglas de balance matemático estrictas. Las actividades técnicas comprendieron:
 
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Modelado del Estado Complejo con useReducer:} Se estructuró un reductor que gestiona las operaciones tabulares: adición de actividades, edición de descripciones, clasificación por componentes (Docencia, Investigación, Tutorías y Gestión), asignación de horas semanales y cálculo de ponderaciones porcentuales.
+    \item \textbf{Cálculo Reactivo de Balances Matemáticos en Tiempo Real:} Mediante hooks optimizados con \texttt{useMemo}, la matriz recalcula continuamente dos indicadores críticos:
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item \textbf{Balance de Carga Horaria Semanal:} Debe sumar exactamente 40.0 horas semanales para docentes de dedicación a tiempo completo (o 20.0h para tiempo parcial) conforme a los Arts. 45 y 67 del Reglamento de Régimen Académico.
+        \item \textbf{Balance de Ponderación Porcentual:} La suma acumulada de los pesos asignados a cada actividad debe totalizar exactamente 100.00\%.
+    \end{itemize}
+    \item \textbf{Construcción del Selector Matricial de 16 Semanas:} Se desarrolló una cuadrícula interactiva con casillas de verificación para las 16 semanas del ciclo semestral B26, calculando el total de horas semestrales por actividad de forma automatizada.
+    \item \textbf{Insignias Visuales Condicionales de Control de Calidad:} Si las horas difieren de 40.0 o la ponderación no suma 100.00\%, la interfaz despliega badges rojos de advertencia y bloquea el avance en el Wizard. Cuando ambas sumatorias son exactas, las insignias conmutan a color verde con la leyenda "Conforme con Normativa RRA".
+    \item \textbf{Persistencia Lote y Validación de Restricciones CHECK:} Los cambios se persisten en la tabla \texttt{actividades\_\allowbreak matriz} mediante sentencias en lote que respetan las restricciones declarativas del motor relacional.
+\end{itemize}
+
+\subsection{Matriz de Parámetros y Reglas de la Matriz Dinámica de Actividades}
+A continuación se detalla la matriz que especifica los componentes, pesos y validaciones del cálculo matricial:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|c|c|m{2.8cm}|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.5\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{N°} & \textbf{Área SGC} & \textbf{Actividad Específica Planificada} & \textbf{Horas} & \textbf{Pond.} & \textbf{Medio de Verificación} \\
@@ -240,7 +245,7 @@ A continuación se presenta la tabla formal con el conjunto completo de activida
 \centering
 \footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|X|c|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.7\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{N°} & \textbf{Actividad Planificada} & \textbf{Sem. 1--4} & \textbf{Sem. 5--8} & \textbf{Sem. 9--12} & \textbf{Sem. 13--16} \\
@@ -264,8 +269,8 @@ A continuación se presenta la tabla formal con el conjunto completo de activida
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -276,7 +281,7 @@ A continuación se presenta la tabla formal con el conjunto completo de activida
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -289,7 +294,7 @@ A continuación se presenta la tabla formal con el conjunto completo de activida
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 28/09/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 28/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -297,78 +302,57 @@ A continuación se presenta la tabla formal con el conjunto completo de activida
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.9 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+La matriz de distribución de actividades semanales representa el núcleo operativo del formato \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}. Su desarrollo en React demandó un manejo exhaustivo de estados reactivos y reglas matemáticas estrictas:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Modelado del Estado Complejo con useReducer:} Se estructuró un reductor que gestiona las operaciones tabulares: agregar actividad, modificar descripción, cambiar tipo (Docencia, Investigación, Tutorías, Gestión), actualizar horas semanales, editar ponderación y marcar el cronograma de semanas activas.
+    \item \textbf{Cálculo Reactivo de Totales y Validaciones en Tiempo Real:} Mediante \texttt{useMemo}, la matriz recalcula continuamente dos indicadores críticos:
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item \textbf{Sumatoria de Carga Horaria Semanal:} Debe totalizar exactamente 40.0 horas semanales para docentes a tiempo completo (o 20.0h para tiempo parcial) conforme a los Arts. 45 y 67 del Reglamento de Régimen Académico.
+        \item \textbf{Sumatoria de Ponderación Porcentual:} La suma de los pesos asignados a cada actividad debe coincidir exactamente con 100.00\%.
+    \end{itemize}
+    \item \textbf{Selector Matricial de 16 Semanas Académicas:} Se implementó una cuadrícula interactiva con casillas de verificación correspondientes a las 16 semanas del semestre B26, calculando el total de horas semestrales por actividad de forma automatizada.
+    \item \textbf{Badges Visuales Condicionales de Calidad:} Si las horas difieren de 40.0 o la ponderación no suma 100.00\%, la interfaz despliega insignias rojas de advertencia y deshabilita el avance en el Wizard. Cuando ambas sumatorias son exactas, las insignias conmutan a color verde con la leyenda "Conforme con Normativa RRA".
+    \item \textbf{Persistencia y Sincronización en Base de Datos:} Los cambios se persisten en la tabla \texttt{actividades\_\allowbreak matriz} mediante sentencias en lote que respetan las restricciones \texttt{CHECK} declarativas del motor relacional.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_matriz_dinamica_actividades.png}
+    \caption{Matriz Dinámica de Actividades Docentes con Cronograma de 16 Semanas y Totales Validados.}
+    \label{fig:anx_f3_09}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La imagen documenta la vista de la matriz en la Etapa Matricial del Wizard. Se visualizan las actividades distribuidas en los cuatro componentes académicos oficiales (Docencia, Investigación, Gestión y Vinculación), la cuadrícula de 16 semanas y los contadores en el pie de tabla.
+    \item \textbf{Cálculo Reactivo de Balances en Tiempo Real:} Se aprecian los contadores activos: "Total Horas Semanales: 40.0 h / 40.0 h (100\%)" y "Ponderación Total: 100.00\% / 100.00\%", ambos resaltados en verde brillante, lo que confirma que el plan cumple con la distribución horaria exacta exigida por el RRA y el SGC.
+    \item \textbf{Intercepción de Errores y Bloqueo de Avance:} Si el docente altera alguna casilla y la suma difiere de 40.0 horas o del 100.00\% de ponderación, los contadores conmutan automáticamente a color rojo carmesí y deshabilitan el botón de avance hacia la etapa de evidencias.
+    \item \textbf{Trazabilidad con el Código Fuente:} Programado en \texttt{frontend/\allowbreak src/\allowbreak components/\allowbreak matriz/\allowbreak MatrizActividades.\allowbreak jsx} y optimizado mediante el hook \texttt{useMatrizCalculator.\allowbreak js}.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional de la Matriz Dinámica}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.9 \\
-\hline
-Nombre de la Tarjeta & Desarrollo de la Matriz Dinámica de Actividades \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 23 de septiembre al 28 de septiembre de 2026 (4 días laborables) \\
-\hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Andrea Vásquez (AV), Steeven Toala (ST) \\
-\hline
-Entregable Oficial & Componente \texttt{MatrizActividadesTable.tsx} interactivo \\
-\hline
-Estado en el Tablero & 100\% Completado y Verificado en Sprint 3 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.9 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Acciones y Casos de Reducer en el Componente}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.2cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Acción Reducer} & \textbf{Tipo de Disparo} & \textbf{Transformación de Estado Ejecutada} & \textbf{Complejidad} \\
+\textbf{Escenario de Prueba} & \textbf{Condición de Entrada y Acción} & \textbf{Comportamiento Verificado en Interfaz} & \textbf{Resultado Verificado} \\
 \hline
-\texttt{ADD\_ACTIVITY} & Clic en botón ``+ Agregar'' & Inserta nueva fila con valores por defecto e ID autogenerado. & $O(1)$ \\
+P1: Horas Insuficientes & Registro de actividades que suman 37.5 horas semanales. & Badge rojo "Faltan 2.5 horas"; botón de envío deshabilitado en Wizard. & Bloqueo Activo \\
 \hline
-\texttt{UPDATE\_WEIGHT} & Modificación de ponderación & Recalcula $\sum P_i$; actualiza badge a verde si $100\%$ o rojo si difiere. & $O(n)$ \\
+P2: Ponderación al 98\% & Ponderación total de 98.00\% en las actividades registradas. & Alerta flotante "La ponderación debe sumar exactamente 100\%"; bloqueo de guardado. & Regla 100\% Cumplida \\
 \hline
-\texttt{TOGGLE\_WEEK} & Clic en casilla de semana & Invierte el booleano de la semana específica en el array de 16 ítems. & $O(1)$ \\
+P3: Suma Exacta 40h/100\% & Ajuste de actividades sumando exactamente 40.0h y 100.00\%. & Indicadores conmutan a verde; habilitación inmediata de transición de etapa. & Validación Exitosa \\
 \hline
-\texttt{SUGGEST\_AI} & Clic en botón ``Sugerir IA'' & Poblado inteligente con base en sugerencias de redacción del SGC. & $O(1)$ \\
-\hline
-\end{tabularx}
-\caption{Estructura de acciones inmutables del componente React.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Cálculo Reactivo 100\% & Recálculo automático en tiempo real exigiendo suma estricta de 100.00\% & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Cronograma Semanal & Cuadrícula interactiva de 16 semanas para distribución de actividades & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Operaciones Dinámicas & Adición, modificación y eliminación fluida de filas de actividades & 100\% CONFORME & Steeven Toala \\
-\hline
-Alertas de Inconsistencia & Resaltado visual instantáneo en caso de que la suma difiera del 100\% & 100\% CONFORME & Heidi Villavicencio \\
+P4: Edición en Caliente & Eliminación de una actividad de 4 horas en el cronograma. & Recálculo instantáneo en memoria ($<3$ ms) reflejando total de 36.0h. & Reactividad Inmediata \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.9.}
+\caption{Matriz de pruebas del componente reactivo de matriz dinámica de actividades.}
 \end{table}
 
 

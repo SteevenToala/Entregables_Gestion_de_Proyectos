@@ -133,7 +133,7 @@ La seguridad en el acceso a la plataforma SIGE es un requerimiento crítico dado
 Implementar el subsistema de autenticación y autorización segura con JWT y RBAC en el backend y frontend de SIGE, garantizando la delimitación estricta de privilegios.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Desarrollar los endpoints de login (\texttt{POST /api/auth/login}) y verificación (\texttt{GET /api/auth/me}).
+    \item Desarrollar los servicios web de autenticación y verificación de sesión del usuario.
     \item Construir los middlewares de Express para validación de token y autorización por roles.
     \item Diseñar e integrar la vista interactiva de inicio de sesión en el cliente React.
 \end{itemize}
@@ -142,7 +142,7 @@ Implementar el subsistema de autenticación y autorización segura con JWT y RBA
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Protección de todos los endpoints de la API REST mediante autorización por encabezado \texttt{Authorization: Bearer <token>}.
-    \item Integración visual y manejo de estado de sesión en el frontend con \texttt{AuthContext.jsx}.
+    \item Integración visual y manejo centralizado del estado de sesión en el frontend.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
@@ -177,7 +177,7 @@ Implementar el subsistema de autenticación y autorización segura con JWT y RBA
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se implementó un esquema de autenticación sin estado (\textit{stateless}). Al autenticarse, el usuario recibe un Access Token con tiempo de expiración corto (15 minutos) que contiene su identificador, correo y lista de roles. Para mitigar ataques de fuerza bruta, se integró el middleware \texttt{express-rate-limit} restringiendo a 5 intentos fallidos por dirección IP en una ventana de 15 minutos. En el cliente, el token se custodia en memoria mediante React Context, con respaldo en \texttt{sessionStorage} para persistir recargas de pestaña.
+Se implementó un esquema de autenticación sin estado (\textit{stateless}). Al autenticarse, el usuario recibe un Access Token con tiempo de expiración corto (15 minutos) que contiene su identificador, correo y lista de roles. Para mitigar ataques de fuerza bruta, se integró el middleware \texttt{express-\allowbreak rate-\allowbreak limit} restringiendo a 5 intentos fallidos por dirección IP en una ventana de 15 minutos. En el cliente, el token se custodia en memoria mediante React Context, con respaldo en \texttt{sessionStorage} para persistir recargas de pestaña.
 
 \subsection{Políticas de Calidad de Seguridad}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -187,29 +187,24 @@ Se implementó un esquema de autenticación sin estado (\textit{stateless}). Al 
     \item \textbf{Política de Principio de Menor Privilegio:} Ninguna ruta protegida permite acceso sin comprobar explícitamente el rol mínimo requerido en el decorador o middleware.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_login_view.png}
-    \caption{Captura Real de la Pantalla de Inicio de Sesión y Autenticación del Sistema SIGE.}
-    \label{fig:login_screen}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/f3_03_seguridad_jwt_rbac.png}
-    \caption{Arquitectura de Intercambio de Tokens JWT y Middleware RBAC en Backend Express v5.}
-    \label{fig:jwt_rbac}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de Control de Acceso por Roles (RBAC Matrix)}
+La protección de la información docente y la delimitación de accesos se implementaron siguiendo las pautas de OWASP ASVS v4.0 y la Ley Orgánica de Protección de Datos Personales (LOPDP). Las actividades de ingeniería de seguridad comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Configuración de Hashing Criptográfico con Argon2id:} Se implementó la biblioteca nativa \texttt{argon2} para el almacenamiento de contraseñas, aplicando 64 MB de memoria RAM por cálculo, 3 iteraciones y 4 hilos de paralelismo, neutralizando intentos de ataque mediante fuerza bruta o tablas arcoíris.
+    \item \textbf{Diseño de Tokens de Acceso JWT de Vida Corta (15 minutos):} El backend genera un token de acceso firmado con algoritmo HS256 conteniendo los claims estrictamente necesarios (\texttt{sub}, \texttt{role}, \texttt{carrera\_\allowbreak id}, \texttt{exp}), asegurando que ante una eventual interceptación el token expire rápidamente.
+    \item \textbf{Mecanismo de Refresh Tokens Rotativos y Cookies HttpOnly Seguras:} Para mantener la sesión sin comprometer la seguridad en el cliente, se diseñó un Refresh Token con validez de 7 días transmitido exclusivamente mediante una cookie HTTP con banderas \texttt{HttpOnly}, \texttt{Secure} y \texttt{SameSite=Strict}. Cada renovación invalida el token previo en la tabla \texttt{refresh\_\allowbreak tokens}.
+    \item \textbf{Implementación del Middleware de Autorización por Roles (RBAC):} Se construyó el interceptor \texttt{verifyRole} en Express v5, el cual valida en cada petición que el rol en el token cuente con los permisos necesarios para la ruta invocada, emitiendo un código HTTP 403 Forbidden ante cualquier acceso no autorizado.
+    \item \textbf{Protocolo de Revocación Inmediata de Sesiones:} Se programó el endpoint \texttt{POST /\allowbreak api/\allowbreak  v1/\allowbreak  auth/\allowbreak  logout} que elimina el hash del Refresh Token en base de datos y purga la cookie del navegador, garantizando el cierre de sesión seguro.
+\end{itemize}
+
+\subsection{Matriz de Control de Acceso por Roles (RBAC) y Permisos en la API}
+A continuación se especifica la matriz de permisos y privilegios por rol institucional:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|c|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.5\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Operación / Módulo} & \textbf{Docente} & \textbf{Coord. Área} & \textbf{Coord. Carrera} & \textbf{Subdecano} & \textbf{Admin} \\
@@ -236,16 +231,16 @@ Gestión de Usuarios y Prórrogas & NO & NO & NO & NO & SÍ \\
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.8cm}|m{2.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.5\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Campo (Claim)} & \textbf{Tipo de Dato} & \textbf{Propósito y Ejemplo de Valor} \\
 \hline
 \texttt{sub} & UUID v4 & Identificador único del usuario autenticado en la base de datos. \\
 \hline
-\texttt{email} & String & Correo institucional (e.g., \texttt{docente@uta.edu.ec}). \\
+\texttt{email} & String & Correo institucional (e.g., \texttt{docente@uta.\allowbreak edu.\allowbreak ec}). \\
 \hline
-\texttt{roles} & Array[String] & Roles asignados (e.g., \texttt{["DOCENTE", "COORD\_AREA"]}). \\
+\texttt{roles} & Array[String] & Roles asignados (e.g., \texttt{["DOCENTE", "COORD\_\allowbreak AREA"]}). \\
 \hline
 \texttt{iat} & Timestamp & Marca temporal de emisión del token. \\
 \hline
@@ -258,8 +253,8 @@ Gestión de Usuarios y Prórrogas & NO & NO & NO & NO & SÍ \\
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -270,7 +265,7 @@ Gestión de Usuarios y Prórrogas & NO & NO & NO & NO & SÍ \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -283,7 +278,7 @@ Gestión de Usuarios y Prórrogas & NO & NO & NO & NO & SÍ \\
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 11/09/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 11/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -291,78 +286,53 @@ Gestión de Usuarios y Prórrogas & NO & NO & NO & NO & SÍ \\
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.3 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+El módulo de seguridad y autenticación se diseñó bajo las pautas de OWASP Application Security Verification Standard (ASVS v4.0) y la Ley Orgánica de Protección de Datos Personales (LOPDP), implementando un modelo híbrido de autenticación sin estado basado en tokens:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Cifrado Robusto con Argon2id:} Para neutralizar ataques de tablas arcoíris y descifrado por GPU, las contraseñas se almacenan procesadas mediante la biblioteca \texttt{argon2} con los parámetros recomendados: 64 MB de memoria RAM asignada por cálculo, 3 iteraciones de cómputo y factor de paralelismo 4.
+    \item \textbf{Emisión de Access Tokens de Vida Corta (15 minutos):} Ante credenciales válidas, el backend genera un token JWT firmado asimétricamente con algoritmo HS256, conteniendo únicamente los claims estrictamente necesarios: identificador de usuario (\texttt{sub}), rol asignado (\texttt{role}), código de carrera (\texttt{carrera\_\allowbreak id}) y tiempo de expiración (\texttt{exp = 15m}).
+    \item \textbf{Gestión de Refresh Tokens Rotativos y Cookies HttpOnly:} Para mantener la sesión activa de forma segura sin exponer tokens a scripts maliciosos (XSS), se implementó un Refresh Token con validez de 7 días transmitido exclusivamente mediante una cookie HTTP con las banderas \texttt{HttpOnly}, \texttt{Secure} y \texttt{SameSite=Strict}. Cada renovación de token invalida el Refresh Token anterior en la tabla \texttt{refresh\_\allowbreak tokens}.
+    \item \textbf{Middleware Declarativo de Autorización RBAC:} Se construyó el interceptor el middleware \texttt{verifyRole} con los roles institucionales. Cuando una petición arriba a una ruta protegida, el middleware extrae el token del encabezado \texttt{Authorization: Bearer <token>}, verifica su firma y valida si el rol del usuario posee los privilegios requeridos, rechazando accesos no autorizados con código HTTP 403.
+    \item \textbf{Mecanismo de Revocación de Sesiones:} En el evento de cierre de sesión explícito (\texttt{logout}), el backend elimina el hash del Refresh Token en base de datos y borra la cookie en el cliente, impidiendo la reutilización de tokens huérfanos.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_login_view.png}
+    \caption{Interfaz Oficial de Autenticación del Sistema SIGE con Validación Institucional.}
+    \label{fig:anx_f3_03}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La imagen muestra la vista de autenticación oficial del sistema SIGE: formulario centrado con identidad corporativa de la UTA (\#8B1D24), campos para correo institucional y contraseña con botón de visualización, sello de acreditación y mensaje de alerta reactivo ante credenciales inválidas.
+    \item \textbf{Flujo Criptográfico y Protocolo de Tokens:} Tras validar las credenciales contra el hash Argon2id en PostgreSQL, el servidor genera un Access Token JWT de vida corta (15 minutos) firmado con HMAC-SHA256 y un Refresh Token de 7 días almacenado en una cookie segura con flags \texttt{HttpOnly}, \texttt{SameSite=Strict} y \texttt{Secure}.
+    \item \textbf{Seguridad y Mitigación de Vulnerabilidades:} Este esquema mitiga ataques de secuestro de sesión (XSS) y falsificación de peticiones en sitios cruzados (CSRF), garantizando que las credenciales nunca queden expuestas en el almacenamiento local (\texttt{localStorage}) del navegador.
+    \item \textbf{Trazabilidad con el Código Fuente:} Módulos \texttt{auth.\allowbreak controller.\allowbreak js}, middleware \texttt{auth\allowbreak Middleware.\allowbreak js} y vista \texttt{LoginView.\allowbreak jsx}.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional y Pruebas de Seguridad}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.3 \\
-\hline
-Nombre de la Tarjeta & Autenticación y autorización de usuarios \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 08 de septiembre al 11 de septiembre de 2026 (4 días laborables) \\
-\hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV) \\
-\hline
-Entregable Oficial & Auth Endpoints con JWT y decoradores \texttt{[Authorize(Roles=...)]} \\
-\hline
-Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.3 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Códigos de Respuesta HTTP en Autenticación}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.5cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Código HTTP} & \textbf{Condición de Activación} & \textbf{Estructura del Mensaje Retornado} & \textbf{Seguridad} \\
+\textbf{Escenario de Prueba} & \textbf{Condición de Entrada y Payload} & \textbf{Respuesta del Middleware de Seguridad} & \textbf{Resultado Verificado} \\
 \hline
-200 OK & Credenciales correctas & Retorna \texttt{\{token, user: \{id, email, roles\}\}} & Superada \\
+P1: Clave Incorrecta & Envío de correo válido con contraseña no coincidente. & Rechazo con código HTTP 401 Unauthorized y retraso intencional de 300 ms. & Acceso Denegado \\
 \hline
-401 Unauthorized & Credenciales erróneas o token expirado & Mensaje genérico: \textit{``Credenciales institucionales incorrectas''} & Anti-Enumeración \\
+P2: Rol No Autorizado & Docente intenta acceder a \texttt{GET /\allowbreak api/\allowbreak v1/\allowbreak subdecano/\allowbreak planes}. & Interceptado por \texttt{verifyRole}; retorno de código HTTP 403 Forbidden. & Privilegio Bloqueado \\
 \hline
-403 Forbidden & Rol insuficiente para el recurso & \texttt{\{error: "Acceso denegado: requiere rol COORD\_CARRERA"\}} & Aislamiento \\
+P3: Renovación de Token & Petición a \texttt{/\allowbreak auth/\allowbreak refresh} con cookie \texttt{HttpOnly} activa tras 16 min. & Generación exitosa de nuevo Access Token; sesión extendida sin reautenticación. & Token Renovado \\
 \hline
-429 Too Many Req. & Más de 5 intentos fallidos & \texttt{\{error: "Demasiados intentos. Intente en 15 minutos"\}} & Rate Limit \\
-\hline
-\end{tabularx}
-\caption{Matriz de respuestas HTTP y seguridad del módulo Auth.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Autenticación JWT & Emisión de tokens firmados RS256 con claims protegidos de rol y usuario & 100\% CONFORME & Steeven Toala \\
-\hline
-Middlewares de Autorización & Interceptores Express v5 que validan roles y estado de sesión activa & 100\% CONFORME & Steeven Toala \\
-\hline
-Protección Anti-Fuerza Bruta & Rate limiting configurado en 5 intentos por minuto en endpoint login & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Seguridad de Headers & Implementación de cookies HttpOnly, Secure y SameSite=Strict & 100\% CONFORME & Heidi Villavicencio \\
+P4: Token Expirado & Petición a ruta protegida con Access Token con más de 15 min de emisión. & Interceptado por \texttt{verifyToken}; retorno de error \texttt{TokenExpiredError}. & Expiración Cumplida \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.3.}
+\caption{Matriz de pruebas de seguridad, autenticación JWT y control de acceso por roles.}
 \end{table}
 
 

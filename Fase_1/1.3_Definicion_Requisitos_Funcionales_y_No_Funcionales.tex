@@ -185,21 +185,22 @@ Se estructuraron los requisitos utilizando plantillas estandarizadas con identif
     \item \textbf{Política de Congelamiento de Alcance:} Los requisitos aprobados en este documento quedan congelados como línea base del proyecto.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_03_modulos_rf.png}
-    \caption{Mapa de Módulos Funcionales y Distribución de los 24 Requerimientos en SIGE.}
-    \label{fig:modulos_rf}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+La especificación de los requerimientos de software se sustentó en la traducción sistemática de las fallas operativas identificadas en el diagnóstico As-Is hacia capacidades técnicas verificables del sistema web. Las actividades de ingeniería de requisitos comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Derivación Directa de Requisitos a partir de la Matriz de Fallas As-Is:} Se realizó una correlación biunívoca entre los seis problemas raíz detectados (P-01 a P-06) y las capacidades requeridas en el software, formalizando 12 requisitos funcionales nucleares (RF-01 a RF-12) y 8 requisitos no funcionales críticos (RNF-01 a RNF-08) para erradicar las deficiencias operativas.
+    \item \textbf{Especificación Rigurosa de Requisitos bajo Sintaxis Normalizada EARS:} Para eliminar cualquier ambigüedad técnica, se redactaron los requerimientos aplicando las cláusulas del estándar EARS (Easy Approach to Requirements Syntax): requisitos ubicuos para funciones permanentes, disparados por eventos para transacciones de usuario y condicionales de estado para restricciones de acceso según el rol.
+    \item \textbf{Definición de Criterios de Aceptación Cuantitativos según Norma ISO/IEC 25010:} Se formularon umbrales cuantitativos de calidad y rendimiento: tiempos de respuesta en API inferiores a 1.5 segundos (RNF-01), disponibilidad anual del 99.5\% (RNF-02), almacenamiento seguro de credenciales con hashing Argon2id (RNF-04) y contraste visual accesible bajo WCAG 2.1 AA (RNF-07).
+    \item \textbf{Construcción de la Matriz de Trazabilidad Bidireccional de Requisitos:} Se estructuró el mapa de cobertura que enlaza cada requisito funcional con los casos de uso del sistema, las compuertas lógicas de backend y los módulos de persistencia en base de datos.
+\end{itemize}
+
 \subsection{Catálogo Oficial de Requisitos Funcionales Nucleares (RF-01 a RF-12)}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.9\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Requisito} & \textbf{Descripción Funcional del Sistema} & \textbf{Módulo} & \textbf{Prioridad} \\
@@ -236,8 +237,8 @@ Se estructuraron los requisitos utilizando plantillas estandarizadas con identif
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -248,7 +249,7 @@ Se estructuraron los requisitos utilizando plantillas estandarizadas con identif
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -261,7 +262,7 @@ Se estructuraron los requisitos utilizando plantillas estandarizadas con identif
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
+    1.0 & Especificación formal de requisitos bajo estándar IEEE 29148: 14 funcionales (RF-01 a RF-14) y 8 no funcionales (RNF-01 a RNF-08). & Heidi Villavicencio / Andrea Vásquez & 18/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -269,78 +270,60 @@ Se estructuraron los requisitos utilizando plantillas estandarizadas con identif
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.3 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Especificación de Requisitos de Software (SRS)}
+
+\subsubsection*{1. Ingeniería de Requisitos y Análisis de Trazabilidad Bidireccional}
+La formulación de los 24 Requisitos Funcionales (RF-01 a RF-24) y 8 Requisitos No Funcionales (RNF-01 a RNF-08) se elaboró siguiendo el estándar internacional ISO/IEC/IEEE 29148:2018 (Ingeniería de Requisitos). Ningún requisito fue planteado de forma aislada; cada uno responde a un problema concreto identificado en el diagnóstico As-Is y a un requerimiento explícito del formato de calidad.
+
+El proceso de ingeniería de requisitos comprendió:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Derivación Directa de Requisitos a partir de Fallas As-Is:} A la falla P-01 (horas no cuadradas) se le asignó el requisito RF-04 (Validación automática de 40h con desglose en docencia, preparación e investigación); a la falla P-02 se le asignó el RF-05 (Matriz dinámica interactiva con sumatoria matemática exacta al 100.00\%); a la falla P-04 se le asignó el RF-08 (Almacenamiento seguro en MinIO S3 con cálculo de huella SHA-256).
+    \item \textbf{Especificación Rigurosa bajo Sintaxis Normalizada EARS:} Cada requisito funcional fue redactado con precondición, disparador del sistema y respuesta verificable, eliminando ambigüedades.
+    \item \textbf{Definición de Criterios de Aceptación Cuantitativos para Calidad RNF:} Se establecieron métricas objetivas para los requisitos no funcionales: tiempo de respuesta de API menor a 200 ms (RNF-01), disponibilidad del servicio del 99.5\% en entorno local contenerizado (RNF-02), y cumplimiento estricto de accesibilidad WCAG 2.1 nivel AA con ratio de contraste 4.5:1 (RNF-07).
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual de los Módulos del Sistema y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s1_03_modulos_rf.png}
+    \caption{Arquitectura Modular Funcional de los 24 Requisitos Funcionales del Sistema SIGE.}
+    \label{fig:modulos_rf}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural del Árbol de Requisitos:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Descomposición Modular de Capacidades Funcionales:} El diagrama organiza los 24 requerimientos del sistema en cuatro subsistemas nucleares: Gestión de Identidad y Acceso (RF-01 a RF-03), Asistente Wizard y Persistencia de Secciones (RF-04 a RF-07), Matriz Dinámica y Validación 40h/100\% (RF-08 a RF-10), y Repositorio de Evidencias con Cascada de Firmas (RF-11 a RF-12).
+    \item \textbf{Relaciones de Dependencia y Trazabilidad EARS:} Cada nodo del diagrama se encuentra formalizado mediante sintaxis EARS (Easy Approach to Requirements Syntax). Se aprecia cómo los requisitos de cálculo reactivo (RF-08) dependen jerárquicamente de la carga horaria base (RF-04), impidiendo la generación de estados inconsistentes.
+    \item \textbf{Integración de Requisitos No Funcionales Críticos:} El gráfico explicita los enlaces transversales hacia los atributos de calidad ISO/IEC 25010: RNF-01 (latencia en API $<1.5\text{ s}$), RNF-04 (hashing Argon2id) y RNF-07 (accesibilidad WCAG 2.1 AA).
+    \item \textbf{Correspondencia con el Backend SIGE:} Los cuatro módulos del diagrama corresponden a los módulos de controladores en Express v5 (\texttt{auth.\allowbreak controller.\allowbreak js}, \texttt{planes.\allowbreak controller.\allowbreak js}, \texttt{actividades.\allowbreak controller.\allowbreak js}, \texttt{firmas.\allowbreak controller.\allowbreak js}), asegurando desacoplamiento y alta cohesión.
+\end{itemize}
+
+
+\subsubsection*{3. Matriz Técnica de Especificación de Requisitos Funcionales Clave}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=2.0\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{ID} & \textbf{Requisito Funcional} & \textbf{Criterio de Aceptación y Regla de Negocio SGC} & \textbf{Prioridad} \\
 \hline
-Código de Tarea & EDT 1.3 \\
+RF-04 & Validación de 40 Horas & El sistema debe calcular la suma total en tiempo real y bloquear el envío si el total es diferente a 40h semanales. & ALTA \\
 \hline
-Nombre de la Tarjeta & Definición de requisitos funcionales y no funcionales \\
+RF-05 & Matriz de Actividades & La tabla debe calcular dinámicamente $\sum P_i = 100\%$ y permitir asignar semanas del semestre (1 a 16). & CRÍTICA \\
 \hline
-Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+RF-08 & Custodia de Evidencias & Cada evidencia adjunta debe ser enviada a MinIO S3 calculando su hash SHA-256 para garantizar integridad probatoria. & ALTA \\
 \hline
-Período de Ejecución & 14 de agosto al 18 de agosto de 2026 (4 días laborables) \\
+RF-15 & Cascada de Firmas & El sistema solo habilitará la firma del Coordinador tras comprobar la firma criptográfica válida del Docente Elaborador. & CRÍTICA \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Heidi Villavicencio (HV), Steeven Toala (ST) \\
-\hline
-Entregable Oficial & \texttt{03\_Definicion\_Requisitos\_Funcionales\_No\_Funcionales.pdf} (SRS) \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado \\
+RF-20 & Exportación SGC & El motor de generación debe producir PDFs vectoriales idénticos a la plantilla A4 oficial con código QR verificador. & ALTA \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 1.3 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Requisitos No Funcionales (ISO/IEC 25010)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{2.5cm}|X|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Código} & \textbf{Característica} & \textbf{Especificación Técnica Cuantitativa} & \textbf{Métrica} \\
-\hline
-RNF-01 & Rendimiento & Tiempo de respuesta de endpoints de consulta bajo carga normal. & $<300\text{ ms}$ (P95) \\
-\hline
-RNF-02 & Seguridad & Hashing de contraseñas con Argon2id y tokens JWT HMAC-SHA256. & Cero fallas OWASP \\
-\hline
-RNF-03 & Usabilidad & Conformidad con directrices de accesibilidad web W3C WCAG 2.1. & Nivel AA ($4.5:1$) \\
-\hline
-RNF-04 & Disponibilidad & Operación ininterrumpida de los contenedores en entorno local. & $99.5\%$ Uptime \\
-\hline
-\end{tabularx}
-\caption{Requisitos no funcionales evaluados en el sistema.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Norma IEEE 29148 & Estructura formal con criterios de aceptación cuantificables & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Cobertura de Procesos & Cobertura total de los formatos SGC \texttt{P7-T1} y \texttt{P7-T2} & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Priorización MoSCoW & Clasificación clara de prioridades pactada con usuarios & 100\% CONFORME & Steeven Toala \\
-\hline
-Aprobación del SRS & Validación y firma del documento de requisitos oficial & 100\% CONFORME & Ing. Paulo Torres \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 1.3.}
+\caption{Matriz técnica de especificación de requisitos funcionales críticos del sistema SIGE.}
 \end{table}
 
 

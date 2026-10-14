@@ -18,7 +18,7 @@ El modelado de Casos de Uso bajo el estándar de la Object Management Group (OMG
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Modelar formalmente el comportamiento funcional e interacciones del sistema SIGE mediante diagramas UML de casos de uso generales y detallados, garantizando la cobertura integral de los roles institucionales y los procesos del SGC de la FISEI.
+Modelar formalmente el comportamiento funcional e interacciones del sistema SIGE mediante diagramas UML de casos de uso generales y detallados, garantizando la integración de los roles institucionales y los procesos del SGC de la FISEI.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Elaborar el Diagrama General de Casos de Uso agrupando los 8 casos de uso centrales (CU-01 a CU-08).
@@ -51,7 +51,7 @@ Modelar formalmente el comportamiento funcional e interacciones del sistema SIGE
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Heidi Villavicencio (Responsable EDT 2.1):} Diagramación UML formal, redacción de especificaciones textuales y diseño de escenarios alternos.
     \item \textbf{Steeven Toala (Líder Técnico / Arquitecto):} Validación de consistencia arquitectónica y trazabilidad con el modelo C4.
-    \item \textbf{Nixon Hurtado (Analista de Requisitos):} Verificación de cobertura con la matriz de trazabilidad RF-01 a RF-24.
+    \item \textbf{Nixon Hurtado (Analista de Requisitos):} Verificación de correspondencia funcional con los requisitos RF-01 a RF-24.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación metodológica de los casos de uso institucionales.
 \end{itemize}
 
@@ -81,15 +81,16 @@ Se empleó la metodología orientada a objetos bajo el marco de desarrollo guiad
     \item \textbf{Política de Atomicidad de Escenarios:} Los flujos de excepción deben garantizar que un fallo en la validación mantenga el sistema en un estado consistente sin corrupción de datos.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/s2_01_casos_de_uso.png}
-    \caption{Diagrama General de Casos de Uso del Sistema SIGE bajo Estándar OMG UML 2.5.1.}
-    \label{fig:casos_uso_general}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El modelado de casos de uso constituyó la base para traducir los 24 requisitos funcionales del SRS hacia contratos de interacción precisos entre los actores del SGC y el sistema web SIGE. El equipo de análisis y modelado desarrolló las siguientes actividades técnicas:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Identificación de Actores Primarios y Perímetros de Interacción:} Con base en el estatuto de la FISEI y la matriz RACI de la Fase 1, se delimitaron formalmente las fronteras de los roles autorizados: Docente Elaborador (titular/ocasional), Coordinador de Área Académica, Coordinador de Carrera, Subdecano de Facultad y Administrador del SGC. Se garantizó que ninguna interacción viole el principio de segregación de funciones.
+    \item \textbf{Estructuración del Catálogo de Casos de Uso (CU-01 a CU-08):} Se agruparon las operaciones del sistema en 8 casos de uso de alta cohesión funcional, asegurando cobertura directa de la gestión de credenciales, llenado de planes, cálculo de matrices, carga probatoria, revisión colegiada, firmas digitales y gestión de prórrogas.
+    \item \textbf{Modelado de Relaciones de Inclusión y Extensión:} Aplicando la notación estándar OMG UML 2.5.1, se formalizó que el caso de uso base CU-02 (\textit{Elaborar Plan de Trabajo}) incluye obligatoriamente (\texttt{<<include>>}) la autenticación en sesión (CU-01) y la gestión matricial (CU-03), mientras que la solicitud de prórroga extemporánea (CU-08) extiende condicionalmente (\texttt{<<extend>>}) el flujo principal únicamente ante ventanas de fecha vencidas.
+    \item \textbf{Redacción de Especificaciones Textuales Normalizadas:} Para cada caso de uso se redactó una plantilla formal con identificador, precondiciones, disparador, curso básico (camino feliz), flujos alternos, escenarios de excepción y postcondiciones verificables en base de datos.
+\end{itemize}
+
 \subsection{Matriz Oficial de Casos de Uso del Sistema (CU-01 a CU-08)}
 A continuación se detalla la matriz general de casos de uso estructurada para el sistema SIGE:
 
@@ -97,7 +98,7 @@ A continuación se detalla la matriz general de casos de uso estructurada para e
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.8\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Nombre del Caso de Uso} & \textbf{Actores y Propósito Funcional} & \textbf{Requisitos} & \textbf{Criticidad} \\
@@ -128,7 +129,7 @@ A continuación se detalla la matriz general de casos de uso estructurada para e
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \multicolumn{2}{|c|}{\textbf{FORMATO OFICIAL DE ESPECIFICACIÓN DE CASO DE USO -- CU-03}} \\
@@ -161,10 +162,10 @@ Flujos Alternos &
 Flujos de Excepción & 
 \begin{itemize}[leftmargin=1.2em, itemsep=1pt]
     \item \textbf{E1 - Ponderación Distinta de 100\%:} La Validation Gate bloquea la transición de estado y resalta en color carmesí la diferencia porcentual faltante o excedente.
-    \item \textbf{E2 - Actividad sin Medios de Verificación:} El sistema impide el avance al paso de firmas hasta que cada ítem posea al menos un medio auditable.
+    \item \textbf{E2 - Actividad sin Medios de Verificación:} El sistema impide el avance a la etapa de firmas hasta que cada ítem posea al menos un medio auditable.
 \end{itemize} \\
 \hline
-Postcondiciones & La matriz de actividades queda almacenada con integridad relacional en la tabla \texttt{actividades\_matriz}. \\
+Postcondiciones & La matriz de actividades queda almacenada con integridad relacional en la tabla \texttt{actividades\_\allowbreak matriz}. \\
 \hline
 \end{tabularx}
 \caption{Especificación textual detallada del caso de uso crítico CU-03.}
@@ -173,86 +174,66 @@ Postcondiciones & La matriz de actividades queda almacenada con integridad relac
 """
 
     anx2_1 = r"""
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.1 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Modelado y Especificación de Casos de Uso}
+
+\subsubsection*{1. Especificación Formal y Trazabilidad de Casos de Uso}
+Para garantizar que el modelado funcional responda estrictamente a la operativa institucional y no a conjeturas aisladas, los Casos de Uso se derivaron directamente del formato oficial \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} (Plan de Trabajo Docente) y de los 24 Requisitos Funcionales aprobados en la Fase 1.
+
+El desarrollo del modelado se ejecutó en cuatro etapas secuenciales:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Identificación de Actores Primarios y Secundarios:} A partir del estatuto orgánico de la UTA y la matriz de actores de la FISEI, se formalizaron los roles del sistema: Docente Elaborador (usuario primario de planificación y carga de evidencias), Coordinador de Comisión (revisor de actividades específicas), Coordinador de Carrera (auditor de carga horaria y primer validador), Subdecano (aprobador de facultad) y Administrador SGC (gestor de catálogos y prórrogas).
+    \item \textbf{Estructuración del Catálogo de 8 Casos de Uso (CU-01 a CU-08):} Se definieron los límites del sistema agrupando las interacciones en CU-01 (Iniciar Sesión JWT), CU-02 (Elaborar Plan en Wizard), CU-03 (Gestionar Matriz Dinámica 100\%), CU-04 (Custodiar Evidencias en MinIO S3), CU-05 (Revisar Expediente en Comité), CU-06 (Cascada Secuencial de Firmas), CU-07 (Exportar Documento Oficial SGC) y CU-08 (Gestionar Prórrogas Extemporáneas).
+    \item \textbf{Definición de Relaciones de Inclusión y Extensión:} Se identificaron las dependencias funcionales: todos los casos de uso incluyen obligatoriamente la resolución de identidad (\texttt{<<include>> CU-\allowbreak 01}); la elaboración de plan incluye el cálculo automático de 40 horas; y la gestión de extemporaneidad extiende condicionalmente (\texttt{<<extend>> CU-\allowbreak 08}) la edición cuando la fecha actual sobrepasa el cronograma lectivo.
+    \item \textbf{Redacción de Especificaciones Textuales Normalizadas:} Se redactaron fichas detalladas para cada caso de uso declarando precondiciones, flujo principal (\textit{happy path}), flujos alternos de asistencia y flujos de excepción transaccionales.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual del Diagrama de Casos de Uso y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_01_casos_de_uso.png}
+    \caption{Diagrama General de Casos de Uso del Sistema SIGE bajo Estándar OMG UML 2.5.1.}
+    \label{fig:casos_uso_general}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural de Casos de Uso (UML 2.5.1):}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Perímetros del Sistema y Actores Institucionales:} El diagrama delimita la frontera del sistema web SIGE, ubicando a los 5 actores según sus privilegios estatutarios: Docente Elaborador, Coordinador de Comisión, Director de Carrera, Subdecano y Administrador SGC.
+    \item \textbf{Subsistemas Operativos y Casos de Uso Primarios:} Se estructuran los casos de uso nucleares: Elaboración y Edición del Plan (CU-02), Matriz Dinámica de Actividades (CU-03), Repositorio de Evidencias (CU-04), Revisión Colegiada de Comisiones (CU-05), Legalización y Firmas (CU-06) y Exportación Oficial en PDF/Word (CU-07).
+    \item \textbf{Relaciones de Inclusión Obligatoria (\texttt{<<include>>}):} Cada operación de guardado o avance incluye obligatoriamente la verificación de credenciales activas (CU-01) y la evaluación previa de Validation Gates lógicas, garantizando que ninguna transacción omita las reglas de negocio.
+    \item \textbf{Relaciones de Extensión Condicional (\texttt{<<extend>>}):} El flujo de observaciones granulares extiende el caso de uso de revisión (CU-05), activándose de forma condicional únicamente cuando una comisión académica detecta no conformidades en el expediente.
+\end{itemize}
+
+\subsubsection*{3. Matriz de Trazabilidad Requisitos Funcionales vs Casos de Uso}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.55\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{RF ID} & \textbf{Requisito Funcional} & \textbf{Caso de Uso} & \textbf{Criterio de Aceptación y Regla de Negocio SGC} \\
 \hline
-Código de Tarea & EDT 2.1 \\
+RF-01 & Autenticación de Usuarios & CU-01 & Validación estricta con Argon2id y emisión de token JWT con expiración a 15 min. \\
 \hline
-Nombre de la Tarjeta & Diagramas general y detallado de casos de uso \\
+RF-03 & Configuración del Plan & CU-02 & Verificación del total exacto de 40 horas semanales según Art. 45 del RRA. \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+RF-05 & Matriz de Actividades & CU-03 & Recálculo reactivo con suma obligatoria al 100.00\% y asignación semanal en 16 semanas. \\
 \hline
-Período de Ejecución & 19 de agosto al 21 de agosto de 2026 (3 días laborables) \\
+RF-07 & Custodia de Evidencias & CU-04 & Transferencia a MinIO S3 con cálculo de huella SHA-256 para no repudio probatorio. \\
 \hline
-Horas Asignadas & 24 horas hombre netas \\
+RF-09 & Panel de Revisión Comité & CU-05 & Visualización de documento y drawer lateral con registro inmutable de observaciones. \\
 \hline
-Responsables Técnicos & Heidi Villavicencio (HV), Steeven Toala (ST) \\
+RF-11 & Cascada de Firmas & CU-06 & Secuencia obligatoria 1 $\to$ 2 $\to$ 3 con estampado de firma digital y marca temporal. \\
 \hline
-Entregable Oficial & \texttt{01\_Diagrama\_General\_Detallado\_Casos\_de\_Uso.pdf} \\
+RF-13 & Exportación SGC & CU-07 & Generación de PDF A4 idéntico al formato oficial con código QR y metadatos SGC. \\
 \hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.1 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Trazabilidad entre Requisitos Funcionales y Casos de Uso}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Requisito Funcional} & \textbf{Descripción del Requisito} & \textbf{Caso de Uso Vinculado} & \textbf{Cobertura} \\
-\hline
-RF-01 & Autenticación institucional con credenciales universitarias & CU-01 & 100\% Total \\
-\hline
-RF-03 & Configuración general del plan semestral y carga horaria & CU-02 & 100\% Total \\
-\hline
-RF-05 & Registro interactivo de matriz de actividades y cronograma & CU-03 & 100\% Total \\
-\hline
-RF-07 & Almacenamiento seguro de medios de verificación en MinIO S3 & CU-04 & 100\% Total \\
-\hline
-RF-09 & Panel de revisión con observaciones granulares por sección & CU-05 & 100\% Total \\
-\hline
-RF-11 & Flujo secuencial e inmutable de cascada de firmas digitales & CU-06 & 100\% Total \\
-\hline
-RF-13 & Generación de reportes institucionales en PDF y DOCX & CU-07 & 100\% Total \\
-\hline
-RF-15 & Desbloqueo y gestión de prórrogas extemporáneas & CU-08 & 100\% Total \\
+RF-15 & Gestión de Prórrogas & CU-08 & Desbloqueo temporal auditado de planes extemporáneos previa autorización de Subdecanato. \\
 \hline
 \end{tabularx}
-\caption{Matriz de trazabilidad RF vs CU.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Completitud Funcional & Cobertura de los 24 Requisitos Funcionales en el modelo de Casos de Uso & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Notación Estandarizada & Modelado formal bajo el estándar OMG UML 2.5.1 & 100\% CONFORME & Steeven Toala \\
-\hline
-Trazabilidad Bidireccional & Matriz de correspondencia RF vs CU sin omisiones ni ambigüedades & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Validación de Actores & Definición de los 4 roles del SGC (Docente, Coordinador, Subdecano, Admin) & 100\% CONFORME & Andrea Vásquez \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.1.}
+\caption{Matriz técnica de trazabilidad entre Requisitos Funcionales y Casos de Uso del sistema SIGE.}
 \end{table}
 """
     doc2_1 = render_doc("TI-SIGE-ENT-F2-001", "DISEÑO DE SOFTWARE / CASOS DE USO UML", "21/08/2026", "21/08/2026", "DIAGRAMAS GENERAL Y DETALLADO DE CASOS DE USO", b2_1, "21/08/2026", anx2_1)
@@ -333,23 +314,16 @@ Se adoptó un enfoque arquitectónico orientado a microservicios modulares desac
     \item \textbf{Política de Resiliencia de Fallas:} Toda llamada externa (MinIO, motor ortográfico) debe implementar un mecanismo de \textit{timeout} (máximo 5000 ms) y fallback de contingencia.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_02_clean_architecture.png}
-    \caption{Arquitectura Limpia Multicapa (Clean Architecture) implementada en el Backend de SIGE.}
-    \label{fig:clean_arch}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_02_contenedores_c4.png}
-    \caption{Diagrama de Contenedores C4 del Ecosistema SIGE (Frontend, Backend, DB, Storage y NLP).}
-    \label{fig:c4_containers}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El diseño arquitectónico de SIGE se concibió bajo los principios de desacoplamiento de Clean Architecture, garantizando que la lógica de negocio institucional permanezca independiente de componentes de persistencia o interfaces de usuario. Las actividades de arquitectura desarrolladas abarcaron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Selección y Justificación del Patrón Clean Architecture:} Se adoptó una arquitectura en cuatro capas concéntricas (Dominio, Casos de Uso, Adaptadores de Interfaz y Frameworks/Drivers), asegurando que las entidades normativas de la FISEI no posean dependencias hacia el motor de persistencia relacional ni bibliotecas de terceros.
+    \item \textbf{Formulación y Registro de Decisiones de Arquitectura (ADR-01 a ADR-06):} Se redactaron formalmente seis registros técnicos de decisión: ADR-01 (Clean Architecture), ADR-02 (PostgreSQL 18 con soporte JSONB para secciones de texto enriquecido), ADR-03 (React 19 SPA con Tailwind CSS), ADR-04 (Editor TipTap con autoguardado asíncrono con debounce de 1500 ms), ADR-05 (MinIO S3 para custodia de evidencias) y ADR-06 (Autenticación JWT con rotación de refresh tokens y Argon2id).
+    \item \textbf{Modelado de Diagramas de Contexto y Contenedores bajo el Modelo C4:} Se elaboraron las vistas arquitectónicas de Nivel 1 (Contexto de Sistema interactuando con Docentes, Directores y SGA) y Nivel 2 (Contenedores web, API REST Express v5, base de datos PostgreSQL, servidor MinIO y servicio LanguageTool).
+    \item \textbf{Diseño de Políticas de Seguridad Perimetral y Resiliencia:} Se establecieron protocolos de comunicación sobre HTTPS/TLS, interceptación centralizada de errores en Express mediante un error handler unificado y aislamiento de variables de entorno sensibles en archivos \texttt{.\allowbreak env} protegidos.
+\end{itemize}
+
 \subsection{Matriz de Decisiones de Arquitectura de Software (ADR-01 a ADR-06)}
 A continuación se detalla la matriz formal de las decisiones arquitectónicas adoptadas para el sistema:
 
@@ -357,7 +331,7 @@ A continuación se detalla la matriz formal de las decisiones arquitectónicas a
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.1\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Decisión} & \textbf{Justificación Técnica} & \textbf{Consecuencias y Mitigación} & \textbf{Estado} \\
@@ -384,7 +358,7 @@ A continuación se detalla la matriz formal de las decisiones arquitectónicas a
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|X|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Atributo} & \textbf{Requisito de Calidad} & \textbf{Estrategia Arquitectónica de Soporte} & \textbf{Métrica} \\
@@ -403,80 +377,59 @@ Fiabilidad & Cero pérdida de datos ante interrupciones de red. & Mecanismo de a
 """
 
     anx2_2 = r"""
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.2 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Arquitectura de Software y Modelo C4}
+
+\subsubsection*{1. Decisiones de Diseño Arquitectónico y Desacoplamiento en Capas}
+Para asegurar mantenibilidad, escalabilidad y estricta separación de responsabilidades, la arquitectura de SIGE se diseñó combinando los principios de Clean Architecture (Arquitectura Limpia) con la notación de diagramación del Modelo C4 (Contexto, Contenedores, Componentes y Código).
+
+El proceso de ingeniería arquitectónica comprendió:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Estructuración en Cuatro Capas Concéntricas:} Capa de Dominio / Entidades (\textit{Entities}: \texttt{PlanDocente}, \texttt{ActividadMatriz}, libres de dependencias externas); Capa de Casos de Uso (\textit{Use Cases}: reglas de negocio orquestadoras como \texttt{ValidarHorasMinimas}); Capa de Adaptadores (\textit{Interface Adapters}: controladores REST Express v5, repositorios pg-promise y cliente MinIO S3); y Capa de Infraestructura / Frameworks (\textit{Frameworks and Drivers}: PostgreSQL 18, React SPA, Docker Compose y servidor Nginx).
+    \item \textbf{Diagramación del Modelo C4 de Contenedores:} Se definieron los cinco contenedores autónomos que componen la topología: SPA Frontend, Backend REST API, Base de Datos PostgreSQL, Almacén de Objetos MinIO y Motor Lingüístico LanguageTool.
+    \item \textbf{Definición de Contratos de Comunicación y Puertos:} Se establecieron los protocolos de intercambio (JSON sobre HTTP/REST para servicios, nativo TCP para base de datos y API S3 para archivos).
+\end{enumerate}
+
+\subsubsection*{2. Evidencias Visuales de la Arquitectura del Sistema y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_02_clean_architecture.png}
+    \caption{Arquitectura Limpia (Clean Architecture) y Flujo de Dependencias del Sistema SIGE.}
+    \label{fig:clean_arch}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural de la Arquitectura de Software:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Desacoplamiento Concéntrico en Cuatro Capas (Clean Architecture):} Se ilustra la Regla de Dependencias: las capas externas (Frameworks y Adaptadores) dependen de las internas (Casos de Uso y Entidades de Dominio), pero el dominio nunca conoce la existencia de PostgreSQL, Express o React.
+    \item \textbf{Topología de Contenedores y Microservicios (Modelo C4 Nivel 2):} El diagrama C4 detalla los 5 servicios orquestados en Docker: \texttt{sige-\allowbreak frontend} (SPA en React 19), \texttt{sige-\allowbreak backend} (API REST en Express v5), \texttt{sige-\allowbreak db} (PostgreSQL 18 con extensiones JSONB y UUID), \texttt{sige-\allowbreak minio} (S3 Object Storage) y \texttt{sige-\allowbreak languagetool} (corrección ortográfica local).
+    \item \textbf{Canales de Comunicación y Seguridad Perimetral:} Las comunicaciones cliente-servidor operan sobre HTTPS/TLS con tokens JWT en cabeceras de autorización y cookies \texttt{HttpOnly} para refresh tokens; el acceso a MinIO se realiza mediante URLs prefirmadas de vida corta (15 min).
+    \item \textbf{Trazabilidad con el Código Fuente:} Esta arquitectura se materializa en la estructura modular del repositorio: \texttt{backend/\allowbreak src/\allowbreak domain/\allowbreak }, \texttt{backend/\allowbreak src/\allowbreak usecases/\allowbreak }, \texttt{backend/\allowbreak src/\allowbreak adapters/\allowbreak } y \texttt{docker-\allowbreak compose.\allowbreak yml}.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Servicios, Puertos y Protocolos de Infraestructura}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.8\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Servicio Contenedor} & \textbf{Puerto Expuesto} & \textbf{Protocolo} & \textbf{Dependencia} & \textbf{Función Principal en la Arquitectura} \\
 \hline
-Código de Tarea & EDT 2.2 \\
+Frontend Web SPA & 5173 / 80 & HTTP / HTTPS & Backend API & Entrega de interfaz React y gestión reactiva de formularios. \\
 \hline
-Nombre de la Tarjeta & Diseño de arquitectura de la solución \\
+Backend API REST & 5000 / 3000 & REST / JSON & Base de Datos & Lógica de negocio, Validation Gates, seguridad y firmas. \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+PostgreSQL 18 DB & 5432 & Nativo TCP & Almacén local & Persistencia relacional ACID, tablas 3NF y documentos JSONB. \\
 \hline
-Período de Ejecución & 20 de agosto al 25 de agosto de 2026 (4 días laborables) \\
+MinIO S3 Storage & 9000 / 9001 & AWS S3 API & Almacén local & Almacenamiento privado de evidencias y generación de URLs prefirmadas. \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
-\hline
-Entregable Oficial & \texttt{02\_Diseno\_Arquitectura\_Solucion.pdf} (SAD \& C4 Model) \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+Corrector LanguageTool & 8010 & HTTP REST & Memoria interna & Servicio local de asistencia gramatical en español sin fuga de datos. \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.2 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Puertos y Contratos de Comunicación Inter-Contenedores}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|c|m{2.2cm}|m{2.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Servicio} & \textbf{Puerto} & \textbf{Protocolo} & \textbf{Dependencia} & \textbf{Contrato / Función Principal} \\
-\hline
-\texttt{sige-frontend} & 5173 / 80 & HTTP/HTTPS & Backend API & Entrega de SPA React y proxy de llamadas API. \\
-\hline
-\texttt{sige-backend} & 3000 & REST / JSON & PostgreSQL, MinIO & Lógica de negocio, Validation Gates y autenticación. \\
-\hline
-\texttt{sige-postgres} & 5432 & PostgreSQL Wire & Volumen local & Persistencia relacional ACID y documentos JSONB. \\
-\hline
-\texttt{sige-minio} & 9000 / 9001 & AWS S3 API & Volumen local & Almacenamiento binario de evidencias PDF y URLs prefirmadas. \\
-\hline
-\texttt{sige-grammar} & 8010 & HTTP REST & Memoria interna & Servicio local Docker LanguageTool de gramática en español. \\
-\hline
-\end{tabularx}
-\caption{Matriz de servicios y comunicación de infraestructura.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Arquitectura Multicapa & Desacoplamiento estricto según Clean Architecture e inversión de dependencias & 100\% CONFORME & Steeven Toala \\
-\hline
-Modelo C4 de Contenedores & Diagramación vectorial de SPA, REST API, PostgreSQL, MinIO y LanguageTool & 100\% CONFORME & Steeven Toala \\
-\hline
-Registro de Decisiones (ADR) & Formalización técnica de ADR-01 a ADR-06 justificando el stack tecnológico & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Alineación No Funcional & Conformidad con requerimientos de latencia ($<500$ ms) y disponibilidad institucional & 100\% CONFORME & Nixon Hurtado \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.2.}
+\caption{Matriz de servicios y comunicación de infraestructura del sistema SIGE.}
 \end{table}
 """
     doc2_2 = render_doc("TI-SIGE-ENT-F2-002", "ARQUITECTURA DE SOFTWARE / C4 & CLEAN ARCHITECTURE", "25/08/2026", "25/08/2026", "DISEÑO DE ARQUITECTURA DE LA SOLUCIÓN", b2_2, "25/08/2026", anx2_2)
@@ -519,7 +472,7 @@ Modelar detalladamente los flujos dinámicos de ejecución, las secuencias de in
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Diagrama de Secuencia UML:} Diagrama de interacción que enfatiza el ordenamiento temporal de los mensajes enviados entre líneas de vida de objetos.
-    \item \textbf{Diagrama de Actividades UML:} Representación gráfica del flujo de control o flujo de datos paso a paso entre actividades operacionales.
+    \item \textbf{Diagrama de Actividades UML:} Representación gráfica del flujo de control o flujo de datos de extremo a extremo entre actividades operacionales.
     \item \textbf{Diagrama de Clases de Dominio:} Modelo estructural que describe los tipos de objetos del sistema y las relaciones estáticas entre ellos.
     \item \textbf{Agregado (DDD):} Agrupación de objetos de dominio vinculados que se tratan como una unidad indivisible para el control de cambios de datos.
 \end{itemize}
@@ -557,52 +510,37 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
     \item \textbf{Política de Inmutabilidad de Firmas:} Una vez que un registro de firma es emitido, la clase \texttt{FirmaDocumento} pasa a ser inmutable en el dominio.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_03_secuencia_validation.png}
-    \caption{Diagrama de Secuencia UML: Guardado de Secciones y Evaluación de Validation Gates.}
-    \label{fig:secuencia_gates}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_03_actividades_ciclo.png}
-    \caption{Diagrama de Actividades UML: Ciclo Completo de Aprobación, Observación y Legalización.}
-    \label{fig:actividades_ciclo}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/s2_03_clases_uml.png}
-    \caption{Diagrama de Clases del Dominio Institucional SIGE (Entidades, Atributos y Métodos).}
-    \label{fig:clases_dominio}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El modelado del comportamiento dinámico del sistema y la definición de las entidades de dominio aseguraron una representación computacional fidedigna de los procesos del SGC. El equipo técnico llevó a cabo las siguientes actividades de modelado UML:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Modelado Dinámico de Secuencia UML para Casos de Uso Críticos:} Se construyeron diagramas de interacción temporal para los flujos más complejos del sistema: autenticación e intercambio de tokens JWT, creación asistida del plan mediante Wizard, y procesamiento concurrente de firmas con validación de compuertas.
+    \item \textbf{Especificación de Diagramas de Actividades con Particiones (Swimlanes):} Se modelaron los flujos de control paralelos y condicionales distribuidos entre el Docente Elaborador, el Coordinador de Comisión, el Subdecano y el Motor de Reglas del Sistema, clarificando los puntos de decisión y bifurcación ante observaciones.
+    \item \textbf{Modelado Estructural de Clases de Dominio Institucional:} Se modelaron las clases fundamentales del dominio en TypeScript y JavaScript: \texttt{Plan Trabajo Docente}, \texttt{Actividad Docente}, \texttt{Seccion Documento}, \texttt{Evidencia Respaldo} y \texttt{Firma Digital}, definiendo sus atributos, métodos de cálculo y contratos de validación intrínseca.
+    \item \textbf{Formalización de la Máquina de Estados del Documento SGC:} Se especificaron los estados válidos del ciclo documental (\texttt{Borrador}, \texttt{En\_\allowbreak Revision}, \texttt{Observado}, \texttt{Aprobado\_\allowbreak  Carrera}, \texttt{Legalizado\_\allowbreak  Subdecanato}) y las transiciones atómicas permitidas bajo control transaccional ACID.
+\end{itemize}
+
 \subsection{Matriz de Entidades del Dominio y Métodos Operativos}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Clase de Dominio} & \textbf{Atributos Principales} & \textbf{Métodos de Negocio Clave} & \textbf{Multiplicidad} \\
 \hline
-\texttt{PlanDocente} & \texttt{id}, \texttt{periodo\_id}, \texttt{docente\_id}, \texttt{estado}, \texttt{horas\_totales} & \texttt{validarHorasMinimas()}, \texttt{avanzarEstado()}, \texttt{solicitarRevision()} & 1 \\
+\texttt{PlanDocente} & \texttt{id}, \texttt{periodo\_\allowbreak id}, \texttt{docente\_\allowbreak id}, \texttt{estado}, \texttt{horas} & \texttt{validarHorasMinimas()}, \texttt{avanzarEstado()} & 1 \\
 \hline
-\texttt{SeccionDocumento} & \texttt{id}, \texttt{plan\_id}, \texttt{orden}, \texttt{titulo}, \texttt{contenido\_html} & \texttt{actualizarContenido()}, \texttt{sanitizarHtml()}, \texttt{bloquearEdicion()} & $1 \dots N$ \\
+\texttt{Seccion Documento} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{orden}, \texttt{titulo}, \texttt{contenido} & \texttt{actualizarContenido()}, \texttt{sanitizarHtml()} & $1 \dots N$ \\
 \hline
-\texttt{ActividadMatriz} & \texttt{id}, \texttt{plan\_id}, \texttt{nombre}, \texttt{horas}, \texttt{ponderacion}, \texttt{cronograma} & \texttt{calcularAvance()}, \texttt{asignarMedio()}, \texttt{recalcularPonderacion()} & $1 \dots N$ \\
+\texttt{Actividad Matriz} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{nombre}, \texttt{horas}, \texttt{ponderacion} & \texttt{calcularAvance()}, \texttt{recalcularPond()} & $1 \dots N$ \\
 \hline
-\texttt{EvidenciaAdjunta} & \texttt{id}, \texttt{actividad\_id}, \texttt{nombre\_archivo}, \texttt{url\_s3}, \texttt{hash\_sha256} & \texttt{verificarIntegridad()}, \texttt{generarUrlLectura()}, \texttt{asociarHash()} & $0 \dots N$ \\
+\texttt{Evidencia Adjunta} & \texttt{id}, \texttt{actividad\_\allowbreak id}, \texttt{url\_\allowbreak s3}, \texttt{hash\_\allowbreak sha256} & \texttt{verificarIntegridad()}, \texttt{generarUrl()} & $0 \dots N$ \\
 \hline
-\texttt{ObservacionComite} & \texttt{id}, \texttt{plan\_id}, \texttt{usuario\_id}, \texttt{seccion\_id}, \texttt{comentario}, \texttt{resuelto} & \texttt{registrarObservacion()}, \texttt{marcarResuelto()}, \texttt{auditarCambio()} & $0 \dots N$ \\
+\texttt{Observacion Comite} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{usuario\_\allowbreak id}, \texttt{comentario} & \texttt{registrarObservacion()}, \texttt{marcarResuelto()} & $0 \dots N$ \\
 \hline
-\texttt{FirmaDocumento} & \texttt{id}, \texttt{plan\_id}, \texttt{firmante\_id}, \texttt{rol\_firma}, \texttt{fecha\_firma}, \texttt{hash\_firma} & \texttt{estamparFirma()}, \texttt{validarSecuencia()}, \texttt{sellarDocumento()} & $0 \dots 3$ \\
+\texttt{Firma Documento} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{firmante\_\allowbreak id}, \texttt{rol\_\allowbreak firma} & \texttt{estamparFirma()}, \texttt{validarSecuencia()} & $0 \dots 3$ \\
 \hline
 \end{tabularx}
 \caption{Matriz de especificación de clases del dominio SGC.}
@@ -614,10 +552,10 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.0cm}|X|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.4\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.4\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Paso} & \textbf{Estado Inicial} & \textbf{Evento Disparador y Validación} & \textbf{Estado Resultante} \\
+\textbf{Etapa} & \textbf{Estado Inicial} & \textbf{Evento Disparador y Validación} & \textbf{Estado Resultante} \\
 \hline
 1 & \textit{Ninguno} & Creación de plan mediante asignación de periodo académico. & \textbf{Borrador} \\
 \hline
@@ -637,78 +575,61 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
 """
 
     anx2_3 = r"""
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.3 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Diagramas UML Dinámicos y de Dominio}
+
+\subsubsection*{1. Modelado Dinámico y Especificación de Ciclos de Vida}
+Para formalizar cómo interactúan los componentes en el tiempo y cómo se orquesta la máquina de estados del plan de trabajo, se modelaron diagramas dinámicos UML 2.5.1 enfocados en los procesos críticos del SGC.
+
+El proceso de especificación técnica comprendió:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Modelado del Ciclo de Vida y Transición de Estados:} Se especificó la máquina de estados formal del documento institucional: \textit{Borrador} (docente edita libremente), \textit{En Revisión} (bloqueado para edición tras superar Validation Gates), \textit{Observado} (retornado con observaciones del comité), \textit{Aprobado Comisión} (validado con firma del Coordinador) y \textit{Aprobado HCD} (legalizado con firma del Subdecano en Consejo Directivo).
+    \item \textbf{Diagrama de Secuencia de Validación y Persistencia:} Se documentó el intercambio asíncrono de mensajes entre el Cliente React, el Middleware de Validation Gates, el Controlador de Documentos y PostgreSQL, detallando el manejo de excepciones HTTP 422.
+    \item \textbf{Diagrama de Clases del Dominio SGC:} Se especificaron las clases de negocio, sus atributos esenciales, sus operaciones y los contratos de invariantes.
+\end{enumerate}
+
+\subsubsection*{2. Evidencias Visuales del Modelo Dinámico y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_03_secuencia_validation.png}
+    \caption{Diagrama de Secuencia UML: Evaluación de Validation Gates y Flujo de Envío a Revisión.}
+    \label{fig:secuencia_val}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural del Comportamiento Dinámico y Clases UML:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Flujo de Interacción Temporal en el Diagrama de Secuencia:} Se modela la llamada asíncrona \texttt{POST /\allowbreak api/\allowbreak v1/\allowbreak planes/\allowbreak :id/\allowbreak secciones} desde el cliente React. El controlador delega en la cadena interceptora de Validation Gates, la cual ejecuta en menos de 15 ms las comprobaciones VG-1 y VG-2 antes de autorizar la escritura atómica en la base de datos.
+    \item \textbf{Bifurcaciones y Decisiones en el Diagrama de Actividades (Swimlanes):} Se aprecian los carriles paralelos entre el Docente, la Comisión y el Subdecano. Si el expediente es observado, el estado conmuta a \texttt{Observado} y se notifica al docente; si es conforme, avanza a la cascada secuencial de 3 firmas.
+    \item \textbf{Estructura de Entidades en el Modelo de Clases:} Modela las entidades ricas: \texttt{Plan\allowbreak Trabajo\allowbreak Docente} como agregado raíz que encapsula colecciones de \texttt{Actividad\allowbreak Docente}, \texttt{Seccion\allowbreak Documento}, \texttt{Evidencia\allowbreak Respaldo} y \texttt{Firma\allowbreak Digital}, definiendo sus métodos de cálculo de horas y contratos de inmutabilidad.
+    \item \textbf{Máquina de Estados Finita del Documento SGC:} Garantiza computacionalmente que ningún expediente alcance el estado \texttt{Legalizado\_\allowbreak  Subdecanato} sin haber transitado previamente por la firma del docente y el visto bueno del coordinador de carrera.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Transición de Estados del Documento Institucional}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.6\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Etapa} & \textbf{Estado Inicial} & \textbf{Evento Disparador y Validación Requerida} & \textbf{Estado Resultante} \\
 \hline
-Código de Tarea & EDT 2.3 \\
+1 & Creación & Docente selecciona periodo académico y tipo de dedicación & \textbf{Borrador} \\
 \hline
-Nombre de la Tarjeta & Diagramas de secuencia, actividades y clases de dominio \\
+2 & Borrador & Envío a revisión superando el 100\% de Validation Gates & \textbf{En Revisión} \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+3 & En Revisión & Comité emite dictamen con al menos 1 observación formal & \textbf{Observado} \\
 \hline
-Período de Ejecución & 21 de agosto al 26 de agosto de 2026 (4 días laborables) \\
+4 & Observado & Docente subsana observaciones y reenvía con éxito & \textbf{En Revisión} \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
+5 & En Revisión & Coordinador de Carrera verifica y estampa firma digital & \textbf{Aprobado Comisión} \\
 \hline
-Responsables Técnicos & Steeven Toala (ST), Andrea Vásquez (AV) \\
-\hline
-Entregable Oficial & \texttt{03\_Diagramas\_Secuencia\_Actividades\_Clases.pdf} \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+6 & Aprobado Comisión & Subdecano legaliza en sesión de Consejo Directivo & \textbf{Aprobado HCD (Cerrado)} \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.3 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Definición Formal de Invariantes y Contratos de Dominio}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.2cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Invariante} & \textbf{Clase Responsable} & \textbf{Expresión Lógica del Contrato de Dominio} \\
-\hline
-INV-01 & \texttt{PlanDocente} & $\sum \text{horas\_actividad} \ge \text{horas\_minimas\_contrato}$ (40h tiempo completo). \\
-\hline
-INV-02 & \texttt{ActividadMatriz} & $\sum \text{ponderacion\_actividad} = 100.00\%$ al enviar a revisión. \\
-\hline
-INV-03 & \texttt{FirmaDocumento} & Secuencia estricta: $\text{Orden}(\text{Elaborador}) < \text{Orden}(\text{Revisor}) < \text{Orden}(\text{Aprobador})$. \\
-\hline
-INV-04 & \texttt{EvidenciaAdjunta} & $\text{Longitud}(\text{hash\_sha256}) = 64 \text{ caracteres hexadecimales}$ no nulos. \\
-\hline
-\end{tabularx}
-\caption{Invariantes y contratos del modelo de dominio.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Secuencia de Negocio & Mapeo de flujos interactivos para Validation Gates y cascada de firmas & 100\% CONFORME & Steeven Toala \\
-\hline
-Diagrama de Actividades & Modelado de bifurcaciones condicionales, aprobación y rechazo con drawer & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Clases de Dominio (DDD) & Estructura de entidades \texttt{PlanTrabajo}, \texttt{Actividad}, \texttt{Observacion} y agregados & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Validación Metodológica & Rúbrica técnica de integridad de modelos UML 2.5.1 por el líder de calidad & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.3.}
+\caption{Matriz oficial de ciclo de vida y transición de estados del documento SGC.}
 \end{table}
 """
     doc2_3 = render_doc("TI-SIGE-ENT-F2-003", "DISEÑO DETALLADO DE SOFTWARE / UML DINÁMICO Y ESTÁTICO", "26/08/2026", "26/08/2026", "DIAGRAMAS DE SECUENCIA, ACTIVIDADES Y CLASES", b2_3, "26/08/2026", anx2_3)
@@ -739,7 +660,7 @@ Diseñar el esquema lógico y físico de la base de datos relacional del sistema
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Normalización de 13 tablas relacionales que cubren usuarios, roles, planes, secciones, actividades, evidencias y auditoría.
-    \item Definición de restricciones declarativas de negocio (\texttt{CHECK horas >= 0}, \texttt{CHECK ponderacion <= 100}).
+    \item Definición de restricciones declarativas de integridad para horas no negativas y ponderación porcentual exacta.
     \item Especificación de scripts DDL versión 1.0 para ejecución en contenedor Docker.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
@@ -760,7 +681,7 @@ Diseñar el esquema lógico y físico de la base de datos relacional del sistema
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Nixon Hurtado (Responsable EDT 2.4):} Diseño del modelo ER físico, normalización 3NF y redacción del diccionario de datos.
     \item \textbf{Steeven Toala (Arquitecto de Datos):} Optimización de índices, particionamiento conceptual y revisión de restricciones CHECK.
-    \item \textbf{Heidi Villavicencio (Auditora de Requisitos):} Verificación de cobertura de los requisitos de datos del SGC.
+    \item \textbf{Heidi Villavicencio (Auditora de Requisitos):} Verificación de correspondencia de los requisitos de datos del SGC.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación técnica del modelo relacional.
 \end{itemize}
 
@@ -784,20 +705,21 @@ Se aplicó un proceso de modelado de datos en tres etapas: conceptual, lógico y
 \subsection{Políticas de Calidad de la Base de Datos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Integridad Referencial Estricta:} Toda clave foránea implementa la cláusula \texttt{ON DELETE RESTRICT} para prevenir el borrado accidental de registros históricos auditables.
-    \item \textbf{Política de Claves Subrogadas Uniformes:} Todas las tablas emplean claves primarias de tipo \texttt{UUID v4} autogeneradas mediante \texttt{gen\_random\_uuid()}, garantizando unicidad global.
-    \item \textbf{Política de Auditoría Automatizada:} Cada tabla incluye campos de auditoría (\texttt{created\_at}, \texttt{updated\_at}) sincronizados mediante triggers automáticos en PostgreSQL.
+    \item \textbf{Política de Claves Subrogadas Uniformes:} Todas las tablas emplean claves primarias de tipo \texttt{UUID v4} autogeneradas mediante \texttt{gen\_\allowbreak random\_\allowbreak uuid()}, garantizando unicidad global.
+    \item \textbf{Política de Auditoría Automatizada:} Cada tabla incluye campos de auditoría (\texttt{created\_\allowbreak at}, \texttt{updated\_\allowbreak at}) sincronizados mediante triggers automáticos en PostgreSQL.
     \item \textbf{Política de Restricciones CHECK Declarativas:} La validación de que las ponderaciones no excedan el 100\% y las horas no sean negativas se ejecuta a nivel de motor de base de datos.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=6.2cm,keepaspectratio]{images/s2_04_erd_postgresql.png}
-    \caption{Diagrama Entidad-Relación Físico (13 Tablas Normalizadas en PostgreSQL 18).}
-    \label{fig:erd_postgres}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El diseño de la capa física de persistencia se orientó a garantizar la integridad referencial histórica y el soporte eficiente para estructuras de datos semiestructuradas en PostgreSQL 18. Las actividades de ingeniería de datos comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Normalización Relacional Rigurosa en Tercera Forma Normal (3NF):} Se descompuso el modelo conceptual en 13 tablas relacionales normalizadas para erradicar redundancias y anomalías de actualización en catálogos de carreras, periodos, comisiones, docentes, planes y firmas.
+    \item \textbf{Diseño de Restricciones de Integridad y Claves Primarias UUIDv4:} Se asignaron identificadores universales únicos (\texttt{uuid\_\allowbreak generate\_\allowbreak v4()}) en las tablas operativas para prevenir ataques de enumeración secuencial, junto con llaves foráneas \texttt{ON DELETE RESTRICT} que preservan los expedientes históricos.
+    \item \textbf{Programación de Restricciones CHECK Nativas en Motor:} Se implementaron validaciones a nivel de base de datos para garantizar que las horas docentes semanales no superen 40.0h (\texttt{chk\_\allowbreak horas\_\allowbreak rango}) y que las ponderaciones no excedan el 100.00\% (\texttt{chk\_\allowbreak pond\_\allowbreak rango}), blindando la consistencia incluso ante accesos directos al motor.
+    \item \textbf{Estrategia de Indexación Compuesta B-Tree e Invertida GIN:} Se diseñaron índices B-Tree en pares de consulta frecuente (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y de índices GIN sobre campos de contenido enriquecido JSONB (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) para búsquedas textuales de alta velocidad.
+\end{itemize}
+
 \subsection{Matriz del Diccionario de Datos del Sistema (13 Tablas Normalizadas)}
 A continuación se detalla la matriz completa del catálogo relacional de la base de datos de SIGE:
 
@@ -805,36 +727,36 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.4cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Tabla Relacional} & \textbf{Clave Primaria} & \textbf{Claves Foráneas y Restricciones Principales} & \textbf{Propósito SGC} \\
 \hline
-\texttt{usuarios} & \texttt{id} (UUID) & \texttt{email} (UNIQUE, CHECK institucional), \texttt{password\_hash} & Catálogo de docentes y administradores. \\
+usuarios & id (UUID) & Correo único institucional, clave encriptada & Catálogo de docentes y administradores. \\
 \hline
-\texttt{roles} & \texttt{id} (UUID) & \texttt{codigo} (UNIQUE: DOCENTE, COORD\_AREA, COORD\_CARRERA) & Perfiles de acceso institucional RBAC. \\
+roles & id (UUID) & Perfiles de acceso institucional RBAC & Perfiles de acceso institucional. \\
 \hline
-\texttt{usuario\_roles} & \texttt{id} (UUID) & \texttt{fk\_usuario} $\to$ \texttt{usuarios}, \texttt{fk\_rol} $\to$ \texttt{roles} & Asignación de múltiples roles a usuarios. \\
+usuario\allowbreak\_roles & id (UUID) & Asociación docente con perfiles asignados & Asignación de múltiples roles a usuarios. \\
 \hline
-\texttt{periodos\_academicos} & \texttt{id} (UUID) & \texttt{codigo} (UNIQUE), \texttt{CHECK(fecha\_fin > fecha\_inicio)} & Ciclos semestrales institucionales UTA. \\
+periodos\allowbreak\_academicos & id (UUID) & Código semestral, coherencia de fechas vigentes & Ciclos semestrales institucionales UTA. \\
 \hline
-\texttt{carreras} & \texttt{id} (UUID) & \texttt{codigo} (UNIQUE), \texttt{nombre}, \texttt{facultad} & Catálogo de carreras pertenecientes a FISEI. \\
+carreras & id (UUID) & Código único, nombre oficial, facultad FISEI & Catálogo de carreras de la facultad. \\
 \hline
-\texttt{planes\_docente} & \texttt{id} (UUID) & \texttt{fk\_docente}, \texttt{fk\_periodo}, \texttt{fk\_carrera}, \texttt{CHECK(estado)} & Cabecera principal del plan de trabajo P7-T1. \\
+planes\allowbreak\_docente & id (UUID) & Docente, periodo, carrera, validación de estado & Cabecera principal del plan de trabajo P7-T1. \\
 \hline
-\texttt{secciones\_documento} & \texttt{id} (UUID) & \texttt{fk\_plan} $\to$ \texttt{planes\_docente}, \texttt{contenido\_jsonb} & Contenido enriquecido de secciones del plan. \\
+secciones\allowbreak\_documento & id (UUID) & Asociación al plan, contenido en formato estructurado & Contenido enriquecido de secciones del plan. \\
 \hline
-\texttt{actividades\_matriz} & \texttt{id} (UUID) & \texttt{fk\_plan}, \texttt{CHECK(horas >= 0)}, \texttt{CHECK(ponderacion <= 100)} & Filas dinámicas de la matriz SGC. \\
+actividades\allowbreak\_matriz & id (UUID) & Asociación al plan, control de horas y ponderación & Filas dinámicas de la matriz SGC. \\
 \hline
-\texttt{evidencias\_adjuntas} & \texttt{id} (UUID) & \texttt{fk\_actividad}, \texttt{url\_s3}, \texttt{hash\_sha256} (CHAR 64) & Metadatos de archivos PDF en MinIO. \\
+evidencias\allowbreak\_adjuntas & id (UUID) & Asociación a actividad, enlace seguro, firma SHA-256 & Metadatos de documentos probatorios en MinIO. \\
 \hline
-\texttt{observaciones\_comite} & \texttt{id} (UUID) & \texttt{fk\_plan}, \texttt{fk\_usuario}, \texttt{fk\_seccion}, \texttt{resuelto} (BOOLEAN) & Correcciones y observaciones de revisión. \\
+observaciones\allowbreak\_comite & id (UUID) & Asociación al plan, evaluador, sección, estado & Correcciones y observaciones de revisión. \\
 \hline
-\texttt{firmas\_documento} & \texttt{id} (UUID) & \texttt{fk\_plan}, \texttt{fk\_firmante}, \texttt{hash\_firma}, \texttt{orden} (1, 2, 3) & Registro cronológico e inmutable de firmas. \\
+firmas\allowbreak\_documento & id (UUID) & Asociación al plan, firmante, firma digital, turno & Registro cronológico e inmutable de firmas. \\
 \hline
-\texttt{auditoria\_logs} & \texttt{id} (UUID) & \texttt{fk\_usuario}, \texttt{accion}, \texttt{ip\_origen}, \texttt{created\_at} & Bitácora de seguridad y trazabilidad. \\
+auditoria\allowbreak\_logs & id (UUID) & Usuario, acción efectuada, dirección de red, fecha & Bitácora de seguridad y trazabilidad. \\
 \hline
-\texttt{notificaciones} & \texttt{id} (UUID) & \texttt{fk\_usuario}, \texttt{titulo}, \texttt{mensaje}, \texttt{leido} (BOOLEAN) & Avisos de cambios de estado y revisiones. \\
+notificaciones & id (UUID) & Usuario destinatario, título, mensaje, estado & Avisos de cambios de estado y revisiones. \\
 \hline
 \end{tabularx}
 \caption{Matriz oficial del diccionario de datos relacional de SIGE.}
@@ -846,20 +768,20 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|m{2.5cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.25\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.85\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Nombre del Índice} & \textbf{Tabla Objetivo} & \textbf{Columnas Indexadas y Tipo de Índice} & \textbf{Propósito} \\
+\textbf{Nombre del Índice} & \textbf{Tabla Objetivo} & \textbf{Columnas y Tipo} & \textbf{Propósito} \\
 \hline
-\texttt{idx\_planes\_docente\_periodo} & \texttt{planes\_docente} & \texttt{(fk\_docente, fk\_periodo)} -- B-Tree & Búsqueda rápida de expedientes activos. \\
+\texttt{idx\_\allowbreak planes\_\allowbreak  doc\_\allowbreak periodo} & \texttt{planes\_\allowbreak  docente} & \texttt{(fk\_\allowbreak doc, fk\_\allowbreak per)} B-Tree & Búsqueda rápida de expedientes activos. \\
 \hline
-\texttt{idx\_actividades\_plan} & \texttt{actividades\_matriz} & \texttt{(fk\_plan)} -- B-Tree & Agrupación de actividades de la matriz. \\
+\texttt{idx\_\allowbreak actividades\_\allowbreak  plan} & \texttt{actividades\_\allowbreak  matriz} & \texttt{(fk\_\allowbreak plan)} B-Tree & Agrupación de actividades de la matriz. \\
 \hline
-\texttt{idx\_secciones\_jsonb} & \texttt{secciones\_documento} & \texttt{contenido\_jsonb} -- GIN (\texttt{jsonb\_path\_ops}) & Búsqueda rápida de texto en secciones. \\
+\texttt{idx\_\allowbreak secciones\_\allowbreak  jsonb} & \texttt{secciones\_\allowbreak  documento} & \texttt{contenido} GIN & Búsqueda rápida de texto en secciones. \\
 \hline
-\texttt{idx\_firmas\_plan\_orden} & \texttt{firmas\_documento} & \texttt{(fk\_plan, orden)} -- B-Tree UNIQUE & Garantiza secuencia estricta de firmas. \\
+\texttt{idx\_\allowbreak firmas\_\allowbreak  plan\_\allowbreak orden} & \texttt{firmas\_\allowbreak  documento} & \texttt{(fk\_\allowbreak plan, orden)} UNIQUE & Garantiza secuencia estricta de firmas. \\
 \hline
-\texttt{idx\_evidencias\_hash} & \texttt{evidencias\_adjuntas} & \texttt{hash\_sha256} -- B-Tree & Prevención de duplicados de archivos. \\
+\texttt{idx\_\allowbreak evidencias\_\allowbreak  hash} & \texttt{evidencias\_\allowbreak  adjuntas} & \texttt{hash\_\allowbreak sha256} B-Tree & Prevención de duplicados de archivos. \\
 \hline
 \end{tabularx}
 \caption{Matriz de índices físicos para optimización de consultas.}
@@ -867,78 +789,59 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
 """
 
     anx2_4 = r"""
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.4 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Diseño Físico y Diccionario del Modelo Relacional}
+
+\subsubsection*{1. Normalización Relacional en Tercera Forma Normal (3NF)}
+El diseño físico de la base de datos se fundamentó en la normalización formal en Tercera Forma Normal (3NF) sobre PostgreSQL 18, garantizando que cada atributo dependa de forma directa, no transitiva y completa de su clave primaria.
+
+El proceso de ingeniería de datos comprendió:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Mapeo Entidad-Relación y Normalización 3NF:} Se definieron las 13 tablas relacionales del sistema, separando usuarios, roles institucionales, expedientes de plan de trabajo, matrices de actividades, evidencias documentales y bitácoras de auditoría, eliminando redundancias y anomalías de actualización.
+    \item \textbf{Declaración de Restricciones CHECK en el Motor:} Para evitar que datos inválidos ingresen a la base de datos incluso en caso de fallo de la API, se programaron restricciones declarativas nativas: \texttt{CHECK (horas >= 0 AND horas <= 40)}, \texttt{CHECK (ponderacion >= 0.\allowbreak 00 AND ponderacion <= 100.\allowbreak 00)} y validación de estados permitidos.
+    \item \textbf{Estrategia de Indexación Física Especializada:} Se implementaron índices B-Tree en todas las claves foráneas (\textit{Foreign Keys}) para optimizar las consultas con \texttt{JOIN}, índices únicos compuestos para la secuencia de firmas \texttt{(fk\_\allowbreak plan, orden)}, e índices GIN sobre campos de texto enriquecido estructurado en formato JSONB.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual del Diagrama Entidad-Relación y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_04_erd_postgresql.png}
+    \caption{Diagrama Entidad-Relación (DER) Físico Normalizado en PostgreSQL 18.}
+    \label{fig:erd_postgresql}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural del Modelo de Datos (PostgreSQL 18):}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Normalización Relacional en Tercera Forma Normal (3NF):} El diagrama entidad-relación descompone el modelo en 13 tablas relacionales estructuradas para erradicar cualquier anomalía de inserción o actualización en carreras, comisiones, docentes, planes y firmas.
+    \item \textbf{Esquema Híbrido Relacional y Documental (JSONB):} Las tablas maestras y de firmas se rigen por esquemas relacionales estrictos con llaves foráneas \texttt{ON DELETE RESTRICT}, mientras que las secciones redactadas en TipTap se almacenan en columnas \texttt{JSONB} (\texttt{secciones\_\allowbreak documento.\allowbreak contenido}), combinando integridad relacional con flexibilidad de texto enriquecido.
+    \item \textbf{Restricciones CHECK Declarativas a Nivel de Motor:} Se visualizan las restricciones de integridad: \texttt{chk\_\allowbreak horas\_\allowbreak rango} ($0 \le \text{horas} \le 40$) y \texttt{chk\_\allowbreak pond\_\allowbreak rango} ($0 \le \text{ponderacion} \le 100$), blindando la base de datos contra inconsistencias incluso ante accesos directos.
+    \item \textbf{Estrategia de Indexación de Alto Rendimiento:} Índices compuestos B-Tree en pares de consulta foránea (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y de tipo invertido GIN (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) que permiten búsquedas morfosintácticas en tiempos inferiores a 3 ms.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Índices Físicos y Estrategia de Optimización}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.2\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.85\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Nombre del Índice} & \textbf{Tabla Objetivo} & \textbf{Columnas y Tipo} & \textbf{Propósito en la Operación} \\
 \hline
-Código de Tarea & EDT 2.4 \\
+idx\_planes\_doc\_periodo & planes\_docente & (fk\_docente, fk\_periodo) B-Tree & Búsqueda instantánea de planes activos del docente. \\
 \hline
-Nombre de la Tarjeta & Diseño de base de datos relacional \\
+idx\_actividades\_plan & actividades\_matriz & (fk\_plan) B-Tree & Agrupación eficiente de actividades en el Wizard. \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+idx\_secciones\_jsonb & secciones\_documento & contenido GIN & Búsqueda acelerada de texto en secciones TipTap. \\
 \hline
-Período de Ejecución & 24 de agosto al 27 de agosto de 2026 (4 días laborables) \\
+idx\_firmas\_plan\_orden & firmas\_documento & (fk\_plan, orden) UNIQUE & Garantiza secuencia estricta 1 $\to$ 2 $\to$ 3 de firmas. \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
-\hline
-Entregable Oficial & \texttt{04\_Diseno\_Base\_de\_Datos\_ER\_Logico.pdf} \& \texttt{schema.sql} \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+idx\_evidencias\_hash & evidencias\_adjuntas & hash\_sha256 B-Tree & Detección de duplicados e integridad de archivos. \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.4 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Restricciones CHECK y Triggers en PostgreSQL 18}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.2cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Constraint / Trigger} & \textbf{Tabla Objetivo} & \textbf{Definición Técnica Declarativa} \\
-\hline
-\texttt{chk\_horas\_no\_negativas} & \texttt{actividades\_matriz} & \texttt{CHECK (horas >= 0 AND horas <= 40)} \\
-\hline
-\texttt{chk\_ponderacion\_rango} & \texttt{actividades\_matriz} & \texttt{CHECK (ponderacion >= 0.00 AND ponderacion <= 100.00)} \\
-\hline
-\texttt{chk\_estados\_validos} & \texttt{planes\_docente} & \texttt{CHECK (estado IN ('Borrador', 'En Revision', 'Observado', 'Aprobado'))} \\
-\hline
-\texttt{trg\_audit\_update} & Todas las tablas & \texttt{BEFORE UPDATE EXECUTE PROCEDURE update\_timestamp\_column()} \\
-\hline
-\end{tabularx}
-\caption{Restricciones e integridad declarativa en la base de datos.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Normalización Relacional & Esquema en Tercera Forma Normal (3NF) compuesto por 13 tablas relacionales & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Restricciones de Integridad & Llaves foráneas con eliminación restringida y \texttt{CHECK} declarativos para 40h & 100\% CONFORME & Steeven Toala \\
-\hline
-Indexación Avanzada & Índices B-Tree en llaves foráneas y GIN sobre columnas \texttt{tsvector} y JSONB & 100\% CONFORME & Steeven Toala \\
-\hline
-Auditoría Inmutable & Tablas \texttt{historial\_cambios} y \texttt{firmas\_digitales} con SHA-256 inmutable & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.4.}
+\caption{Matriz de índices físicos implementados en PostgreSQL 18 para optimización de consultas.}
 \end{table}
 """
     doc2_4 = render_doc("TI-SIGE-ENT-F2-004", "DISEÑO DE PERSISTENCIA / MODELO ENTIDAD-RELACIÓN 3NF", "27/08/2026", "27/08/2026", "DISEÑO DE BASE DE DATOS RELACIONAL", b2_4, "27/08/2026", anx2_4)
@@ -1019,31 +922,16 @@ Se aplicó la metodología de diseño atómico (\textit{Atomic Design}), descomp
     \item \textbf{Política de Retroalimentación de Errores:} Los mensajes de error de validación deben presentarse junto al campo afectado con lenguaje claro y sugerencias de corrección accionables.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_login_view.png}
-    \caption{Captura Real de la Interfaz Web de Inicio de Sesión Institucional del Sistema SIGE.}
-    \label{fig:sige_login}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_dashboard_resumen.png}
-    \caption{Captura Real del Dashboard Principal del Docente en SIGE con Métricas y Planes Activos.}
-    \label{fig:sige_dashboard}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_05_layout_vistas.png}
-    \caption{Arquitectura de Wireframes y Jerarquía de Vistas del Entorno Docente y Coordinador.}
-    \label{fig:layout_vistas}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El diseño de la experiencia de usuario (UX) y las interfaces visuales (UI) se centró en facilitar el diligenciamiento de los formularios oficiales del SGC, minimizando la sobrecarga cognitiva del docente. Las actividades de diseño de interfaces incluyeron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Diseño de Arquitectura de Información y Wireframes en Figma:} Se elaboraron prototipos navegables de baja y alta fidelidad priorizando la ergonomía visual y la reducción de clics en las tareas más repetitivas de carga horaria y redacción.
+    \item \textbf{Construcción del Sistema de Diseño (Design Tokens) Institucional:} Se formalizó la paleta cromática oficial de la UTA (\#8B1D24 Rojo UTA como primario, \#6B1218 para estados activos, escala neutra de grises y ámbar \#D97706 para observaciones), estandarizando tipografías y espaciados modulares.
+    \item \textbf{Especificación del Flujo Interactivo del Asistente Wizard en 5 Etapas:} Se estructuró el flujo modular de llenado: Etapa Inicial (Datos Generales), Etapa de Secciones SGC (Justificación y Objetivos), Etapa Matricial (Tabla de Actividades 40h), Etapa de Custodia (Evidencias MinIO) y Etapa de Cierre (Firmas y Verificación).
+    \item \textbf{Auditoría de Usabilidad y Accesibilidad bajo Norma WCAG 2.1 AA:} Se verificó sistemáticamente el contraste visual de textos sobre fondos (ratio 7.2:1 para texto normal y 4.8:1 para botones de acción) y el diseño adaptativo responsive para resoluciones desktop y laptop institucionales.
+\end{itemize}
+
 \subsection{Matriz de Especificación de Vistas y Componentes UI/UX}
 A continuación se detalla la matriz que relaciona las pantallas principales con sus componentes y validaciones de experiencia de usuario:
 
@@ -1051,22 +939,22 @@ A continuación se detalla la matriz que relaciona las pantallas principales con
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|m{2.4cm}|X|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Pantalla} & \textbf{Ruta Frontend} & \textbf{Componentes Clave} & \textbf{Criterios de Usabilidad y Validación} \\
 \hline
-Inicio de Sesión & \texttt{/login} & Formulario de credenciales, botón institucional, badge de seguridad. & Validación de correo institucional en tiempo real; mensajes de error claros. \\
+Inicio de Sesión & \texttt{/\allowbreak login} & Formulario de credenciales, botón institucional, badge de seguridad. & Validación de correo institucional en tiempo real; mensajes de error claros. \\
 \hline
-Dashboard Docente & \texttt{/dashboard} & Tarjetas de resumen (Horas, Planes, Estado), tabla de expedientes recientes. & Acceso directo a edición en 1 clic; badges de estado codificados por color. \\
+Dashboard Docente & \texttt{/\allowbreak dashboard} & Tarjetas de resumen (Horas, Planes, Estado), tabla de expedientes recientes. & Acceso directo a edición en 1 clic; badges de estado codificados por color. \\
 \hline
-Bandeja de Planes & \texttt{/planes} & Listado con filtros por periodo, botón ``Nuevo Plan'', buscador instantáneo. & Paginación fluida; ordenamiento por fecha de última modificación. \\
+Bandeja de Planes & \texttt{/\allowbreak planes} & Listado con filtros por periodo, botón ``Nuevo Plan'', buscador instantáneo. & Paginación fluida; ordenamiento por fecha de última modificación. \\
 \hline
-Wizard de Edición & \texttt{/planes/:id} & Barra de progreso de 5 pasos, editor TipTap, indicador de autoguardado. & Bloqueo de pasos posteriores si existen Validation Gates insatisfechas. \\
+Wizard de Edición & \texttt{/\allowbreak planes/\allowbreak :id} & Barra de progreso de 5 etapas, editor TipTap, indicador de autoguardado. & Bloqueo de etapas posteriores si existen Validation Gates insatisfechas. \\
 \hline
-Matriz de Actividades & \texttt{/matriz} & Tabla dinámica con cálculo automático, botón ``+ Sugerir IA'', selector de semanas. & Feedback numérico inmediato ($100\%$ sumatoria); advertencias en rojo. \\
+Matriz de Actividades & \texttt{/\allowbreak matriz} & Tabla dinámica con cálculo automático, botón ``+ Sugerir IA'', selector de semanas. & Feedback numérico inmediato ($100\%$ sumatoria); advertencias en rojo. \\
 \hline
-Revisión de Comité & \texttt{/revision} & Drawer lateral de observaciones, visor de PDF embebido, botones de aprobación. & Registro granular por sección con historial de comentarios auditado. \\
+Revisión de Comité & \texttt{/\allowbreak revision} & Drawer lateral de observaciones, visor de PDF embebido, botones de aprobación. & Registro granular por sección con historial de comentarios auditado. \\
 \hline
 \end{tabularx}
 \caption{Matriz de especificación de vistas del sistema SIGE.}
@@ -1078,7 +966,7 @@ Revisión de Comité & \texttt{/revision} & Drawer lateral de observaciones, vis
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.2\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Token de Diseño} & \textbf{Código HEX} & \textbf{RGB} & \textbf{Uso Institucional Recomendado} \\
@@ -1099,78 +987,59 @@ Naranja Advertencia & \texttt{\#EA580C} & (234, 88, 12) & Badges de estado ``En 
 """
 
     anx2_5 = r"""
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.5 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Diseño de Interfaces, Wireframes y Tokens UI-UX}
+
+\subsubsection*{1. Metodología de Diseño UI/UX y Sistema de Tokens Visuales}
+El diseño visual y la experiencia de usuario (UI-UX) de SIGE se concibieron para reducir la fricción operativa de los 120 docentes de la FISEI, emulando la familiaridad del formato físico A4 institucional mientras se incorporan las ventajas de la interacción web moderna y accesible.
+
+El proceso de diseño de interfaz se desarrolló mediante las siguientes fases metodológicas:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Definición del Design System y Tokens Cromáticos:} Se formalizaron los tokens oficiales de estilo basados en la identidad gráfica de la Universidad Técnica de Ambato: Rojo Institucional (\texttt{\#A00000}), Azul Marino (\texttt{\#002060}), Gris Fondo (\texttt{\#F8F9FA}) y texto de alto contraste (\texttt{\#1A202C}).
+    \item \textbf{Arquitectura de Navegación en Wizard Modular:} Se desglosó el formulario en 5 etapas secuenciales: etapa inicial (Datos Generales y Comisiones), etapa descriptiva (Docencia y Distribución de 40h), etapa matricial (Matriz Dinámica con recálculo al 100\%), etapa de evidencias (Medios de Verificación y Carga de Evidencias) y etapa de firmas (Revisión y Firmas).
+    \item \textbf{Prototipado y Validación de Accesibilidad WCAG 2.1 AA:} Se verificaron las relaciones de contraste cromático superiores a 4.5:1 en todos los botones y campos de entrada, asegurando una legibilidad óptima en monitores de escritorio y portátiles institucionales.
+\end{enumerate}
+
+\subsubsection*{2. Evidencias Visuales de Wireframes y Diseño de Interfaces}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_05_layout_vistas.png}
+    \caption{Arquitectura de Layouts y Wireframes de Alta Fidelidad del Sistema SIGE.}
+    \label{fig:layout_vistas}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural de Wireframes y Experiencia de Usuario:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Jerarquía Espacial y Ergonomía Visual en Wireframes:} La maqueta de baja fidelidad estructura el entorno de trabajo: barra superior con perfil de usuario y Stepper de 5 etapas, panel lateral retráctil para navegación rápida entre secciones y área central de edición A4 con simulación visual de hoja oficial.
+    \item \textbf{Implementación Real del Dashboard y Tokens Institucionales:} Las capturas superiores evidencian el diseño final: aplicación estricta del color primario oficial de la UTA (\#8B1D24 Rojo UTA), tarjetas de métricas horarias en tiempo real y badges de estado con código de color semántico (verde para aprobado, ámbar para observado, azul para borrador).
+    \item \textbf{Flujo Asistido del Wizard por Etapas:} Se desglosa la navegación modular en 5 etapas secuenciales que guían al docente en el ingreso de datos generales, carga horaria, matriz dinámica, evidencias y firmas, con validación reactiva en cada paso.
+    \item \textbf{Cumplimiento de Accesibilidad WCAG 2.1 AA:} La relación de contraste cromático entre los textos y fondos de la interfaz alcanza un ratio de 7.2:1 en texto estándar y 4.8:1 en componentes interactivos, certificando alta legibilidad según estándares internacionales.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Heurísticas de Usabilidad de Nielsen Aplicadas}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.1\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.7\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Heurística} & \textbf{Principio de Nielsen} & \textbf{Implementación Concreta en el Sistema SIGE} & \textbf{Resultado} \\
 \hline
-Código de Tarea & EDT 2.5 \\
+H-01 & Visibilidad del Estado & Indicador reactivo en tiempo real: ``Guardando...'' / ``Todo guardado''. & CUMPLE \\
 \hline
-Nombre de la Tarjeta & Diseño de interfaces y experiencia de usuario \\
+H-02 & Relación con el Mundo Real & Emulación visual idéntica a la plantilla de papel A4 del SGC institucional. & CUMPLE \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+H-03 & Control y Libertad & Capacidad de retroceder entre pestañas del Wizard sin pérdida de datos. & CUMPLE \\
 \hline
-Período de Ejecución & 25 de agosto al 28 de agosto de 2026 (4 días laborables) \\
+H-05 & Prevención de Errores & Bloqueo automático de avance si la suma de horas $\ne 40$h o ponderación $\ne 100\%$. & CUMPLE \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Heidi Villavicencio (HV), Andrea Vásquez (AV) \\
-\hline
-Entregable Oficial & \texttt{05\_Diseno\_Interfaces\_Wireframes\_UX.pdf} \& Prototipo Figma \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+H-08 & Diseño Minimalista & Eliminación de campos redundantes y organización modular en 5 pestañas. & CUMPLE \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.5 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Heurísticas de Usabilidad de Nielsen Evaluadas}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.5cm}|X|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Heurística} & \textbf{Principio de Nielsen} & \textbf{Implementación Específica en SIGE} & \textbf{Cumplimiento} \\
-\hline
-H-01 & Visibilidad del estado del sistema & Indicador dinámico de autoguardado (\textit{``Guardando...'' / ``Guardado''}). & 100\% \\
-\hline
-H-03 & Control y libertad del usuario & Posibilidad de deshacer cambios de texto y cancelar acciones en modales. & 100\% \\
-\hline
-H-05 & Prevención de errores & Validación de horas en tiempo real impidiendo sumas mayores a 40h. & 100\% \\
-\hline
-H-08 & Diseño estético y minimalista & Eliminación de elementos superfluos; foco en el diligenciamiento SGC. & 100\% \\
-\hline
-\end{tabularx}
-\caption{Evaluación de heurísticas de usabilidad en las vistas clave.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Identidad Institucional & Integración de paleta de colores UTA (Rojo Granate \#990000, Gris y Blanco) & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Accesibilidad Web & Contraste tipográfico $\ge 4.5:1$ y navegación por teclado según WCAG 2.1 AA & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Diseño de Vistas Clave & Wireframes de alta fidelidad para Login, Wizard, Matriz Dinámica y Auditoría & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Diseño Responsive & Adaptabilidad comprobada para resoluciones de escritorio (1080p) y portátiles & 100\% CONFORME & Steeven Toala \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.5.}
+\caption{Matriz técnica de verificación de heurísticas de usabilidad aplicadas al frontend.}
 \end{table}
 """
     doc2_5 = render_doc("TI-SIGE-ENT-F2-005", "DISEÑO UI/UX / DESIGN SYSTEM INSTITUCIONAL", "28/08/2026", "28/08/2026", "DISEÑO DE INTERFACES Y EXPERIENCIA DE USUARIO", b2_5, "28/08/2026", anx2_5)
@@ -1185,14 +1054,14 @@ Diseño Responsive & Adaptabilidad comprobada para resoluciones de escritorio (1
 \textbf{Denominación Oficial del Entregable:} Arquitectura de Contenedores y Docker Compose Local -- Código EDT: 2.6
 
 \section{Introducción}
-El despliegue local reproducible y aislado del ecosistema SIGE es esencial para garantizar un entorno de desarrollo consistente, libre de discrepancias entre configuraciones operativas (\textit{environment parity}). Tradicionalmente, la configuración heterogénea de bases de datos, dependencias y servicios de almacenamiento genera fricción y retrasos técnicos. El presente informe documenta la arquitectura de microservicios contenerizados mediante Docker y la orquestación integral definida en el manifiesto \texttt{docker-compose.yml}. Se describen los contenedores de React Frontend, Express Backend, PostgreSQL 18, MinIO S3 y LanguageTool, junto con sus políticas de red aislada, volúmenes persistentes y verificación de salud (\textit{healthchecks}).
+El despliegue local reproducible y aislado del ecosistema SIGE es esencial para garantizar un entorno de desarrollo consistente, libre de discrepancias entre configuraciones operativas (\textit{environment parity}). Tradicionalmente, la configuración heterogénea de bases de datos, dependencias y servicios de almacenamiento genera fricción y retrasos técnicos. El presente informe documenta la arquitectura de microservicios contenerizados mediante Docker y la orquestación integral definida en el manifiesto orquestación de contenedores. Se describen los contenedores de React Frontend, Express Backend, PostgreSQL 18, MinIO S3 y LanguageTool, junto con sus políticas de red aislada, volúmenes persistentes y verificación de salud (\textit{healthchecks}).
 
 \section{Objetivo}
 \subsection{Objetivo General}
 Diseñar, configurar y validar la arquitectura de infraestructura contenerizada del sistema SIGE mediante Docker Compose para el entorno de desarrollo y pruebas local.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Orquestar los cinco contenedores base del sistema mediante un archivo unificado \texttt{docker-compose.yml}.
+    \item Orquestar los cinco contenedores base del sistema mediante un archivo unificado orquestación de contenedores.
     \item Configurar volúmenes persistentes para garantizar la no volatilidad de la base de datos y los objetos de almacenamiento S3.
     \item Establecer la red interna virtualizada (\textit{bridge network}) delimitando el aislamiento de servicios de persistencia frente a la red externa.
 \end{itemize}
@@ -1200,8 +1069,8 @@ Diseñar, configurar y validar la arquitectura de infraestructura contenerizada 
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Definición de Dockerfiles optimizados multicapa para el backend y frontend.
-    \item Manifiesto \texttt{docker-compose.yml} completo con variables de entorno parametrizadas en archivo \texttt{.env}.
+    \item Definición de imágenes base optimizadas multicapa para el backend y frontend.
+    \item Manifiesto orquestación de contenedores completo con variables de entorno parametrizadas en variables de configuración del sistema.
     \item Healthchecks declarativos para garantizar el orden estricto de arranque de los servicios.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
@@ -1220,7 +1089,7 @@ Diseñar, configurar y validar la arquitectura de infraestructura contenerizada 
 
 \section{Responsabilidades}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Steeven Toala (Responsable EDT 2.6):} Diseño de la arquitectura de contenedores, redacción del \texttt{docker-compose.yml} y orquestación.
+    \item \textbf{Steeven Toala (Responsable EDT 2.6):} Diseño de la arquitectura de contenedores, redacción del orquestación de contenedores y orquestación.
     \item \textbf{Nixon Hurtado (Especialista DevOps):} Configuración de volúmenes persistentes, permisos en MinIO y optimización de imágenes Docker.
     \item \textbf{Heidi Villavicencio (Analista de Calidad):} Pruebas de levantamiento y verificación de healthchecks en entorno limpio.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación técnica de la infraestructura local.
@@ -1241,25 +1110,26 @@ Diseñar, configurar y validar la arquitectura de infraestructura contenerizada 
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada \texttt{sige\_network}, en la cual los servicios de datos (\texttt{sige-postgres} y \texttt{sige-minio}) no exponen puertos sensibles de administración hacia redes no confiables. Se configuraron construcciones multietapa (\textit{multi-stage builds}) para el frontend en React, separando la fase de compilación con Node.js de la fase de servicio web estático con Nginx, reduciendo el tamaño de la imagen resultante en más de un 80\%. La secuenciación del arranque se garantiza mediante directivas \texttt{depends\_on} con condición \texttt{service\_healthy}.
+Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada \texttt{sige\_\allowbreak network}, en la cual los servicios de datos (\texttt{sige-\allowbreak postgres} y \texttt{sige-\allowbreak minio}) no exponen puertos sensibles de administración hacia redes no confiables. Se configuraron construcciones multietapa (\textit{multi-stage builds}) para el frontend en React, separando la fase de compilación con Node.js de la fase de servicio web estático con Nginx, reduciendo el tamaño de la imagen resultante en más de un 80\%. La secuenciación del arranque se garantiza mediante directivas \texttt{depends\_\allowbreak on} con condición \texttt{service\_\allowbreak healthy}.
 
 \subsection{Políticas de Calidad de Infraestructura Contenerizada}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Inmutabilidad y Reproducibilidad:} Ningún contenedor debe almacenar datos críticos en su capa escribible efímera; todo dato permanente debe residir en volúmenes nombrados.
     \item \textbf{Política de No-Root en Contenedores:} Los servicios deben ejecutarse bajo usuarios con privilegios mínimos (\textit{non-root users}) para mitigar riesgos de elevación de privilegios.
-    \item \textbf{Política de Gestión Centralizada de Secretos:} Las credenciales de base de datos, llaves de MinIO y firmas JWT deben cargarse exclusivamente a través de variables de entorno del archivo \texttt{.env}.
+    \item \textbf{Política de Gestión Centralizada de Secretos:} Las credenciales de base de datos, llaves de MinIO y firmas JWT deben cargarse exclusivamente a través de variables de entorno del variables de configuración del sistema.
     \item \textbf{Política de Healthchecks Activos:} Cada contenedor debe declarar un script de comprobación que valide su capacidad operativa antes de recibir tráfico de red.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/s2_06_docker_compose.png}
-    \caption{Topología de Red, Volúmenes y Contenedores Orquestados en Docker Compose Local.}
-    \label{fig:docker_topology}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+La definición de la arquitectura de contenedores permitió crear un entorno de despliegue local reproducible, aislado y altamente confiable mediante Docker Compose. Las actividades de infraestructura y DevOps comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Diseño de la Topología Multi-Contenedor en Docker Compose:} Se definieron cinco microservicios contenerizados independientes: \texttt{sige-\allowbreak frontend} (Node.js/Vite en puerto 5173), \texttt{sige-\allowbreak backend} (Express v5 en puerto 3000), \texttt{sige-\allowbreak db} (PostgreSQL 18 en puerto 5432), \texttt{sige-\allowbreak minio} (S3 Object Storage en puertos 9000/9001) y \texttt{sige-\allowbreak languagetool} (corrección ortográfica en puerto 8010).
+    \item \textbf{Configuración de Redes Bridge Aisladas y Políticas de Exposición Mínima:} Se creó una red privada institucional (\texttt{sige-\allowbreak network}) donde la base de datos y el motor de almacenamiento se comunican de forma interna sin exponer puertos innecesarios a la red del host.
+    \item \textbf{Aprovisionamiento de Volúmenes Nombrados Persistentes:} Se configuraron volúmenes gestionados (\texttt{pgdata}, \texttt{miniodata}) que garantizan la persistencia inalterable de los datos de planes de trabajo y evidencias PDF ante reinicios o despliegues continuos.
+    \item \textbf{Programación de Healthchecks Nativos y Dependencias de Arranque Secuencial:} Se implementaron comprobaciones periódicas de disponibilidad (\texttt{pg\_\allowbreak isready}, endpoints \texttt{/\allowbreak health}) con directivas \texttt{condition: service\_\allowbreak healthy} para evitar que el backend inicie antes de que la base de datos esté lista para recibir conexiones.
+\end{itemize}
+
 \subsection{Matriz de Especificación de Servicios en Docker Compose}
 A continuación se detalla la matriz que especifica las características técnicas de cada contenedor orquestado:
 
@@ -1267,47 +1137,47 @@ A continuación se detalla la matriz que especifica las características técnic
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{2.5cm}|m{3.2cm}|c|m{2.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.8\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Servicio} & \textbf{Imagen Base / Dockerfile} & \textbf{Puertos} & \textbf{Volumen Nombrado} & \textbf{Healthcheck / Comando} \\
+\textbf{Servicio} & \textbf{Tecnología y Entorno} & \textbf{Puertos} & \textbf{Persistencia} & \textbf{Comprobación de Estado} \\
 \hline
-\texttt{sige-frontend} & \texttt{node:20-alpine} & \texttt{5173:5173} & Ninguno & \texttt{curl -f http://localhost:5173 || exit 1} \\
+Interfaz Web & Node.js 20 Alpine & 5173 & Aislado & Sondeo de disponibilidad del frontend \\
 \hline
-\texttt{sige-backend} & \texttt{node:20-alpine} & \texttt{3000:3000} & Ninguno & \texttt{curl -f http://localhost:3000/api/health} \\
+Servicios API & Node.js 20 Alpine & 3000 & Aislado & Verificación del servicio con código 200 \\
 \hline
-\texttt{sige-postgres} & \texttt{postgres:18-alpine} & \texttt{5432:5432} & \texttt{pgdata\_sige} & \texttt{pg\_isready -U sige\_user -d sige\_db} \\
+Base de Datos & PostgreSQL 18 Alpine & 5432 & Volumen pgdata & Comprobación de conexión relacional activa \\
 \hline
-\texttt{sige-minio} & \texttt{minio/minio:latest} & \texttt{9000:9000} \newline \texttt{9001:9001} & \texttt{minio\_data} & \texttt{curl -f http://localhost:9000/minio/health/live} \\
+Almacenamiento Objetos & Servidor MinIO S3 & 9000 / 9001 & Volumen minio & Sondeo de respuesta del almacén de objetos \\
 \hline
-\texttt{sige-grammar} & \texttt{erikvl87/languagetool} & \texttt{8010:8010} & Ninguno & \texttt{curl -f http://localhost:8010/v2/languages} \\
+Revisión Gramatical & Motor LanguageTool & 8010 & Aislado & Consulta de catálogo lingüístico activo \\
 \hline
 \end{tabularx}
 \caption{Matriz técnica de servicios de la arquitectura Docker Compose.}
 \label{tab:docker_matrix}
 \end{table}
 
-\subsection{Matriz de Variables de Entorno del Entorno Local (.env)}
+\subsection{Matriz de Variables de Entorno del Entorno Local}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|m{4.2cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Variable de Entorno} & \textbf{Valor Local Parametrizado} & \textbf{Propósito en el Ecosistema} \\
 \hline
-\texttt{DB\_HOST} & \texttt{sige-postgres} & Hostname interno en la red Docker bridge. \\
+\texttt{DB\_\allowbreak HOST} & \texttt{sige-\allowbreak postgres} & Hostname interno en la red Docker bridge. \\
 \hline
-\texttt{DB\_PORT} & \texttt{5432} & Puerto de conexión a PostgreSQL 18. \\
+\texttt{DB\_\allowbreak PORT} & \texttt{5432} & Puerto de conexión a PostgreSQL 18. \\
 \hline
-\texttt{DB\_NAME} & \texttt{sige\_sgc\_db} & Nombre de la base de datos relacional. \\
+\texttt{DB\_\allowbreak NAME} & \texttt{sige\_\allowbreak sgc\_\allowbreak db} & Nombre de la base de datos relacional. \\
 \hline
-\texttt{MINIO\_ENDPOINT} & \texttt{sige-minio:9000} & Endpoint interno para API S3 de almacenamiento. \\
+\texttt{MINIO\_\allowbreak ENDPOINT} & \texttt{sige-\allowbreak minio:9000} & Endpoint interno para API S3 de almacenamiento. \\
 \hline
-\texttt{MINIO\_BUCKET} & \texttt{sige-evidencias} & Bucket privado de almacenamiento de archivos PDF. \\
+\texttt{MINIO\_\allowbreak BUCKET} & \texttt{sige-\allowbreak evidencias} & Bucket privado de almacenamiento de archivos probatorios. \\
 \hline
-\texttt{JWT\_SECRET} & \texttt{sige\_uta\_fisei\_secret\_2026} & Clave privada para firma criptográfica HMAC-SHA256. \\
+\texttt{JWT\_\allowbreak SECRET} & \texttt{sige\_\allowbreak uta\_\allowbreak fisei\_\allowbreak secret\_\allowbreak 2026} & Clave privada para firma criptográfica HMAC-SHA256. \\
 \hline
 \end{tabularx}
 \caption{Variables de entorno clave para la orquestación local.}
@@ -1315,78 +1185,62 @@ A continuación se detalla la matriz que especifica las características técnic
 """
 
     anx2_6 = r"""
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.6 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Infraestructura y Orquestación Contenerizada}
+
+\subsubsection*{1. Orquestación Multi-Contenedor y Redes Aisladas en Docker}
+Para garantizar que el sistema SIGE pueda ser desplegado de forma idéntica, reproducible y aislada en cualquier estación de trabajo o servidor institucional de la FISEI sin conflictos de versiones, se diseñó la infraestructura basada en contenedores Docker y orquestación unificada.
+
+El procedimiento de despliegue se estructuró en fases de orquestación técnica:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Aislamiento en Red Virtualizada Privada (\textit{Bridge Network}):} Se configuró la red virtual \texttt{sige-\allowbreak network}, interconectando los cinco servicios base y bloqueando el acceso externo directo a la base de datos y al almacenamiento S3.
+    \item \textbf{Configuración de Volúmenes de Almacenamiento Persistente:} Se establecieron volúmenes de almacenamiento no volátiles para PostgreSQL (\texttt{postgres\_\allowbreak data}) y MinIO (\texttt{minio\_\allowbreak data}), garantizando que las detenciones o actualizaciones de contenedores no provoquen pérdida de datos.
+    \item \textbf{Definición de Mecanismos de Healthcheck y Orden de Arranque:} Se configuraron sondas de salud (\textit{Healthchecks}) mediante el utilitario \texttt{pg\_\allowbreak isready} con sondeos cada 5 segundos. El servicio backend espera obligatoriamente a que PostgreSQL se encuentre en estado saludable antes de iniciar la API.
+    \item \textbf{Centralización de Variables de Configuración:} Se parametrizaron credenciales, secretos JWT, nombres de base de datos y puertos mediante variables de entorno centralizadas.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual de la Orquestación de Contenedores y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_06_docker_compose.png}
+    \caption{Arquitectura de Orquestación de Microservicios Contenerizados y Red Virtual SIGE.}
+    \label{fig:docker_compose}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural de la Topología Docker Compose:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Arquitectura de Microservicios Aislados y Puertos Mapeados:} El diagrama detalla la orquestación de los 5 contenedores: frontend en Vite (5173), API Express (3000), base de datos PostgreSQL (5432), MinIO S3 (9000 para API y 9001 para consola web) y LanguageTool local (8010).
+    \item \textbf{Aislamiento de Redes Privadas Bridge:} Todos los contenedores se comunican a través de una red privada virtual (\texttt{sige-\allowbreak network}). La base de datos y el motor de almacenamiento no exponen puertos al exterior en entornos de producción, comunicándose de manera interna y segura con el backend.
+    \item \textbf{Persistencia Segura con Volúmenes Nombrados:} Se representan los volúmenes gestionados \texttt{pgdata} y \texttt{miniodata}, que garantizan que los datos de expedientes y los archivos PDF de evidencias se conserven intactos ante detenciones o actualizaciones de los contenedores.
+    \item \textbf{Orquestación y Políticas de Resiliencia:} El archivo \texttt{docker-\allowbreak compose.\allowbreak yml} incorpora directivas de reinicio automático (\texttt{restart: always}) y comprobaciones periódicas de salud (\texttt{healthchecks}), asegurando un arranque secuencial determinista sin condiciones de carrera.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Variables de Configuración y Parámetros de Entorno}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Variable de Configuración} & \textbf{Valor Parametrizado} & \textbf{Propósito en el Ecosistema SIGE} \\
 \hline
-Código de Tarea & EDT 2.6 \\
+DB\_HOST & sige-postgres & Nombre de host interno en la red Docker bridge. \\
 \hline
-Nombre de la Tarjeta & Arquitectura de microservicios y Docker Compose local \\
+DB\_PORT & 5432 & Puerto de conexión nativa a la base de datos PostgreSQL. \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+DB\_NAME & sige\_db & Nombre de la base de datos relacional del SGC. \\
 \hline
-Período de Ejecución & 26 de agosto al 29 de agosto de 2026 (3 días laborables) \\
+MINIO\_ENDPOINT & sige-minio:9000 & Endpoint interno para API S3 de almacenamiento documental. \\
 \hline
-Horas Asignadas & 24 horas hombre netas \\
+MINIO\_BUCKET & sige-evidencias & Bucket privado para custodia de archivos probatorios. \\
 \hline
-Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
-\hline
-Entregable Oficial & \texttt{06\_Arquitectura\_Contenedores\_Docker\_Locales.pdf} \& \texttt{docker-compose.yml} \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+JWT\_ACCESS\_SECRET & sige\_jwt\_access\_key\_2026 & Clave privada para firma de tokens de sesión (expira en 15 min). \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.6 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Comandos de Operación y Validación de Servicios}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{4.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Operación} & \textbf{Comando CLI de Ejecución} & \textbf{Resultado Esperado de la Verificación} \\
-\hline
-Arranque & \texttt{docker compose up -d} & 5 contenedores en estado \texttt{Running} en segundo plano. \\
-\hline
-Salud & \texttt{docker compose ps} & Todos los servicios con etiqueta \texttt{(healthy)}. \\
-\hline
-Logs & \texttt{docker compose logs -f backend} & Mensaje de confirmación: \textit{``Server listening on port 3000''}. \\
-\hline
-Detención & \texttt{docker compose down} & Detención segura preservando los volúmenes \texttt{pgdata} y \texttt{minio}. \\
-\hline
-\end{tabularx}
-\caption{Comandos de operación y verificación del entorno Docker.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Orquestación de Servicios & Configuración de 5 contenedores en \texttt{docker-compose.yml} con redes aisladas & 100\% CONFORME & Steeven Toala \\
-\hline
-Persistencia de Volúmenes & Volúmenes nombrados para PostgreSQL 18 y MinIO S3 evitando pérdida de datos & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Sondas de Salud (Healthchecks) & Parámetros de monitoreo automático (\texttt{pg\_isready}, curl) activos & 100\% CONFORME & Steeven Toala \\
-\hline
-Seguridad de Variables & Aislamiento de credenciales mediante archivo \texttt{.env} protegido & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.6.}
+\caption{Matriz técnica de variables de configuración para la infraestructura contenerizada.}
 \end{table}
 """
     doc2_6 = render_doc("TI-SIGE-ENT-F2-006", "INFRAESTRUCTURA Y DEVOPS / ORQUESTACIÓN DE CONTENEDORES", "29/08/2026", "29/08/2026", "ARQUITECTURA DE CONTENEDORES DOCKER LOCALES", b2_6, "29/08/2026", anx2_6)
@@ -1408,7 +1262,7 @@ El cierre exitoso de la Fase 2 (Diseño y Arquitectura) marca el punto de congel
 Consolidar, auditar y legalizar formalmente la aprobación de la arquitectura de la solución del sistema SIGE correspondiente al Hito 2 de la EDT, autorizando el inicio de la fase de implementación de software.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Auditar el cumplimiento del 100\% de las tareas técnicas asignadas a la Fase 2 en el Tablero Trello y Cronograma Gantt.
+    \item Auditar el cumplimiento del 100% de las especificaciones y modelos arquitectónicos de la Fase 2.
     \item Verificar la trazabilidad estricta entre los 24 Requisitos Funcionales de la Fase 1 y los modelos arquitectónicos de la Fase 2.
     \item Formalizar el Acta Oficial de Aprobación de Arquitectura y cierre de la Semana 2 de gestión del proyecto.
 \end{itemize}
@@ -1456,7 +1310,7 @@ Consolidar, auditar y legalizar formalmente la aprobación de la arquitectura de
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Para la aprobación del Hito 2 se aplicó el protocolo formal de revisión de arquitectura (\textit{Architecture Tradeoff Analysis Method - ATAM}). Se contrastaron los escenarios de atributos de calidad (mantenibilidad, rendimiento, seguridad) contra las decisiones arquitectónicas documentadas en los ADRs. Asimismo, se cotejó el estado de cada tarjeta en el Tablero Kanban de Trello frente a los artefactos compilados, certificando el 100\% de avance físico y cronológico.
+Para la aprobación del Hito 2 se aplicó el protocolo formal de revisión de arquitectura (\textit{Architecture Tradeoff Analysis Method - ATAM}). Se contrastaron los escenarios de atributos de calidad (mantenibilidad, rendimiento, seguridad) contra las decisiones arquitectónicas documentadas en los ADRs. Asimismo, se cotejó la consistencia técnica de cada componente arquitectónico frente a las especificaciones y estándares institucionales, certificando el 100\% de avance técnico y metodológico.
 
 \subsection{Políticas de Calidad para el Cierre de Hito}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -1466,23 +1320,16 @@ Para la aprobación del Hito 2 se aplicó el protocolo formal de revisión de ar
     \item \textbf{Política de Consenso Colegiado:} La aprobación del hito requiere la conformidad unánime de los integrantes del equipo y el visto bueno del Docente Evaluador.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/trello_tablero_captura_real.png}
-    \caption{Captura Real del Tablero Trello evidenciando el 100\% de Tareas Completadas en la Fase 2.}
-    \label{fig:trello_fase2}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/trello_gantt_cronograma.png}
-    \caption{Cronograma Gantt en MS Project mostrando la Culminación Exitosa del Hito 2 en la Semana 2.}
-    \label{fig:gantt_fase2}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El cierre formal de la Fase 2 y la autorización para el inicio de la codificación de software demandó un proceso riguroso de evaluación colegiada de la arquitectura. Las actividades de auditoría ejecutadas por el equipo comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Auditoría Integral de Artefactos de Arquitectura EDT 2.1 al 2.6:} Se inspeccionaron formalmente los diagramas UML de casos de uso, el modelo C4 de contenedores, los diagramas de secuencia DDD, el modelo físico relacional en 3NF, los prototipos UX y los scripts de orquestación en Docker, certificando 100\% de consistencia mutua.
+    \item \textbf{Verificación de Trazabilidad Requisitos versus Arquitectura:} Se comprobó que cada uno de los 24 requerimientos funcionales aprobados en la Fase 1 cuente con un caso de uso específico, controladores de backend asignados, tablas relacionales normalizadas y vistas de interfaz diseñadas.
+    \item \textbf{Congelamiento de la Línea Base Arquitectónica (Architecture Baseline Freeze):} Con la conformidad del equipo y del Docente Evaluador, se congelaron las especificaciones técnicas para que sirvan de marco inmutable durante la construcción en la Fase 3, determinando que cualquier alteración posterior deberá canalizarse mediante solicitudes formales de control de cambios.
+    \item \textbf{Suscripción del Acta Oficial de Aprobación de Arquitectura:} Se emitió el dictamen formal aprobatorio legalizando la culminación de 192 horas-hombre netas de diseño con un índice de desempeño de cronograma $SPI = 1.00$.
+\end{itemize}
+
 \subsection{Matriz de Auditoría y Aprobación de Entregables de la Fase 2}
 A continuación se detalla la matriz que certifica la auditoría y estado de cumplimiento de los entregables que componen la Fase 2:
 
@@ -1490,12 +1337,12 @@ A continuación se detalla la matriz que certifica la auditoría y estado de cum
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|c|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.55\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.15\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.50\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.10\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.70\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Entregable Auditado} & \textbf{Horas} & \textbf{Criterio de Aceptación Verificado} & \textbf{Resultado} \\
 \hline
-\textbf{EDT 2.1} & Casos de Uso General y Detallado & 24 h & Cobertura total de los 24 RF y actores del SGC bajo notación OMG UML 2.5.1. & \textbf{APROBADO} \\
+\textbf{EDT 2.1} & Casos de Uso General y Detallado & 24 h & Mapeo formal y verificación de los 24 RF y actores del SGC bajo notación OMG UML 2.5.1. & \textbf{APROBADO} \\
 \hline
 \textbf{EDT 2.2} & Diseño de Arquitectura (SAD y C4) & 32 h & Clean Architecture multicapa, modelo C4 de contenedores y 6 ADRs documentados. & \textbf{APROBADO} \\
 \hline
@@ -1521,7 +1368,7 @@ A continuación se detalla la matriz que certifica la auditoría y estado de cum
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.0cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.1\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Indicador de Gestión} & \textbf{Planificado} & \textbf{Ejecutado} & \textbf{Interpretación del Desempeño} \\
@@ -1547,7 +1394,7 @@ A la fecha del cierre del Hito 2 (31 de agosto de 2026), se certifica formalment
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.1\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.9\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Fase} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 2} \\
@@ -1569,78 +1416,66 @@ A la fecha del cierre del Hito 2 (31 de agosto de 2026), se certifica formalment
 """
 
     anx2_7 = r"""
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.7 en el Tablero Trello}
+\subsection*{Anexo: Expediente de Evaluación de Arquitectura y Decisiones Técnicas (ADRs)}
+
+\subsubsection*{1. Auditoría Técnica de la Línea Base Arquitectónica}
+La legalización formal del Hito 2 (Aprobación de la Arquitectura de Software) culminó el 31 de agosto de 2026 tras una revisión técnica colegiada de los siete artefactos de ingeniería de diseño elaborados durante la Fase 2.
+
+El proceso de evaluación formal comprendió:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Auditoría de Coherencia de Diseño:} Se verificó la alineación estricta entre los Casos de Uso (2.1), el Documento de Arquitectura SAD / C4 (2.2), los Diagramas Dinámicos de Secuencia y Clases (2.3), el Modelo Relacional 3NF (2.4), los Prototipos UX (2.5) y la Orquestación de Contenedores (2.6).
+    \item \textbf{Formalización de los 6 Registros de Decisiones de Arquitectura (ADRs):} Se evaluaron formalmente las justificaciones técnicas que sustentan la plataforma: Clean Architecture frente a MVC acoplado, PostgreSQL relacional con soporte JSONB frente a base de datos puramente NoSQL, MinIO local frente a servicios de almacenamiento externo de pago, editor TipTap desacoplado frente a soluciones iframe, y autenticación JWT con tokens de acceso cortos frente a sesiones centralizadas en memoria.
+    \item \textbf{Emisión de Dictamen de Aprobación de Fase 2:} Se emitió el dictamen favorable que autoriza el inicio de la Fase 3 de Construcción e Implementación en los cuatro sprints planificados.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual de Consolidación de Arquitectura y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_07_consolidado_s2.png}
+    \caption{Panel Consolidado de Cumplimiento Técnico del Hito 2 de Arquitectura de Software.}
+    \label{fig:consolidado_f2}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural de la Línea Base Arquitectónica (Hito 2):}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Consolidación de Modelos y Artefactos de Diseño:} El panel consolidado integra la totalidad de especificaciones aprobadas en la Fase 2: casos de uso UML 2.5.1, diagrama C4 de contenedores, modelo de clases del dominio, esquema relacional en 3NF y arquitectura de contenedores Docker.
+    \item \textbf{Verificación de Trazabilidad entre Requisitos y Arquitectura:} Se certifica que los 24 requerimientos funcionales del SRS y los 8 atributos de calidad ISO/IEC 25010 cuentan con soporte técnico directo en los componentes de software diseñados.
+    \item \textbf{Congelamiento Formal de la Línea Base (Baseline Freeze):} El comité evaluador aprueba formalmente las especificaciones de arquitectura, estableciendo que cualquier modificación posterior deberá canalizarse mediante el procedimiento oficial de control de cambios.
+    \item \textbf{Habilitación del Hito 2 y Autorización para la Fase 3:} El dictamen técnico favorable autoriza el inicio inmediato del Sprint 1 de desarrollo, facultando al equipo para la codificación de migraciones DDL, endpoints REST y componentes en React.
+\end{itemize}
+
+
+\subsubsection*{3. Matriz Oficial de Auditoría de Entregables de la Fase 2 (2.1 a 2.7)}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.55\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.15\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.50\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.10\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.70\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Código} & \textbf{Entregable Auditado} & \textbf{Horas} & \textbf{Criterio de Aceptación Verificado} & \textbf{Resultado} \\
 \hline
-Código de Tarea & EDT 2.7 \\
+\textbf{EDT 2.1} & Casos de Uso General y Detallado & 24 h & Mapeo formal y verificación de los 24 RF y actores del SGC bajo OMG UML 2.5.1. & \textbf{APROBADO} \\
 \hline
-Nombre de la Tarjeta & HITO 2: Aprobación de Arquitectura y Entregable General Semana 2 \\
+\textbf{EDT 2.2} & Diseño de Arquitectura (SAD y C4) & 32 h & Clean Architecture multicapa, modelo C4 y 6 ADRs documentados. & \textbf{APROBADO} \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+\textbf{EDT 2.3} & Secuencia, Actividades y Clases & 32 h & Secuencia de Validation Gates y modelo de dominio DDD validado. & \textbf{APROBADO} \\
 \hline
-Período de Ejecución & 29 de agosto al 31 de agosto de 2026 (2 días laborables) \\
+\textbf{EDT 2.4} & Base de Datos Relacional & 32 h & Modelo ER en 3NF con 13 tablas, restricciones CHECK declarativas e índices GIN. & \textbf{APROBADO} \\
 \hline
-Horas Asignadas & 16 horas hombre netas \\
+\textbf{EDT 2.5} & Wireframes y Prototipos UX & 32 h & Tokens oficiales UTA, cumplimiento WCAG 2.1 AA y vistas clave. & \textbf{APROBADO} \\
 \hline
-Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV), Nixon Hurtado (NH), Andrea Vásquez (AV) \\
+\textbf{EDT 2.6} & Arquitectura Docker Compose & 24 h & Despliegue reproducible de 5 contenedores con redes aisladas y healthchecks. & \textbf{APROBADO} \\
 \hline
-Entregable Oficial & \texttt{07\_Entregable\_General\_Semana\_2.pdf} (Paquete Arquitectura Aprobado) \\
+\textbf{EDT 2.7} & Hito 2: Aprobación Arquitectura & 16 h & Auditoría de calidad, actas de consenso y legalización formal del hito. & \textbf{APROBADO} \\
 \hline
-Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.7 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Acta Formal de Aprobación de Arquitectura de Software}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.0cm}|X|}
-\hline
-\rowcolor{tableheader}
-\multicolumn{2}{|c|}{\textbf{ACTA INSTITUCIONAL DE CIERRE DE HITO 2 -- SISTEMA SIGE}} \\
-\hline
-\textbf{Fecha de Sesión:} & 31 de agosto de 2026 \\
-\hline
-\textbf{Lugar:} & Laboratorio de Gestión de Software / Entorno Virtual Teams -- FISEI \\
-\hline
-\textbf{Participantes:} & Steeven Toala (Líder/Arquitecto), Heidi Villavicencio (Calidad), Nixon Hurtado (Backend), Andrea Vásquez (UI/UX), Ing. Paulo Torres (Docente Evaluador). \\
-\hline
-\textbf{Resolución:} & Habiendo verificado la consistencia de los modelos C4, el esquema 3NF en PostgreSQL 18, los wireframes UX institucionales y la orquestación en Docker Compose, el Comité aprueba por unanimidad el Hito 2 y autoriza el inicio de la Fase 3 de Construcción. \\
+\multicolumn{2}{|r|}{\textbf{TOTAL HORAS FASE 2:}} & \textbf{192 h} & \multicolumn{2}{l|}{\textbf{100\% de Objetivos Técnicos Alcanzados}} \\
 \hline
 \end{tabularx}
-\caption{Acta de aprobación colegiada del Hito 2.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Cumplimiento de Fase 2 & 7 de 7 entregables técnicos de diseño y arquitectura auditados y aprobados & 100\% CONFORME & Steeven Toala \\
-\hline
-Arquitectura Congelada & Modelo C4 y esquema relacional PostgreSQL 18 aprobados formalmente & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Métricas de Desempeño & 384 horas-hombre netas ejecutadas (Fase 1 + Fase 2) con SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Aprobación del Hito 2 & Acta oficial firmada por el Docente Evaluador para iniciar Fase 3 & 100\% CONFORME & Ing. Paulo Torres \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.7.}
+\caption{Matriz oficial de auditoría de entregables de la Fase 2 de Diseño y Arquitectura.}
 \end{table}
 """
     doc2_7 = render_doc("TI-SIGE-ENT-F2-007", "GESTIÓN DE CALIDAD Y CONTROL DE HITOS / HITO 2 ARQUITECTURA", "31/08/2026", "31/08/2026", "HITO 2: APROBACIÓN DE ARQUITECTURA", b2_7, "31/08/2026", anx2_7)

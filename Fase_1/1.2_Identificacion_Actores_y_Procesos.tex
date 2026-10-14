@@ -186,21 +186,22 @@ Se aplicó el modelo de categorización de interesados del PMI, evaluando a los 
     \item \textbf{Política de Notificación Inmediata:} Cualquier observación emitida por el comité debe notificarse automáticamente al docente.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_02_macroprocesos.png}
-    \caption{Mapa de Macroprocesos del Sistema de Gestión de Calidad en la FISEI.}
-    \label{fig:macroprocesos}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+La correcta asignación de responsabilidades y la eliminación de etapas de aprobación redundantes constituyeron el eje de las actividades de ingeniería de procesos ejecutadas en la facultad. El equipo técnico llevó a cabo las siguientes actividades de modelado organizacional:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Análisis de Competencias Orgánicas y Marco Estatutario UTA/LOES:} Se revisó el Estatuto de la Universidad Técnica de Ambato y el Reglamento de Régimen Académico (RRA - CES) para deslindar con precisión las atribuciones jurídicas de cada rol. Se determinó que el Coordinador de Comisión posee competencia de revisión técnica y disciplinar, mientras que el Subdecano de Facultad ostenta la autoridad legal exclusiva para la aprobación institucional final.
+    \item \textbf{Taller de Mapeo de Interacciones y Flujos de Decisión Inter-departamentales:} Se desarrolló una sesión de trabajo colaborativo junto a los coordinadores de carrera y comisiones académicas de la FISEI, modelando formalmente los cinco roles esenciales del sistema: Docente Elaborador, Coordinador de Comisión, Director de Carrera, Subdecano de Facultad y Administrador del SGC, eliminando dos revisiones informales que generaban duplicidad sin valor agregado.
+    \item \textbf{Estructuración de la Matriz RACI Institucional del Ciclo Documental:} Para cada una de las 8 fases del flujo documental (Configuración Inicial, Carga Horaria, Redacción Descriptiva, Matriz Dinámica, Custodia de Evidencias, Revisión Técnica de Comisión, Aprobación de Subdecanato y Custodia Histórica), se asignó con rigor quién es Responsable de ejecutar (R), Quién Aprueba legalmente (A), A quién se Consulta técnicamente (C) y Quién debe ser Informado (I).
+    \item \textbf{Segmentación y Evaluación de Involucrados según el Marco PMBOK:} Se clasificaron los actores institucionales mediante una matriz de Poder versus Interés, definiendo estrategias diferenciadas de comunicación, vistas de tablero con permisos RBAC y canales de notificación asíncrona adaptados a su nivel de dedicación horaria.
+\end{itemize}
+
 \subsection{Matriz RACI de la Cadena Documental Institucional}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{3.5cm}|c|c|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.5\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Actividad del Proceso SGC} & \textbf{Docente} & \textbf{Coord. Área} & \textbf{Coord. Carrera} & \textbf{Subdecano} & \textbf{Admin SGC} \\
@@ -225,8 +226,8 @@ Apertura de Prórrogas y Catálogos & I & I & C & C & \textbf{R / A} \\
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -237,7 +238,7 @@ Apertura de Prórrogas y Catálogos & I & I & C & C & \textbf{R / A} \\
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -250,7 +251,7 @@ Apertura de Prórrogas y Catálogos & I & I & C & C & \textbf{R / A} \\
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
+    1.0 & Elaboración de la matriz de partes interesadas (Stakeholders), asignación de niveles RACI y perfiles de usuario. & Heidi Villavicencio / Nixon Hurtado & 18/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -258,78 +259,61 @@ Apertura de Prórrogas y Catálogos & I & I & C & C & \textbf{R / A} \\
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.2 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Mapeo de Actores y Macroprocesos Institucionales}
+
+\subsubsection*{1. Análisis de Competencias Orgánicas y Modelado de Roles del SGC}
+La identificación de actores y macroprocesos no se basó en supuestos teóricos, sino en el organigrama funcional y el estatuto orgánico de la Universidad Técnica de Ambato, así como en las 14 comisiones oficiales activas en la FISEI documentadas en el catálogo institucional.
+
+El proceso de caracterización se estructuró de la siguiente forma:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Delimitación de Competencias y Atribuciones Estatutarias:} Se mapearon las funciones según la Ley Orgánica de Educación Superior (LOES) y el Reglamento de Régimen Académico (RRA). Se definieron formalmente cinco roles de interacción: Docente Elaborador (autor del plan e informe), Coordinador de Comisión (revisor de actividades específicas), Coordinador de Carrera (primer filtro académico colegiado), Subdecano (auditor de carga horaria y comisiones) y Administrador SGC (gestor de periodos y catálogos).
+    \item \textbf{Construcción y Asignación de la Matriz RACI Institucional:} Se clasificaron las responsabilidades en Responsable (\textit{R}), Aprobador (\textit{A}), Consultado (\textit{C}) e Informado (\textit{I}) para cada una de las 6 fases del ciclo de calidad, evitando la duplicidad de funciones identificada en el proceso As-Is.
+    \item \textbf{Análisis de Involucrados Mediante Matriz de Poder versus Interés:} Se categorizó a cada grupo de interés para definir la estrategia de gestión del cambio tecnológico y diseño de interfaces.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual del Mapa de Macroprocesos y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s1_02_macroprocesos.png}
+    \caption{Mapa de Macroprocesos Institucionales del SGC y Cadena de Valor Docente en FISEI.}
+    \label{fig:macroprocesos}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural de Macroprocesos y Actores:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Jerarquía de Procesos Estratégicos, Misionales y de Soporte:} La arquitectura del mapa articula tres niveles operativos: en el nivel estratégico se sitúan las Directrices del Honorable Consejo Directivo y Subdecanato; en el nivel misional central se ubica la Elaboración y Seguimiento del Plan de Trabajo Docente (\texttt{P7-\allowbreak T1}) y Cumplimiento (\texttt{P7-\allowbreak T4}); y en el nivel de soporte se integran la Secretaría Académica y la Custodia Documental.
+    \item \textbf{Interacción de Roles Institucionales y Cadena de Valor:} El diagrama desglosa los 5 perfiles formales del sistema: Docente Elaborador (origen de datos), Coordinador de Comisión (revisión disciplinar), Director de Carrera (consolidación de programas), Subdecano (legalización y fiscalización de 40h) y Administrador SGC (parametrización de periodos y carreras).
+    \item \textbf{Alineación con la Matriz RACI Institucional:} El mapa delimita con precisión que la responsabilidad de ejecución (\textit{R}) recae en el docente, mientras que la autoridad de aprobación final (\textit{A}) corresponde legalmente al Subdecano, eliminando pasos redundantes de visto bueno informal que ralentizaban el proceso.
+    \item \textbf{Implementación en el Sistema SIGE:} Este mapa define la estructura del control de acceso basado en roles (RBAC) en el backend de Express v5 y las vistas del enrutador en React, garantizando que cada usuario acceda únicamente a las opciones correspondientes a su perfil.
+\end{itemize}
+
+\subsubsection*{3. Matriz RACI Oficial de Responsabilidades en el Ciclo Documental SGC}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.2\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Fase del Proceso SGC} & \textbf{Docente} & \textbf{Comisión} & \textbf{Coordinador} & \textbf{Subdecano} \\
 \hline
-Código de Tarea & EDT 1.2 \\
+1. Elaboración y Registro del Plan (P7-T1) & \textbf{R / A} & C & I & I \\
 \hline
-Nombre de la Tarjeta & Identificación de actores y procesos \\
+2. Verificación de Carga Horaria (40h) & R & C & \textbf{R} & \textbf{A} \\
 \hline
-Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+3. Seguimiento Semestral de Actividades & \textbf{R} & C & I & I \\
 \hline
-Período de Ejecución & 13 de agosto al 18 de agosto de 2026 (4 días laborables) \\
+4. Carga y Custodia de Evidencias en S3 & \textbf{R} & C & C & I \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
+5. Revisión Colegiada de Cumplimiento & I & \textbf{R} & \textbf{R / A} & C \\
 \hline
-Responsables Técnicos & Nixon Hurtado (NH), Andrea Vásquez (AV) \\
-\hline
-Entregable Oficial & \texttt{02\_Identificacion\_Actores\_Procesos.pdf} (Matriz de Stakeholders) \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado \\
+6. Aprobación y Legalización de Firmas & R & C & R & \textbf{R / A} \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 1.2 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Poder versus Interés de Stakeholders}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.0cm}|c|c|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Rol Institucional} & \textbf{Nivel Poder} & \textbf{Nivel Interés} & \textbf{Estrategia de Gestión PMI} \\
-\hline
-Subdecano de FISEI & Alto & Alto & Gestionar atentamente; clave para legalización. \\
-\hline
-Coordinador de Carrera & Alto & Alto & Gestionar activamente; líder de revisión. \\
-\hline
-Docente Elaborador & Medio & Alto & Mantener informado y satisfecho; usuario primario. \\
-\hline
-Administrador SGC & Alto & Medio & Mantener satisfecho; soporte técnico y parametrización. \\
-\hline
-\end{tabularx}
-\caption{Clasificación estratégica de los interesados del proyecto.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Delimitación de Roles & Cobertura de los 5 roles institucionales de FISEI & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Consistencia RACI & Verificación de un único aprobador principal por actividad & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Marco de Acreditación & Conformidad con Estatuto UTA y normativa CACES & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Aprobación del Mapa & Validación formal de la cadena de interesados & 100\% CONFORME & Ing. Paulo Torres \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 1.2.}
+\caption{Matriz RACI formal de responsabilidades para el sistema SIGE.}
 \end{table}
 
 

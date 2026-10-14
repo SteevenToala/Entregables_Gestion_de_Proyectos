@@ -154,7 +154,7 @@ Modelar detalladamente los flujos dinámicos de ejecución, las secuencias de in
 \section{Definiciones}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Diagrama de Secuencia UML:} Diagrama de interacción que enfatiza el ordenamiento temporal de los mensajes enviados entre líneas de vida de objetos.
-    \item \textbf{Diagrama de Actividades UML:} Representación gráfica del flujo de control o flujo de datos paso a paso entre actividades operacionales.
+    \item \textbf{Diagrama de Actividades UML:} Representación gráfica del flujo de control o flujo de datos de extremo a extremo entre actividades operacionales.
     \item \textbf{Diagrama de Clases de Dominio:} Modelo estructural que describe los tipos de objetos del sistema y las relaciones estáticas entre ellos.
     \item \textbf{Agregado (DDD):} Agrupación de objetos de dominio vinculados que se tratan como una unidad indivisible para el control de cambios de datos.
 \end{itemize}
@@ -192,52 +192,37 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
     \item \textbf{Política de Inmutabilidad de Firmas:} Una vez que un registro de firma es emitido, la clase \texttt{FirmaDocumento} pasa a ser inmutable en el dominio.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_03_secuencia_validation.png}
-    \caption{Diagrama de Secuencia UML: Guardado de Secciones y Evaluación de Validation Gates.}
-    \label{fig:secuencia_gates}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_03_actividades_ciclo.png}
-    \caption{Diagrama de Actividades UML: Ciclo Completo de Aprobación, Observación y Legalización.}
-    \label{fig:actividades_ciclo}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=6.0cm,keepaspectratio]{images/s2_03_clases_uml.png}
-    \caption{Diagrama de Clases del Dominio Institucional SIGE (Entidades, Atributos y Métodos).}
-    \label{fig:clases_dominio}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El modelado del comportamiento dinámico del sistema y la definición de las entidades de dominio aseguraron una representación computacional fidedigna de los procesos del SGC. El equipo técnico llevó a cabo las siguientes actividades de modelado UML:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Modelado Dinámico de Secuencia UML para Casos de Uso Críticos:} Se construyeron diagramas de interacción temporal para los flujos más complejos del sistema: autenticación e intercambio de tokens JWT, creación asistida del plan mediante Wizard, y procesamiento concurrente de firmas con validación de compuertas.
+    \item \textbf{Especificación de Diagramas de Actividades con Particiones (Swimlanes):} Se modelaron los flujos de control paralelos y condicionales distribuidos entre el Docente Elaborador, el Coordinador de Comisión, el Subdecano y el Motor de Reglas del Sistema, clarificando los puntos de decisión y bifurcación ante observaciones.
+    \item \textbf{Modelado Estructural de Clases de Dominio Institucional:} Se modelaron las clases fundamentales del dominio en TypeScript y JavaScript: \texttt{Plan Trabajo Docente}, \texttt{Actividad Docente}, \texttt{Seccion Documento}, \texttt{Evidencia Respaldo} y \texttt{Firma Digital}, definiendo sus atributos, métodos de cálculo y contratos de validación intrínseca.
+    \item \textbf{Formalización de la Máquina de Estados del Documento SGC:} Se especificaron los estados válidos del ciclo documental (\texttt{Borrador}, \texttt{En\_\allowbreak Revision}, \texttt{Observado}, \texttt{Aprobado\_\allowbreak  Carrera}, \texttt{Legalizado\_\allowbreak  Subdecanato}) y las transiciones atómicas permitidas bajo control transaccional ACID.
+\end{itemize}
+
 \subsection{Matriz de Entidades del Dominio y Métodos Operativos}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Clase de Dominio} & \textbf{Atributos Principales} & \textbf{Métodos de Negocio Clave} & \textbf{Multiplicidad} \\
 \hline
-\texttt{PlanDocente} & \texttt{id}, \texttt{periodo\_id}, \texttt{docente\_id}, \texttt{estado}, \texttt{horas\_totales} & \texttt{validarHorasMinimas()}, \texttt{avanzarEstado()}, \texttt{solicitarRevision()} & 1 \\
+\texttt{PlanDocente} & \texttt{id}, \texttt{periodo\_\allowbreak id}, \texttt{docente\_\allowbreak id}, \texttt{estado}, \texttt{horas} & \texttt{validarHorasMinimas()}, \texttt{avanzarEstado()} & 1 \\
 \hline
-\texttt{SeccionDocumento} & \texttt{id}, \texttt{plan\_id}, \texttt{orden}, \texttt{titulo}, \texttt{contenido\_html} & \texttt{actualizarContenido()}, \texttt{sanitizarHtml()}, \texttt{bloquearEdicion()} & $1 \dots N$ \\
+\texttt{Seccion Documento} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{orden}, \texttt{titulo}, \texttt{contenido} & \texttt{actualizarContenido()}, \texttt{sanitizarHtml()} & $1 \dots N$ \\
 \hline
-\texttt{ActividadMatriz} & \texttt{id}, \texttt{plan\_id}, \texttt{nombre}, \texttt{horas}, \texttt{ponderacion}, \texttt{cronograma} & \texttt{calcularAvance()}, \texttt{asignarMedio()}, \texttt{recalcularPonderacion()} & $1 \dots N$ \\
+\texttt{Actividad Matriz} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{nombre}, \texttt{horas}, \texttt{ponderacion} & \texttt{calcularAvance()}, \texttt{recalcularPond()} & $1 \dots N$ \\
 \hline
-\texttt{EvidenciaAdjunta} & \texttt{id}, \texttt{actividad\_id}, \texttt{nombre\_archivo}, \texttt{url\_s3}, \texttt{hash\_sha256} & \texttt{verificarIntegridad()}, \texttt{generarUrlLectura()}, \texttt{asociarHash()} & $0 \dots N$ \\
+\texttt{Evidencia Adjunta} & \texttt{id}, \texttt{actividad\_\allowbreak id}, \texttt{url\_\allowbreak s3}, \texttt{hash\_\allowbreak sha256} & \texttt{verificarIntegridad()}, \texttt{generarUrl()} & $0 \dots N$ \\
 \hline
-\texttt{ObservacionComite} & \texttt{id}, \texttt{plan\_id}, \texttt{usuario\_id}, \texttt{seccion\_id}, \texttt{comentario}, \texttt{resuelto} & \texttt{registrarObservacion()}, \texttt{marcarResuelto()}, \texttt{auditarCambio()} & $0 \dots N$ \\
+\texttt{Observacion Comite} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{usuario\_\allowbreak id}, \texttt{comentario} & \texttt{registrarObservacion()}, \texttt{marcarResuelto()} & $0 \dots N$ \\
 \hline
-\texttt{FirmaDocumento} & \texttt{id}, \texttt{plan\_id}, \texttt{firmante\_id}, \texttt{rol\_firma}, \texttt{fecha\_firma}, \texttt{hash\_firma} & \texttt{estamparFirma()}, \texttt{validarSecuencia()}, \texttt{sellarDocumento()} & $0 \dots 3$ \\
+\texttt{Firma Documento} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{firmante\_\allowbreak id}, \texttt{rol\_\allowbreak firma} & \texttt{estamparFirma()}, \texttt{validarSecuencia()} & $0 \dots 3$ \\
 \hline
 \end{tabularx}
 \caption{Matriz de especificación de clases del dominio SGC.}
@@ -249,10 +234,10 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.0cm}|X|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.4\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.4\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Paso} & \textbf{Estado Inicial} & \textbf{Evento Disparador y Validación} & \textbf{Estado Resultante} \\
+\textbf{Etapa} & \textbf{Estado Inicial} & \textbf{Evento Disparador y Validación} & \textbf{Estado Resultante} \\
 \hline
 1 & \textit{Ninguno} & Creación de plan mediante asignación de periodo académico. & \textbf{Borrador} \\
 \hline
@@ -273,8 +258,8 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -285,7 +270,7 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -298,7 +283,7 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 26/08/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 26/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -306,78 +291,61 @@ Se estructuraron los modelos dinámicos aplicando el principio de diseño por co
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.3 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Diagramas UML Dinámicos y de Dominio}
+
+\subsubsection*{1. Modelado Dinámico y Especificación de Ciclos de Vida}
+Para formalizar cómo interactúan los componentes en el tiempo y cómo se orquesta la máquina de estados del plan de trabajo, se modelaron diagramas dinámicos UML 2.5.1 enfocados en los procesos críticos del SGC.
+
+El proceso de especificación técnica comprendió:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Modelado del Ciclo de Vida y Transición de Estados:} Se especificó la máquina de estados formal del documento institucional: \textit{Borrador} (docente edita libremente), \textit{En Revisión} (bloqueado para edición tras superar Validation Gates), \textit{Observado} (retornado con observaciones del comité), \textit{Aprobado Comisión} (validado con firma del Coordinador) y \textit{Aprobado HCD} (legalizado con firma del Subdecano en Consejo Directivo).
+    \item \textbf{Diagrama de Secuencia de Validación y Persistencia:} Se documentó el intercambio asíncrono de mensajes entre el Cliente React, el Middleware de Validation Gates, el Controlador de Documentos y PostgreSQL, detallando el manejo de excepciones HTTP 422.
+    \item \textbf{Diagrama de Clases del Dominio SGC:} Se especificaron las clases de negocio, sus atributos esenciales, sus operaciones y los contratos de invariantes.
+\end{enumerate}
+
+\subsubsection*{2. Evidencias Visuales del Modelo Dinámico y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_03_secuencia_validation.png}
+    \caption{Diagrama de Secuencia UML: Evaluación de Validation Gates y Flujo de Envío a Revisión.}
+    \label{fig:secuencia_val}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural del Comportamiento Dinámico y Clases UML:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Flujo de Interacción Temporal en el Diagrama de Secuencia:} Se modela la llamada asíncrona \texttt{POST /\allowbreak api/\allowbreak v1/\allowbreak planes/\allowbreak :id/\allowbreak secciones} desde el cliente React. El controlador delega en la cadena interceptora de Validation Gates, la cual ejecuta en menos de 15 ms las comprobaciones VG-1 y VG-2 antes de autorizar la escritura atómica en la base de datos.
+    \item \textbf{Bifurcaciones y Decisiones en el Diagrama de Actividades (Swimlanes):} Se aprecian los carriles paralelos entre el Docente, la Comisión y el Subdecano. Si el expediente es observado, el estado conmuta a \texttt{Observado} y se notifica al docente; si es conforme, avanza a la cascada secuencial de 3 firmas.
+    \item \textbf{Estructura de Entidades en el Modelo de Clases:} Modela las entidades ricas: \texttt{Plan\allowbreak Trabajo\allowbreak Docente} como agregado raíz que encapsula colecciones de \texttt{Actividad\allowbreak Docente}, \texttt{Seccion\allowbreak Documento}, \texttt{Evidencia\allowbreak Respaldo} y \texttt{Firma\allowbreak Digital}, definiendo sus métodos de cálculo de horas y contratos de inmutabilidad.
+    \item \textbf{Máquina de Estados Finita del Documento SGC:} Garantiza computacionalmente que ningún expediente alcance el estado \texttt{Legalizado\_\allowbreak  Subdecanato} sin haber transitado previamente por la firma del docente y el visto bueno del coordinador de carrera.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Transición de Estados del Documento Institucional}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.6\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Etapa} & \textbf{Estado Inicial} & \textbf{Evento Disparador y Validación Requerida} & \textbf{Estado Resultante} \\
 \hline
-Código de Tarea & EDT 2.3 \\
+1 & Creación & Docente selecciona periodo académico y tipo de dedicación & \textbf{Borrador} \\
 \hline
-Nombre de la Tarjeta & Diagramas de secuencia, actividades y clases de dominio \\
+2 & Borrador & Envío a revisión superando el 100\% de Validation Gates & \textbf{En Revisión} \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+3 & En Revisión & Comité emite dictamen con al menos 1 observación formal & \textbf{Observado} \\
 \hline
-Período de Ejecución & 21 de agosto al 26 de agosto de 2026 (4 días laborables) \\
+4 & Observado & Docente subsana observaciones y reenvía con éxito & \textbf{En Revisión} \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
+5 & En Revisión & Coordinador de Carrera verifica y estampa firma digital & \textbf{Aprobado Comisión} \\
 \hline
-Responsables Técnicos & Steeven Toala (ST), Andrea Vásquez (AV) \\
-\hline
-Entregable Oficial & \texttt{03\_Diagramas\_Secuencia\_Actividades\_Clases.pdf} \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+6 & Aprobado Comisión & Subdecano legaliza en sesión de Consejo Directivo & \textbf{Aprobado HCD (Cerrado)} \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.3 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Definición Formal de Invariantes y Contratos de Dominio}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.2cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Invariante} & \textbf{Clase Responsable} & \textbf{Expresión Lógica del Contrato de Dominio} \\
-\hline
-INV-01 & \texttt{PlanDocente} & $\sum \text{horas\_actividad} \ge \text{horas\_minimas\_contrato}$ (40h tiempo completo). \\
-\hline
-INV-02 & \texttt{ActividadMatriz} & $\sum \text{ponderacion\_actividad} = 100.00\%$ al enviar a revisión. \\
-\hline
-INV-03 & \texttt{FirmaDocumento} & Secuencia estricta: $\text{Orden}(\text{Elaborador}) < \text{Orden}(\text{Revisor}) < \text{Orden}(\text{Aprobador})$. \\
-\hline
-INV-04 & \texttt{EvidenciaAdjunta} & $\text{Longitud}(\text{hash\_sha256}) = 64 \text{ caracteres hexadecimales}$ no nulos. \\
-\hline
-\end{tabularx}
-\caption{Invariantes y contratos del modelo de dominio.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Secuencia de Negocio & Mapeo de flujos interactivos para Validation Gates y cascada de firmas & 100\% CONFORME & Steeven Toala \\
-\hline
-Diagrama de Actividades & Modelado de bifurcaciones condicionales, aprobación y rechazo con drawer & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Clases de Dominio (DDD) & Estructura de entidades \texttt{PlanTrabajo}, \texttt{Actividad}, \texttt{Observacion} y agregados & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Validación Metodológica & Rúbrica técnica de integridad de modelos UML 2.5.1 por el líder de calidad & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.3.}
+\caption{Matriz oficial de ciclo de vida y transición de estados del documento SGC.}
 \end{table}
 
 

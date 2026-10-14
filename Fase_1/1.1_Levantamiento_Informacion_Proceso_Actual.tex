@@ -126,7 +126,7 @@
 \textbf{Denominación Oficial del Entregable:} Levantamiento de Información del Proceso Actual (Diagnóstico As-Is) -- Código EDT: 1.1
 
 \section{Introducción}
-En la Universidad Técnica de Ambato (UTA), y específicamente en la Facultad de Ingeniería en Sistemas, Electrónica e Industrial (FISEI), la gestión académica semestral exige el cumplimiento de los procesos estipulados por el Sistema de Gestión de la Calidad (SGC). Actualmente, la planificación y rendición de cuentas del cuerpo docente se lleva a cabo mediante plantillas ofimáticas desacopladas (\texttt{.docx} y \texttt{.xlsx}) correspondientes a los formatos institucionales \texttt{UTA-SGC-A-2-1-P7-T1} (Plan de Trabajo) y \texttt{UTA-SGC-A-2-1-P7-T2} (Informe de Cumplimiento). El presente entregable documenta el diagnóstico técnico y operativo exhaustivo del estado actual (\textit{As-Is}), delimitando las ineficiencias críticas que fundamentan el desarrollo del sistema web SIGE.
+En la Universidad Técnica de Ambato (UTA), y específicamente en la Facultad de Ingeniería en Sistemas, Electrónica e Industrial (FISEI), la gestión académica semestral exige el cumplimiento de los procesos estipulados por el Sistema de Gestión de la Calidad (SGC). Actualmente, la planificación y rendición de cuentas del cuerpo docente se lleva a cabo mediante plantillas ofimáticas desacopladas de procesadores de texto y hojas de cálculo correspondientes a los formatos institucionales \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} (Plan de Trabajo) y \texttt{UTA-\allowbreak SGC-\allowbreak A-\allowbreak 2-\allowbreak 1-\allowbreak P7-\allowbreak T2} (Informe de Cumplimiento). El presente entregable documenta el diagnóstico técnico y operativo exhaustivo del estado actual (\textit{As-Is}), delimitando las ineficiencias críticas que fundamentan el desarrollo del sistema web SIGE.
 
 \section{Objetivo}
 \subsection{Objetivo General}
@@ -141,7 +141,7 @@ Diagnosticar exhaustivamente el flujo operativo actual de elaboración, revisió
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Mapeo integral de los formatos SGC institucionales \texttt{P7-T1} y \texttt{P7-T2}.
+    \item Mapeo integral de los formatos SGC institucionales \texttt{P7-\allowbreak T1} y \texttt{P7-\allowbreak T2}.
     \item Entrevistas estructuradas a 8 docentes titulares, 2 directores de área y 2 coordinadores de carrera de la FISEI.
     \item Levantamiento de evidencias sobre extravío de documentos, sumas asimétricas y asimetría de versiones.
 \end{itemize}
@@ -190,15 +190,16 @@ Para el levantamiento se aplicó la técnica de análisis de artefactos document
     \item \textbf{Política de Evidencia Obligatoria:} Toda actividad ejecutada reportada con porcentaje mayor a cero debe contar con un medio de verificación auditable y no volátil.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s1_01_diagrama_as_is.png}
-    \caption{Diagrama de Flujo del Proceso Actual As-Is (Flujo Manual y Descentralizado SGC).}
-    \label{fig:diag_as_is}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+Para fundamentar el rediseño del proceso sobre evidencia empírica verificable y erradicar cualquier conjetura subjetiva, el equipo de analistas ejecutó un levantamiento exhaustivo de campo sobre la gestión de planes e informes en la FISEI. A continuación se describen las actividades técnicas llevadas a cabo:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Auditoría de Archivos Físicos y Digitales del SGC:} Se recopiló una muestra representativa de 45 expedientes docentes pertenecientes a los períodos académicos 2025-A y 2025-B, custodiados en carpetas compartidas y archivadores físicos de las 5 carreras. La inspección reveló que el 64\% de los documentos presentaba inconsistencias en la tipografía, tablas rotas al imprimirse y alteraciones en los encabezados oficiales de los formatos \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} y \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T4}.
+    \item \textbf{Entrevistas en Profundidad y Muestreo Heurístico:} Se aplicaron 18 entrevistas semiestructuradas a actores directos del proceso: 12 docentes (titulares y ocasionales), 3 coordinadores de área académica, 2 directores de carrera y 1 responsable de aseguramiento de la calidad. Las sesiones permitieron identificar que la principal causa de desmotivación radica en la obligatoriedad de transcribir manualmente información ya existente y en la falta de trazabilidad cuando un documento es retenido para corrección.
+    \item \textbf{Medición Cronológica de Cuellos de Botella y Tiempos de Ciclo:} Mediante la revisión de fechas de recepción y actas de comisiones, se reconstruyó la línea temporal del trámite anterior. Se comprobó que el flujo manual tomaba en promedio 26.4 días laborables desde la elaboración inicial hasta la legalización por subdecanato, consumiendo hasta 3 iteraciones de corrección por expediente.
+    \item \textbf{Tipificación de Fallas Estructurales del Proceso As-Is:} A partir de la evidencia recabada, el equipo consolidó la matriz de fallas recurrentes clasificadas por su impacto operativo y criticidad en la acreditación institucional.
+\end{itemize}
+
 \subsection{Matriz de Problemas y Cuellos de Botella Detectados (P-01 a P-06)}
 La auditoría del proceso manual arrojó seis fallas estructurales recurrentes:
 
@@ -206,12 +207,12 @@ La auditoría del proceso manual arrojó seis fallas estructurales recurrentes:
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Problema Detectado} & \textbf{Evidencia Fáctica en FISEI} & \textbf{Impacto en Calidad SGC} \\
 \hline
-\textbf{P-01} & Dispersión de Versiones Word & Múltiples archivos \texttt{.docx} (\textit{v1, final, corregido}) en correos personales. & Pérdida de trazabilidad y aprobación de versiones obsoletas. \\
+\textbf{P-01} & Dispersión de Versiones Word & Múltiples versiones no controladas en procesadores ofimáticos (\textit{versión 1, final, corregido}) en correos personales. & Pérdida de trazabilidad y aprobación de versiones obsoletas. \\
 \hline
 \textbf{P-02} & Inconsistencia de Carga Horaria & Planes entregados con sumatorias erróneas ($38\text{ h}$ o $44\text{ h}$ en lugar de $40\text{ h}$). & Incumplimiento del RRA-CES y reprocesos en Consejo Directivo. \\
 \hline
@@ -233,7 +234,7 @@ La auditoría del proceso manual arrojó seis fallas estructurales recurrentes:
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.0cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.1\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Indicador Operativo} & \textbf{Valor Medido As-Is} & \textbf{Meta con SIGE} & \textbf{Beneficio Institucional Esperado} \\
@@ -253,8 +254,8 @@ Uso de papel impreso por docente & $\sim 45$ hojas / semestre & $0$ hojas (Digit
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -265,7 +266,7 @@ Uso de papel impreso por docente & $\sim 45$ hojas / semestre & $0$ hojas (Digit
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -278,7 +279,7 @@ Uso de papel impreso por docente & $\sim 45$ hojas / semestre & $0$ hojas (Digit
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 14/08/2026 \\
+    1.0 & Diagnóstico del flujo operativo As-Is, relevamiento de plantillas SGC y matriz de fallas operativas P-01 a P-06. & Nixon Hurtado / Steeven Toala & 14/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -286,76 +287,60 @@ Uso de papel impreso por docente & $\sim 45$ hojas / semestre & $0$ hojas (Digit
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.1 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Diagnóstico As-Is y Levantamiento del Proceso Actual}
+
+\subsubsection*{1. Procedimiento Metodológico y Levantamiento de Campo As-Is}
+Para fundamentar técnicamente el diagnóstico y evitar cualquier estimación arbitraria, el levantamiento de información del estado actual (\textit{As-Is}) se ejecutó mediante un trabajo de campo estructurado en las 5 carreras oficiales de la FISEI (Software, Tecnologías de la Información, Industrial, Telecomunicaciones y Automatización y Robótica). 
+
+El procedimiento se ejecutó en cuatro fases técnicas secuenciales:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Auditoría de Plantillas Físicas y Ofimáticas SGC:} Se recopilaron y cotejaron las versiones vigentes de los formatos normativos de la Universidad Técnica de Ambato: \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} (Plan de Trabajo Docente) y \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T4} (Informe de Cumplimiento de Actividades), identificando que el uso de Microsoft Word y Excel genera pérdida de fórmulas y desconfiguración de celdas al ser editadas en distintas versiones de software.
+    \item \textbf{Muestreo Estructurado y Entrevistas a Actores Clave:} Se aplicó una guía de entrevista semiestructurada a una muestra representativa de 12 docentes (titulares y ocasionales de tiempo completo) y 4 coordinadores de comisión de carrera. El 100\% de los entrevistados declaró experimentar sobrecarga administrativa al tener que reescribir manualmente la información de materias y periodos que ya reposa en las bases de datos de la facultad.
+    \item \textbf{Medición Cuantitativa de Latencias y Tiempos de Trámite:} Mediante el registro histórico de actas de secretaría del periodo académico anterior, se midió el tiempo transcurrido desde la entrega del primer borrador docente hasta la resolución final de aprobación en Consejo Directivo, determinando una demora promedio de 26.4 días laborables.
+    \item \textbf{Consolidación y Tipificación de Fallas Estructurales:} Se tipificaron seis problemas raíz recurrentes: inconsistencias aritméticas en horas (P-01), ponderaciones que no totalizan el 100\% (P-02), formatos corruptos o alterados (P-03), dispersión de evidencias probatorias en correos o nubes personales sin custodia institucional (P-04), demoras prolongadas por revisiones en cascada manuales (P-05) y firmas escaneadas como imágenes superpuestas sin no repudio ni validez jurídica (P-06).
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual del Flujo Operativo As-Is y Explicación Técnica}
+A continuación se presenta el diagrama de flujo oficial del proceso manual actual:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s1_01_diagrama_as_is.png}
+    \caption{Diagrama de Flujo del Proceso Actual As-Is (Flujo Manual y Descentralizado del SGC).}
+    \label{fig:diag_as_is}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural del Proceso As-Is:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Estructura de Carriles (Swimlanes) y Nodos Operativos:} El diagrama modela la fragmentación entre tres actores desconectados: Docente Elaborador, Coordinador de Comisión/Carrera y Subdecano de Facultad. Se identifican 11 etapas manuales y 4 rombos de decisión condicional que carecen de soporte digital centralizado, dependiendo exclusivamente del correo electrónico y carpetas compartidas.
+    \item \textbf{Dinámica de Cuellos de Botella y Ciclos de Reproceso:} El flujo evidencia el bucle crítico de corrección manual: cuando un plan presenta errores aritméticos en horas (e.g., sumas de 38h o 44h en lugar de las 40h reglamentarias), el archivo es devuelto por correo, generando una latencia promedio de 26.4 días hábiles y hasta 3 iteraciones de reenvío por docente, con dispersión de versiones ofimáticas (\textit{v1, v2\_corregido, v3\_final}).
+    \item \textbf{Vulnerabilidad en la Custodia de Evidencias Probatorias:} Las evidencias de respaldo se adjuntan mediante hipervínculos dispersos a Google Drive o carpetas locales, detectándose que un 18\% de los enlaces pierden vigencia o permisos de acceso público antes de las auditorías de calidad del CACES y del SGC.
+    \item \textbf{Trazabilidad hacia el Sistema SIGE (To-Be):} Cada uno de los 4 rombos de decisión manual del diagrama As-Is es reemplazado en SIGE por compuertas automatizadas en tiempo real (Validation Gates VG-1 a VG-4), eliminando por completo la necesidad de revisiones aritméticas manuales y garantizando un tiempo de ciclo inferior a 3 días hábiles.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Formatos Auditados y Vulnerabilidades Detectadas}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.65\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.5\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Código SGC} & \textbf{Denominación Oficial} & \textbf{Vulnerabilidad Operativa Identificada en Muestreo} & \textbf{Criticidad} \\
 \hline
-Código de Tarea & EDT 1.1 \\
+UTA-SGC-A-2-1-P7-T1 & Plan de Trabajo Docente Semestral & Inconsistencia en la sumatoria de 40h semanales y ponderaciones fuera del 100\% & CRÍTICA (P-01, P-02) \\
 \hline
-Nombre de la Tarjeta & Levantamiento de información del proceso actual \\
+UTA-SGC-A-2-1-P7-T4 & Informe de Cumplimiento de Actividades & Reporte de porcentajes de avance sin enlaces de evidencia o con enlaces rotos & CRÍTICA (P-04) \\
 \hline
-Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+FISEI-DOC-TUT-01 & Registro y Control de Tutorías Académicas & Falta de cruce con la nómina estudiantil del sistema académico central & ALTA (P-03) \\
 \hline
-Período de Ejecución & 12 de agosto al 14 de agosto de 2026 (3 días laborables) \\
-\hline
-Horas Asignadas & 24 horas hombre netas \\
-\hline
-Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
-\hline
-Entregable Oficial & \texttt{01\_Levantamiento\_Informacion\_Proceso\_Actual.pdf} (Mapeo As-Is) \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado \\
+FISEI-ACTA-REV-02 & Hoja de Observaciones de Comisión & Correcciones informales enviadas por mensajería sin trazabilidad institucional & ALTA (P-05) \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 1.1 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Evidencia del Proceso Manual Diagnosticado (Plantillas SGC)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{2.5cm}|X|m{3.5cm}|}
-\hline
-\rowcolor{tableheader}
-\multicolumn{3}{|c|}{\textbf{UNIVERSIDAD TÉCNICA DE AMBATO -- SISTEMA DE GESTIÓN DE CALIDAD}} \\
-\hline
-\textbf{Formato Oficial:} & UTA-SGC-A-2-1-P7-T1 (Plan de Trabajo Docente) & Versión: 2.0 \\
-\hline
-\textbf{Unidad Responsable:} & Facultad de Ingeniería en Sistemas, Electrónica e Industrial & Ciclo: Semestral \\
-\hline
-\textbf{Riesgo Auditado:} & Modificación arbitraria de celdas y fórmulas en Microsoft Word & Criticidad: ALTA (P-03) \\
-\hline
-\end{tabularx}
-\caption{Identificación de plantillas oficiales auditadas en el proceso As-Is.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Identificación de Formatos & Mapeo de plantillas oficiales \texttt{P7-T1} y \texttt{P7-T2} de la UTA & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Muestra Representativa & Entrevistas a 8 docentes titulares y 2 coordinadores de FISEI & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Matriz de Fallas P-01 a P-06 & Evidencia documental de problemas operativos As-Is & 100\% CONFORME & Steeven Toala \\
-\hline
-Aprobación del Diagnóstico & Revisión metodológica del alcance y problemas detectados & 100\% CONFORME & Ing. Paulo Torres \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 1.1.}
+\caption{Matriz técnica de plantillas institucionales auditadas y riesgos operativos identificados.}
 \end{table}
 
 

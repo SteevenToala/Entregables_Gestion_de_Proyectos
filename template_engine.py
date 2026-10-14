@@ -129,8 +129,8 @@ FOOTER_TEMPLATE = r"""
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -141,7 +141,7 @@ FOOTER_TEMPLATE = r"""
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -154,7 +154,7 @@ FOOTER_TEMPLATE = r"""
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & @FECHA_FIRMA@ \\
+    1.0 & @DESC_CAMBIO@ & @RESP_CAMBIO@ & @FECHA_FIRMA@ \\
     \hline
 \end{tabularx}
 
@@ -166,17 +166,21 @@ FOOTER_TEMPLATE = r"""
 \end{document}
 """
 
-def render_doc(codigo, proceso, fecha_el, fecha_rev, titulo_doc, body_content, fecha_firma, anexos_content):
+def render_doc(codigo, proceso, fecha_el, fecha_rev, titulo_doc, body_content, fecha_firma, anexos_content, desc_cambio="Elaboración y entrega del artefacto técnico inicial", resp_cambio="Steeven Toala / Heidi Villavicencio"):
     # Sanitize header fields so unescaped & doesn't break tabularx header table
     proceso_safe = proceso.replace(r"\&", "&").replace("&", r"\&")
     titulo_doc_safe = titulo_doc.replace(r"\&", "&").replace("&", r"\&")
     codigo_safe = codigo.replace(r"\&", "&").replace("&", r"\&")
+    desc_safe = desc_cambio.replace(r"\&", "&").replace("&", r"\&")
+    resp_safe = resp_cambio.replace(r"\&", "&").replace("&", r"\&")
     preamble = PREAMBLE_TEMPLATE.replace("@CODIGO@", codigo_safe)\
                                 .replace("@PROCESO@", proceso_safe)\
                                 .replace("@FECHA_EL@", fecha_el)\
                                 .replace("@FECHA_REV@", fecha_rev)\
                                 .replace("@TITULO_DOC@", titulo_doc_safe)
     footer = FOOTER_TEMPLATE.replace("@FECHA_FIRMA@", fecha_firma)\
-                            .replace("@ANEXOS_CONTENT@", anexos_content)
+                            .replace("@ANEXOS_CONTENT@", anexos_content)\
+                            .replace("@DESC_CAMBIO@", desc_safe)\
+                            .replace("@RESP_CAMBIO@", resp_safe)
     return preamble + body_content + footer
 

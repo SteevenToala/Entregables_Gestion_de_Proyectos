@@ -186,21 +186,24 @@ Se ejecutó una sesión formal de revisión de Sprint siguiendo la metodología 
     \item \textbf{Política de Registro de Observaciones:} Cualquier recomendación formulada por el Docente Evaluador se incorpora al Product Backlog del Sprint 3.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_bandeja_planes.png}
-    \caption{Captura Real de la Demostración de Planes Persistidos en la Base de Datos al Hito 3.}
-    \label{fig:hito3_demo}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de Aceptación de Historias de Usuario del Sprint 2}
+Al culminar la segunda iteración del ciclo de desarrollo de la Fase 3, se llevó a cabo la ceremonia formal de Revisión de Sprint (Sprint 2 Review) bajo el marco Scrum, certificando la operación conjunta del Asistente Wizard y la capa de persistencia. Las actividades de revisión técnica comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Preparación del Entorno Integrado de Demostración:} Se verificó el funcionamiento saludable de los 5 contenedores en Docker Compose, precargando los datos maestros de la carrera de Ingeniería de Software para las pruebas en vivo.
+    \item \textbf{Demostración End-to-End del Asistente Wizard en Vivo:} Ante el equipo de desarrollo y el Docente Evaluador, se ejecutó una sesión real que demostró la autenticación del usuario, la creación guiada de un nuevo plan de trabajo para el período B26, el autoguardado a los 1500 ms tras redactar justificaciones y la recuperación intacta del borrador tras un cierre forzado del navegador.
+    \item \textbf{Inspección Forense de la Capa de Datos en PostgreSQL 18:} Se accedió a la consola de base de datos para comprobar que los registros en las tablas \texttt{planes\_\allowbreak docente} y \texttt{secciones\_\allowbreak documento} se crearon con identificadores UUID válidos, claves foráneas correctas y tipos JSONB estructurados.
+    \item \textbf{Levantamiento de Retroalimentación de Coordinadores de Área:} Se recopilaron recomendaciones respecto al contraste de los botones de acción del Wizard, aprobándose el avance inmediato al desarrollo de la Matriz Dinámica en el Sprint 3.
+    \item \textbf{Suscripción del Acta Formal de Aprobación de Sprint Review:} Se legalizó el documento de aceptación de los incrementos construidos, certificando el cumplimiento del 100\% de los criterios de las Historias de Usuario HU-01 a HU-08 con cero defectos abiertos.
+\end{itemize}
+
+\subsection{Matriz de Auditoría y Verificación de Criterios del Sprint 2}
+A continuación se presenta la matriz de evaluación formal de los incrementos demostrados en el Sprint 2:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.8\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Historia de Usuario} & \textbf{Criterio de Aceptación Evaluado} & \textbf{Resultado} & \textbf{Estado} \\
@@ -225,7 +228,7 @@ US-09 & Bandeja de Expedientes & Listado de planes con filtros por periodo y bad
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.9\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Métrica de Rendimiento} & \textbf{Estimado} & \textbf{Real Logrado} & \textbf{Interpretación del Desempeño} \\
@@ -247,7 +250,7 @@ A la fecha de corte del Hito 3 (22 de septiembre de 2026), se certifica formalme
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.1\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.9\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Fase / Sprint} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 3} \\
@@ -276,8 +279,8 @@ A la fecha de corte del Hito 3 (22 de septiembre de 2026), se certifica formalme
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -288,7 +291,7 @@ A la fecha de corte del Hito 3 (22 de septiembre de 2026), se certifica formalme
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -301,7 +304,7 @@ A la fecha de corte del Hito 3 (22 de septiembre de 2026), se certifica formalme
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 22/09/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 22/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -309,76 +312,60 @@ A la fecha de corte del Hito 3 (22 de septiembre de 2026), se certifica formalme
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.8 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+Al finalizar la segunda semana del ciclo de desarrollo de la Fase 3, se llevó a cabo la ceremonia formal de Revisión de Sprint (Sprint 2 Review) bajo el marco Scrum, certificando la operación integrada del Asistente Wizard y la capa de persistencia:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Preparación del Entorno Integrado de Demostración:} Se desplegó el stack completo de 5 contenedores en Docker Compose, verificando el estado saludable (\textit{healthy}) de PostgreSQL 18, el backend Express v5 y el frontend en Vite.
+    \item \textbf{Ejecución de Prueba End-to-End en Vivo:} Ante el equipo técnico y el docente evaluador, se ejecutó una sesión real que demostró:
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item Autenticación de un docente de la carrera de Ingeniería de Software con credenciales del período B26.
+        \item Creación de un nuevo Plan de Trabajo Docente desde la bandeja general.
+        \item Navegación guiada por los las etapas inicial y descriptiva del Wizard, completando datos de dedicación y justificaciones.
+        \item Comprobación en vivo del autoguardado a los 1500 ms tras pausar la redacción.
+        \item Simulación de cierre forzado de pestaña y reapertura inmediata, comprobando la restauración exacta de todos los campos.
+    \end{itemize}
+    \item \textbf{Auditoría Directa sobre el Motor Relacional:} Se accedió a la consola de PostgreSQL para consultar las tablas \texttt{planes\_\allowbreak docente} y \texttt{secciones\_\allowbreak documento}, constatando que los registros se crearon con sus claves foráneas, restricciones CHECK y estampas de tiempo correctas.
+    \item \textbf{Levantamiento de Retroalimentación de Coordinación:} Se recogieron observaciones de usabilidad respecto al contraste de los botones de acción del Wizard, aprobándose el avance inmediato al desarrollo de la Matriz Dinámica en el Sprint 3.
+    \item \textbf{Formalización del Acta Técnica de Sprint Review:} Se legalizó el documento de aceptación de los incrementos construidos, certificando 0 defectos bloqueantes en las Historias de Usuario HU-01 a HU-08.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_bandeja_planes.png}
+    \caption{Bandeja de Gestión Docente Presentada Durante la Demostración del Sprint 2.}
+    \label{fig:anx_f3_08}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La captura documenta la bandeja de expedientes presentada durante la sesión de Sprint 2 Review. Se visualizan los planes persistidos en PostgreSQL correspondientes a las carreras de Software y TI, con sus identificadores UUID, periodo académico y marcas de tiempo UTC.
+    \item \textbf{Demostración en Vivo ante Evaluadores:} Durante la revisión colegiada, se demostró el flujo completo de creación asistida con el Wizard, el guardado automático de secciones enriquecidas y la recuperación íntegra de borradores tras forzar el reinicio del contenedor del backend.
+    \item \textbf{Certificación de Objetivos de Iteración:} El equipo evaluador constató que los objetivos del Sprint 2 fueron superados al 100\%, registrando cero defectos bloqueantes y autorizando el inicio del Sprint 3 para la Matriz Dinámica y el almacenamiento MinIO.
+    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde al release tag de Sprint 2 en el repositorio Git y a los registros de planes en la tabla \texttt{planes\_\allowbreak docente}.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional del Sprint 2 Review}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.8 \\
-\hline
-Nombre de la Tarjeta & HITO 3: Sprint 2 Review: Wizard y Persistencia Operativa \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 21 de septiembre al 22 de septiembre de 2026 (2 días laborables) \\
-\hline
-Horas Asignadas & 16 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV), Andrea Vásquez (AV), Nixon Hurtado (NH) \\
-\hline
-Entregable Oficial & Demostración funcional de Wizard con autoguardado en DB \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.8 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Acta Formal de Aprobación del Sprint 2 (Hito 3)}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.0cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\multicolumn{2}{|c|}{\textbf{ACTA INSTITUCIONAL DE CIERRE DE SPRINT 2 -- SISTEMA SIGE}} \\
+\textbf{Criterio Evaluado en Sprint} & \textbf{Mecanismo de Comprobación en Vivo} & \textbf{Evidencia Observada por Evaluadores} & \textbf{Resultado del Sprint} \\
 \hline
-\textbf{Fecha de Sesión:} & 22 de septiembre de 2026 \\
+Operación del Asistente Wizard & Recorrido de las 5 etapas modulares con datos de prueba reales. & Navegación fluida, validaciones activas y bloqueo de etapas inconsistentes. & Aceptado sin Defectos \\
 \hline
-\textbf{Asistentes:} & Steeven Toala (Líder Técnico), Heidi Villavicencio (Calidad), Andrea Vásquez (Frontend), Nixon Hurtado (Backend), Ing. Paulo Torres (Docente Evaluador). \\
+Autoguardado y Debounce & Escritura de párrafo y observación de red en DevTools. & Petición despachada exactamente a los 1500 ms; confirmación visual verde en UI. & Aceptado sin Defectos \\
 \hline
-\textbf{Dictamen:} & Verificada la operación fluida del Wizard modular, el autoguardado con debounce de 800 ms y la persistencia transaccional en PostgreSQL 18, el Docente Evaluador aprueba por unanimidad el Hito 3 y autoriza el inicio del Sprint 3 enfocado en la Matriz Dinámica y Almacenamiento MinIO S3. \\
+Persistencia en PostgreSQL & Consulta \texttt{SELECT * FROM planes\_\allowbreak docente;} en terminal. & Registros almacenados con UUID, llaves foráneas y tipos JSONB íntegros. & Aceptado sin Defectos \\
 \hline
-\end{tabularx}
-\caption{Acta oficial de aprobación de Hito 3.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Cumplimiento Sprint 2 & Historias de usuario US-05 a US-10 probadas y aceptadas al 100\% & 100\% CONFORME & Steeven Toala \\
-\hline
-Persistencia Verificada & Operación fluida del Wizard y TipTap con guardado en PostgreSQL 18 & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Rendimiento del Cronograma & 112 horas netas ejecutadas en el Sprint 2 con índice SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Aprobación Colegiada & Acta formal de cierre de Hito 3 firmada por el Docente Evaluador & 100\% CONFORME & Ing. Paulo Torres \\
+Resiliencia de Sesión & Recarga de página con cierre accidental de sesión. & Recuperación transparente del borrador sin pérdida de datos del docente. & Aceptado sin Defectos \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.8.}
+\caption{Matriz de criterios técnicos y de aceptación validados en la Revisión de Sprint 2.}
 \end{table}
 
 

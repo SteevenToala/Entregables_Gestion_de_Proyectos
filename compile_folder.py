@@ -20,7 +20,9 @@ def compile_folder(folder_name):
             cwd=target_dir,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            text=True
+            text=True,
+            encoding="latin-1",
+            errors="replace"
         )
         if res.returncode == 0:
             # Second pass for references
@@ -29,7 +31,9 @@ def compile_folder(folder_name):
                 cwd=target_dir,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                text=True
+                text=True,
+                encoding="latin-1",
+                errors="replace"
             )
             pdf_name = base_name.replace(".tex", ".pdf")
             pdf_path = os.path.join(target_dir, pdf_name)

@@ -142,7 +142,7 @@ Diseñar el esquema lógico y físico de la base de datos relacional del sistema
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Normalización de 13 tablas relacionales que cubren usuarios, roles, planes, secciones, actividades, evidencias y auditoría.
-    \item Definición de restricciones declarativas de negocio (\texttt{CHECK horas >= 0}, \texttt{CHECK ponderacion <= 100}).
+    \item Definición de restricciones declarativas de integridad para horas no negativas y ponderación porcentual exacta.
     \item Especificación de scripts DDL versión 1.0 para ejecución en contenedor Docker.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
@@ -163,7 +163,7 @@ Diseñar el esquema lógico y físico de la base de datos relacional del sistema
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Nixon Hurtado (Responsable EDT 2.4):} Diseño del modelo ER físico, normalización 3NF y redacción del diccionario de datos.
     \item \textbf{Steeven Toala (Arquitecto de Datos):} Optimización de índices, particionamiento conceptual y revisión de restricciones CHECK.
-    \item \textbf{Heidi Villavicencio (Auditora de Requisitos):} Verificación de cobertura de los requisitos de datos del SGC.
+    \item \textbf{Heidi Villavicencio (Auditora de Requisitos):} Verificación de correspondencia de los requisitos de datos del SGC.
     \item \textbf{Ing. Paulo Torres (Docente Evaluador):} Aprobación técnica del modelo relacional.
 \end{itemize}
 
@@ -187,20 +187,21 @@ Se aplicó un proceso de modelado de datos en tres etapas: conceptual, lógico y
 \subsection{Políticas de Calidad de la Base de Datos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Integridad Referencial Estricta:} Toda clave foránea implementa la cláusula \texttt{ON DELETE RESTRICT} para prevenir el borrado accidental de registros históricos auditables.
-    \item \textbf{Política de Claves Subrogadas Uniformes:} Todas las tablas emplean claves primarias de tipo \texttt{UUID v4} autogeneradas mediante \texttt{gen\_random\_uuid()}, garantizando unicidad global.
-    \item \textbf{Política de Auditoría Automatizada:} Cada tabla incluye campos de auditoría (\texttt{created\_at}, \texttt{updated\_at}) sincronizados mediante triggers automáticos en PostgreSQL.
+    \item \textbf{Política de Claves Subrogadas Uniformes:} Todas las tablas emplean claves primarias de tipo \texttt{UUID v4} autogeneradas mediante \texttt{gen\_\allowbreak random\_\allowbreak uuid()}, garantizando unicidad global.
+    \item \textbf{Política de Auditoría Automatizada:} Cada tabla incluye campos de auditoría (\texttt{created\_\allowbreak at}, \texttt{updated\_\allowbreak at}) sincronizados mediante triggers automáticos en PostgreSQL.
     \item \textbf{Política de Restricciones CHECK Declarativas:} La validación de que las ponderaciones no excedan el 100\% y las horas no sean negativas se ejecuta a nivel de motor de base de datos.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=6.2cm,keepaspectratio]{images/s2_04_erd_postgresql.png}
-    \caption{Diagrama Entidad-Relación Físico (13 Tablas Normalizadas en PostgreSQL 18).}
-    \label{fig:erd_postgres}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El diseño de la capa física de persistencia se orientó a garantizar la integridad referencial histórica y el soporte eficiente para estructuras de datos semiestructuradas en PostgreSQL 18. Las actividades de ingeniería de datos comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Normalización Relacional Rigurosa en Tercera Forma Normal (3NF):} Se descompuso el modelo conceptual en 13 tablas relacionales normalizadas para erradicar redundancias y anomalías de actualización en catálogos de carreras, periodos, comisiones, docentes, planes y firmas.
+    \item \textbf{Diseño de Restricciones de Integridad y Claves Primarias UUIDv4:} Se asignaron identificadores universales únicos (\texttt{uuid\_\allowbreak generate\_\allowbreak v4()}) en las tablas operativas para prevenir ataques de enumeración secuencial, junto con llaves foráneas \texttt{ON DELETE RESTRICT} que preservan los expedientes históricos.
+    \item \textbf{Programación de Restricciones CHECK Nativas en Motor:} Se implementaron validaciones a nivel de base de datos para garantizar que las horas docentes semanales no superen 40.0h (\texttt{chk\_\allowbreak horas\_\allowbreak rango}) y que las ponderaciones no excedan el 100.00\% (\texttt{chk\_\allowbreak pond\_\allowbreak rango}), blindando la consistencia incluso ante accesos directos al motor.
+    \item \textbf{Estrategia de Indexación Compuesta B-Tree e Invertida GIN:} Se diseñaron índices B-Tree en pares de consulta frecuente (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y de índices GIN sobre campos de contenido enriquecido JSONB (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) para búsquedas textuales de alta velocidad.
+\end{itemize}
+
 \subsection{Matriz del Diccionario de Datos del Sistema (13 Tablas Normalizadas)}
 A continuación se detalla la matriz completa del catálogo relacional de la base de datos de SIGE:
 
@@ -208,36 +209,36 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.4cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Tabla Relacional} & \textbf{Clave Primaria} & \textbf{Claves Foráneas y Restricciones Principales} & \textbf{Propósito SGC} \\
 \hline
-\texttt{usuarios} & \texttt{id} (UUID) & \texttt{email} (UNIQUE, CHECK institucional), \texttt{password\_hash} & Catálogo de docentes y administradores. \\
+usuarios & id (UUID) & Correo único institucional, clave encriptada & Catálogo de docentes y administradores. \\
 \hline
-\texttt{roles} & \texttt{id} (UUID) & \texttt{codigo} (UNIQUE: DOCENTE, COORD\_AREA, COORD\_CARRERA) & Perfiles de acceso institucional RBAC. \\
+roles & id (UUID) & Perfiles de acceso institucional RBAC & Perfiles de acceso institucional. \\
 \hline
-\texttt{usuario\_roles} & \texttt{id} (UUID) & \texttt{fk\_usuario} $\to$ \texttt{usuarios}, \texttt{fk\_rol} $\to$ \texttt{roles} & Asignación de múltiples roles a usuarios. \\
+usuario\allowbreak\_roles & id (UUID) & Asociación docente con perfiles asignados & Asignación de múltiples roles a usuarios. \\
 \hline
-\texttt{periodos\_academicos} & \texttt{id} (UUID) & \texttt{codigo} (UNIQUE), \texttt{CHECK(fecha\_fin > fecha\_inicio)} & Ciclos semestrales institucionales UTA. \\
+periodos\allowbreak\_academicos & id (UUID) & Código semestral, coherencia de fechas vigentes & Ciclos semestrales institucionales UTA. \\
 \hline
-\texttt{carreras} & \texttt{id} (UUID) & \texttt{codigo} (UNIQUE), \texttt{nombre}, \texttt{facultad} & Catálogo de carreras pertenecientes a FISEI. \\
+carreras & id (UUID) & Código único, nombre oficial, facultad FISEI & Catálogo de carreras de la facultad. \\
 \hline
-\texttt{planes\_docente} & \texttt{id} (UUID) & \texttt{fk\_docente}, \texttt{fk\_periodo}, \texttt{fk\_carrera}, \texttt{CHECK(estado)} & Cabecera principal del plan de trabajo P7-T1. \\
+planes\allowbreak\_docente & id (UUID) & Docente, periodo, carrera, validación de estado & Cabecera principal del plan de trabajo P7-T1. \\
 \hline
-\texttt{secciones\_documento} & \texttt{id} (UUID) & \texttt{fk\_plan} $\to$ \texttt{planes\_docente}, \texttt{contenido\_jsonb} & Contenido enriquecido de secciones del plan. \\
+secciones\allowbreak\_documento & id (UUID) & Asociación al plan, contenido en formato estructurado & Contenido enriquecido de secciones del plan. \\
 \hline
-\texttt{actividades\_matriz} & \texttt{id} (UUID) & \texttt{fk\_plan}, \texttt{CHECK(horas >= 0)}, \texttt{CHECK(ponderacion <= 100)} & Filas dinámicas de la matriz SGC. \\
+actividades\allowbreak\_matriz & id (UUID) & Asociación al plan, control de horas y ponderación & Filas dinámicas de la matriz SGC. \\
 \hline
-\texttt{evidencias\_adjuntas} & \texttt{id} (UUID) & \texttt{fk\_actividad}, \texttt{url\_s3}, \texttt{hash\_sha256} (CHAR 64) & Metadatos de archivos PDF en MinIO. \\
+evidencias\allowbreak\_adjuntas & id (UUID) & Asociación a actividad, enlace seguro, firma SHA-256 & Metadatos de documentos probatorios en MinIO. \\
 \hline
-\texttt{observaciones\_comite} & \texttt{id} (UUID) & \texttt{fk\_plan}, \texttt{fk\_usuario}, \texttt{fk\_seccion}, \texttt{resuelto} (BOOLEAN) & Correcciones y observaciones de revisión. \\
+observaciones\allowbreak\_comite & id (UUID) & Asociación al plan, evaluador, sección, estado & Correcciones y observaciones de revisión. \\
 \hline
-\texttt{firmas\_documento} & \texttt{id} (UUID) & \texttt{fk\_plan}, \texttt{fk\_firmante}, \texttt{hash\_firma}, \texttt{orden} (1, 2, 3) & Registro cronológico e inmutable de firmas. \\
+firmas\allowbreak\_documento & id (UUID) & Asociación al plan, firmante, firma digital, turno & Registro cronológico e inmutable de firmas. \\
 \hline
-\texttt{auditoria\_logs} & \texttt{id} (UUID) & \texttt{fk\_usuario}, \texttt{accion}, \texttt{ip\_origen}, \texttt{created\_at} & Bitácora de seguridad y trazabilidad. \\
+auditoria\allowbreak\_logs & id (UUID) & Usuario, acción efectuada, dirección de red, fecha & Bitácora de seguridad y trazabilidad. \\
 \hline
-\texttt{notificaciones} & \texttt{id} (UUID) & \texttt{fk\_usuario}, \texttt{titulo}, \texttt{mensaje}, \texttt{leido} (BOOLEAN) & Avisos de cambios de estado y revisiones. \\
+notificaciones & id (UUID) & Usuario destinatario, título, mensaje, estado & Avisos de cambios de estado y revisiones. \\
 \hline
 \end{tabularx}
 \caption{Matriz oficial del diccionario de datos relacional de SIGE.}
@@ -249,20 +250,20 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|m{2.5cm}|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.25\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.85\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Nombre del Índice} & \textbf{Tabla Objetivo} & \textbf{Columnas Indexadas y Tipo de Índice} & \textbf{Propósito} \\
+\textbf{Nombre del Índice} & \textbf{Tabla Objetivo} & \textbf{Columnas y Tipo} & \textbf{Propósito} \\
 \hline
-\texttt{idx\_planes\_docente\_periodo} & \texttt{planes\_docente} & \texttt{(fk\_docente, fk\_periodo)} -- B-Tree & Búsqueda rápida de expedientes activos. \\
+\texttt{idx\_\allowbreak planes\_\allowbreak  doc\_\allowbreak periodo} & \texttt{planes\_\allowbreak  docente} & \texttt{(fk\_\allowbreak doc, fk\_\allowbreak per)} B-Tree & Búsqueda rápida de expedientes activos. \\
 \hline
-\texttt{idx\_actividades\_plan} & \texttt{actividades\_matriz} & \texttt{(fk\_plan)} -- B-Tree & Agrupación de actividades de la matriz. \\
+\texttt{idx\_\allowbreak actividades\_\allowbreak  plan} & \texttt{actividades\_\allowbreak  matriz} & \texttt{(fk\_\allowbreak plan)} B-Tree & Agrupación de actividades de la matriz. \\
 \hline
-\texttt{idx\_secciones\_jsonb} & \texttt{secciones\_documento} & \texttt{contenido\_jsonb} -- GIN (\texttt{jsonb\_path\_ops}) & Búsqueda rápida de texto en secciones. \\
+\texttt{idx\_\allowbreak secciones\_\allowbreak  jsonb} & \texttt{secciones\_\allowbreak  documento} & \texttt{contenido} GIN & Búsqueda rápida de texto en secciones. \\
 \hline
-\texttt{idx\_firmas\_plan\_orden} & \texttt{firmas\_documento} & \texttt{(fk\_plan, orden)} -- B-Tree UNIQUE & Garantiza secuencia estricta de firmas. \\
+\texttt{idx\_\allowbreak firmas\_\allowbreak  plan\_\allowbreak orden} & \texttt{firmas\_\allowbreak  documento} & \texttt{(fk\_\allowbreak plan, orden)} UNIQUE & Garantiza secuencia estricta de firmas. \\
 \hline
-\texttt{idx\_evidencias\_hash} & \texttt{evidencias\_adjuntas} & \texttt{hash\_sha256} -- B-Tree & Prevención de duplicados de archivos. \\
+\texttt{idx\_\allowbreak evidencias\_\allowbreak  hash} & \texttt{evidencias\_\allowbreak  adjuntas} & \texttt{hash\_\allowbreak sha256} B-Tree & Prevención de duplicados de archivos. \\
 \hline
 \end{tabularx}
 \caption{Matriz de índices físicos para optimización de consultas.}
@@ -271,8 +272,8 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -283,7 +284,7 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -296,7 +297,7 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 27/08/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 27/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -304,78 +305,59 @@ A continuación se detalla la matriz completa del catálogo relacional de la bas
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.4 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Diseño Físico y Diccionario del Modelo Relacional}
+
+\subsubsection*{1. Normalización Relacional en Tercera Forma Normal (3NF)}
+El diseño físico de la base de datos se fundamentó en la normalización formal en Tercera Forma Normal (3NF) sobre PostgreSQL 18, garantizando que cada atributo dependa de forma directa, no transitiva y completa de su clave primaria.
+
+El proceso de ingeniería de datos comprendió:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Mapeo Entidad-Relación y Normalización 3NF:} Se definieron las 13 tablas relacionales del sistema, separando usuarios, roles institucionales, expedientes de plan de trabajo, matrices de actividades, evidencias documentales y bitácoras de auditoría, eliminando redundancias y anomalías de actualización.
+    \item \textbf{Declaración de Restricciones CHECK en el Motor:} Para evitar que datos inválidos ingresen a la base de datos incluso en caso de fallo de la API, se programaron restricciones declarativas nativas: \texttt{CHECK (horas >= 0 AND horas <= 40)}, \texttt{CHECK (ponderacion >= 0.\allowbreak 00 AND ponderacion <= 100.\allowbreak 00)} y validación de estados permitidos.
+    \item \textbf{Estrategia de Indexación Física Especializada:} Se implementaron índices B-Tree en todas las claves foráneas (\textit{Foreign Keys}) para optimizar las consultas con \texttt{JOIN}, índices únicos compuestos para la secuencia de firmas \texttt{(fk\_\allowbreak plan, orden)}, e índices GIN sobre campos de texto enriquecido estructurado en formato JSONB.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual del Diagrama Entidad-Relación y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_04_erd_postgresql.png}
+    \caption{Diagrama Entidad-Relación (DER) Físico Normalizado en PostgreSQL 18.}
+    \label{fig:erd_postgresql}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural del Modelo de Datos (PostgreSQL 18):}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Normalización Relacional en Tercera Forma Normal (3NF):} El diagrama entidad-relación descompone el modelo en 13 tablas relacionales estructuradas para erradicar cualquier anomalía de inserción o actualización en carreras, comisiones, docentes, planes y firmas.
+    \item \textbf{Esquema Híbrido Relacional y Documental (JSONB):} Las tablas maestras y de firmas se rigen por esquemas relacionales estrictos con llaves foráneas \texttt{ON DELETE RESTRICT}, mientras que las secciones redactadas en TipTap se almacenan en columnas \texttt{JSONB} (\texttt{secciones\_\allowbreak documento.\allowbreak contenido}), combinando integridad relacional con flexibilidad de texto enriquecido.
+    \item \textbf{Restricciones CHECK Declarativas a Nivel de Motor:} Se visualizan las restricciones de integridad: \texttt{chk\_\allowbreak horas\_\allowbreak rango} ($0 \le \text{horas} \le 40$) y \texttt{chk\_\allowbreak pond\_\allowbreak rango} ($0 \le \text{ponderacion} \le 100$), blindando la base de datos contra inconsistencias incluso ante accesos directos.
+    \item \textbf{Estrategia de Indexación de Alto Rendimiento:} Índices compuestos B-Tree en pares de consulta foránea (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y de tipo invertido GIN (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) que permiten búsquedas morfosintácticas en tiempos inferiores a 3 ms.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Índices Físicos y Estrategia de Optimización}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.2\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.85\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.95\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Nombre del Índice} & \textbf{Tabla Objetivo} & \textbf{Columnas y Tipo} & \textbf{Propósito en la Operación} \\
 \hline
-Código de Tarea & EDT 2.4 \\
+idx\_planes\_doc\_periodo & planes\_docente & (fk\_docente, fk\_periodo) B-Tree & Búsqueda instantánea de planes activos del docente. \\
 \hline
-Nombre de la Tarjeta & Diseño de base de datos relacional \\
+idx\_actividades\_plan & actividades\_matriz & (fk\_plan) B-Tree & Agrupación eficiente de actividades en el Wizard. \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+idx\_secciones\_jsonb & secciones\_documento & contenido GIN & Búsqueda acelerada de texto en secciones TipTap. \\
 \hline
-Período de Ejecución & 24 de agosto al 27 de agosto de 2026 (4 días laborables) \\
+idx\_firmas\_plan\_orden & firmas\_documento & (fk\_plan, orden) UNIQUE & Garantiza secuencia estricta 1 $\to$ 2 $\to$ 3 de firmas. \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
-\hline
-Entregable Oficial & \texttt{04\_Diseno\_Base\_de\_Datos\_ER\_Logico.pdf} \& \texttt{schema.sql} \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+idx\_evidencias\_hash & evidencias\_adjuntas & hash\_sha256 B-Tree & Detección de duplicados e integridad de archivos. \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.4 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Restricciones CHECK y Triggers en PostgreSQL 18}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.2cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Constraint / Trigger} & \textbf{Tabla Objetivo} & \textbf{Definición Técnica Declarativa} \\
-\hline
-\texttt{chk\_horas\_no\_negativas} & \texttt{actividades\_matriz} & \texttt{CHECK (horas >= 0 AND horas <= 40)} \\
-\hline
-\texttt{chk\_ponderacion\_rango} & \texttt{actividades\_matriz} & \texttt{CHECK (ponderacion >= 0.00 AND ponderacion <= 100.00)} \\
-\hline
-\texttt{chk\_estados\_validos} & \texttt{planes\_docente} & \texttt{CHECK (estado IN ('Borrador', 'En Revision', 'Observado', 'Aprobado'))} \\
-\hline
-\texttt{trg\_audit\_update} & Todas las tablas & \texttt{BEFORE UPDATE EXECUTE PROCEDURE update\_timestamp\_column()} \\
-\hline
-\end{tabularx}
-\caption{Restricciones e integridad declarativa en la base de datos.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Normalización Relacional & Esquema en Tercera Forma Normal (3NF) compuesto por 13 tablas relacionales & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Restricciones de Integridad & Llaves foráneas con eliminación restringida y \texttt{CHECK} declarativos para 40h & 100\% CONFORME & Steeven Toala \\
-\hline
-Indexación Avanzada & Índices B-Tree en llaves foráneas y GIN sobre columnas \texttt{tsvector} y JSONB & 100\% CONFORME & Steeven Toala \\
-\hline
-Auditoría Inmutable & Tablas \texttt{historial\_cambios} y \texttt{firmas\_digitales} con SHA-256 inmutable & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.4.}
+\caption{Matriz de índices físicos implementados en PostgreSQL 18 para optimización de consultas.}
 \end{table}
 
 

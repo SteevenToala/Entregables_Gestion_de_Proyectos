@@ -126,7 +126,7 @@
 \textbf{Denominación Oficial del Entregable:} Planificación del Proyecto y Cronograma de Trabajo -- Código EDT: 1.7
 
 \section{Introducción}
-La planificación temporal estructurada y la descomposición del trabajo constituyen el eje sobre el cual se coordina el esfuerzo de desarrollo en el proyecto SIGE. Para garantizar la entrega a tiempo antes del inicio del ciclo académico semestral, se elaboró la Estructura de Desglose del Trabajo (EDT / WBS) dividida en 4 Fases y 34 tareas no resumen, articulada con un cronograma formal en Microsoft Project y el Tablero Kanban oficial en Trello. El presente informe formaliza la línea base del cronograma y la ruta crítica del proyecto.
+La planificación temporal estructurada y la descomposición del trabajo constituyen el eje sobre el cual se coordina el esfuerzo de desarrollo en el proyecto SIGE. Para garantizar la entrega a tiempo antes del inicio del ciclo académico semestral, se elaboró la Estructura de Desglose del Trabajo (EDT / WBS) dividida en 4 Fases y 34 tareas no resumen, articulada con un cronograma formal en Microsoft Project y la asignación estructurada de paquetes de trabajo de la EDT. El presente informe formaliza la línea base del cronograma y la ruta crítica del proyecto.
 
 \section{Objetivo}
 \subsection{Objetivo General}
@@ -135,7 +135,7 @@ Planificar, programar y estructurar el cronograma de trabajo y la Estructura de 
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Construir la EDT jerárquica de 4 niveles para las 4 fases del proyecto.
     \item Determinar la ruta crítica y holguras del cronograma en Microsoft Project.
-    \item Configurar el tablero Kanban interactivo en Trello sincronizado con el cronograma.
+    \item Determinar la asignación de recursos, duraciones y dependencias lógicas por paquete de trabajo.
 \end{itemize}
 
 \section{Alcance}
@@ -181,24 +181,25 @@ Se utilizó el método del diagrama de precedencias (PDM) en Microsoft Project. 
 \subsection{Políticas de Gestión del Cronograma}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Cero Holgura en Hitos Críticos:} Los hitos de aprobación no admiten prórrogas que comprometan el inicio de las fases subsiguientes.
-    \item \textbf{Política de Registro Diario en Tablero:} Cada tarea en Trello debe reflejar fielmente su avance porcentual y estado operativo.
+    \item \textbf{Política de Control de Avance Físico:} Cada paquete de trabajo debe registrar su progreso técnico y horas netas incurridas.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/trello_gantt_cronograma.png}
-    \caption{Cronograma Gantt Oficial de la Planificación del Proyecto SIGE en MS Project.}
-    \label{fig:gantt_cronograma}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+La planificación operativa del proyecto se estructuró a partir de una descomposición jerárquica orientada a entregables, asegurando una asignación eficiente de recursos y el control estricto de los plazos de ejecución. Las actividades técnicas de gestión desarrolladas abarcaron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Descomposición Jerárquica de la EDT/WBS en 34 Paquetes de Trabajo:} Se estructuró el árbol de entregables en cuatro fases metodológicas bien delimitadas: Fase 1 (Análisis y Requisitos, 1.1 al 1.8), Fase 2 (Diseño y Arquitectura, 2.1 al 2.7), Fase 3 (Implementación y Desarrollo, 3.1 al 3.16) y Fase 4 (Pruebas y Calidad, 4.1 al 4.3).
+    \item \textbf{Estimación Paramétrica de Esfuerzo y Nivelación de Cargas:} Mediante Microsoft Project se estimaron las duraciones de cada actividad técnica y se niveló la asignación horaria del equipo de ingeniería para garantizar un régimen de trabajo sostenible sin sobreasignación de recursos humanos.
+    \item \textbf{Modelado de Precedencias PDM y Determinación de la Ruta Crítica (CPM):} Se configuraron las dependencias lógicas Fin a Inicio (FS) entre paquetes de trabajo, identificando la cadena crítica de tareas que condiciona la duración total del proyecto fijada en 104 días laborables.
+    \item \textbf{Establecimiento de Compuertas de Control de Calidad (Stage-Gates 1 a 5):} Se programaron cinco hitos formales de evaluación colegiada al cierre de cada etapa para auditar la completitud de los artefactos técnicos y autorizar el avance hacia la siguiente fase de desarrollo.
+\end{itemize}
+
 \subsection{Resumen de la Línea Base del Cronograma por Fases de la EDT}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.5cm}|m{2.5cm}|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.8\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.8\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.8\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Fase} & \textbf{Denominación Oficial} & \textbf{Fechas de Ejecución} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Hito Asociado} \\
@@ -221,8 +222,8 @@ Se utilizó el método del diagrama de precedencias (PDM) en Microsoft Project. 
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -233,7 +234,7 @@ Se utilizó el método del diagrama de precedencias (PDM) en Microsoft Project. 
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -246,7 +247,7 @@ Se utilizó el método del diagrama de precedencias (PDM) en Microsoft Project. 
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 18/08/2026 \\
+    1.0 & Estructuración de la EDT institucional, asignación de cargas de trabajo, dependencias lógicas y línea base del cronograma. & Steeven Toala / Nixon Hurtado & 18/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -254,78 +255,60 @@ Se utilizó el método del diagrama de precedencias (PDM) en Microsoft Project. 
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 1.7 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Planificación Temporal, Cronograma y EDT}
+
+\subsubsection*{1. Descomposición Jerárquica y Nivelación de la Ruta Crítica}
+La planificación temporal del proyecto se estructuró dividiendo los objetivos en cuatro fases continuas no solapadas, totalizando 34 paquetes de trabajo (\textit{Work Packages}) rigurosamente secuenciados a lo largo de 832 horas hombre netas.
+
+El procedimiento de planificación detallada comprendió:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Estructuración de la EDT Jerárquica en 4 Niveles:} Fase 1 (Análisis y Planificación, 8 tareas, 192h), Fase 2 (Diseño y Arquitectura, 7 tareas, 192h), Fase 3 (Implementación y Desarrollo, 16 tareas, 400h) y Fase 4 (Pruebas y Cierre, 3 tareas, 48h).
+    \item \textbf{Determinación de la Ruta Crítica (CPM):} Se identificaron las dependencias obligatorias: la definición del esquema DDL en PostgreSQL (EDT 3.1) y el servicio de autenticación (EDT 3.3) son precedentes estrictos para el desarrollo del Wizard (EDT 3.5) y de la Matriz Dinámica (EDT 3.9), conformando la ruta crítica del proyecto.
+    \item \textbf{Asignación Equitativa de Carga Laboral:} Cada uno de los 4 desarrolladores recibió una asignación nominal de 208 horas netas a lo largo de las 9 semanas de ejecución, garantizando sostenibilidad operativa sin sobretiempos.
+\end{enumerate}
+
+\subsubsection*{2. Evidencia Visual del Cronograma Oficial y Explicación Técnica}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/gantt_fases_sige.png}
+    \caption{Diagrama de Gantt del Proyecto SIGE con Ruta Crítica y Cuatro Fases de Desarrollo.}
+    \label{fig:gantt_sige}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural del Cronograma y Ruta Crítica:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Distribución Temporal en Cuatro Fases y 34 Paquetes de Trabajo:} El diagrama de Gantt ilustra la cadencia de ejecución del proyecto a lo largo de 104 días hábiles, divididos en Fase 1 (Análisis y Requisitos, días 1-22), Fase 2 (Diseño y Arquitectura, días 23-44), Fase 3 (Desarrollo y Construcción, días 45-90) y Fase 4 (Pruebas y Calidad, días 91-104).
+    \item \textbf{Identificación Instrumental de la Ruta Crítica (CPM):} Las barras destacadas en rojo representan la secuencia de tareas críticas sin holgura: 1.3 (SRS) $\to$ 2.2 (Arquitectura) $\to$ 2.4 (Base de Datos) $\to$ 3.1 (DDL PostgreSQL) $\to$ 3.7 (Endpoints REST) $\to$ 3.10 (Validation Gates) $\to$ 4.1 (Pruebas Unitarias) $\to$ 4.2 (Pruebas Integración). Cualquier retraso en estos paquetes compromete la fecha de entrega final.
+    \item \textbf{Paralelización de Actividades y Holguras Operativas:} Se aprecian las holguras positivas en el desarrollo de la interfaz frontend (EDT 3.4 a 3.6) y en la infraestructura de MinIO (EDT 3.11), permitiendo amortiguar imprevistos sin afectar la fecha de despliegue institucional.
+    \item \textbf{Compuertas de Control Colegiado (Stage-Gates 1 a 5):} Los rombos del cronograma marcan las revisiones formales de hito al término de cada fase, asegurando que ningún paquete avance a la fase siguiente sin contar con la aprobación y firma del comité de calidad.
+\end{itemize}
+
+
+\subsubsection*{3. Matriz de Distribución de Horas y Carga de Trabajo por Fase}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.1\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Fase} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} \\
 \hline
-Código de Tarea & EDT 1.7 \\
+Fase 1 & Análisis y Planificación & 12 ago -- 18 ago 2026 & 8 tareas & 192 h \\
 \hline
-Nombre de la Tarjeta & Planificación del proyecto y cronograma de trabajo \\
+Fase 2 & Diseño y Arquitectura & 19 ago -- 31 ago 2026 & 7 tareas & 192 h \\
 \hline
-Fase Correspondiente & FASE 1. ANÁLISIS Y PLANIFICACIÓN \\
+Fase 3 & Implementación y Desarrollo & 01 sep -- 12 oct 2026 & 16 tareas & 400 h \\
 \hline
-Período de Ejecución & 17 de agosto al 18 de agosto de 2026 (2 días laborables) \\
+Fase 4 & Pruebas y Cierre Formal & 12 oct -- 13 oct 2026 & 3 tareas & 48 h \\
 \hline
-Horas Asignadas & 16 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
-\hline
-Entregable Oficial & \texttt{07\_Planificacion\_Proyecto\_Cronograma\_EDT.md} \& Cronograma MS Project \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado \\
+\multicolumn{3}{|r|}{\textbf{TOTAL GENERAL DEL PROYECTO:}} & \textbf{34 tareas} & \textbf{832 h} \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 1.7 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Evidencia de la Ruta Crítica en MS Project}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.5cm}|c|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Código} & \textbf{Tarea en Ruta Crítica} & \textbf{Duración} & \textbf{Holgura Total} & \textbf{Impacto en Hito} \\
-\hline
-EDT 1.3 & Definición de Requisitos SRS & 4 días & 0 días & Crítico para inicio de F2 \\
-\hline
-EDT 2.2 & Arquitectura SAD y C4 & 4 días & 0 días & Crítico para inicio de F3 \\
-\hline
-EDT 2.4 & Base de Datos Relacional 3NF & 4 días & 0 días & Crítico para scripts DDL \\
-\hline
-EDT 3.9 & Matriz Dinámica de Actividades & 4 días & 0 días & Crítico para Hito 4 \\
-\hline
-\end{tabularx}
-\caption{Ruta crítica identificada en la planificación temporal.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Consistencia EDT & Correspondencia exacta de las 34 tareas con el Tablero Trello & 100\% CONFORME & Steeven Toala \\
-\hline
-Presupuesto Horas & Balance exacto de 832 horas asignadas entre los 4 integrantes & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Ruta Crítica Calculada & Secuencia PDM validada sin lazos cíclicos en MS Project & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Aprobación del Cronograma & Validación formal de la línea base por el docente evaluador & 100\% CONFORME & Ing. Paulo Torres \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 1.7.}
+\caption{Matriz oficial de distribución de esfuerzo y duración por fase del proyecto SIGE.}
 \end{table}
 
 

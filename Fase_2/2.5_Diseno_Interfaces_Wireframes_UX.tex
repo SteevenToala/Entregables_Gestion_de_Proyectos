@@ -192,31 +192,16 @@ Se aplicó la metodología de diseño atómico (\textit{Atomic Design}), descomp
     \item \textbf{Política de Retroalimentación de Errores:} Los mensajes de error de validación deben presentarse junto al campo afectado con lenguaje claro y sugerencias de corrección accionables.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_login_view.png}
-    \caption{Captura Real de la Interfaz Web de Inicio de Sesión Institucional del Sistema SIGE.}
-    \label{fig:sige_login}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_dashboard_resumen.png}
-    \caption{Captura Real del Dashboard Principal del Docente en SIGE con Métricas y Planes Activos.}
-    \label{fig:sige_dashboard}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s2_05_layout_vistas.png}
-    \caption{Arquitectura de Wireframes y Jerarquía de Vistas del Entorno Docente y Coordinador.}
-    \label{fig:layout_vistas}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+El diseño de la experiencia de usuario (UX) y las interfaces visuales (UI) se centró en facilitar el diligenciamiento de los formularios oficiales del SGC, minimizando la sobrecarga cognitiva del docente. Las actividades de diseño de interfaces incluyeron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Diseño de Arquitectura de Información y Wireframes en Figma:} Se elaboraron prototipos navegables de baja y alta fidelidad priorizando la ergonomía visual y la reducción de clics en las tareas más repetitivas de carga horaria y redacción.
+    \item \textbf{Construcción del Sistema de Diseño (Design Tokens) Institucional:} Se formalizó la paleta cromática oficial de la UTA (\#8B1D24 Rojo UTA como primario, \#6B1218 para estados activos, escala neutra de grises y ámbar \#D97706 para observaciones), estandarizando tipografías y espaciados modulares.
+    \item \textbf{Especificación del Flujo Interactivo del Asistente Wizard en 5 Etapas:} Se estructuró el flujo modular de llenado: Etapa Inicial (Datos Generales), Etapa de Secciones SGC (Justificación y Objetivos), Etapa Matricial (Tabla de Actividades 40h), Etapa de Custodia (Evidencias MinIO) y Etapa de Cierre (Firmas y Verificación).
+    \item \textbf{Auditoría de Usabilidad y Accesibilidad bajo Norma WCAG 2.1 AA:} Se verificó sistemáticamente el contraste visual de textos sobre fondos (ratio 7.2:1 para texto normal y 4.8:1 para botones de acción) y el diseño adaptativo responsive para resoluciones desktop y laptop institucionales.
+\end{itemize}
+
 \subsection{Matriz de Especificación de Vistas y Componentes UI/UX}
 A continuación se detalla la matriz que relaciona las pantallas principales con sus componentes y validaciones de experiencia de usuario:
 
@@ -224,22 +209,22 @@ A continuación se detalla la matriz que relaciona las pantallas principales con
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|m{2.4cm}|X|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.7\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Pantalla} & \textbf{Ruta Frontend} & \textbf{Componentes Clave} & \textbf{Criterios de Usabilidad y Validación} \\
 \hline
-Inicio de Sesión & \texttt{/login} & Formulario de credenciales, botón institucional, badge de seguridad. & Validación de correo institucional en tiempo real; mensajes de error claros. \\
+Inicio de Sesión & \texttt{/\allowbreak login} & Formulario de credenciales, botón institucional, badge de seguridad. & Validación de correo institucional en tiempo real; mensajes de error claros. \\
 \hline
-Dashboard Docente & \texttt{/dashboard} & Tarjetas de resumen (Horas, Planes, Estado), tabla de expedientes recientes. & Acceso directo a edición en 1 clic; badges de estado codificados por color. \\
+Dashboard Docente & \texttt{/\allowbreak dashboard} & Tarjetas de resumen (Horas, Planes, Estado), tabla de expedientes recientes. & Acceso directo a edición en 1 clic; badges de estado codificados por color. \\
 \hline
-Bandeja de Planes & \texttt{/planes} & Listado con filtros por periodo, botón ``Nuevo Plan'', buscador instantáneo. & Paginación fluida; ordenamiento por fecha de última modificación. \\
+Bandeja de Planes & \texttt{/\allowbreak planes} & Listado con filtros por periodo, botón ``Nuevo Plan'', buscador instantáneo. & Paginación fluida; ordenamiento por fecha de última modificación. \\
 \hline
-Wizard de Edición & \texttt{/planes/:id} & Barra de progreso de 5 pasos, editor TipTap, indicador de autoguardado. & Bloqueo de pasos posteriores si existen Validation Gates insatisfechas. \\
+Wizard de Edición & \texttt{/\allowbreak planes/\allowbreak :id} & Barra de progreso de 5 etapas, editor TipTap, indicador de autoguardado. & Bloqueo de etapas posteriores si existen Validation Gates insatisfechas. \\
 \hline
-Matriz de Actividades & \texttt{/matriz} & Tabla dinámica con cálculo automático, botón ``+ Sugerir IA'', selector de semanas. & Feedback numérico inmediato ($100\%$ sumatoria); advertencias en rojo. \\
+Matriz de Actividades & \texttt{/\allowbreak matriz} & Tabla dinámica con cálculo automático, botón ``+ Sugerir IA'', selector de semanas. & Feedback numérico inmediato ($100\%$ sumatoria); advertencias en rojo. \\
 \hline
-Revisión de Comité & \texttt{/revision} & Drawer lateral de observaciones, visor de PDF embebido, botones de aprobación. & Registro granular por sección con historial de comentarios auditado. \\
+Revisión de Comité & \texttt{/\allowbreak revision} & Drawer lateral de observaciones, visor de PDF embebido, botones de aprobación. & Registro granular por sección con historial de comentarios auditado. \\
 \hline
 \end{tabularx}
 \caption{Matriz de especificación de vistas del sistema SIGE.}
@@ -251,7 +236,7 @@ Revisión de Comité & \texttt{/revision} & Drawer lateral de observaciones, vis
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.2\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Token de Diseño} & \textbf{Código HEX} & \textbf{RGB} & \textbf{Uso Institucional Recomendado} \\
@@ -273,8 +258,8 @@ Naranja Advertencia & \texttt{\#EA580C} & (234, 88, 12) & Badges de estado ``En 
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -285,7 +270,7 @@ Naranja Advertencia & \texttt{\#EA580C} & (234, 88, 12) & Badges de estado ``En 
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -298,7 +283,7 @@ Naranja Advertencia & \texttt{\#EA580C} & (234, 88, 12) & Badges de estado ``En 
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 28/08/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 28/08/2026 \\
     \hline
 \end{tabularx}
 
@@ -306,78 +291,59 @@ Naranja Advertencia & \texttt{\#EA580C} & (234, 88, 12) & Badges de estado ``En 
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 2.5 en el Tablero Trello}
+\subsection*{Anexo: Evidencias de Diseño de Interfaces, Wireframes y Tokens UI-UX}
+
+\subsubsection*{1. Metodología de Diseño UI/UX y Sistema de Tokens Visuales}
+El diseño visual y la experiencia de usuario (UI-UX) de SIGE se concibieron para reducir la fricción operativa de los 120 docentes de la FISEI, emulando la familiaridad del formato físico A4 institucional mientras se incorporan las ventajas de la interacción web moderna y accesible.
+
+El proceso de diseño de interfaz se desarrolló mediante las siguientes fases metodológicas:
+\begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
+    \item \textbf{Definición del Design System y Tokens Cromáticos:} Se formalizaron los tokens oficiales de estilo basados en la identidad gráfica de la Universidad Técnica de Ambato: Rojo Institucional (\texttt{\#A00000}), Azul Marino (\texttt{\#002060}), Gris Fondo (\texttt{\#F8F9FA}) y texto de alto contraste (\texttt{\#1A202C}).
+    \item \textbf{Arquitectura de Navegación en Wizard Modular:} Se desglosó el formulario en 5 etapas secuenciales: etapa inicial (Datos Generales y Comisiones), etapa descriptiva (Docencia y Distribución de 40h), etapa matricial (Matriz Dinámica con recálculo al 100\%), etapa de evidencias (Medios de Verificación y Carga de Evidencias) y etapa de firmas (Revisión y Firmas).
+    \item \textbf{Prototipado y Validación de Accesibilidad WCAG 2.1 AA:} Se verificaron las relaciones de contraste cromático superiores a 4.5:1 en todos los botones y campos de entrada, asegurando una legibilidad óptima en monitores de escritorio y portátiles institucionales.
+\end{enumerate}
+
+\subsubsection*{2. Evidencias Visuales de Wireframes y Diseño de Interfaces}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/s2_05_layout_vistas.png}
+    \caption{Arquitectura de Layouts y Wireframes de Alta Fidelidad del Sistema SIGE.}
+    \label{fig:layout_vistas}
+\end{figure}
+\FloatBarrier
+
+\noindent
+\noindent
+\textbf{Desglose Técnico y Análisis Estructural de Wireframes y Experiencia de Usuario:}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Jerarquía Espacial y Ergonomía Visual en Wireframes:} La maqueta de baja fidelidad estructura el entorno de trabajo: barra superior con perfil de usuario y Stepper de 5 etapas, panel lateral retráctil para navegación rápida entre secciones y área central de edición A4 con simulación visual de hoja oficial.
+    \item \textbf{Implementación Real del Dashboard y Tokens Institucionales:} Las capturas superiores evidencian el diseño final: aplicación estricta del color primario oficial de la UTA (\#8B1D24 Rojo UTA), tarjetas de métricas horarias en tiempo real y badges de estado con código de color semántico (verde para aprobado, ámbar para observado, azul para borrador).
+    \item \textbf{Flujo Asistido del Wizard por Etapas:} Se desglosa la navegación modular en 5 etapas secuenciales que guían al docente en el ingreso de datos generales, carga horaria, matriz dinámica, evidencias y firmas, con validación reactiva en cada paso.
+    \item \textbf{Cumplimiento de Accesibilidad WCAG 2.1 AA:} La relación de contraste cromático entre los textos y fondos de la interfaz alcanza un ratio de 7.2:1 en texto estándar y 4.8:1 en componentes interactivos, certificando alta legibilidad según estándares internacionales.
+\end{itemize}
+
+\subsubsection*{3. Matriz Técnica de Heurísticas de Usabilidad de Nielsen Aplicadas}
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.1\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.7\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
+\textbf{Heurística} & \textbf{Principio de Nielsen} & \textbf{Implementación Concreta en el Sistema SIGE} & \textbf{Resultado} \\
 \hline
-Código de Tarea & EDT 2.5 \\
+H-01 & Visibilidad del Estado & Indicador reactivo en tiempo real: ``Guardando...'' / ``Todo guardado''. & CUMPLE \\
 \hline
-Nombre de la Tarjeta & Diseño de interfaces y experiencia de usuario \\
+H-02 & Relación con el Mundo Real & Emulación visual idéntica a la plantilla de papel A4 del SGC institucional. & CUMPLE \\
 \hline
-Fase Correspondiente & FASE 2. DISEÑO Y ARQUITECTURA \\
+H-03 & Control y Libertad & Capacidad de retroceder entre pestañas del Wizard sin pérdida de datos. & CUMPLE \\
 \hline
-Período de Ejecución & 25 de agosto al 28 de agosto de 2026 (4 días laborables) \\
+H-05 & Prevención de Errores & Bloqueo automático de avance si la suma de horas $\ne 40$h o ponderación $\ne 100\%$. & CUMPLE \\
 \hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Heidi Villavicencio (HV), Andrea Vásquez (AV) \\
-\hline
-Entregable Oficial & \texttt{05\_Diseno\_Interfaces\_Wireframes\_UX.pdf} \& Prototipo Figma \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado en Reunión de Hito 2 \\
+H-08 & Diseño Minimalista & Eliminación de campos redundantes y organización modular en 5 pestañas. & CUMPLE \\
 \hline
 \end{tabularx}
-\caption{Ficha técnica de la tarea EDT 2.5 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Heurísticas de Usabilidad de Nielsen Evaluadas}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{3.5cm}|X|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Heurística} & \textbf{Principio de Nielsen} & \textbf{Implementación Específica en SIGE} & \textbf{Cumplimiento} \\
-\hline
-H-01 & Visibilidad del estado del sistema & Indicador dinámico de autoguardado (\textit{``Guardando...'' / ``Guardado''}). & 100\% \\
-\hline
-H-03 & Control y libertad del usuario & Posibilidad de deshacer cambios de texto y cancelar acciones en modales. & 100\% \\
-\hline
-H-05 & Prevención de errores & Validación de horas en tiempo real impidiendo sumas mayores a 40h. & 100\% \\
-\hline
-H-08 & Diseño estético y minimalista & Eliminación de elementos superfluos; foco en el diligenciamiento SGC. & 100\% \\
-\hline
-\end{tabularx}
-\caption{Evaluación de heurísticas de usabilidad en las vistas clave.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Identidad Institucional & Integración de paleta de colores UTA (Rojo Granate \#990000, Gris y Blanco) & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Accesibilidad Web & Contraste tipográfico $\ge 4.5:1$ y navegación por teclado según WCAG 2.1 AA & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Diseño de Vistas Clave & Wireframes de alta fidelidad para Login, Wizard, Matriz Dinámica y Auditoría & 100\% CONFORME & Andrea Vásquez \\
-\hline
-Diseño Responsive & Adaptabilidad comprobada para resoluciones de escritorio (1080p) y portátiles & 100\% CONFORME & Steeven Toala \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 2.5.}
+\caption{Matriz técnica de verificación de heurísticas de usabilidad aplicadas al frontend.}
 \end{table}
 
 

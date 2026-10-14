@@ -177,38 +177,33 @@ Evaluar, demostrar y formalizar la aprobación del Sprint 3 del sistema SIGE, ap
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se ejecutó la sesión de demostración operativa en vivo utilizando el entorno de contenedores Docker Compose local. Se recreó el flujo real de un docente titular de FISEI: registro interactivo de 6 actividades en la matriz dinámica, forzado de un error de ponderación (105\%) comprobando el bloqueo preventivo del sistema, corrección al 100.00\% exacto con desbloqueo automático, subida de un archivo PDF de evidencia con cálculo en tiempo real de su hash SHA-256 e inspección directa en la consola de MinIO confirmando el almacenamiento en el bucket \texttt{sige-evidencias}.
+Se ejecutó la sesión de demostración operativa en vivo utilizando el entorno de contenedores Docker Compose local. Se recreó el flujo real de un docente titular de FISEI: registro interactivo de 6 actividades en la matriz dinámica, forzado de un error de ponderación (105\%) comprobando el bloqueo preventivo del sistema, corrección al 100.00\% exacto con desbloqueo automático, subida de un archivo PDF de evidencia con cálculo en tiempo real de su hash SHA-256 e inspección directa en la consola de MinIO confirmando el almacenamiento en el bucket \texttt{sige-\allowbreak evidencias}.
 
 \subsection{Políticas de Calidad de Hito 4}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Consistencia Total:} Las actividades registradas en la matriz deben ser idénticas en base de datos, en memoria del cliente y en los archivos de evidencia asociados.
-    \item \textbf{Política de Transparencia de Auditoría:} Toda prueba debe evidenciar los registros generados en los logs de auditoría (\texttt{auditoria\_logs}).
-    \item \textbf{Política de Cero Defectos Funcionales:} No se autoriza el paso al Sprint 4 si existen inconsistencias aritméticas o fallas de carga en MinIO.
+    \item \textbf{Política de Transparencia de Auditoría:} Toda prueba debe evidenciar los registros generados en los logs de auditoría (\texttt{auditoria\_\allowbreak logs}).
+    \item \textbf{Política de Cero Defectos Funcionales:} No se autoriza el avance al Sprint 4 si existen inconsistencias aritméticas o fallas de carga en MinIO.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_matriz_dinamica_actividades.png}
-    \caption{Captura Real de la Demostración de la Matriz Dinámica durante la Sesión de Hito 4.}
-    \label{fig:hito4_demo1}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.6cm,keepaspectratio]{images/sige_seguimiento_evidencias.png}
-    \caption{Captura Real de la Verificación de Evidencias MinIO durante la Demostración de Hito 4.}
-    \label{fig:hito4_demo2}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de Aceptación de Historias de Usuario del Sprint 3}
+Al culminar el Sprint 3 de desarrollo, se ejecutó la sesión formal de demostración y revisión de sprint bajo metodología Scrum, focalizada en validar la integración entre la Matriz Dinámica, las Validation Gates y el almacenamiento en MinIO S3. Las actividades de demostración comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Preparación del Entorno Integrado de Demostración:} Se verificó el funcionamiento conjunto de los contenedores \texttt{sige-\allowbreak backend}, \texttt{sige-\allowbreak postgres} y \texttt{sige-\allowbreak minio}, precargando un informe de cumplimiento semestral para pruebas en vivo.
+    \item \textbf{Demostración de la Matriz Dinámica en Tiempo Real:} Se mostró la distribución de 40 horas en 6 actividades académicas y la asignación del cronograma en 16 semanas. Se ejecutó una alteración deliberada de la carga horaria a 38h, mostrando en pantalla cómo los badges visuales se tornaban rojos y el sistema bloqueaba el botón de guardado. Se restableció la suma exacta a 40.0h y 100.00\%, observando la transición inmediata a color verde.
+    \item \textbf{Comprobación de la Compuerta VG-3 y Custodia S3:} Se ingresó un avance del 60\% en la actividad de docencia e intentó enviar a revisión sin evidencias; la compuerta VG-3 bloqueó la operación devolviendo el error HTTP 422. Se adjuntó un archivo PDF de calificaciones de 1.8 MB; el backend calculó su hash SHA-256 y lo custodió en MinIO, permitiendo el envío exitoso tras la adjunción del respaldo.
+    \item \textbf{Inspección en Caliente del Bucket MinIO:} Se proyectó la consola de administración de MinIO en el puerto 9001, evidenciando el objeto almacenado con clave UUID y metadatos inmutables.
+    \item \textbf{Suscripción del Acta del Sprint 3:} El Docente Evaluador constató el cumplimiento de las Historias de Usuario HU-09 a HU-14, autorizando el inicio de la implementación del Drawer de Observaciones y Firmas Digitales en el Sprint 4.
+\end{itemize}
+
+\subsection{Matriz de Criterios y Funcionalidades Aprobadas en el Sprint 3 Review}
+A continuación se detalla la matriz que consolida los incrementos aprobados por el comité:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.3\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.8\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Historia de Usuario} & \textbf{Criterio de Aceptación Evaluado} & \textbf{Resultado} & \textbf{Estado} \\
@@ -255,7 +250,7 @@ A la fecha de corte del Hito 4 (02 de octubre de 2026), se certifica la culminac
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.1\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.9\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Fase / Sprint} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 4} \\
@@ -280,8 +275,8 @@ A la fecha de corte del Hito 4 (02 de octubre de 2026), se certifica la culminac
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -292,7 +287,7 @@ A la fecha de corte del Hito 4 (02 de octubre de 2026), se certifica la culminac
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -305,7 +300,7 @@ A la fecha de corte del Hito 4 (02 de octubre de 2026), se certifica la culminac
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 02/10/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 02/10/2026 \\
     \hline
 \end{tabularx}
 
@@ -313,76 +308,63 @@ A la fecha de corte del Hito 4 (02 de octubre de 2026), se certifica la culminac
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.12 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+Al concluir el Sprint 3 de desarrollo, se ejecutó la sesión formal de demostración y revisión de sprint bajo metodología Scrum, focalizada en validar la integración entre la Matriz Dinámica, las Validation Gates y el almacenamiento en MinIO S3:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Preparación del Entorno Integrado de Demostración:} Se verificó el funcionamiento conjunto de los contenedores \texttt{sige-\allowbreak backend}, \texttt{sige-\allowbreak postgres} y \texttt{sige-\allowbreak minio}, precargando un informe de cumplimiento semestral para pruebas en vivo.
+    \item \textbf{Demostración de la Matriz Dinámica en Tiempo Real:}
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item Se mostró la distribución de 40 horas en 6 actividades académicas y la asignación del cronograma en 16 semanas.
+        \item Se ejecutó una alteración deliberada de la carga horaria a 38h, mostrando en pantalla cómo los badges visuales se tornaban rojos y el sistema bloqueaba el botón de guardado.
+        \item Se restableció la suma exacta a 40.0h y 100.00\%, observando la transición inmediata a color verde.
+    \end{itemize}
+    \item \textbf{Comprobación de la Compuerta VG-3 y Custodia S3:}
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item Se ingresó un avance del 60\% en la actividad de docencia e intentó enviar a revisión sin evidencias; la compuerta VG-3 bloqueó la operación devolviendo el error HTTP 422.
+        \item Se adjuntó un archivo PDF de calificaciones de 1.8 MB; el backend calculó su hash SHA-256 y lo custodió en MinIO.
+        \item Con la evidencia registrada, el sistema permitió el envío exitoso del informe a revisión.
+    \end{itemize}
+    \item \textbf{Inspección en Caliente del Bucket MinIO:} Se proyectó la consola de administración de MinIO en el puerto 9001, evidenciando el objeto almacenado con clave UUID y metadatos inmutables.
+    \item \textbf{Formalización del Acta del Sprint 3:} El docente evaluador constató el cumplimiento de las Historias de Usuario HU-09 a HU-14, autorizando el inicio de la implementación del Drawer de Observaciones y Firmas Digitales en el Sprint 4.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_gestion_evidencias_detalle.png}
+    \caption{Demostración en Vivo de la Custodia de Evidencias y Verificación de Validation Gates.}
+    \label{fig:anx_f3_12}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La captura documenta la sesión de Sprint 3 Review. Se muestra en pantalla dividida la interacción del docente con la Matriz Dinámica a la izquierda y la bandeja de verificación de evidencias en MinIO S3 a la derecha, confirmando la integración operativa de ambos subsistemas.
+    \item \textbf{Demostración en Vivo ante la Coordinación Académica:} Se demostró en tiempo real el comportamiento de la compuerta VG-3: al intentar registrar un 20\% de avance en una actividad de vinculación sin adjunto probatorio, el sistema bloqueó el guardado; una vez cargado el PDF de evidencia en MinIO, el gate conmutó a verde permitiendo el avance.
+    \item \textbf{Aprobación Colegiada de Hito 4:} Los evaluadores suscribieron el acta de conformidad del Sprint 3, certificando que los módulos más complejos del sistema (cálculo matricial reactivo y almacenamiento de objetos) operan de forma óptima sin fallos de concurrencia.
+    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde al acta de demostración de Hito 4 y al release tag de Sprint 3 en el control de versiones.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional del Sprint 3 Review}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.12 \\
-\hline
-Nombre de la Tarjeta & HITO 4: Sprint 3 Review: Matriz Dinámica y Evidencias MinIO \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 01 de octubre al 02 de octubre de 2026 (2 días laborables) \\
-\hline
-Horas Asignadas & 16 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Andrea Vásquez (AV), Nixon Hurtado (NH), Heidi Villavicencio (HV) \\
-\hline
-Entregable Oficial & Demostración funcional de matriz con evidencias MinIO \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.12 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Acta Formal de Aprobación del Sprint 3 (Hito 4)}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.0cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\multicolumn{2}{|c|}{\textbf{ACTA INSTITUCIONAL DE CIERRE DE SPRINT 3 -- SISTEMA SIGE}} \\
+\textbf{Criterio Evaluado en Sprint} & \textbf{Mecanismo de Comprobación en Vivo} & \textbf{Evidencia Observada por Evaluadores} & \textbf{Resultado del Sprint} \\
 \hline
-\textbf{Fecha de Sesión:} & 02 de octubre de 2026 \\
+Validación 40h / 100\% & Ingreso de valores deliberadamente erróneos. & Bloqueo reactivo en frontend y compuertas VG-1 y VG-2 en backend. & Aceptado sin Defectos \\
 \hline
-\textbf{Participantes:} & Steeven Toala (Líder Técnico), Andrea Vásquez (Frontend), Nixon Hurtado (Backend), Heidi Villavicencio (Calidad), Ing. Paulo Torres (Docente Evaluador). \\
+Compuerta VG-3 de Evidencias & Envío de informe con avance sin respaldos. & Rechazo con HTTP 422 detallando la actividad infractora sin evidencia. & Aceptado sin Defectos \\
 \hline
-\textbf{Resolución:} & Tras presenciar la demostración de recálculo aritmético instantáneo de la Matriz Dinámica al 100\%, el bloqueo preventivo de las Validation Gates y la persistencia de evidencias en MinIO S3 con hashes SHA-256, el Docente Evaluador declara APROBADO por unanimidad el Hito 4 y autoriza el inicio del Sprint 4 enfocado en Revisión Colegiada, Corrección Ortográfica y Exportación Oficial. \\
+Subida y Hash en MinIO S3 & Carga de archivo de respaldo PDF en tiempo real. & Objeto alojado en bucket privado con hash SHA-256 verificado en DB. & Aceptado sin Defectos \\
 \hline
-\end{tabularx}
-\caption{Acta oficial de aprobación de Hito 4.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Cumplimiento Sprint 3 & Historias de usuario US-11 a US-16 probadas y aceptadas al 100\% & 100\% CONFORME & Steeven Toala \\
-\hline
-Integración de Evidencias & Matriz dinámica y carga de archivos en MinIO operando con éxito & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Rendimiento del Cronograma & 100 horas netas ejecutadas en el Sprint 3 con índice SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Aprobación Colegiada & Acta formal de cierre de Hito 4 firmada por el Docente Evaluador & 100\% CONFORME & Ing. Paulo Torres \\
+URLs Prefirmadas Temporales & Apertura de enlace de visualización de evidencia. & Previsualización instantánea en navegador y confirmación de expiración a 15m. & Aceptado sin Defectos \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.12.}
+\caption{Matriz de criterios técnicos y de aceptación validados en la Revisión de Sprint 3.}
 \end{table}
 
 

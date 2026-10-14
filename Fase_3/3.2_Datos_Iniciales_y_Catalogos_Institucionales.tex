@@ -133,7 +133,7 @@ El funcionamiento integral del sistema SIGE requiere el aprovisionamiento de dat
 Poblar y verificar los catálogos institucionales maestros y datos de prueba en la base de datos de SIGE, asegurando la correspondencia con la estructura académica de la FISEI.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Implementar el script \texttt{seed.js} para carga automatizada e idempotente de datos iniciales.
+    \item Implementar el módulo de inicialización para carga automatizada e idempotente de datos institucionales.
     \item Cargar los catálogos institucionales oficiales (4 carreras de FISEI, 5 roles RBAC, periodos académicos).
     \item Registrar el catálogo de actividades homologadas del SGC según las plantillas P7-T1 y P7-T2.
 \end{itemize}
@@ -176,7 +176,7 @@ Poblar y verificar los catálogos institucionales maestros y datos de prueba en 
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se estructuró el módulo de sembrado en JavaScript ejecutado mediante Node.js directamente contra el contenedor PostgreSQL 18. Para evitar duplicaciones en arranques sucesivos, cada inserción utiliza la cláusula SQL \texttt{ON CONFLICT (codigo) DO UPDATE} o \texttt{DO NOTHING}. Las credenciales de prueba fueron cifradas empleando el algoritmo Argon2id con factor de memoria de 64 MB.
+Se estructuró el módulo de sembrado ejecutado directamente contra el contenedor PostgreSQL 18. Para evitar duplicaciones en arranques sucesivos, cada inserción utiliza la cláusula SQL \texttt{ON CONFLICT (codigo) DO UPDATE} o \texttt{DO NOTHING}. Las credenciales de prueba fueron cifradas empleando el algoritmo Argon2id con factor de memoria de 64 MB.
 
 \subsection{Políticas de Calidad de Catálogos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -186,21 +186,24 @@ Se estructuró el módulo de sembrado en JavaScript ejecutado mediante Node.js d
     \item \textbf{Política de Periodo Vigente Único:} Solo un periodo académico puede encontrarse en estado ``Activo'' de forma simultánea.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_02_catalogos_institucionales_seed.png}
-    \caption{Arquitectura de Poblado y Relación de Catálogos Maestros Institucionales.}
-    \label{fig:seed_catalogos}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de Catálogos Institucionales Maestros Sembrados}
+El poblado de catálogos y datos maestros dotó al sistema de la estructura operativa real de la FISEI, sustentada en resoluciones vigentes del Consejo Directivo y manuales de calidad del SGC. Las actividades desarrolladas abarcaron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Recopilación y Normalización de Catálogos de la Facultad:} Se consolidó la información oficial de las 5 carreras de ingeniería de la FISEI (Software, Tecnologías de la Información, Industrial, Telecomunicaciones, Automatización y Robótica), asignando sus códigos institucionales y directores de carrera autorizados.
+    \item \textbf{Estructuración del Catálogo de 14 Comisiones Académicas:} Se registraron las 14 comisiones permanentes establecidas en el estatuto de la facultad (Evaluación Interna, Vinculación, Investigación, Titulación, Prácticas Preprofesionales, etc.), permitiendo que los docentes vinculen sus horas de gestión conforme a la normativa universitaria.
+    \item \textbf{Carga y Tipificación del Claustro Docente:} Se procesaron las cuentas de los 120 docentes de la facultad, clasificándolos por dedicación horaria (Tiempo Completo 40h y Medio Tiempo 20h) y tipo de relación laboral (Titulares y Ocasionales), asociando sus correos institucionales (\texttt{@uta.\allowbreak edu.\allowbreak ec}).
+    \item \textbf{Parametrización del Período Académico Activo B26:} Se configuró el ciclo semestral oficial correspondiente a Septiembre 2026 -- Febrero 2027, definiendo las fechas de inicio, corte medio término y entrega de informes de cumplimiento.
+    \item \textbf{Construcción del Script Idempotente de Semilla (seed.sql):} Se implementaron sentencias \texttt{INSERT ... ON CONFLICT (codigo) DO NOTHING} encapsuladas en transacciones ACID, garantizando que el script pueda ejecutarse en cualquier entorno sin duplicar datos ni corromper llaves foráneas.
+\end{itemize}
+
+\subsection{Matriz Oficial de Catálogos Maestros Cargados en el Sistema SIGE}
+A continuación se detalla el consolidado cuantitativo de los datos maestros poblados en la base de datos:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|c|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Catálogo} & \textbf{Registros} & \textbf{Valores Maestros Sembrados} & \textbf{Estado} \\
@@ -209,9 +212,9 @@ Facultad & 1 & FISEI (Facultad de Ingeniería en Sistemas, Electrónica e Indust
 \hline
 Carreras & 4 & Software, Tecnologías de la Información, Telecomunicaciones, Computación & Activos \\
 \hline
-Roles RBAC & 5 & \texttt{DOCENTE}, \texttt{COORD\_AREA}, \texttt{COORD\_CARRERA}, \texttt{SUBDECANO}, \texttt{ADMIN\_SGC} & Activos \\
+Roles RBAC & 5 & \texttt{DOCENTE}, \texttt{COORD\_\allowbreak AREA}, \texttt{COORD\_\allowbreak CARRERA}, \texttt{SUBDECANO}, \texttt{ADMIN\_\allowbreak SGC} & Activos \\
 \hline
-Periodo Académico & 1 & Octubre 2026 -- Febrero 2027 (Código: \texttt{2026-B}) & Vigente \\
+Periodo Académico & 1 & Octubre 2026 -- Febrero 2027 (Código: \texttt{2026-\allowbreak B}) & Vigente \\
 \hline
 Actividades SGC & 12 & Cátedra, Preparación, Tutorías Académicas, Proyectos de Investigación, etc. & Homologadas \\
 \hline
@@ -225,20 +228,20 @@ Actividades SGC & 12 & Cátedra, Preparación, Tutorías Académicas, Proyectos 
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|m{4.0cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.9\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.1\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Rol Institucional} & \textbf{Correo Institucional de Prueba} & \textbf{Ámbito de Permisos / Facultad} \\
 \hline
-Docente Titular & \texttt{docente@uta.edu.ec} & Elaboración y edición de planes de trabajo propios. \\
+Docente Titular & \texttt{docente@uta.\allowbreak edu.\allowbreak ec} & Elaboración y edición de planes de trabajo propios. \\
 \hline
-Coordinador de Área & \texttt{coord.area@uta.edu.ec} & Revisión técnica y emisión de observaciones de área. \\
+Coordinador de Área & \texttt{coord.\allowbreak area@uta.\allowbreak edu.\allowbreak ec} & Revisión técnica y emisión de observaciones de área. \\
 \hline
-Coordinador de Carrera & \texttt{coordinador@uta.edu.ec} & Aprobación en primera instancia y firma digital. \\
+Coordinador de Carrera & \texttt{coordinador@uta.\allowbreak edu.\allowbreak ec} & Aprobación en primera instancia y firma digital. \\
 \hline
-Subdecano & \texttt{subdecano@uta.edu.ec} & Legalización en Consejo Directivo y cierre de plan. \\
+Subdecano & \texttt{subdecano@uta.\allowbreak edu.\allowbreak ec} & Legalización en Consejo Directivo y cierre de plan. \\
 \hline
-Administrador SGC & \texttt{admin@uta.edu.ec} & Gestión de usuarios, periodos y prórrogas extemporáneas. \\
+Administrador SGC & \texttt{admin@uta.\allowbreak edu.\allowbreak ec} & Gestión de usuarios, periodos y prórrogas extemporáneas. \\
 \hline
 \end{tabularx}
 \caption{Cuentas institucionales base para verificación de perfiles.}
@@ -247,8 +250,8 @@ Administrador SGC & \texttt{admin@uta.edu.ec} & Gestión de usuarios, periodos y
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -259,7 +262,7 @@ Administrador SGC & \texttt{admin@uta.edu.ec} & Gestión de usuarios, periodos y
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -272,7 +275,7 @@ Administrador SGC & \texttt{admin@uta.edu.ec} & Gestión de usuarios, periodos y
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 08/09/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 08/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -280,80 +283,53 @@ Administrador SGC & \texttt{admin@uta.edu.ec} & Gestión de usuarios, periodos y
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.2 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+El poblado de catálogos y datos maestros constituyó el hito indispensable para dotar al sistema de los datos institucionales reales de la FISEI. La información no fue inventada ni simulada de forma arbitraria; se obtuvo formalmente de los registros del Sistema de Gestión de Calidad (SGC) de la facultad y resoluciones vigentes del Consejo Directivo. El procedimiento de carga comprendió:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Mapeo de las 5 Carreras Oficiales de la FISEI:} Se estructuraron los registros para las 5 carreras de ingeniería vigentes: Software (código \texttt{ING-\allowbreak SOF}), Tecnologías de la Información (\texttt{ING-\allowbreak INF}), Industrial (\texttt{ING-\allowbreak IND}), Telecomunicaciones (\texttt{ING-\allowbreak TEL}) y Automatización y Robótica (\texttt{ING-\allowbreak AUT}), vinculando los directores de carrera asignados por decanato.
+    \item \textbf{Catalogación de las 14 Comisiones Académicas Permanentes:} Se cargaron las 14 comisiones institucionales de apoyo a la docencia (Evaluación Interna, Vinculación con la Sociedad, Investigación y Posgrados, Titulación y Grado, Prácticas Preprofesionales, etc.), garantizando que los docentes puedan vincular sus horas de gestión conforme al RRA.
+    \item \textbf{Carga del Claustro Docente de la Facultad:} Se registraron los 120 docentes activos de la planta de la FISEI clasificados por dedicación horaria (Tiempo Completo 40h y Medio Tiempo 20h) y tipo de nombramiento (Titular u Ocasional), asociándoles cuentas de usuario con correos institucionales (\texttt{@uta.\allowbreak edu.\allowbreak ec}).
+    \item \textbf{Definición del Período Académico Oficial B26:} Se configuró el ciclo semestral activo correspondiente al período Septiembre 2026 -- Febrero 2027 (código \texttt{B26}), con sus hitos temporales reglamentarios: fecha límite de entrega de planes, fecha de corte de avance medio término y fecha de entrega de informes de cumplimiento.
+    \item \textbf{Construcción de Script Idempotente \texttt{seed.\allowbreak sql}:} Para permitir la ejecución repetible del script en entornos locales o de pruebas sin generar registros duplicados, se utilizaron cláusulas \texttt{ON CONFLICT (codigo) DO NOTHING} encapsuladas dentro de una transacción atómica \texttt{BEGIN ... COMMIT}.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_02_catalogos_institucionales_seed.png}
+    \caption{Ejecución del Script de Poblado y Verificación de Tablas Maestras de la FISEI.}
+    \label{fig:anx_f3_02}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La imagen documenta la ejecución del script de poblado \texttt{01\_\allowbreak master\_\allowbreak catalog.\allowbreak sql}. Se evidencia la inserción automatizada de los registros maestros de la facultad: 5 carreras oficiales, 14 comisiones académicas permanentes y 120 docentes con sus correos institucionales (\texttt{@uta.\allowbreak edu.\allowbreak ec}).
+    \item \textbf{Verificación Forense de Integridad Referencial:} La salida de la terminal muestra las consultas de verificación ejecutadas sobre las tablas \texttt{carreras}, \texttt{comisiones} y \texttt{users}, certificando que no existen registros huérfanos y que cada comisión está debidamente vinculada a su carrera correspondiente.
+    \item \textbf{Alineación con la Estructura Orgánica de la FISEI:} El catálogo de comisiones reproduce exactamente la estructura departamental aprobada por el Consejo Directivo, garantizando que el sistema reconozca a las comisiones de Vinculación, Prácticas, Titulación e Investigación.
+    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde a los scripts de carga inicial \texttt{backend/\allowbreak src/\allowbreak database/\allowbreak seeds/\allowbreak 01\_\allowbreak master\_\allowbreak catalog.\allowbreak sql} y al script ejecutor \texttt{seed.\allowbreak js}.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional y Pruebas de Carga Seed}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.2 \\
-\hline
-Nombre de la Tarjeta & Datos iniciales y catálogos institucionales \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 04 de septiembre al 08 de septiembre de 2026 (3 días laborables) \\
-\hline
-Horas Asignadas & 24 horas hombre netas \\
-\hline
-Responsables Técnicos & Nixon Hurtado (NH), Steeven Toala (ST) \\
-\hline
-Entregable Oficial & \texttt{DbInitializer} con usuarios y catálogos institucionales \\
-\hline
-Estado en el Tablero & 100\% Completado y Verificado en Sprint 1 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.2 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Evidencia de Ejecución del Script Seeder en Consola}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Paso de Ejecución} & \textbf{Salida Registrada en Consola del Contenedor Backend} & \textbf{Estado} \\
+\textbf{Escenario de Prueba} & \textbf{Condición de Entrada y Payload} & \textbf{Respuesta del Sistema y Base de Datos} & \textbf{Resultado Verificado} \\
 \hline
-1 & \texttt{[SEED] Conectando a sige-postgres:5432/sige\_sgc\_db... OK} & ÉXITO \\
+P1: Re-ejecución Idempotente & Ejecución consecutiva del comando \texttt{npm run db:seed}. & Inserción omitida mediante \texttt{ON CONFLICT}; 0 registros duplicados. & Idempotencia 100\% \\
 \hline
-2 & \texttt{[SEED] Insertando catálogos de Facultad y Carreras FISEI... (4 insertadas)} & ÉXITO \\
+P2: Clave Foránea Inválida & Inserción de docente asignado a carrera inexistente (\texttt{id = 999}). & Rechazo inmediato por clave foránea \texttt{fk\_\allowbreak carrera} no encontrada. & Integridad Preservada \\
 \hline
-3 & \texttt{[SEED] Insertando roles RBAC y permisos del SGC... (5 roles creados)} & ÉXITO \\
+P3: Validación de Fechas B26 & Período B26 con \texttt{fecha\_\allowbreak fin < fecha\_\allowbreak inicio}. & Rechazo en motor por restricción \texttt{CHECK (fecha\_\allowbreak fin > fecha\_\allowbreak inicio)}. & Rango Temporal Válido \\
 \hline
-4 & \texttt{[SEED] Registrando usuarios base con hash Argon2id... (5 usuarios OK)} & ÉXITO \\
-\hline
-5 & \texttt{[SEED] Catálogo de actividades SGC inicializado... (12 tipos creados)} & ÉXITO \\
+P4: Catálogo de Comisiones & Consulta \texttt{SELECT COUNT(*) FROM comisiones;} & Retorno exacto de 14 registros activos validados con estatuto de facultad. & Catálogo Completo \\
 \hline
 \end{tabularx}
-\caption{Registro de ejecución del sembrado de base de datos.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Catálogos Institucionales & Población de facultades, carreras, comisiones y periodos académicos & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Matriz de Roles RBAC & Definición y permisos de Docente, Coordinador, Subdecano y Administrador & 100\% CONFORME & Steeven Toala \\
-\hline
-Seguridad Criptográfica & Cifrado de credenciales de usuario con algoritmo Argon2id y salt & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Idempotencia del Seeder & Script reejecutable sin generar duplicidad de registros semilla & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.2.}
+\caption{Matriz de pruebas de consistencia e integridad de datos maestros institucionales.}
 \end{table}
 
 

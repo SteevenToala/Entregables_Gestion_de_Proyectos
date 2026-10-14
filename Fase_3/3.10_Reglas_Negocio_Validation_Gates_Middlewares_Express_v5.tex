@@ -133,7 +133,7 @@ La confiabilidad y estandarización del proceso de acreditación de la FISEI exi
 Implementar la tubería de Validation Gates mediante Middlewares en Express v5 para garantizar el cumplimiento ineludible de las reglas de negocio del SGC.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Codificar los 6 Validation Gates del sistema (\texttt{validation.middleware.js}).
+    \item Codificar los 6 Validation Gates del sistema mediante la capa de validación de reglas de negocio.
     \item Estandarizar las respuestas de error en formato JSON estructurado con códigos HTTP 400 y 422.
     \item Validar transiciones de estado entre Borrador, En Revisión, Observado y Aprobado.
 \end{itemize}
@@ -176,7 +176,7 @@ Implementar la tubería de Validation Gates mediante Middlewares en Express v5 p
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain of Responsibility}). Al invocarse el endpoint de envío a revisión (\texttt{POST /api/documentos/:id/solicitar-revision}), Express invoca consecutivamente cada Gate. Si una regla se incumple, la ejecución se interrumpe de inmediato retornando una respuesta HTTP 422 que incluye un array de objetos con el código de error, el campo afectado y el mensaje institucional correctivo. Si todos los Gates son superados, se invoca \texttt{next()} permitiendo la transición de estado.
+Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain of Responsibility}). Al invocarse el endpoint de solicitud de revisión, Express evalúa consecutivamente cada compuerta de validación. Si una regla se incumple, la ejecución se interrumpe de inmediato retornando una respuesta HTTP 422 que incluye un array de objetos con el código de error, el campo afectado y el mensaje institucional correctivo. Si todos los Gates son superados, se invoca \texttt{next()} permitiendo la transición de estado.
 
 \subsection{Políticas de Calidad de las Validation Gates}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -185,26 +185,30 @@ Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain o
     \item \textbf{Política de Inmutabilidad de Validación:} Ningún usuario, inclusive con perfil Administrador, puede sobrepasar una Validation Gate sin registrar una prórroga formal.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_09_decision_validation_gates.png}
-    \caption{Diagrama de Flujo y Pipeline de Decisión de las 6 Validation Gates en Express v5.}
-    \label{fig:gates_pipeline}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
-\subsection{Matriz de las 6 Validation Gates Implementadas}
+Para blindar al sistema contra datos anómalos y garantizar que ningún expediente avance al comité de revisión sin cumplir los requisitos del SGC, se implementó la cadena de Validation Gates en el backend Express v5. Las actividades de desarrollo comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Arquitectura de la Cadena de Responsabilidad (Middleware Chain):} Se diseñó una serie de interceptores que evalúan de forma temprana (\textit{fail-fast}) las condiciones antes de procesar cambios de estado o persistencia definitiva en base de datos.
+    \item \textbf{Implementación de la Compuerta VG-1 (Integridad Horaria RRA):} Extrae las actividades del plan y ejecuta \texttt{SUM(horas)}. Si el resultado no coincide con la dedicación contractual del docente (40h tiempo completo o 20h medio tiempo), interrumpe el flujo y responde inmediatamente con código HTTP 422.
+    \item \textbf{Implementación de la Compuerta VG-2 (Ponderación Absoluta al 100\%):} Verifica mediante precisión decimal (\texttt{Math.\allowbreak abs(sum - 100.\allowbreak 0) < 0.\allowbreak 001}) que el porcentaje total sea exactamente 100.00\%, evitando desbalances en la evaluación de fin de ciclo.
+    \item \textbf{Implementación de la Compuerta VG-3 (Custodia Obligatoria de Evidencias):} Al procesar un Informe de Cumplimiento (\texttt{P7-\allowbreak T4}), si una actividad reporta un porcentaje de avance mayor a cero (\texttt{avance > 0}), exige la existencia de al menos un registro vinculado en la tabla \texttt{seguimiento\_\allowbreak  evidencias} con archivo verificado en MinIO S3.
+    \item \textbf{Implementación de la Compuerta VG-4 (Justificación Obligatoria ante Desvíos):} Si el avance real alcanzado presenta un desvío negativo mayor al 15\% respecto a lo planificado, la compuerta rechaza la solicitud si el campo de justificación cualitativa contiene menos de 30 caracteres.
+    \item \textbf{Estandarización de Respuestas de Error bajo RFC 7807:} Todos los rechazos retornan un objeto JSON con estructura estandarizada: código de error, compuerta infractora, detalle del desvío numérico y recomendación de remediación para el usuario.
+\end{itemize}
+
+\subsection{Matriz Técnica de Especificación de las Validation Gates (VG-1 a VG-6)}
+A continuación se detalla la matriz que consolida las reglas, compuertas y códigos de retorno del middleware:
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{2.8cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.4\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.2\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Gate} & \textbf{Nombre de la Regla} & \textbf{Condición Lógica Evaluada} & \textbf{Error HTTP} & \textbf{Acción del Sistema} \\
 \hline
-\textbf{Gate 1} & Carga Horaria 40h & $\sum \text{horas\_actividades} = 40\text{ h}$ & 422 & Bloquea paso a revisión; exige cuadre exacto. \\
+\textbf{Gate 1} & Carga Horaria 40h & $\sum \text{horas\_actividades} = 40\text{ h}$ & 422 & Bloquea el avance a revisión; exige cuadre exacto. \\
 \hline
 \textbf{Gate 2} & Ponderación 100\% & $\sum \text{ponderacion} = 100.00\%$ & 422 & Bloquea envío; notifica diferencia porcentual. \\
 \hline
@@ -226,18 +230,18 @@ Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain o
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.2cm}|m{2.5cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.8\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.6\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Campo JSON} & \textbf{Tipo de Dato} & \textbf{Contenido Retornado en Fallo} \\
 \hline
-\texttt{gate} & String & Identificador de la regla insatisfecha (e.g., \texttt{"GATE\_02\_PONDERACION"}). \\
+\texttt{gate} & String & Identificador de la regla insatisfecha (e.g., \texttt{"GATE\_\allowbreak 02\_\allowbreak PONDERACION"}). \\
 \hline
-\texttt{campo} & String & Campo afectado para enlace con la pestaña (e.g., \texttt{"matriz\_actividades"}). \\
+\texttt{campo} & String & Campo afectado para enlace con la pestaña (e.g., \texttt{"matriz\_\allowbreak actividades"}). \\
 \hline
-\texttt{valor\_actual} & Float & Valor numérico calculado actualmente en el sistema (e.g., \texttt{92.50}). \\
+\texttt{valor\_\allowbreak actual} & Float & Valor numérico calculado actualmente en el sistema (e.g., \texttt{92.\allowbreak 50}). \\
 \hline
-\texttt{valor\_esperado} & Float / String & Valor requerido según norma SGC (e.g., \texttt{100.00}). \\
+\texttt{valor\_\allowbreak esperado} & Float / String & Valor requerido según norma SGC (e.g., \texttt{100.\allowbreak 00}). \\
 \hline
 \texttt{mensaje} & String & Mensaje instructivo: \textit{``La ponderación debe sumar exactamente 100\%''}. \\
 \hline
@@ -248,8 +252,8 @@ Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain o
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -260,7 +264,7 @@ Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain o
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -273,7 +277,7 @@ Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain o
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 30/09/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 30/09/2026 \\
     \hline
 \end{tabularx}
 
@@ -281,80 +285,54 @@ Los Middlewares se organizaron en una cadena de responsabilidad (\textit{Chain o
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.10 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+Para blindar al sistema contra datos inconsistentes y garantizar que ningún expediente avance al comité de revisión sin cumplir los requisitos del SGC, se implementó la cadena de Validation Gates en \texttt{SIGE/\allowbreak backend/\allowbreak src/\allowbreak middlewares/\allowbreak validationGates.\allowbreak js}:
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Estructura de Cadena de Responsabilidad (Middleware Chain):} Se diseñó una serie de interceptores que evalúan de forma secuencial y temprana (\textit{fail-fast}) las condiciones antes de procesar cambios de estado o guardado definitivo.
+    \item \textbf{Compuerta VG-1 (Integridad de Horas RRA):} Extrae las actividades del plan y ejecuta \texttt{SUM(horas)}. Si el resultado no coincide con la dedicación contractual del docente (40h tiempo completo o 20h medio tiempo), interrumpe el flujo y responde inmediatamente con código HTTP 422.
+    \item \textbf{Compuerta VG-2 (Ponderación Absoluta 100\%):} Verifica mediante precisión decimal (\texttt{Math.\allowbreak abs(sum - 100.\allowbreak 0) < 0.\allowbreak 001}) que el porcentaje total sea exactamente 100.00\%, evitando desbalances en la evaluación de fin de ciclo.
+    \item \textbf{Compuerta VG-3 (Custodia Obligatoria de Evidencias en Avance):} Al procesar un Informe de Cumplimiento (\texttt{P7-\allowbreak T4}), si una actividad reporta un porcentaje de avance mayor a cero (\texttt{avance > 0}), exige la existencia de al menos un registro vinculado en la tabla \texttt{seguimiento\_\allowbreak evidencias} con archivo verificado en MinIO S3.
+    \item \textbf{Compuerta VG-4 (Justificación Obligatoria ante Desvíos):} Si el avance real alcanzado presenta un desvío negativo mayor al 15\% respecto a lo planificado, la compuerta rechaza la solicitud si el campo de justificación cualitativa contiene menos de 30 caracteres.
+    \item \textbf{Estandarización de Errores RFC 7807:} Todos los rechazos retornan un objeto JSON con estructura estandarizada: código de error, compuerta infractora, detalle del desvío numérico y recomendación de remediación para el usuario.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/f3_09_decision_validation_gates.png}
+    \caption{Árbol de Decisión y Ejecución de la Cadena de Validation Gates en Express v5.}
+    \label{fig:anx_f3_10}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La captura muestra el diagrama de flujo y la respuesta de la consola del backend ante una solicitud con inconsistencias. Se observa el arribo de una petición \texttt{POST /\allowbreak api/\allowbreak  v1/\allowbreak  planes/\allowbreak  :id/\allowbreak  enviar-\allowbreak revision} interceptada por el pipeline de middlewares.
+    \item \textbf{Evaluación Secuencial de Validation Gates:} El middleware ejecuta en 12 ms la compuerta VG-1 (aprobada con 40h), VG-2 (aprobada con 100\%) y se detiene en la compuerta VG-3, emitiendo un código de retorno HTTP 422 Unprocessable Entity debido a que una actividad reportaba avance del 40\% sin registrar evidencias en el bucket MinIO.
+    \item \textbf{Carga Útil de Error y Subsanación:} La respuesta JSON detalla el campo afectado (\texttt{"actividad\_\allowbreak id": "act-\allowbreak 4"}), la compuerta violada (\texttt{"gate": "VG-\allowbreak 3"}) y el mensaje de acción correctiva que la interfaz presenta al docente para guiar su resolución.
+    \item \textbf{Trazabilidad con el Código Fuente:}\newline Implementado en \texttt{backend/\allowbreak src/\allowbreak middlewares/\allowbreak validationGates.\allowbreak js} y probado exhaustivamente en \texttt{backend/\allowbreak tests/\allowbreak validationGates.\allowbreak test.\allowbreak js}.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional de Validation Gates}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.10 \\
-\hline
-Nombre de la Tarjeta & Reglas de negocio y Validation Gates con Middlewares Express v5 \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 25 de septiembre al 30 de septiembre de 2026 (4 días laborables) \\
-\hline
-Horas Asignadas & 32 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Nixon Hurtado (NH) \\
-\hline
-Entregable Oficial & Middlewares de validación y reglas de negocio (\texttt{validation.middleware.js}) \\
-\hline
-Estado en el Tablero & 100\% Completado y Verificado en Sprint 3 \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.10 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Matriz de Pruebas de Bloqueo de Validation Gates}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|m{2.5cm}|X|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\textbf{Test ID} & \textbf{Gate Evaluado} & \textbf{Condición Forzada en Petición} & \textbf{HTTP} & \textbf{Resultado} \\
+\textbf{Compuerta Evaluada} & \textbf{Condición de Entrada del Payload} & \textbf{Respuesta del Middleware Backend} & \textbf{Resultado Verificado} \\
 \hline
-TC-G01 & Gate 1 (Horas) & Envío con 38 horas semanales acumuladas & 422 & BLOQUEO EXITOSO \\
+VG-1: Carga Horaria & Plan con suma de 42.0 horas semanales. & Intercepción inmediata; código HTTP 422; mensaje "Horas exceden límite legal". & Bloqueo Preventivo \\
 \hline
-TC-G02 & Gate 2 (Pond.) & Envío con ponderación sumando 105.00\% & 422 & BLOQUEO EXITOSO \\
+VG-2: Ponderación & Matriz con suma de ponderación de 99.50\%. & Intercepción; código HTTP 422; mensaje "Ponderación total no suma 100\%". & Bloqueo Preventivo \\
 \hline
-TC-G03 & Gate 3 (Evid.) & Informe con avance 50\% sin archivos MinIO & 422 & BLOQUEO EXITOSO \\
+VG-3: Evidencias & Actividad con avance 50\% sin archivos adjuntos. & Bloqueo en VG-3; código HTTP 422; mensaje "Evidencias obligatorias no adjuntas". & Custodia Exigida \\
 \hline
-TC-G04 & Gate 5 (Firmas) & Intento de firma de Revisor antes del Elaborador & 409 & BLOQUEO EXITOSO \\
-\hline
-TC-G05 & Todos OK & Expediente completo (40h, 100\%, evidencias, orden) & 200 & AVANCE AUTORIZADO \\
+VG-4: Desvíos & Avance del 20\% vs 60\% planificado sin justificación. & Rechazo; código HTTP 422; mensaje "Justificación requerida para desvíos > 15\%". & Explicación Exigida \\
 \hline
 \end{tabularx}
-\caption{Matriz de pruebas unitarias sobre el pipeline de Middlewares.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Gate 1: Límite Horario & Validación estricta de jornada semanal de 40 horas en tiempo completo & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Gate 2: Ponderación Total & Bloqueo de envío a revisión si la matriz de actividades no suma 100\% & 100\% CONFORME & Steeven Toala \\
-\hline
-Gate 3: Plazos y Prórrogas & Control estricto de fechas de entrega impidiendo envíos extemporáneos & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Errores Semánticos & Respuestas HTTP 422 con detalle descriptivo de los campos infractores & 100\% CONFORME & Nixon Hurtado \\
-\hline
-\end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.10.}
+\caption{Matriz de pruebas y respuestas de la cadena de Validation Gates en el backend.}
 \end{table}
 
 

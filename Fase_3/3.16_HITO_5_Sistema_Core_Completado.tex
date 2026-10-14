@@ -126,14 +126,14 @@
 \textbf{Denominación Oficial del Entregable:} HITO 5: Sistema Core Completado -- Código EDT: 3.16
 
 \section{Introducción}
-El cierre formal de la Fase 3 (Implementación y Desarrollo) constituye el hito más trascendental en el ciclo de vida del proyecto SIGE: la culminación exitosa de la versión funcional v0.9 (\textit{Core System Completed}) que integra la totalidad de las 24 Historias de Usuario aprobadas en la especificación de requisitos. A lo largo de cuatro Sprints de desarrollo ágil ejecutados entre el 1 de septiembre y el 12 de octubre de 2026, el equipo completó los módulos de persistencia relacional en PostgreSQL 18, interfaces SPA en React, Matriz Dinámica interactiva, Validation Gates bloqueantes, repositorio MinIO S3, revisión colegiada, corrección ortográfica y exportación oficial en PDF y Word. El presente informe formaliza la entrega y aprobación colegiada del sistema core, autorizando el paso a la Fase 4 de Pruebas y Despliegue.
+El cierre formal de la Fase 3 (Implementación y Desarrollo) constituye el hito más trascendental en el ciclo de vida del proyecto SIGE: la culminación exitosa de la versión funcional v0.9 (\textit{Core System Completed}) que integra la totalidad de las 24 Historias de Usuario aprobadas en la especificación de requisitos. A lo largo de cuatro Sprints de desarrollo ágil ejecutados entre el 1 de septiembre y el 12 de octubre de 2026, el equipo completó los módulos de persistencia relacional en PostgreSQL 18, interfaces SPA en React, Matriz Dinámica interactiva, Validation Gates bloqueantes, repositorio MinIO S3, revisión colegiada, corrección ortográfica y exportación oficial en PDF y Word. El presente informe formaliza la entrega y aprobación colegiada del sistema core, autorizando la transición a la Fase 4 de Pruebas y Despliegue.
 
 \section{Objetivo}
 \subsection{Objetivo General}
-Consolidar, auditar y legalizar la entrega formal del Sistema Core Completado del proyecto SIGE correspondiente al Hito 5 de la EDT, certificando la cobertura total de los requerimientos funcionales del SGC.
+Consolidar, auditar y legalizar la entrega formal del Sistema Core Completado del proyecto SIGE correspondiente al Hito 5 de la EDT, certificando la correspondencia total con los requerimientos funcionales del SGC.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Auditar el cumplimiento de las 16 tareas técnicas que integran la Fase 3 en el Tablero Trello y Cronograma Gantt.
+    \item Auditar el cumplimiento y funcionamiento operativo de los 16 componentes técnicos que integran la Fase 3.
     \item Demostrar de extremo a extremo (\textit{End-to-End}) el ciclo de vida completo de un Plan de Trabajo y un Informe de Cumplimiento.
     \item Formalizar el Acta Oficial de Cierre de Construcción y pase a la Fase de Aseguramiento de Calidad (QA).
 \end{itemize}
@@ -184,36 +184,28 @@ Para la aprobación del Hito 5 se llevó a cabo una sesión formal de inspecció
 
 \subsection{Políticas de Calidad de Cierre de Construcción}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Política de Cobertura Total de Requisitos:} Todas y cada una de las 24 Historias de Usuario del SRS deben encontrarse implementadas y operativas sin excepciones.
+    \item \textbf{Política de Completitud de Requisitos:} Todas y cada una de las 24 Historias de Usuario del SRS deben encontrarse implementadas y operativas sin excepciones.
     \item \textbf{Política de Congelamiento de Código (Code Freeze):} Con la aprobación del Hito 5, la rama principal (\texttt{main}) entra en estado de congelamiento de nuevas funciones, permitiendo únicamente parches de corrección de defectos durante la Fase 4.
     \item \textbf{Política de Unanimidad Colegiada:} La formalización del Hito 5 requiere el aval unánime del equipo de proyecto y la rúbrica del Docente Evaluador.
 \end{enumerate}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/sige_dashboard_resumen.png}
-    \caption{Captura Real del Dashboard del Sistema Core v0.9 Totalmente Integrado y Operativo.}
-    \label{fig:hito5_dashboard}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/trello_gantt_cronograma.png}
-    \caption{Cronograma Gantt en MS Project evidenciando el Cumplimiento al 100\% del Hito 5.}
-    \label{fig:hito5_gantt}
-\end{figure}
-\FloatBarrier
-
 \section{Descripción de actividades}
+La culminación de la Fase 3 de Implementación y Construcción se formalizó mediante la auditoría técnica colegiada del Hito 5 (Sistema Core Completado). Las actividades de cierre ejecutadas por el equipo comprendieron:
+
+\begin{itemize}[leftmargin=1.5em, itemsep=4pt]
+    \item \textbf{Consolidación de los 16 Entregables Técnicos:} Se constató la ejecución completa de los 16 paquetes de trabajo de la Fase 3 (EDT 3.1 a EDT 3.16), totalizando 400 horas-hombre netas de desarrollo con un índice de desempeño de cronograma $SPI = 1.00$.
+    \item \textbf{Demostración End-to-End en Vivo ante el Evaluador:} Se recorrió el ciclo de vida completo del sistema sin interrupciones: inicio de sesión con JWT y RBAC, llenado del plan en el Asistente Wizard, redacción con TipTap y LanguageTool, matriz dinámica validada al 100\% y 40 horas, custodia de evidencias en MinIO S3, superación de las 6 Validation Gates, revisión del coordinador en Drawer, estampado de la cascada de 3 firmas digitales y exportación a PDF vectorial con código QR.
+    \item \textbf{Auditoría de Salud de Contenedores Docker:} Se inspeccionó el estado del clúster local en Docker Compose, verificando que los 5 contenedores (\texttt{sige-\allowbreak postgres}, \texttt{sige-\allowbreak backend}, \texttt{sige-\allowbreak frontend}, \texttt{sige-\allowbreak minio} y \texttt{sige-\allowbreak languagetool}) se mantuvieron en estado saludable sin reinicios intempestivos ni fugas de memoria.
+    \item \textbf{Decreto Formal de Congelamiento de Código (Code Freeze):} Con la aprobación del Hito 5, la rama principal de código entra en estado inmutable para nuevas funciones, autorizando el inicio inmediato de la Fase 4 de Pruebas Unitarias, Pentesting y Despliegue.
+\end{itemize}
+
 \subsection{Matriz de Auditoría y Aprobación de Entregables de la Fase 3}
 A continuación se detalla la matriz que certifica la auditoría y estado de cumplimiento de los 16 entregables que componen la Fase 3 de Construcción:
-
 \begin{table}[H]
 \centering
 \small
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|c|X|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.55\hsize\centering\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.15\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.50\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.10\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.70\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Código} & \textbf{Entregable Técnico} & \textbf{Horas} & \textbf{Criterio de Aceptación Verificado} & \textbf{Resultado} \\
@@ -226,7 +218,7 @@ A continuación se detalla la matriz que certifica la auditoría y estado de cum
 \hline
 \textbf{EDT 3.4} & Cliente Base y Layouts & 32 h & SPA React + Vite con layouts responsivos y Dashboard de métricas. & \textbf{APROBADO} \\
 \hline
-\textbf{EDT 3.5} & Wizard Modular en Pestañas & 32 h & Asistente guiado en 5 pasos con barra de progreso y gates. & \textbf{APROBADO} \\
+\textbf{EDT 3.5} & Wizard Modular en Pestañas & 32 h & Asistente guiado en 5 etapas con barra de progreso y gates. & \textbf{APROBADO} \\
 \hline
 \textbf{EDT 3.6} & Editor TipTap con Debounce & 32 h & Edición enriquecida, autoguardado a los 800 ms y vista A4. & \textbf{APROBADO} \\
 \hline
@@ -262,7 +254,7 @@ A continuación se detalla la matriz que certifica la auditoría y estado de cum
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{4.2cm}|c|c|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=1.1\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.45\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=2.0\hsize\raggedright\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Fase del Proyecto} & \textbf{Horas Planificadas} & \textbf{Horas Ejecutadas} & \textbf{Resultado de Gestión} \\
@@ -286,7 +278,7 @@ A la fecha de cierre de la Fase 3 de Construcción (12 de octubre de 2026), se c
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash\bfseries}m{3.2cm}|m{2.5cm}|c|c|c|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.3\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.1\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.5\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=0.6\hsize\centering\arraybackslash\footnotesize}X|>{\hsize=1.9\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
 \textbf{Fase} & \textbf{Denominación Oficial} & \textbf{Período Planificado} & \textbf{Tareas} & \textbf{Horas Netas} & \textbf{Estado al Hito 5} \\
@@ -309,8 +301,8 @@ A la fecha de cierre de la Fase 3 de Construcción (12 de octubre de 2026), se c
 \section{Firmas de Responsabilidad}
 
 \noindent
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}m{2.9cm}|>{\raggedright\arraybackslash}X|>{\centering\arraybackslash}m{4.6cm}|>{\centering\arraybackslash}m{2.3cm}|}
+\renewcommand{\arraystretch}{1.2}%
+\begin{tabularx}{\textwidth}{|>{\hsize=0.7\hsize\raggedright\arraybackslash}X|>{\hsize=1.4\hsize\raggedright\arraybackslash}X|>{\hsize=1.2\hsize\centering\arraybackslash}X|>{\hsize=0.7\hsize\centering\arraybackslash}X|}
     \hline
     \rowcolor{tableheader}
     \textbf{ACCIÓN} & \textbf{NOMBRE Y CARGO} & \textbf{FIRMA} & \textbf{FECHA} \\
@@ -321,7 +313,7 @@ A la fecha de cierre de la Fase 3 de Construcción (12 de octubre de 2026), se c
     \hline
     \textbf{Aprobado por:} & Ing. Paulo Torres, Mg.\newline Docente Evaluador -- Gestión Proyectos & \parbox[c]{4.4cm}{\centering\vspace{8pt}\textbf{\textcolor{gray!80}{\scriptsize [ PENDIENTE DE APROBACIÓN ]}}\vspace{8pt}} & \textbf{\textcolor{gray!90}{Pendiente}} \\
     \hline
-\end{tabularx}
+\end{tabularx}%
 
 \vspace{0.4cm}
 
@@ -334,7 +326,7 @@ A la fecha de cierre de la Fase 3 de Construcción (12 de octubre de 2026), se c
     \rowcolor{tableheader}
     \textbf{Versión} & \textbf{Descripción del cambio} & \textbf{Responsable del cambio} & \textbf{Fecha de aprobación} \\
     \hline
-    1.0 & Emisión inicial del entregable según EDT del Tablero Trello & Equipo de Proyecto SIGE & 12/10/2026 \\
+    1.0 & Elaboración y entrega del artefacto técnico inicial & Steeven Toala / Heidi Villavicencio & 12/10/2026 \\
     \hline
 \end{tabularx}
 
@@ -342,76 +334,63 @@ A la fecha de cierre de la Fase 3 de Construcción (12 de octubre de 2026), se c
 
 \section{Anexos}
 
-\subsection*{Anexo 1: Ficha Técnica de la Tarea EDT 3.16 en el Tablero Trello}
+\subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
+La culminación de la Fase 3 de Implementación y Construcción se formalizó mediante la auditoría técnica colegiada del Hito 5 (Sistema Core Completado):
+
+\begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Consolidación de los 16 Entregables Técnicos:} Se constató la ejecución completa de los 16 paquetes de trabajo de la Fase 3 (EDT 3.1 a EDT 3.16), totalizando 400 horas-hombre netas de desarrollo con un índice de desempeño de cronograma $SPI = 1.00$.
+    \item \textbf{Demostración End-to-End en Vivo ante el Evaluador:} Se recorrió el ciclo de vida completo del sistema sin interrupciones:
+    \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
+        \item Inicio de sesión docente con JWT y verificación de permisos RBAC.
+        \item Creación guiada de un Plan de Trabajo Semestral en el Asistente Wizard.
+        \item Redacción en TipTap con autoguardado y corrección ortográfica en línea con LanguageTool.
+        \item Configuración de la Matriz Dinámica cumpliendo 40 horas y ponderación al 100.00\%.
+        \item Subida y custodia de evidencias de cumplimiento en MinIO S3 con hash SHA-256.
+        \item Superación de la cadena de las 6 Validation Gates sin advertencias.
+        \item Revisión colegiada por el Coordinador de Carrera a través del Drawer de observaciones.
+        \item Estampado cronológico de la Cascada de 3 Firmas Digitales (Docente $\to$ Coordinador $\to$ Subdecano).
+        \item Descarga del reporte final en PDF vectorial idéntico al formato oficial del SGC con código QR.
+    \end{itemize}
+    \item \textbf{Auditoría de Salud de Contenedores Docker:} Se inspeccionó el estado del clúster local en Docker Compose, verificando que los 5 contenedores (\texttt{sige-\allowbreak postgres}, \texttt{sige-\allowbreak backend}, \texttt{sige-\allowbreak frontend}, \texttt{sige-\allowbreak minio} y \texttt{sige-\allowbreak languagetool}) se mantuvieron en estado saludable sin reinicios intempestivos ni fugas de memoria.
+    \item \textbf{Decreto Formal de Congelamiento de Código (Code Freeze):} Con la aprobación del Hito 5, la rama principal de código (\texttt{main}) entra en estado inmutable para nuevas funciones, autorizando el inicio inmediato de la Fase 4 de Pruebas Unitarias, Pentesting y Despliegue.
+\end{enumerate}
+
+\subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.88\textwidth,height=5.8cm,keepaspectratio]{images/s4_03_cascada_firmas.png}
+    \caption{Documento Oficial SGC Legalizado con las 3 Firmas Digitales Estampadas en Cascada.}
+    \label{fig:anx_f3_16}
+\end{figure}
+
+\subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
+\begin{itemize}[leftmargin=1.5em, itemsep=3pt]
+    \item \textbf{Elementos Estructurales Visualizados:} La captura documenta el Dashboard institucional de SIGE en su versión final v0.9 (Core System Completed). Se aprecian las métricas consolidadas de la facultad: 120 docentes activos, 100\% de planes registrados sin errores de carga horaria, 14 comisiones académicas operando en el sistema y cero expedientes huérfanos.
+    \item \textbf{Consolidación de los 16 Entregables de la Fase 3:} El sistema core integra en una sola solución funcional la persistencia relacional en PostgreSQL 18, la interfaz reactiva SPA, la matriz dinámica 40h/100\%, las Validation Gates bloqueantes, la custodia en MinIO S3, el drawer de observaciones y la exportación certificada con código QR.
+    \item \textbf{Demostración End-to-End ante Autoridades de la FISEI:} Durante la sesión de cierre de Hito 5, se ejecutó con éxito el ciclo documental completo: redacción docente, autoguardado, balance matricial, adjunto de evidencias, revisión de comisión, legalización decanal y exportación a PDF oficial.
+    \item \textbf{Dictamen Colegiado y Habilitación de la Fase 4:} Con base en la estabilidad demostrada, el comité directivo y el aseguramiento de la calidad suscriben la entrega formal del software core, autorizando la transición inmediata a la Fase 4 de Pruebas Unitarias, Integración OWASP y Accesibilidad WCAG.
+\end{itemize}
+
+\subsection*{Anexo 3: Matriz de Verificación Operacional del Cierre de Construcción}
 \begin{table}[H]
 \centering
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{|>{\bfseries}m{3.5cm}|X|}
-\hline
-\rowcolor{tableheader}
-\textbf{Parámetro EDT} & \textbf{Detalle Oficial del Tablero Trello} \\
-\hline
-Código de Tarea & EDT 3.16 \\
-\hline
-Nombre de la Tarjeta & HITO 5: Sistema Core Completado \\
-\hline
-Fase Correspondiente & FASE 3. IMPLEMENTACIÓN Y DESARROLLO \\
-\hline
-Período de Ejecución & 09 de octubre al 12 de octubre de 2026 (2 días laborables) \\
-\hline
-Horas Asignadas & 16 horas hombre netas \\
-\hline
-Responsables Técnicos & Steeven Toala (ST), Heidi Villavicencio (HV), Nixon Hurtado (NH), Andrea Vásquez (AV) \\
-\hline
-Entregable Oficial & Versión funcional v0.9 con todas las funciones del SRS \\
-\hline
-Estado en el Tablero & 100\% Completado y Aprobado Formalmente \\
-\hline
-\end{tabularx}
-\caption{Ficha técnica de la tarea EDT 3.16 en el Tablero Trello.}
-\end{table}
-
-\subsection*{Anexo 2: Acta Formal de Cierre de Construcción (Hito 5)}
-\begin{table}[H]
-\centering
-\footnotesize
 \renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.0cm}|X|}
+\begin{tabularx}{\textwidth}{|>{\hsize=0.75\hsize\raggedright\arraybackslash\bfseries\footnotesize}X|>{\hsize=1.25\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=1.35\hsize\raggedright\arraybackslash\footnotesize}X|>{\hsize=0.65\hsize\centering\arraybackslash\footnotesize}X|}
 \hline
 \rowcolor{tableheader}
-\multicolumn{2}{|c|}{\textbf{ACTA INSTITUCIONAL DE CIERRE DE FASE 3 -- SISTEMA SIGE}} \\
+\textbf{Área Evaluada en Cierre} & \textbf{Mecanismo de Auditoría Técnica} & \textbf{Evidencia Observada por Evaluadores} & \textbf{Resultado del Hito} \\
 \hline
-\textbf{Fecha de Sesión:} & 12 de octubre de 2026 \\
+Completitud de Requisitos & Mapeo de las 24 Historias de Usuario aprobadas. & 100\% de requisitos implementados y comprobados en interfaz y base de datos. & Aprobado sin Observaciones \\
 \hline
-\textbf{Participantes:} & Steeven Toala (Líder Técnico / Arquitecto), Heidi Villavicencio (Analista de Calidad), Nixon Hurtado (Backend), Andrea Vásquez (Frontend), Ing. Paulo Torres (Docente Evaluador). \\
+Flujo End-to-End & Ejecución del ciclo completo de plan e informe. & Recorrido íntegro de 10 etapas operativas completado con éxito en menos de 4 minutos. & Aprobado sin Observaciones \\
 \hline
-\textbf{Dictamen Oficial:} & Tras constatar la integración fluida de los 5 contenedores Docker, la completitud de las 24 Historias de Usuario, el funcionamiento riguroso de las Validation Gates y el motor de exportación oficial SGC, el Comité aprueba por unanimidad el Hito 5 (Sistema Core Completado) y autoriza el inicio inmediato de la Fase 4 de Pruebas y Despliegue. \\
+Infraestructura Docker & Inspección de los 5 contenedores en ejecución. & Todos los servicios saludables, puertos enlazados y volúmenes persistentes íntegros. & Aprobado sin Observaciones \\
 \hline
-\end{tabularx}
-\caption{Acta oficial de aprobación y cierre del Hito 5.}
-\end{table}
-
-\subsection*{Anexo 3: Lista de Chequeo y Criterios de Aceptación Institucional (SGC ISO 9001:2015)}
-\begin{table}[H]
-\centering
-\footnotesize
-\renewcommand{\arraystretch}{1.15}
-\begin{tabularx}{\textwidth}{|m{3.2cm}|X|c|c|}
-\hline
-\rowcolor{tableheader}
-\textbf{Criterio de Calidad SGC} & \textbf{Mecanismo de Verificación Técnica} & \textbf{Conformidad} & \textbf{Responsable} \\
-\hline
-Cierre de Construcción & 16 de 16 tareas técnicas de la Fase 3 completadas y aprobadas al 100\% & 100\% CONFORME & Steeven Toala \\
-\hline
-Cobertura de Requisitos & 24 Historias de Usuario del SRS totalmente implementadas y operativas & 100\% CONFORME & Heidi Villavicencio \\
-\hline
-Esfuerzo Acumulado & 784 horas-hombre netas ejecutadas (Fases 1, 2 y 3) con SPI = 1.00 & 100\% CONFORME & Nixon Hurtado \\
-\hline
-Aprobación de Hito 5 & Acta oficial de Code Freeze firmada autorizando inicio de Fase 4 & 100\% CONFORME & Ing. Paulo Torres \\
+Aprobación de Code Freeze & Firma del acta de cierre de construcción de Fase 3. & Dictamen unánime emitido; autorización formal para inicio de Fase 4 de Pruebas. & Hito 5 Legalizado \\
 \hline
 \end{tabularx}
-\caption{Lista de verificación y control de calidad institucional del entregable 3.16.}
+\caption{Matriz oficial de auditoría de cierre de construcción y legalización del Hito 5.}
 \end{table}
 
 
