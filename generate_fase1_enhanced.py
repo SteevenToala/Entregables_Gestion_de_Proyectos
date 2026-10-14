@@ -1163,8 +1163,8 @@ El procedimiento de planificación detallada comprendió:
 \subsubsection*{2. Evidencia Visual del Cronograma Oficial y Explicación Técnica}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.92\textwidth,keepaspectratio]{images/gantt_fases_sige.png}
-    \caption{Diagrama de Gantt del Proyecto SIGE con Ruta Crítica y Cuatro Fases de Desarrollo.}
+    \includegraphics[width=0.96\textwidth,keepaspectratio]{images/trello_gantt_cronograma.png}
+    \caption{Diagrama de Gantt del Proyecto SIGE con Ruta Crítica y Cuatro Fases de Desarrollo (Cronograma Oficial en Trello).}
     \label{fig:gantt_sige}
 \end{figure}
 \FloatBarrier

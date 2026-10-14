@@ -296,8 +296,8 @@ Para asegurar que los planes e informes cumplan con los estándares ortográfico
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Elementos Estructurales Visualizados:} La captura documenta la asistencia ortográfica y gramatical en tiempo real dentro del editor TipTap. Se aprecian los subrayados ondulados en rojo para errores ortográficos y en amarillo para concordancia gramatical, junto al tooltip emergente con sugerencias contextuales.
     \item \textbf{Topología del Contenedor Local LanguageTool:} Las solicitudes de verificación morfosintáctica se canalizan al contenedor local \texttt{sige- languagetool} en el puerto 8010. Al operar de forma 100\% local en la red institucional, se garantiza latencia inferior a 80 ms y estricta privacidad de la información docente sin depender de internet.
-    \item \textbf{Diccionario Institucional Personalizado:} El motor incorpora el archivo \texttt{uta\_\allowbreak  diccionario. txt} con términos de la facultad (sílabo, FISEI, RRA, CACES, tutoría), suprimiendo falsos positivos comunes en correctores comerciales.
-    \item \textbf{Trazabilidad con el Código Fuente:}\newline Contenedor \texttt{sige- languagetool} en \texttt{docker- compose. yml} y servicio cliente \texttt{frontend/\allowbreak  src/\allowbreak  services/\allowbreak  spellcheckService. js}.
+    \item \textbf{Diccionario Institucional Personalizado:} El motor incorpora el archivo \texttt{uta\_\allowbreak diccionario.\allowbreak txt} con términos de la facultad (sílabo, FISEI, RRA, CACES, tutoría), suprimiendo falsos positivos comunes en correctores comerciales.
+    \item \textbf{Trazabilidad:} Contenedor \texttt{sige-\allowbreak languagetool} y servicio \texttt{spellcheckService.\allowbreak js}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional de Asistencia Lingüística}

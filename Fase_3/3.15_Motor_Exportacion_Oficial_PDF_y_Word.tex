@@ -306,8 +306,8 @@ La emisión de los formatos oficiales impresos y descargables requirió la const
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Elementos Estructurales Visualizados:} La captura muestra la previsualización del documento PDF generado mediante el motor de exportación de Puppeteer. Se evidencia la maquetación vectorial idéntica a la plantilla oficial \texttt{UTA- SGC- A- 2- 1- P7- T1}: encabezado oficial con logotipo institucional, tablas normalizadas de actividades, bloques de las 3 firmas digitales y el código QR de verificación.
     \item \textbf{Pipeline de Compilación Vectorial Headless:} El backend en Node.js renderiza una plantilla HTML/CSS de alta fidelidad alimentada con los datos del plan y genera el PDF utilizando Chromium en modo headless con banderas de optimización vectorial, garantizando que textos y tablas conserven nitidez tipográfica al imprimirse.
-    \item \textbf{Código QR Vectorial de Validación Criptográfica:} Al escanear el código QR impreso en el documento, se redirige al endpoint público \texttt{/\allowbreak  api/\allowbreak  v1/\allowbreak  verificar/\allowbreak  :hash}, permitiendo a auditores del CACES constatar de inmediato la autenticidad, autor y fecha exacta de legalización del expediente.
-    \item \textbf{Trazabilidad con el Código Fuente:} Servicio de generación \texttt{backend/\allowbreak  src/\allowbreak  services/\allowbreak  pdfGenerator. js} y plantilla \texttt{backend/\allowbreak  src/\allowbreak  templates/\allowbreak  planTrabajoTemplate. html}.
+    \item \textbf{Código QR Vectorial de Validación Criptográfica:} Al escanear el código QR impreso en el documento, se redirige al endpoint público \texttt{/api/\allowbreak v1/\allowbreak verificar/\allowbreak :hash}, permitiendo a auditores del CACES constatar de inmediato la autenticidad, autor y fecha exacta de legalización del expediente.
+    \item \textbf{Trazabilidad:} Servicio \texttt{pdfGenerator.\allowbreak js} y plantilla \texttt{planTrabajoTemplate.\allowbreak html}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional del Motor PDF y Código QR}

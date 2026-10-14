@@ -304,8 +304,8 @@ El flujo colegiado de revisión y legalización formal de los expedientes del SG
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Elementos Estructurales Visualizados:} La imagen muestra la interfaz de revisión del Coordinador de Carrera con el Drawer lateral de observaciones desplegado. Se aprecian las secciones del plan resaltadas en color ámbar (\#D97706), el área de texto para retroalimentación granular y los botones de acción resolutiva ("Aprobar Expediente", "Devolver con Observaciones").
     \item \textbf{Flujo en Cascada de 3 Firmas Secuenciales:} Se representa la compuerta VG-4: primero firma el docente elaborador, segundo firma el coordinador de carrera tras validar el cumplimiento curricular, y tercero firma el Subdecano de Facultad para conferir validez legal institucional.
-    \item \textbf{Inmutabilidad y No Repudio Criptográfico:} Cada firma estampa en la tabla \texttt{firmas\_\allowbreak   documento} el UUID del firmante, su dirección IP, fecha UTC y el hash SHA-256 del contenido del plan. Una vez legalizado por Subdecanato, el expediente queda bloqueado contra cualquier edición (VG-5).
-    \item \textbf{Trazabilidad con el Código Fuente:}\newline Componente \texttt{frontend/\allowbreak  src/\allowbreak  components/\allowbreak  revision/\allowbreak  ObservacionesDrawer. jsx} y controlador \texttt{backend/\allowbreak  src/\allowbreak  controllers/\allowbreak  firmas. controller. js}.
+    \item \textbf{Inmutabilidad y No Repudio Criptográfico:} Cada firma estampa en la tabla \texttt{firmas\_\allowbreak documento} el UUID del firmante, su dirección IP, fecha UTC y el hash SHA-256 del contenido del plan. Una vez legalizado por Subdecanato, el expediente queda bloqueado contra cualquier edición (VG-5).
+    \item \textbf{Trazabilidad con el Código Fuente:} Componente \texttt{ObservacionesDrawer.\allowbreak jsx} y controlador \texttt{firmas.\allowbreak controller.\allowbreak js}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional de Firmas y Observaciones}
