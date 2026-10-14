@@ -165,7 +165,7 @@ Flujos de Excepción &
     \item \textbf{E2 - Actividad sin Medios de Verificación:} El sistema impide el avance a la etapa de firmas hasta que cada ítem posea al menos un medio auditable.
 \end{itemize} \\
 \hline
-Postcondiciones & La matriz de actividades queda almacenada con integridad relacional en la tabla \texttt{actividades\_\allowbreak matriz}. \\
+Postcondiciones & La matriz de actividades queda almacenada con integridad relacional en la tabla \texttt{actividades\_\allowbreak  matriz}. \\
 \hline
 \end{tabularx}
 \caption{Especificación textual detallada del caso de uso crítico CU-03.}
@@ -177,13 +177,13 @@ Postcondiciones & La matriz de actividades queda almacenada con integridad relac
 \subsection*{Anexo: Evidencias de Modelado y Especificación de Casos de Uso}
 
 \subsubsection*{1. Especificación Formal y Trazabilidad de Casos de Uso}
-Para garantizar que el modelado funcional responda estrictamente a la operativa institucional y no a conjeturas aisladas, los Casos de Uso se derivaron directamente del formato oficial \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} (Plan de Trabajo Docente) y de los 24 Requisitos Funcionales aprobados en la Fase 1.
+Para garantizar que el modelado funcional responda estrictamente a la operativa institucional y no a conjeturas aisladas, los Casos de Uso se derivaron directamente del formato oficial \texttt{UTA- SGC- A- 2- 1- P7- T1} (Plan de Trabajo Docente) y de los 24 Requisitos Funcionales aprobados en la Fase 1.
 
 El desarrollo del modelado se ejecutó en cuatro etapas secuenciales:
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Identificación de Actores Primarios y Secundarios:} A partir del estatuto orgánico de la UTA y la matriz de actores de la FISEI, se formalizaron los roles del sistema: Docente Elaborador (usuario primario de planificación y carga de evidencias), Coordinador de Comisión (revisor de actividades específicas), Coordinador de Carrera (auditor de carga horaria y primer validador), Subdecano (aprobador de facultad) y Administrador SGC (gestor de catálogos y prórrogas).
     \item \textbf{Estructuración del Catálogo de 8 Casos de Uso (CU-01 a CU-08):} Se definieron los límites del sistema agrupando las interacciones en CU-01 (Iniciar Sesión JWT), CU-02 (Elaborar Plan en Wizard), CU-03 (Gestionar Matriz Dinámica 100\%), CU-04 (Custodiar Evidencias en MinIO S3), CU-05 (Revisar Expediente en Comité), CU-06 (Cascada Secuencial de Firmas), CU-07 (Exportar Documento Oficial SGC) y CU-08 (Gestionar Prórrogas Extemporáneas).
-    \item \textbf{Definición de Relaciones de Inclusión y Extensión:} Se identificaron las dependencias funcionales: todos los casos de uso incluyen obligatoriamente la resolución de identidad (\texttt{<<include>> CU-\allowbreak 01}); la elaboración de plan incluye el cálculo automático de 40 horas; y la gestión de extemporaneidad extiende condicionalmente (\texttt{<<extend>> CU-\allowbreak 08}) la edición cuando la fecha actual sobrepasa el cronograma lectivo.
+    \item \textbf{Definición de Relaciones de Inclusión y Extensión:} Se identificaron las dependencias funcionales: todos los casos de uso incluyen obligatoriamente la resolución de identidad (\texttt{<<include>> CU- 01}); la elaboración de plan incluye el cálculo automático de 40 horas; y la gestión de extemporaneidad extiende condicionalmente (\texttt{<<extend>> CU- 08}) la edición cuando la fecha actual sobrepasa el cronograma lectivo.
     \item \textbf{Redacción de Especificaciones Textuales Normalizadas:} Se redactaron fichas detalladas para cada caso de uso declarando precondiciones, flujo principal (\textit{happy path}), flujos alternos de asistencia y flujos de excepción transaccionales.
 \end{enumerate}
 
@@ -321,7 +321,7 @@ El diseño arquitectónico de SIGE se concibió bajo los principios de desacopla
     \item \textbf{Selección y Justificación del Patrón Clean Architecture:} Se adoptó una arquitectura en cuatro capas concéntricas (Dominio, Casos de Uso, Adaptadores de Interfaz y Frameworks/Drivers), asegurando que las entidades normativas de la FISEI no posean dependencias hacia el motor de persistencia relacional ni bibliotecas de terceros.
     \item \textbf{Formulación y Registro de Decisiones de Arquitectura (ADR-01 a ADR-06):} Se redactaron formalmente seis registros técnicos de decisión: ADR-01 (Clean Architecture), ADR-02 (PostgreSQL 18 con soporte JSONB para secciones de texto enriquecido), ADR-03 (React 19 SPA con Tailwind CSS), ADR-04 (Editor TipTap con autoguardado asíncrono con debounce de 1500 ms), ADR-05 (MinIO S3 para custodia de evidencias) y ADR-06 (Autenticación JWT con rotación de refresh tokens y Argon2id).
     \item \textbf{Modelado de Diagramas de Contexto y Contenedores bajo el Modelo C4:} Se elaboraron las vistas arquitectónicas de Nivel 1 (Contexto de Sistema interactuando con Docentes, Directores y SGA) y Nivel 2 (Contenedores web, API REST Express v5, base de datos PostgreSQL, servidor MinIO y servicio LanguageTool).
-    \item \textbf{Diseño de Políticas de Seguridad Perimetral y Resiliencia:} Se establecieron protocolos de comunicación sobre HTTPS/TLS, interceptación centralizada de errores en Express mediante un error handler unificado y aislamiento de variables de entorno sensibles en archivos \texttt{.\allowbreak env} protegidos.
+    \item \textbf{Diseño de Políticas de Seguridad Perimetral y Resiliencia:} Se establecieron protocolos de comunicación sobre HTTPS/TLS, interceptación centralizada de errores en Express mediante un error handler unificado y aislamiento de variables de entorno sensibles en archivos \texttt{. env} protegidos.
 \end{itemize}
 
 \subsection{Matriz de Decisiones de Arquitectura de Software (ADR-01 a ADR-06)}
@@ -403,9 +403,9 @@ El proceso de ingeniería arquitectónica comprendió:
 \textbf{Desglose Técnico y Análisis Estructural de la Arquitectura de Software:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Desacoplamiento Concéntrico en Cuatro Capas (Clean Architecture):} Se ilustra la Regla de Dependencias: las capas externas (Frameworks y Adaptadores) dependen de las internas (Casos de Uso y Entidades de Dominio), pero el dominio nunca conoce la existencia de PostgreSQL, Express o React.
-    \item \textbf{Topología de Contenedores y Microservicios (Modelo C4 Nivel 2):} El diagrama C4 detalla los 5 servicios orquestados en Docker: \texttt{sige-\allowbreak frontend} (SPA en React 19), \texttt{sige-\allowbreak backend} (API REST en Express v5), \texttt{sige-\allowbreak db} (PostgreSQL 18 con extensiones JSONB y UUID), \texttt{sige-\allowbreak minio} (S3 Object Storage) y \texttt{sige-\allowbreak languagetool} (corrección ortográfica local).
+    \item \textbf{Topología de Contenedores y Microservicios (Modelo C4 Nivel 2):} El diagrama C4 detalla los 5 servicios orquestados en Docker: \texttt{sige- frontend} (SPA en React 19), \texttt{sige- backend} (API REST en Express v5), \texttt{sige- db} (PostgreSQL 18 con extensiones JSONB y UUID), \texttt{sige- minio} (S3 Object Storage) y \texttt{sige- languagetool} (corrección ortográfica local).
     \item \textbf{Canales de Comunicación y Seguridad Perimetral:} Las comunicaciones cliente-servidor operan sobre HTTPS/TLS con tokens JWT en cabeceras de autorización y cookies \texttt{HttpOnly} para refresh tokens; el acceso a MinIO se realiza mediante URLs prefirmadas de vida corta (15 min).
-    \item \textbf{Trazabilidad con el Código Fuente:} Esta arquitectura se materializa en la estructura modular del repositorio: \texttt{backend/\allowbreak src/\allowbreak domain/\allowbreak }, \texttt{backend/\allowbreak src/\allowbreak usecases/\allowbreak }, \texttt{backend/\allowbreak src/\allowbreak adapters/\allowbreak } y \texttt{docker-\allowbreak compose.\allowbreak yml}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Esta arquitectura se materializa en la estructura modular del repositorio: \texttt{backend/\allowbreak  src/\allowbreak  domain/\allowbreak  }, \texttt{backend/\allowbreak  src/\allowbreak  usecases/\allowbreak  }, \texttt{backend/\allowbreak  src/\allowbreak  adapters/\allowbreak  } y \texttt{docker- compose. yml}.
 \end{itemize}
 
 \subsubsection*{3. Matriz Técnica de Servicios, Puertos y Protocolos de Infraestructura}
@@ -517,7 +517,7 @@ El modelado del comportamiento dinámico del sistema y la definición de las ent
     \item \textbf{Modelado Dinámico de Secuencia UML para Casos de Uso Críticos:} Se construyeron diagramas de interacción temporal para los flujos más complejos del sistema: autenticación e intercambio de tokens JWT, creación asistida del plan mediante Wizard, y procesamiento concurrente de firmas con validación de compuertas.
     \item \textbf{Especificación de Diagramas de Actividades con Particiones (Swimlanes):} Se modelaron los flujos de control paralelos y condicionales distribuidos entre el Docente Elaborador, el Coordinador de Comisión, el Subdecano y el Motor de Reglas del Sistema, clarificando los puntos de decisión y bifurcación ante observaciones.
     \item \textbf{Modelado Estructural de Clases de Dominio Institucional:} Se modelaron las clases fundamentales del dominio en TypeScript y JavaScript: \texttt{Plan Trabajo Docente}, \texttt{Actividad Docente}, \texttt{Seccion Documento}, \texttt{Evidencia Respaldo} y \texttt{Firma Digital}, definiendo sus atributos, métodos de cálculo y contratos de validación intrínseca.
-    \item \textbf{Formalización de la Máquina de Estados del Documento SGC:} Se especificaron los estados válidos del ciclo documental (\texttt{Borrador}, \texttt{En\_\allowbreak Revision}, \texttt{Observado}, \texttt{Aprobado\_\allowbreak  Carrera}, \texttt{Legalizado\_\allowbreak  Subdecanato}) y las transiciones atómicas permitidas bajo control transaccional ACID.
+    \item \textbf{Formalización de la Máquina de Estados del Documento SGC:} Se especificaron los estados válidos del ciclo documental (\texttt{Borrador}, \texttt{En\_\allowbreak  Revision}, \texttt{Observado}, \texttt{Aprobado\_\allowbreak   Carrera}, \texttt{Legalizado\_\allowbreak   Subdecanato}) y las transiciones atómicas permitidas bajo control transaccional ACID.
 \end{itemize}
 
 \subsection{Matriz de Entidades del Dominio y Métodos Operativos}
@@ -530,17 +530,17 @@ El modelado del comportamiento dinámico del sistema y la definición de las ent
 \rowcolor{tableheader}
 \textbf{Clase de Dominio} & \textbf{Atributos Principales} & \textbf{Métodos de Negocio Clave} & \textbf{Multiplicidad} \\
 \hline
-\texttt{PlanDocente} & \texttt{id}, \texttt{periodo\_\allowbreak id}, \texttt{docente\_\allowbreak id}, \texttt{estado}, \texttt{horas} & \texttt{validarHorasMinimas()}, \texttt{avanzarEstado()} & 1 \\
+\texttt{PlanDocente} & \texttt{id}, \texttt{periodo\_\allowbreak  id}, \texttt{docente\_\allowbreak  id}, \texttt{estado}, \texttt{horas} & \texttt{validarHorasMinimas()}, \texttt{avanzarEstado()} & 1 \\
 \hline
-\texttt{Seccion Documento} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{orden}, \texttt{titulo}, \texttt{contenido} & \texttt{actualizarContenido()}, \texttt{sanitizarHtml()} & $1 \dots N$ \\
+\texttt{Seccion Documento} & \texttt{id}, \texttt{plan\_\allowbreak  id}, \texttt{orden}, \texttt{titulo}, \texttt{contenido} & \texttt{actualizarContenido()}, \texttt{sanitizarHtml()} & $1 \dots N$ \\
 \hline
-\texttt{Actividad Matriz} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{nombre}, \texttt{horas}, \texttt{ponderacion} & \texttt{calcularAvance()}, \texttt{recalcularPond()} & $1 \dots N$ \\
+\texttt{Actividad Matriz} & \texttt{id}, \texttt{plan\_\allowbreak  id}, \texttt{nombre}, \texttt{horas}, \texttt{ponderacion} & \texttt{calcularAvance()}, \texttt{recalcularPond()} & $1 \dots N$ \\
 \hline
-\texttt{Evidencia Adjunta} & \texttt{id}, \texttt{actividad\_\allowbreak id}, \texttt{url\_\allowbreak s3}, \texttt{hash\_\allowbreak sha256} & \texttt{verificarIntegridad()}, \texttt{generarUrl()} & $0 \dots N$ \\
+\texttt{Evidencia Adjunta} & \texttt{id}, \texttt{actividad\_\allowbreak  id}, \texttt{url\_\allowbreak  s3}, \texttt{hash\_\allowbreak  sha256} & \texttt{verificarIntegridad()}, \texttt{generarUrl()} & $0 \dots N$ \\
 \hline
-\texttt{Observacion Comite} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{usuario\_\allowbreak id}, \texttt{comentario} & \texttt{registrarObservacion()}, \texttt{marcarResuelto()} & $0 \dots N$ \\
+\texttt{Observacion Comite} & \texttt{id}, \texttt{plan\_\allowbreak  id}, \texttt{usuario\_\allowbreak  id}, \texttt{comentario} & \texttt{registrarObservacion()}, \texttt{marcarResuelto()} & $0 \dots N$ \\
 \hline
-\texttt{Firma Documento} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{firmante\_\allowbreak id}, \texttt{rol\_\allowbreak firma} & \texttt{estamparFirma()}, \texttt{validarSecuencia()} & $0 \dots 3$ \\
+\texttt{Firma Documento} & \texttt{id}, \texttt{plan\_\allowbreak  id}, \texttt{firmante\_\allowbreak  id}, \texttt{rol\_\allowbreak  firma} & \texttt{estamparFirma()}, \texttt{validarSecuencia()} & $0 \dots 3$ \\
 \hline
 \end{tabularx}
 \caption{Matriz de especificación de clases del dominio SGC.}
@@ -600,10 +600,10 @@ El proceso de especificación técnica comprendió:
 \noindent
 \textbf{Desglose Técnico y Análisis Estructural del Comportamiento Dinámico y Clases UML:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Flujo de Interacción Temporal en el Diagrama de Secuencia:} Se modela la llamada asíncrona \texttt{POST /\allowbreak api/\allowbreak v1/\allowbreak planes/\allowbreak :id/\allowbreak secciones} desde el cliente React. El controlador delega en la cadena interceptora de Validation Gates, la cual ejecuta en menos de 15 ms las comprobaciones VG-1 y VG-2 antes de autorizar la escritura atómica en la base de datos.
+    \item \textbf{Flujo de Interacción Temporal en el Diagrama de Secuencia:} Se modela la llamada asíncrona \texttt{POST /\allowbreak  api/\allowbreak  v1/\allowbreak  planes/\allowbreak  :id/\allowbreak  secciones} desde el cliente React. El controlador delega en la cadena interceptora de Validation Gates, la cual ejecuta en menos de 15 ms las comprobaciones VG-1 y VG-2 antes de autorizar la escritura atómica en la base de datos.
     \item \textbf{Bifurcaciones y Decisiones en el Diagrama de Actividades (Swimlanes):} Se aprecian los carriles paralelos entre el Docente, la Comisión y el Subdecano. Si el expediente es observado, el estado conmuta a \texttt{Observado} y se notifica al docente; si es conforme, avanza a la cascada secuencial de 3 firmas.
-    \item \textbf{Estructura de Entidades en el Modelo de Clases:} Modela las entidades ricas: \texttt{Plan\allowbreak Trabajo\allowbreak Docente} como agregado raíz que encapsula colecciones de \texttt{Actividad\allowbreak Docente}, \texttt{Seccion\allowbreak Documento}, \texttt{Evidencia\allowbreak Respaldo} y \texttt{Firma\allowbreak Digital}, definiendo sus métodos de cálculo de horas y contratos de inmutabilidad.
-    \item \textbf{Máquina de Estados Finita del Documento SGC:} Garantiza computacionalmente que ningún expediente alcance el estado \texttt{Legalizado\_\allowbreak  Subdecanato} sin haber transitado previamente por la firma del docente y el visto bueno del coordinador de carrera.
+    \item \textbf{Estructura de Entidades en el Modelo de Clases:} Modela las entidades ricas: \texttt{Plan Trabajo Docente} como agregado raíz que encapsula colecciones de \texttt{Actividad Docente}, \texttt{Seccion Documento}, \texttt{Evidencia Respaldo} y \texttt{Firma Digital}, definiendo sus métodos de cálculo de horas y contratos de inmutabilidad.
+    \item \textbf{Máquina de Estados Finita del Documento SGC:} Garantiza computacionalmente que ningún expediente alcance el estado \texttt{Legalizado\_\allowbreak   Subdecanato} sin haber transitado previamente por la firma del docente y el visto bueno del coordinador de carrera.
 \end{itemize}
 
 \subsubsection*{3. Matriz Técnica de Transición de Estados del Documento Institucional}
@@ -705,8 +705,8 @@ Se aplicó un proceso de modelado de datos en tres etapas: conceptual, lógico y
 \subsection{Políticas de Calidad de la Base de Datos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Integridad Referencial Estricta:} Toda clave foránea implementa la cláusula \texttt{ON DELETE RESTRICT} para prevenir el borrado accidental de registros históricos auditables.
-    \item \textbf{Política de Claves Subrogadas Uniformes:} Todas las tablas emplean claves primarias de tipo \texttt{UUID v4} autogeneradas mediante \texttt{gen\_\allowbreak random\_\allowbreak uuid()}, garantizando unicidad global.
-    \item \textbf{Política de Auditoría Automatizada:} Cada tabla incluye campos de auditoría (\texttt{created\_\allowbreak at}, \texttt{updated\_\allowbreak at}) sincronizados mediante triggers automáticos en PostgreSQL.
+    \item \textbf{Política de Claves Subrogadas Uniformes:} Todas las tablas emplean claves primarias de tipo \texttt{UUID v4} autogeneradas mediante \texttt{gen\_\allowbreak  random\_\allowbreak  uuid()}, garantizando unicidad global.
+    \item \textbf{Política de Auditoría Automatizada:} Cada tabla incluye campos de auditoría (\texttt{created\_\allowbreak  at}, \texttt{updated\_\allowbreak  at}) sincronizados mediante triggers automáticos en PostgreSQL.
     \item \textbf{Política de Restricciones CHECK Declarativas:} La validación de que las ponderaciones no excedan el 100\% y las horas no sean negativas se ejecuta a nivel de motor de base de datos.
 \end{enumerate}
 
@@ -715,9 +715,9 @@ El diseño de la capa física de persistencia se orientó a garantizar la integr
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Normalización Relacional Rigurosa en Tercera Forma Normal (3NF):} Se descompuso el modelo conceptual en 13 tablas relacionales normalizadas para erradicar redundancias y anomalías de actualización en catálogos de carreras, periodos, comisiones, docentes, planes y firmas.
-    \item \textbf{Diseño de Restricciones de Integridad y Claves Primarias UUIDv4:} Se asignaron identificadores universales únicos (\texttt{uuid\_\allowbreak generate\_\allowbreak v4()}) en las tablas operativas para prevenir ataques de enumeración secuencial, junto con llaves foráneas \texttt{ON DELETE RESTRICT} que preservan los expedientes históricos.
-    \item \textbf{Programación de Restricciones CHECK Nativas en Motor:} Se implementaron validaciones a nivel de base de datos para garantizar que las horas docentes semanales no superen 40.0h (\texttt{chk\_\allowbreak horas\_\allowbreak rango}) y que las ponderaciones no excedan el 100.00\% (\texttt{chk\_\allowbreak pond\_\allowbreak rango}), blindando la consistencia incluso ante accesos directos al motor.
-    \item \textbf{Estrategia de Indexación Compuesta B-Tree e Invertida GIN:} Se diseñaron índices B-Tree en pares de consulta frecuente (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y de índices GIN sobre campos de contenido enriquecido JSONB (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) para búsquedas textuales de alta velocidad.
+    \item \textbf{Diseño de Restricciones de Integridad y Claves Primarias UUIDv4:} Se asignaron identificadores universales únicos (\texttt{uuid\_\allowbreak  generate\_\allowbreak  v4()}) en las tablas operativas para prevenir ataques de enumeración secuencial, junto con llaves foráneas \texttt{ON DELETE RESTRICT} que preservan los expedientes históricos.
+    \item \textbf{Programación de Restricciones CHECK Nativas en Motor:} Se implementaron validaciones a nivel de base de datos para garantizar que las horas docentes semanales no superen 40.0h (\texttt{chk\_\allowbreak  horas\_\allowbreak  rango}) y que las ponderaciones no excedan el 100.00\% (\texttt{chk\_\allowbreak  pond\_\allowbreak  rango}), blindando la consistencia incluso ante accesos directos al motor.
+    \item \textbf{Estrategia de Indexación Compuesta B-Tree e Invertida GIN:} Se diseñaron índices B-Tree en pares de consulta frecuente (\texttt{idx\_\allowbreak  plan\_\allowbreak  doc\_\allowbreak  per}) y de índices GIN sobre campos de contenido enriquecido JSONB (\texttt{idx\_\allowbreak  sec\_\allowbreak  jsonb}) para búsquedas textuales de alta velocidad.
 \end{itemize}
 
 \subsection{Matriz del Diccionario de Datos del Sistema (13 Tablas Normalizadas)}
@@ -773,15 +773,15 @@ notificaciones & id (UUID) & Usuario destinatario, título, mensaje, estado & Av
 \rowcolor{tableheader}
 \textbf{Nombre del Índice} & \textbf{Tabla Objetivo} & \textbf{Columnas y Tipo} & \textbf{Propósito} \\
 \hline
-\texttt{idx\_\allowbreak planes\_\allowbreak  doc\_\allowbreak periodo} & \texttt{planes\_\allowbreak  docente} & \texttt{(fk\_\allowbreak doc, fk\_\allowbreak per)} B-Tree & Búsqueda rápida de expedientes activos. \\
+\texttt{idx\_\allowbreak  planes\_\allowbreak   doc\_\allowbreak  periodo} & \texttt{planes\_\allowbreak   docente} & \texttt{(fk\_\allowbreak  doc, fk\_\allowbreak  per)} B-Tree & Búsqueda rápida de expedientes activos. \\
 \hline
-\texttt{idx\_\allowbreak actividades\_\allowbreak  plan} & \texttt{actividades\_\allowbreak  matriz} & \texttt{(fk\_\allowbreak plan)} B-Tree & Agrupación de actividades de la matriz. \\
+\texttt{idx\_\allowbreak  actividades\_\allowbreak   plan} & \texttt{actividades\_\allowbreak   matriz} & \texttt{(fk\_\allowbreak  plan)} B-Tree & Agrupación de actividades de la matriz. \\
 \hline
-\texttt{idx\_\allowbreak secciones\_\allowbreak  jsonb} & \texttt{secciones\_\allowbreak  documento} & \texttt{contenido} GIN & Búsqueda rápida de texto en secciones. \\
+\texttt{idx\_\allowbreak  secciones\_\allowbreak   jsonb} & \texttt{secciones\_\allowbreak   documento} & \texttt{contenido} GIN & Búsqueda rápida de texto en secciones. \\
 \hline
-\texttt{idx\_\allowbreak firmas\_\allowbreak  plan\_\allowbreak orden} & \texttt{firmas\_\allowbreak  documento} & \texttt{(fk\_\allowbreak plan, orden)} UNIQUE & Garantiza secuencia estricta de firmas. \\
+\texttt{idx\_\allowbreak  firmas\_\allowbreak   plan\_\allowbreak  orden} & \texttt{firmas\_\allowbreak   documento} & \texttt{(fk\_\allowbreak  plan, orden)} UNIQUE & Garantiza secuencia estricta de firmas. \\
 \hline
-\texttt{idx\_\allowbreak evidencias\_\allowbreak  hash} & \texttt{evidencias\_\allowbreak  adjuntas} & \texttt{hash\_\allowbreak sha256} B-Tree & Prevención de duplicados de archivos. \\
+\texttt{idx\_\allowbreak  evidencias\_\allowbreak   hash} & \texttt{evidencias\_\allowbreak   adjuntas} & \texttt{hash\_\allowbreak  sha256} B-Tree & Prevención de duplicados de archivos. \\
 \hline
 \end{tabularx}
 \caption{Matriz de índices físicos para optimización de consultas.}
@@ -797,8 +797,8 @@ El diseño físico de la base de datos se fundamentó en la normalización forma
 El proceso de ingeniería de datos comprendió:
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Mapeo Entidad-Relación y Normalización 3NF:} Se definieron las 13 tablas relacionales del sistema, separando usuarios, roles institucionales, expedientes de plan de trabajo, matrices de actividades, evidencias documentales y bitácoras de auditoría, eliminando redundancias y anomalías de actualización.
-    \item \textbf{Declaración de Restricciones CHECK en el Motor:} Para evitar que datos inválidos ingresen a la base de datos incluso en caso de fallo de la API, se programaron restricciones declarativas nativas: \texttt{CHECK (horas >= 0 AND horas <= 40)}, \texttt{CHECK (ponderacion >= 0.\allowbreak 00 AND ponderacion <= 100.\allowbreak 00)} y validación de estados permitidos.
-    \item \textbf{Estrategia de Indexación Física Especializada:} Se implementaron índices B-Tree en todas las claves foráneas (\textit{Foreign Keys}) para optimizar las consultas con \texttt{JOIN}, índices únicos compuestos para la secuencia de firmas \texttt{(fk\_\allowbreak plan, orden)}, e índices GIN sobre campos de texto enriquecido estructurado en formato JSONB.
+    \item \textbf{Declaración de Restricciones CHECK en el Motor:} Para evitar que datos inválidos ingresen a la base de datos incluso en caso de fallo de la API, se programaron restricciones declarativas nativas: \texttt{CHECK (horas >= 0 AND horas <= 40)}, \texttt{CHECK (ponderacion >= 0. 00 AND ponderacion <= 100. 00)} y validación de estados permitidos.
+    \item \textbf{Estrategia de Indexación Física Especializada:} Se implementaron índices B-Tree en todas las claves foráneas (\textit{Foreign Keys}) para optimizar las consultas con \texttt{JOIN}, índices únicos compuestos para la secuencia de firmas \texttt{(fk\_\allowbreak  plan, orden)}, e índices GIN sobre campos de texto enriquecido estructurado en formato JSONB.
 \end{enumerate}
 
 \subsubsection*{2. Evidencia Visual del Diagrama Entidad-Relación y Explicación Técnica}
@@ -815,9 +815,9 @@ El proceso de ingeniería de datos comprendió:
 \textbf{Desglose Técnico y Análisis Estructural del Modelo de Datos (PostgreSQL 18):}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Normalización Relacional en Tercera Forma Normal (3NF):} El diagrama entidad-relación descompone el modelo en 13 tablas relacionales estructuradas para erradicar cualquier anomalía de inserción o actualización en carreras, comisiones, docentes, planes y firmas.
-    \item \textbf{Esquema Híbrido Relacional y Documental (JSONB):} Las tablas maestras y de firmas se rigen por esquemas relacionales estrictos con llaves foráneas \texttt{ON DELETE RESTRICT}, mientras que las secciones redactadas en TipTap se almacenan en columnas \texttt{JSONB} (\texttt{secciones\_\allowbreak documento.\allowbreak contenido}), combinando integridad relacional con flexibilidad de texto enriquecido.
-    \item \textbf{Restricciones CHECK Declarativas a Nivel de Motor:} Se visualizan las restricciones de integridad: \texttt{chk\_\allowbreak horas\_\allowbreak rango} ($0 \le \text{horas} \le 40$) y \texttt{chk\_\allowbreak pond\_\allowbreak rango} ($0 \le \text{ponderacion} \le 100$), blindando la base de datos contra inconsistencias incluso ante accesos directos.
-    \item \textbf{Estrategia de Indexación de Alto Rendimiento:} Índices compuestos B-Tree en pares de consulta foránea (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y de tipo invertido GIN (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) que permiten búsquedas morfosintácticas en tiempos inferiores a 3 ms.
+    \item \textbf{Esquema Híbrido Relacional y Documental (JSONB):} Las tablas maestras y de firmas se rigen por esquemas relacionales estrictos con llaves foráneas \texttt{ON DELETE RESTRICT}, mientras que las secciones redactadas en TipTap se almacenan en columnas \texttt{JSONB} (\texttt{secciones\_\allowbreak  documento. contenido}), combinando integridad relacional con flexibilidad de texto enriquecido.
+    \item \textbf{Restricciones CHECK Declarativas a Nivel de Motor:} Se visualizan las restricciones de integridad: \texttt{chk\_\allowbreak  horas\_\allowbreak  rango} ($0 \le \text{horas} \le 40$) y \texttt{chk\_\allowbreak  pond\_\allowbreak  rango} ($0 \le \text{ponderacion} \le 100$), blindando la base de datos contra inconsistencias incluso ante accesos directos.
+    \item \textbf{Estrategia de Indexación de Alto Rendimiento:} Índices compuestos B-Tree en pares de consulta foránea (\texttt{idx\_\allowbreak  plan\_\allowbreak  doc\_\allowbreak  per}) y de tipo invertido GIN (\texttt{idx\_\allowbreak  sec\_\allowbreak  jsonb}) que permiten búsquedas morfosintácticas en tiempos inferiores a 3 ms.
 \end{itemize}
 
 \subsubsection*{3. Matriz Técnica de Índices Físicos y Estrategia de Optimización}
@@ -944,17 +944,17 @@ A continuación se detalla la matriz que relaciona las pantallas principales con
 \rowcolor{tableheader}
 \textbf{Pantalla} & \textbf{Ruta Frontend} & \textbf{Componentes Clave} & \textbf{Criterios de Usabilidad y Validación} \\
 \hline
-Inicio de Sesión & \texttt{/\allowbreak login} & Formulario de credenciales, botón institucional, badge de seguridad. & Validación de correo institucional en tiempo real; mensajes de error claros. \\
+Inicio de Sesión & \texttt{/\allowbreak  login} & Formulario de credenciales, botón institucional, badge de seguridad. & Validación de correo institucional en tiempo real; mensajes de error claros. \\
 \hline
-Dashboard Docente & \texttt{/\allowbreak dashboard} & Tarjetas de resumen (Horas, Planes, Estado), tabla de expedientes recientes. & Acceso directo a edición en 1 clic; badges de estado codificados por color. \\
+Dashboard Docente & \texttt{/\allowbreak  dashboard} & Tarjetas de resumen (Horas, Planes, Estado), tabla de expedientes recientes. & Acceso directo a edición en 1 clic; badges de estado codificados por color. \\
 \hline
-Bandeja de Planes & \texttt{/\allowbreak planes} & Listado con filtros por periodo, botón ``Nuevo Plan'', buscador instantáneo. & Paginación fluida; ordenamiento por fecha de última modificación. \\
+Bandeja de Planes & \texttt{/\allowbreak  planes} & Listado con filtros por periodo, botón ``Nuevo Plan'', buscador instantáneo. & Paginación fluida; ordenamiento por fecha de última modificación. \\
 \hline
-Wizard de Edición & \texttt{/\allowbreak planes/\allowbreak :id} & Barra de progreso de 5 etapas, editor TipTap, indicador de autoguardado. & Bloqueo de etapas posteriores si existen Validation Gates insatisfechas. \\
+Wizard de Edición & \texttt{/\allowbreak  planes/\allowbreak  :id} & Barra de progreso de 5 etapas, editor TipTap, indicador de autoguardado. & Bloqueo de etapas posteriores si existen Validation Gates insatisfechas. \\
 \hline
-Matriz de Actividades & \texttt{/\allowbreak matriz} & Tabla dinámica con cálculo automático, botón ``+ Sugerir IA'', selector de semanas. & Feedback numérico inmediato ($100\%$ sumatoria); advertencias en rojo. \\
+Matriz de Actividades & \texttt{/\allowbreak  matriz} & Tabla dinámica con cálculo automático, botón ``+ Sugerir IA'', selector de semanas. & Feedback numérico inmediato ($100\%$ sumatoria); advertencias en rojo. \\
 \hline
-Revisión de Comité & \texttt{/\allowbreak revision} & Drawer lateral de observaciones, visor de PDF embebido, botones de aprobación. & Registro granular por sección con historial de comentarios auditado. \\
+Revisión de Comité & \texttt{/\allowbreak  revision} & Drawer lateral de observaciones, visor de PDF embebido, botones de aprobación. & Registro granular por sección con historial de comentarios auditado. \\
 \hline
 \end{tabularx}
 \caption{Matriz de especificación de vistas del sistema SIGE.}
@@ -1110,7 +1110,7 @@ Diseñar, configurar y validar la arquitectura de infraestructura contenerizada 
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada \texttt{sige\_\allowbreak network}, en la cual los servicios de datos (\texttt{sige-\allowbreak postgres} y \texttt{sige-\allowbreak minio}) no exponen puertos sensibles de administración hacia redes no confiables. Se configuraron construcciones multietapa (\textit{multi-stage builds}) para el frontend en React, separando la fase de compilación con Node.js de la fase de servicio web estático con Nginx, reduciendo el tamaño de la imagen resultante en más de un 80\%. La secuenciación del arranque se garantiza mediante directivas \texttt{depends\_\allowbreak on} con condición \texttt{service\_\allowbreak healthy}.
+Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada \texttt{sige\_\allowbreak  network}, en la cual los servicios de datos (\texttt{sige- postgres} y \texttt{sige- minio}) no exponen puertos sensibles de administración hacia redes no confiables. Se configuraron construcciones multietapa (\textit{multi-stage builds}) para el frontend en React, separando la fase de compilación con Node.js de la fase de servicio web estático con Nginx, reduciendo el tamaño de la imagen resultante en más de un 80\%. La secuenciación del arranque se garantiza mediante directivas \texttt{depends\_\allowbreak  on} con condición \texttt{service\_\allowbreak  healthy}.
 
 \subsection{Políticas de Calidad de Infraestructura Contenerizada}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -1124,10 +1124,10 @@ Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada 
 La definición de la arquitectura de contenedores permitió crear un entorno de despliegue local reproducible, aislado y altamente confiable mediante Docker Compose. Las actividades de infraestructura y DevOps comprendieron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
-    \item \textbf{Diseño de la Topología Multi-Contenedor en Docker Compose:} Se definieron cinco microservicios contenerizados independientes: \texttt{sige-\allowbreak frontend} (Node.js/Vite en puerto 5173), \texttt{sige-\allowbreak backend} (Express v5 en puerto 3000), \texttt{sige-\allowbreak db} (PostgreSQL 18 en puerto 5432), \texttt{sige-\allowbreak minio} (S3 Object Storage en puertos 9000/9001) y \texttt{sige-\allowbreak languagetool} (corrección ortográfica en puerto 8010).
-    \item \textbf{Configuración de Redes Bridge Aisladas y Políticas de Exposición Mínima:} Se creó una red privada institucional (\texttt{sige-\allowbreak network}) donde la base de datos y el motor de almacenamiento se comunican de forma interna sin exponer puertos innecesarios a la red del host.
+    \item \textbf{Diseño de la Topología Multi-Contenedor en Docker Compose:} Se definieron cinco microservicios contenerizados independientes: \texttt{sige- frontend} (Node.js/Vite en puerto 5173), \texttt{sige- backend} (Express v5 en puerto 3000), \texttt{sige- db} (PostgreSQL 18 en puerto 5432), \texttt{sige- minio} (S3 Object Storage en puertos 9000/9001) y \texttt{sige- languagetool} (corrección ortográfica en puerto 8010).
+    \item \textbf{Configuración de Redes Bridge Aisladas y Políticas de Exposición Mínima:} Se creó una red privada institucional (\texttt{sige- network}) donde la base de datos y el motor de almacenamiento se comunican de forma interna sin exponer puertos innecesarios a la red del host.
     \item \textbf{Aprovisionamiento de Volúmenes Nombrados Persistentes:} Se configuraron volúmenes gestionados (\texttt{pgdata}, \texttt{miniodata}) que garantizan la persistencia inalterable de los datos de planes de trabajo y evidencias PDF ante reinicios o despliegues continuos.
-    \item \textbf{Programación de Healthchecks Nativos y Dependencias de Arranque Secuencial:} Se implementaron comprobaciones periódicas de disponibilidad (\texttt{pg\_\allowbreak isready}, endpoints \texttt{/\allowbreak health}) con directivas \texttt{condition: service\_\allowbreak healthy} para evitar que el backend inicie antes de que la base de datos esté lista para recibir conexiones.
+    \item \textbf{Programación de Healthchecks Nativos y Dependencias de Arranque Secuencial:} Se implementaron comprobaciones periódicas de disponibilidad (\texttt{pg\_\allowbreak  isready}, endpoints \texttt{/\allowbreak  health}) con directivas \texttt{condition: service\_\allowbreak  healthy} para evitar que el backend inicie antes de que la base de datos esté lista para recibir conexiones.
 \end{itemize}
 
 \subsection{Matriz de Especificación de Servicios en Docker Compose}
@@ -1167,17 +1167,17 @@ Revisión Gramatical & Motor LanguageTool & 8010 & Aislado & Consulta de catálo
 \rowcolor{tableheader}
 \textbf{Variable de Entorno} & \textbf{Valor Local Parametrizado} & \textbf{Propósito en el Ecosistema} \\
 \hline
-\texttt{DB\_\allowbreak HOST} & \texttt{sige-\allowbreak postgres} & Hostname interno en la red Docker bridge. \\
+\texttt{DB\_\allowbreak  HOST} & \texttt{sige- postgres} & Hostname interno en la red Docker bridge. \\
 \hline
-\texttt{DB\_\allowbreak PORT} & \texttt{5432} & Puerto de conexión a PostgreSQL 18. \\
+\texttt{DB\_\allowbreak  PORT} & \texttt{5432} & Puerto de conexión a PostgreSQL 18. \\
 \hline
-\texttt{DB\_\allowbreak NAME} & \texttt{sige\_\allowbreak sgc\_\allowbreak db} & Nombre de la base de datos relacional. \\
+\texttt{DB\_\allowbreak  NAME} & \texttt{sige\_\allowbreak  sgc\_\allowbreak  db} & Nombre de la base de datos relacional. \\
 \hline
-\texttt{MINIO\_\allowbreak ENDPOINT} & \texttt{sige-\allowbreak minio:9000} & Endpoint interno para API S3 de almacenamiento. \\
+\texttt{MINIO\_\allowbreak  ENDPOINT} & \texttt{sige- minio:9000} & Endpoint interno para API S3 de almacenamiento. \\
 \hline
-\texttt{MINIO\_\allowbreak BUCKET} & \texttt{sige-\allowbreak evidencias} & Bucket privado de almacenamiento de archivos probatorios. \\
+\texttt{MINIO\_\allowbreak  BUCKET} & \texttt{sige- evidencias} & Bucket privado de almacenamiento de archivos probatorios. \\
 \hline
-\texttt{JWT\_\allowbreak SECRET} & \texttt{sige\_\allowbreak uta\_\allowbreak fisei\_\allowbreak secret\_\allowbreak 2026} & Clave privada para firma criptográfica HMAC-SHA256. \\
+\texttt{JWT\_\allowbreak  SECRET} & \texttt{sige\_\allowbreak  uta\_\allowbreak  fisei\_\allowbreak  secret\_\allowbreak  2026} & Clave privada para firma criptográfica HMAC-SHA256. \\
 \hline
 \end{tabularx}
 \caption{Variables de entorno clave para la orquestación local.}
@@ -1192,9 +1192,9 @@ Para garantizar que el sistema SIGE pueda ser desplegado de forma idéntica, rep
 
 El procedimiento de despliegue se estructuró en fases de orquestación técnica:
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Aislamiento en Red Virtualizada Privada (\textit{Bridge Network}):} Se configuró la red virtual \texttt{sige-\allowbreak network}, interconectando los cinco servicios base y bloqueando el acceso externo directo a la base de datos y al almacenamiento S3.
-    \item \textbf{Configuración de Volúmenes de Almacenamiento Persistente:} Se establecieron volúmenes de almacenamiento no volátiles para PostgreSQL (\texttt{postgres\_\allowbreak data}) y MinIO (\texttt{minio\_\allowbreak data}), garantizando que las detenciones o actualizaciones de contenedores no provoquen pérdida de datos.
-    \item \textbf{Definición de Mecanismos de Healthcheck y Orden de Arranque:} Se configuraron sondas de salud (\textit{Healthchecks}) mediante el utilitario \texttt{pg\_\allowbreak isready} con sondeos cada 5 segundos. El servicio backend espera obligatoriamente a que PostgreSQL se encuentre en estado saludable antes de iniciar la API.
+    \item \textbf{Aislamiento en Red Virtualizada Privada (\textit{Bridge Network}):} Se configuró la red virtual \texttt{sige- network}, interconectando los cinco servicios base y bloqueando el acceso externo directo a la base de datos y al almacenamiento S3.
+    \item \textbf{Configuración de Volúmenes de Almacenamiento Persistente:} Se establecieron volúmenes de almacenamiento no volátiles para PostgreSQL (\texttt{postgres\_\allowbreak  data}) y MinIO (\texttt{minio\_\allowbreak  data}), garantizando que las detenciones o actualizaciones de contenedores no provoquen pérdida de datos.
+    \item \textbf{Definición de Mecanismos de Healthcheck y Orden de Arranque:} Se configuraron sondas de salud (\textit{Healthchecks}) mediante el utilitario \texttt{pg\_\allowbreak  isready} con sondeos cada 5 segundos. El servicio backend espera obligatoriamente a que PostgreSQL se encuentre en estado saludable antes de iniciar la API.
     \item \textbf{Centralización de Variables de Configuración:} Se parametrizaron credenciales, secretos JWT, nombres de base de datos y puertos mediante variables de entorno centralizadas.
 \end{enumerate}
 
@@ -1212,9 +1212,9 @@ El procedimiento de despliegue se estructuró en fases de orquestación técnica
 \textbf{Desglose Técnico y Análisis Estructural de la Topología Docker Compose:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Arquitectura de Microservicios Aislados y Puertos Mapeados:} El diagrama detalla la orquestación de los 5 contenedores: frontend en Vite (5173), API Express (3000), base de datos PostgreSQL (5432), MinIO S3 (9000 para API y 9001 para consola web) y LanguageTool local (8010).
-    \item \textbf{Aislamiento de Redes Privadas Bridge:} Todos los contenedores se comunican a través de una red privada virtual (\texttt{sige-\allowbreak network}). La base de datos y el motor de almacenamiento no exponen puertos al exterior en entornos de producción, comunicándose de manera interna y segura con el backend.
+    \item \textbf{Aislamiento de Redes Privadas Bridge:} Todos los contenedores se comunican a través de una red privada virtual (\texttt{sige- network}). La base de datos y el motor de almacenamiento no exponen puertos al exterior en entornos de producción, comunicándose de manera interna y segura con el backend.
     \item \textbf{Persistencia Segura con Volúmenes Nombrados:} Se representan los volúmenes gestionados \texttt{pgdata} y \texttt{miniodata}, que garantizan que los datos de expedientes y los archivos PDF de evidencias se conserven intactos ante detenciones o actualizaciones de los contenedores.
-    \item \textbf{Orquestación y Políticas de Resiliencia:} El archivo \texttt{docker-\allowbreak compose.\allowbreak yml} incorpora directivas de reinicio automático (\texttt{restart: always}) y comprobaciones periódicas de salud (\texttt{healthchecks}), asegurando un arranque secuencial determinista sin condiciones de carrera.
+    \item \textbf{Orquestación y Políticas de Resiliencia:} El archivo \texttt{docker- compose. yml} incorpora directivas de reinicio automático (\texttt{restart: always}) y comprobaciones periódicas de salud (\texttt{healthchecks}), asegurando un arranque secuencial determinista sin condiciones de carrera.
 \end{itemize}
 
 \subsubsection*{3. Matriz Técnica de Variables de Configuración y Parámetros de Entorno}

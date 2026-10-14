@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Diseño de Arquitectura de la Solución (SAD y Modelo C4) -- Código EDT: 2.2
 
@@ -199,7 +195,7 @@ El diseño arquitectónico de SIGE se concibió bajo los principios de desacopla
     \item \textbf{Selección y Justificación del Patrón Clean Architecture:} Se adoptó una arquitectura en cuatro capas concéntricas (Dominio, Casos de Uso, Adaptadores de Interfaz y Frameworks/Drivers), asegurando que las entidades normativas de la FISEI no posean dependencias hacia el motor de persistencia relacional ni bibliotecas de terceros.
     \item \textbf{Formulación y Registro de Decisiones de Arquitectura (ADR-01 a ADR-06):} Se redactaron formalmente seis registros técnicos de decisión: ADR-01 (Clean Architecture), ADR-02 (PostgreSQL 18 con soporte JSONB para secciones de texto enriquecido), ADR-03 (React 19 SPA con Tailwind CSS), ADR-04 (Editor TipTap con autoguardado asíncrono con debounce de 1500 ms), ADR-05 (MinIO S3 para custodia de evidencias) y ADR-06 (Autenticación JWT con rotación de refresh tokens y Argon2id).
     \item \textbf{Modelado de Diagramas de Contexto y Contenedores bajo el Modelo C4:} Se elaboraron las vistas arquitectónicas de Nivel 1 (Contexto de Sistema interactuando con Docentes, Directores y SGA) y Nivel 2 (Contenedores web, API REST Express v5, base de datos PostgreSQL, servidor MinIO y servicio LanguageTool).
-    \item \textbf{Diseño de Políticas de Seguridad Perimetral y Resiliencia:} Se establecieron protocolos de comunicación sobre HTTPS/TLS, interceptación centralizada de errores en Express mediante un error handler unificado y aislamiento de variables de entorno sensibles en archivos \texttt{.\allowbreak env} protegidos.
+    \item \textbf{Diseño de Políticas de Seguridad Perimetral y Resiliencia:} Se establecieron protocolos de comunicación sobre HTTPS/TLS, interceptación centralizada de errores en Express mediante un error handler unificado y aislamiento de variables de entorno sensibles en archivos \texttt{. env} protegidos.
 \end{itemize}
 
 \subsection{Matriz de Decisiones de Arquitectura de Software (ADR-01 a ADR-06)}
@@ -315,9 +311,9 @@ El proceso de ingeniería arquitectónica comprendió:
 \textbf{Desglose Técnico y Análisis Estructural de la Arquitectura de Software:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Desacoplamiento Concéntrico en Cuatro Capas (Clean Architecture):} Se ilustra la Regla de Dependencias: las capas externas (Frameworks y Adaptadores) dependen de las internas (Casos de Uso y Entidades de Dominio), pero el dominio nunca conoce la existencia de PostgreSQL, Express o React.
-    \item \textbf{Topología de Contenedores y Microservicios (Modelo C4 Nivel 2):} El diagrama C4 detalla los 5 servicios orquestados en Docker: \texttt{sige-\allowbreak frontend} (SPA en React 19), \texttt{sige-\allowbreak backend} (API REST en Express v5), \texttt{sige-\allowbreak db} (PostgreSQL 18 con extensiones JSONB y UUID), \texttt{sige-\allowbreak minio} (S3 Object Storage) y \texttt{sige-\allowbreak languagetool} (corrección ortográfica local).
+    \item \textbf{Topología de Contenedores y Microservicios (Modelo C4 Nivel 2):} El diagrama C4 detalla los 5 servicios orquestados en Docker: \texttt{sige- frontend} (SPA en React 19), \texttt{sige- backend} (API REST en Express v5), \texttt{sige- db} (PostgreSQL 18 con extensiones JSONB y UUID), \texttt{sige- minio} (S3 Object Storage) y \texttt{sige- languagetool} (corrección ortográfica local).
     \item \textbf{Canales de Comunicación y Seguridad Perimetral:} Las comunicaciones cliente-servidor operan sobre HTTPS/TLS con tokens JWT en cabeceras de autorización y cookies \texttt{HttpOnly} para refresh tokens; el acceso a MinIO se realiza mediante URLs prefirmadas de vida corta (15 min).
-    \item \textbf{Trazabilidad con el Código Fuente:} Esta arquitectura se materializa en la estructura modular del repositorio: \texttt{backend/\allowbreak src/\allowbreak domain/\allowbreak }, \texttt{backend/\allowbreak src/\allowbreak usecases/\allowbreak }, \texttt{backend/\allowbreak src/\allowbreak adapters/\allowbreak } y \texttt{docker-\allowbreak compose.\allowbreak yml}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Esta arquitectura se materializa en la estructura modular del repositorio: \texttt{backend/\allowbreak  src/\allowbreak  domain/\allowbreak  }, \texttt{backend/\allowbreak  src/\allowbreak  usecases/\allowbreak  }, \texttt{backend/\allowbreak  src/\allowbreak  adapters/\allowbreak  } y \texttt{docker- compose. yml}.
 \end{itemize}
 
 \subsubsection*{3. Matriz Técnica de Servicios, Puertos y Protocolos de Infraestructura}

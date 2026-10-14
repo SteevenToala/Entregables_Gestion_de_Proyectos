@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Diagramas General y Detallado de Casos de Uso del Sistema SIGE -- Código EDT: 2.1
 
@@ -277,7 +273,7 @@ Flujos de Excepción &
     \item \textbf{E2 - Actividad sin Medios de Verificación:} El sistema impide el avance a la etapa de firmas hasta que cada ítem posea al menos un medio auditable.
 \end{itemize} \\
 \hline
-Postcondiciones & La matriz de actividades queda almacenada con integridad relacional en la tabla \texttt{actividades\_\allowbreak matriz}. \\
+Postcondiciones & La matriz de actividades queda almacenada con integridad relacional en la tabla \texttt{actividades\_\allowbreak  matriz}. \\
 \hline
 \end{tabularx}
 \caption{Especificación textual detallada del caso de uso crítico CU-03.}
@@ -323,13 +319,13 @@ Postcondiciones & La matriz de actividades queda almacenada con integridad relac
 \subsection*{Anexo: Evidencias de Modelado y Especificación de Casos de Uso}
 
 \subsubsection*{1. Especificación Formal y Trazabilidad de Casos de Uso}
-Para garantizar que el modelado funcional responda estrictamente a la operativa institucional y no a conjeturas aisladas, los Casos de Uso se derivaron directamente del formato oficial \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} (Plan de Trabajo Docente) y de los 24 Requisitos Funcionales aprobados en la Fase 1.
+Para garantizar que el modelado funcional responda estrictamente a la operativa institucional y no a conjeturas aisladas, los Casos de Uso se derivaron directamente del formato oficial \texttt{UTA- SGC- A- 2- 1- P7- T1} (Plan de Trabajo Docente) y de los 24 Requisitos Funcionales aprobados en la Fase 1.
 
 El desarrollo del modelado se ejecutó en cuatro etapas secuenciales:
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Identificación de Actores Primarios y Secundarios:} A partir del estatuto orgánico de la UTA y la matriz de actores de la FISEI, se formalizaron los roles del sistema: Docente Elaborador (usuario primario de planificación y carga de evidencias), Coordinador de Comisión (revisor de actividades específicas), Coordinador de Carrera (auditor de carga horaria y primer validador), Subdecano (aprobador de facultad) y Administrador SGC (gestor de catálogos y prórrogas).
     \item \textbf{Estructuración del Catálogo de 8 Casos de Uso (CU-01 a CU-08):} Se definieron los límites del sistema agrupando las interacciones en CU-01 (Iniciar Sesión JWT), CU-02 (Elaborar Plan en Wizard), CU-03 (Gestionar Matriz Dinámica 100\%), CU-04 (Custodiar Evidencias en MinIO S3), CU-05 (Revisar Expediente en Comité), CU-06 (Cascada Secuencial de Firmas), CU-07 (Exportar Documento Oficial SGC) y CU-08 (Gestionar Prórrogas Extemporáneas).
-    \item \textbf{Definición de Relaciones de Inclusión y Extensión:} Se identificaron las dependencias funcionales: todos los casos de uso incluyen obligatoriamente la resolución de identidad (\texttt{<<include>> CU-\allowbreak 01}); la elaboración de plan incluye el cálculo automático de 40 horas; y la gestión de extemporaneidad extiende condicionalmente (\texttt{<<extend>> CU-\allowbreak 08}) la edición cuando la fecha actual sobrepasa el cronograma lectivo.
+    \item \textbf{Definición de Relaciones de Inclusión y Extensión:} Se identificaron las dependencias funcionales: todos los casos de uso incluyen obligatoriamente la resolución de identidad (\texttt{<<include>> CU- 01}); la elaboración de plan incluye el cálculo automático de 40 horas; y la gestión de extemporaneidad extiende condicionalmente (\texttt{<<extend>> CU- 08}) la edición cuando la fecha actual sobrepasa el cronograma lectivo.
     \item \textbf{Redacción de Especificaciones Textuales Normalizadas:} Se redactaron fichas detalladas para cada caso de uso declarando precondiciones, flujo principal (\textit{happy path}), flujos alternos de asistencia y flujos de excepción transaccionales.
 \end{enumerate}
 

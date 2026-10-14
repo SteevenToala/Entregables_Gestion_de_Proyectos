@@ -119,7 +119,7 @@ UT-06 & Gate 4 (Firmas) & Firma de Revisor sin firma previa del Elaborador. & Bl
 \end{table}
 
 \subsection{Análisis Técnico de Cobertura de Código y Confiabilidad}
-El análisis de cobertura de código (\textit{Code Coverage}) se ejecutó sobre la totalidad de los archivos de lógica de negocio, validadores y utilitarios del backend. Para garantizar que ningún escenario crítico quede sin evaluación, se emplearon cuatro criterios complementarios: cobertura de sentencias, cobertura de ramas condicionales, cobertura de funciones y cobertura de líneas ejecutadas. La cobertura de ramas alcanzó el 88.7\%, garantizando que todas las bifurcaciones lógicas de las compuertas de validación (\texttt{if/\allowbreak else}, operadores ternarios y validaciones de rango) cuenten con casos de prueba positivos y negativos.
+El análisis de cobertura de código (\textit{Code Coverage}) se ejecutó sobre la totalidad de los archivos de lógica de negocio, validadores y utilitarios del backend. Para garantizar que ningún escenario crítico quede sin evaluación, se emplearon cuatro criterios complementarios: cobertura de sentencias, cobertura de ramas condicionales, cobertura de funciones y cobertura de líneas ejecutadas. La cobertura de ramas alcanzó el 88.7\%, garantizando que todas las bifurcaciones lógicas de las compuertas de validación (\texttt{if/\allowbreak  else}, operadores ternarios y validaciones de rango) cuenten con casos de prueba positivos y negativos.
 
 \begin{table}[H]
 \centering
@@ -173,7 +173,7 @@ A continuación se presentan las capturas reales de la consola de ejecución de 
 \textbf{Desglose Técnico y Análisis de Resultados de Pruebas Unitarias:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Resultados de la Terminal de Pruebas Jest y Supertest:} La captura superior documenta la ejecución de la suite automatizada sobre los controladores de backend. Se evidencia la superación del 100\% de las 35 pruebas unitarias (\textit{35 passed, 0 failed}) en un tiempo neto de ejecución de 2.84 segundos.
-    \item \textbf{Aislamiento y Arquitectura del Arnés de Pruebas (Mocks):} El diagrama inferior ilustra el desacoplamiento implementado: las pruebas unitarias aíslan por completo la capa de lógica de negocio mediante mocks deterministas de persistencia (\texttt{pg-\allowbreak promise}) y del cliente de objetos S3 (\texttt{minioClient}), permitiendo verificar el cálculo algorítmico sin efectos colaterales en la base de datos real.
+    \item \textbf{Aislamiento y Arquitectura del Arnés de Pruebas (Mocks):} El diagrama inferior ilustra el desacoplamiento implementado: las pruebas unitarias aíslan por completo la capa de lógica de negocio mediante mocks deterministas de persistencia (\texttt{pg- promise}) y del cliente de objetos S3 (\texttt{minioClient}), permitiendo verificar el cálculo algorítmico sin efectos colaterales en la base de datos real.
     \item \textbf{Cobertura Instrumental de Código (Code Coverage):} Se certifica un 92.4\% de cobertura en sentencias (\textit{statements}), 88.7\% en ramas de decisión condicional (\textit{branches}) y 94.1\% en funciones de cálculo de carga horaria y ponderación de la matriz dinámica.
     \item \textbf{Validación de Casos de Borde y Reglas RRA:} Las pruebas automatizadas verifican que sumatorias de 39.5h o 40.5h disparen de inmediato el error de bloqueo con código HTTP 422, garantizando la inviolabilidad del límite de 40.0 horas semanales establecido en la normativa universitaria.
 \end{itemize}
@@ -282,8 +282,8 @@ La validación de seguridad de caja gris y las pruebas de integración de extrem
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Diseño y Ejecución de la Suite de Pruebas de Integración con Supertest:} Se automatizaron escenarios de prueba sobre los endpoints de la API REST de Express v5, simulando el ciclo completo del documento desde la autenticación, creación del borrador y persistencia en lote de la matriz, hasta la emisión de firmas y exportación en PDF.
     \item \textbf{Auditoría de Vulnerabilidades Web según el Estándar OWASP Top 10:2021:} Se aplicaron pruebas de penetración sobre la interfaz web y los controladores backend, evaluando la resistencia frente a inyección SQL, control de acceso roto (Broken Access Control), fallas criptográficas y exposición indebida de datos.
-    \item \textbf{Simulación de Vectores de Inyección SQL y Tampering de Tokens JWT:} Se verificó que el uso de consultas parametrizadas en \texttt{pg-\allowbreak promise} y la firma criptográfica HMAC-SHA256 de los tokens impidan cualquier escalamiento no autorizado de privilegios o alteración del identificador de usuario (\texttt{user\_\allowbreak id}).
-    \item \textbf{Inspección de Cabeceras de Seguridad HTTP y Políticas CORS:} Se configuró e inspeccionó el middleware \texttt{helmet}, verificando la aplicación de Content Security Policy (CSP), protección contra ataques de clickjacking (\texttt{X-\allowbreak Frame-\allowbreak Options: DENY}) y restricción estricta de orígenes permitidos en llamadas asíncronas.
+    \item \textbf{Simulación de Vectores de Inyección SQL y Tampering de Tokens JWT:} Se verificó que el uso de consultas parametrizadas en \texttt{pg- promise} y la firma criptográfica HMAC-SHA256 de los tokens impidan cualquier escalamiento no autorizado de privilegios o alteración del identificador de usuario (\texttt{user\_\allowbreak  id}).
+    \item \textbf{Inspección de Cabeceras de Seguridad HTTP y Políticas CORS:} Se configuró e inspeccionó el middleware \texttt{helmet}, verificando la aplicación de Content Security Policy (CSP), protección contra ataques de clickjacking (\texttt{X- Frame- Options: DENY}) y restricción estricta de orígenes permitidos en llamadas asíncronas.
 \end{itemize}
 
 \subsection{Matriz Oficial de Evaluación OWASP Top 10:2021 en SIGE}
@@ -354,9 +354,9 @@ Las comprobaciones técnicas incluyeron:
 \textbf{Desglose Técnico y Análisis Estructural de Seguridad OWASP Top 10:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Control de Acceso Basado en Roles (RBAC) y Seguridad JWT:} El diagrama ilustra el flujo de intercepción en Express v5: cada solicitud entrante debe presentar un token Bearer firmado con HMAC-SHA256; el middleware extrae el payload con el rol institucional del usuario y valida los permisos de acceso antes de autorizar la ejecución del controlador.
-    \item \textbf{Mitigación de Inyecciones SQL (A03:2021):} La arquitectura garantiza que el 100\% de las consultas hacia PostgreSQL 18 emplean parámetros bindeados (\texttt{\$1, \$2}) mediante \texttt{pg-\allowbreak promise}, imposibilitando cualquier manipulación o inyección de código SQL malicioso.
+    \item \textbf{Mitigación de Inyecciones SQL (A03:2021):} La arquitectura garantiza que el 100\% de las consultas hacia PostgreSQL 18 emplean parámetros bindeados (\texttt{\$1, \$2}) mediante \texttt{pg- promise}, imposibilitando cualquier manipulación o inyección de código SQL malicioso.
     \item \textbf{Protección contra Tampering y Ataques XSS en TipTap (A08:2021):} Se desglosa el protocolo de sanitización aplicado sobre los contenidos JSONB: el backend valida y filtra etiquetas HTML maliciosas antes de almacenar el texto enriquecido en la base de datos.
-    \item \textbf{Directivas de Seguridad HTTP con Helmet (A05:2021):} Se verifica la configuración activa de cabeceras seguras: Content Security Policy (CSP), \texttt{X-\allowbreak Frame-\allowbreak Options: DENY} para prevenir clickjacking y cookies HttpOnly con flags \texttt{SameSite=Strict} para mitigar ataques CSRF.
+    \item \textbf{Directivas de Seguridad HTTP con Helmet (A05:2021):} Se verifica la configuración activa de cabeceras seguras: Content Security Policy (CSP), \texttt{X- Frame- Options: DENY} para prevenir clickjacking y cookies HttpOnly con flags \texttt{SameSite=Strict} para mitigar ataques CSRF.
 \end{itemize}
 
 \subsubsection*{3. Matriz de Ensayos Operativos de Penetración y Verificación de Seguridad}
@@ -462,7 +462,7 @@ La evaluación de la usabilidad y la accesibilidad web se orientó a certificar 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Auditoría Automatizada de Accesibilidad Web con Motor Axe-Core y Lighthouse:} Se ejecutaron análisis estáticos y dinámicos sobre las vistas clave de la aplicación (Dashboard, Asistente Wizard, Matriz de Actividades y Bandeja de Observaciones), alcanzando un índice de cumplimiento superior al 95\%.
     \item \textbf{Evaluación Heurística de Usabilidad basada en los 10 Principios de Nielsen:} Se inspeccionó la interacción del usuario en el Asistente Wizard, validando la visibilidad del estado del sistema mediante el Stepper visual, la consistencia terminológica con el SGC institucional y la prevención proactiva de errores de cálculo.
-    \item \textbf{Pruebas de Navegación Exclusiva por Teclado y Tecnologías de Asistencia:} Se comprobó la operabilidad del sistema prescindiendo del ratón, garantizando un orden lógico de tabulación en los formularios y la compatibilidad con el lector de pantalla NVDA mediante el uso de etiquetas semánticas ARIA (\texttt{aria-\allowbreak live}, \texttt{aria-\allowbreak describedby}).
+    \item \textbf{Pruebas de Navegación Exclusiva por Teclado y Tecnologías de Asistencia:} Se comprobó la operabilidad del sistema prescindiendo del ratón, garantizando un orden lógico de tabulación en los formularios y la compatibilidad con el lector de pantalla NVDA mediante el uso de etiquetas semánticas ARIA (\texttt{aria- live}, \texttt{aria- describedby}).
     \item \textbf{Comprobación Espectral de Ratios de Contraste Cromático bajo Norma WCAG 2.1 AA:} Se certificó que el color primario institucional (\#8B1D24 Rojo UTA) presenta una relación de contraste de 7.2:1 frente al fondo blanco, superando con holgura el umbral mínimo de 4.5:1 exigido para texto normal.
 \end{itemize}
 
@@ -508,8 +508,8 @@ El desarrollo del frontend del sistema SIGE priorizó la eliminación de fricci�
 Los aspectos técnicos implementados incluyen:
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Navegación Total por Teclado:} Cada elemento interactivo (botones, inputs, selectores y pestañas) posee un orden de tabulación predecible (\textit{tabindex}), con indicadores de foco visibles de alto contraste para facilitar la navegación a personas con dificultades motoras o visuales.
-    \item \textbf{Semántica Accesible ARIA:} Se incorporaron atributos \texttt{aria-\allowbreak selected}, \texttt{aria-\allowbreak expanded} y roles de diálogo en modales para asegurar la compatibilidad con tecnologías de asistencia y lectores de pantalla (NVDA, JAWS).
-    \item \textbf{Manejo Reactivo de Alertas:} Las alertas del sistema emplean regiones de anuncio dinámico (\texttt{aria-\allowbreak live="polite"}), permitiendo que los errores de las Validation Gates sean comunicados sin interrumpir abruptamente el foco del usuario.
+    \item \textbf{Semántica Accesible ARIA:} Se incorporaron atributos \texttt{aria- selected}, \texttt{aria- expanded} y roles de diálogo en modales para asegurar la compatibilidad con tecnologías de asistencia y lectores de pantalla (NVDA, JAWS).
+    \item \textbf{Manejo Reactivo de Alertas:} Las alertas del sistema emplean regiones de anuncio dinámico (\texttt{aria- live="polite"}), permitiendo que los errores de las Validation Gates sean comunicados sin interrumpir abruptamente el foco del usuario.
     \item \textbf{Diseño Adaptable Multiresolución:} El layout se ajusta dinámicamente mediante breakpoints CSS fluidos, reorganizando la barra lateral y los paneles de métricas para optimizar el espacio útil en pantallas panorámicas y portátiles docentes.
 \end{itemize}
 
@@ -529,8 +529,8 @@ A continuación se presentan capturas del sistema en funcionamiento real, eviden
 \textbf{Desglose Técnico y Análisis Estructural de Usabilidad y Accesibilidad (WCAG 2.1 AA):}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Arquitectura Visual del Dashboard y Feedback Cognitivo:} La captura superior ilustra la pantalla principal recibida por el docente: tarjetas de balance horaria semanal en tiempo real, accesos directos al Wizard y listado de planes activos con indicadores semánticos de estado que reducen la sobrecarga cognitiva del usuario.
-    \item \textbf{Simulación de Formato Oficial A4 en Tiempo Real:} La segunda captura muestra la vista de edición modular en TipTap, donde el docente redacta sobre un lienzo con dimensiones y márgenes idénticos a la plantilla física oficial \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}, eliminando la desconfiguración visual al momento de exportar a PDF.
-    \item \textbf{Navegación por Teclado y Tecnologías de Asistencia:} Se certifica el soporte completo para lectores de pantalla (NVDA) mediante etiquetas semánticas ARIA (\texttt{aria-\allowbreak live}, \texttt{aria-\allowbreak describedby}) y una secuencia lógica de tabulación en todos los formularios modulares sin requerir el uso de ratón.
+    \item \textbf{Simulación de Formato Oficial A4 en Tiempo Real:} La segunda captura muestra la vista de edición modular en TipTap, donde el docente redacta sobre un lienzo con dimensiones y márgenes idénticos a la plantilla física oficial \texttt{UTA- SGC- A- 2- 1- P7- T1}, eliminando la desconfiguración visual al momento de exportar a PDF.
+    \item \textbf{Navegación por Teclado y Tecnologías de Asistencia:} Se certifica el soporte completo para lectores de pantalla (NVDA) mediante etiquetas semánticas ARIA (\texttt{aria- live}, \texttt{aria- describedby}) y una secuencia lógica de tabulación en todos los formularios modulares sin requerir el uso de ratón.
     \item \textbf{Verificación Espectral de Contraste Cromático:} La medición instrumental certifica que el color primario corporativo (\#8B1D24 Rojo UTA) presenta una relación de contraste de 7.2:1 frente a fondos blancos, superando con holgura el mínimo de 4.5:1 exigido para el nivel AA de la norma ISO/IEC 40500.
 \end{itemize}
 

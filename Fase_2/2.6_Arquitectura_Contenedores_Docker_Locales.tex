@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Arquitectura de Contenedores y Docker Compose Local -- Código EDT: 2.6
 
@@ -182,7 +178,7 @@ Diseñar, configurar y validar la arquitectura de infraestructura contenerizada 
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada \texttt{sige\_\allowbreak network}, en la cual los servicios de datos (\texttt{sige-\allowbreak postgres} y \texttt{sige-\allowbreak minio}) no exponen puertos sensibles de administración hacia redes no confiables. Se configuraron construcciones multietapa (\textit{multi-stage builds}) para el frontend en React, separando la fase de compilación con Node.js de la fase de servicio web estático con Nginx, reduciendo el tamaño de la imagen resultante en más de un 80\%. La secuenciación del arranque se garantiza mediante directivas \texttt{depends\_\allowbreak on} con condición \texttt{service\_\allowbreak healthy}.
+Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada \texttt{sige\_\allowbreak  network}, en la cual los servicios de datos (\texttt{sige- postgres} y \texttt{sige- minio}) no exponen puertos sensibles de administración hacia redes no confiables. Se configuraron construcciones multietapa (\textit{multi-stage builds}) para el frontend en React, separando la fase de compilación con Node.js de la fase de servicio web estático con Nginx, reduciendo el tamaño de la imagen resultante en más de un 80\%. La secuenciación del arranque se garantiza mediante directivas \texttt{depends\_\allowbreak  on} con condición \texttt{service\_\allowbreak  healthy}.
 
 \subsection{Políticas de Calidad de Infraestructura Contenerizada}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -196,10 +192,10 @@ Se estructuró una arquitectura de red tipo puente (\textit{bridge}) denominada 
 La definición de la arquitectura de contenedores permitió crear un entorno de despliegue local reproducible, aislado y altamente confiable mediante Docker Compose. Las actividades de infraestructura y DevOps comprendieron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
-    \item \textbf{Diseño de la Topología Multi-Contenedor en Docker Compose:} Se definieron cinco microservicios contenerizados independientes: \texttt{sige-\allowbreak frontend} (Node.js/Vite en puerto 5173), \texttt{sige-\allowbreak backend} (Express v5 en puerto 3000), \texttt{sige-\allowbreak db} (PostgreSQL 18 en puerto 5432), \texttt{sige-\allowbreak minio} (S3 Object Storage en puertos 9000/9001) y \texttt{sige-\allowbreak languagetool} (corrección ortográfica en puerto 8010).
-    \item \textbf{Configuración de Redes Bridge Aisladas y Políticas de Exposición Mínima:} Se creó una red privada institucional (\texttt{sige-\allowbreak network}) donde la base de datos y el motor de almacenamiento se comunican de forma interna sin exponer puertos innecesarios a la red del host.
+    \item \textbf{Diseño de la Topología Multi-Contenedor en Docker Compose:} Se definieron cinco microservicios contenerizados independientes: \texttt{sige- frontend} (Node.js/Vite en puerto 5173), \texttt{sige- backend} (Express v5 en puerto 3000), \texttt{sige- db} (PostgreSQL 18 en puerto 5432), \texttt{sige- minio} (S3 Object Storage en puertos 9000/9001) y \texttt{sige- languagetool} (corrección ortográfica en puerto 8010).
+    \item \textbf{Configuración de Redes Bridge Aisladas y Políticas de Exposición Mínima:} Se creó una red privada institucional (\texttt{sige- network}) donde la base de datos y el motor de almacenamiento se comunican de forma interna sin exponer puertos innecesarios a la red del host.
     \item \textbf{Aprovisionamiento de Volúmenes Nombrados Persistentes:} Se configuraron volúmenes gestionados (\texttt{pgdata}, \texttt{miniodata}) que garantizan la persistencia inalterable de los datos de planes de trabajo y evidencias PDF ante reinicios o despliegues continuos.
-    \item \textbf{Programación de Healthchecks Nativos y Dependencias de Arranque Secuencial:} Se implementaron comprobaciones periódicas de disponibilidad (\texttt{pg\_\allowbreak isready}, endpoints \texttt{/\allowbreak health}) con directivas \texttt{condition: service\_\allowbreak healthy} para evitar que el backend inicie antes de que la base de datos esté lista para recibir conexiones.
+    \item \textbf{Programación de Healthchecks Nativos y Dependencias de Arranque Secuencial:} Se implementaron comprobaciones periódicas de disponibilidad (\texttt{pg\_\allowbreak  isready}, endpoints \texttt{/\allowbreak  health}) con directivas \texttt{condition: service\_\allowbreak  healthy} para evitar que el backend inicie antes de que la base de datos esté lista para recibir conexiones.
 \end{itemize}
 
 \subsection{Matriz de Especificación de Servicios en Docker Compose}
@@ -239,17 +235,17 @@ Revisión Gramatical & Motor LanguageTool & 8010 & Aislado & Consulta de catálo
 \rowcolor{tableheader}
 \textbf{Variable de Entorno} & \textbf{Valor Local Parametrizado} & \textbf{Propósito en el Ecosistema} \\
 \hline
-\texttt{DB\_\allowbreak HOST} & \texttt{sige-\allowbreak postgres} & Hostname interno en la red Docker bridge. \\
+\texttt{DB\_\allowbreak  HOST} & \texttt{sige- postgres} & Hostname interno en la red Docker bridge. \\
 \hline
-\texttt{DB\_\allowbreak PORT} & \texttt{5432} & Puerto de conexión a PostgreSQL 18. \\
+\texttt{DB\_\allowbreak  PORT} & \texttt{5432} & Puerto de conexión a PostgreSQL 18. \\
 \hline
-\texttt{DB\_\allowbreak NAME} & \texttt{sige\_\allowbreak sgc\_\allowbreak db} & Nombre de la base de datos relacional. \\
+\texttt{DB\_\allowbreak  NAME} & \texttt{sige\_\allowbreak  sgc\_\allowbreak  db} & Nombre de la base de datos relacional. \\
 \hline
-\texttt{MINIO\_\allowbreak ENDPOINT} & \texttt{sige-\allowbreak minio:9000} & Endpoint interno para API S3 de almacenamiento. \\
+\texttt{MINIO\_\allowbreak  ENDPOINT} & \texttt{sige- minio:9000} & Endpoint interno para API S3 de almacenamiento. \\
 \hline
-\texttt{MINIO\_\allowbreak BUCKET} & \texttt{sige-\allowbreak evidencias} & Bucket privado de almacenamiento de archivos probatorios. \\
+\texttt{MINIO\_\allowbreak  BUCKET} & \texttt{sige- evidencias} & Bucket privado de almacenamiento de archivos probatorios. \\
 \hline
-\texttt{JWT\_\allowbreak SECRET} & \texttt{sige\_\allowbreak uta\_\allowbreak fisei\_\allowbreak secret\_\allowbreak 2026} & Clave privada para firma criptográfica HMAC-SHA256. \\
+\texttt{JWT\_\allowbreak  SECRET} & \texttt{sige\_\allowbreak  uta\_\allowbreak  fisei\_\allowbreak  secret\_\allowbreak  2026} & Clave privada para firma criptográfica HMAC-SHA256. \\
 \hline
 \end{tabularx}
 \caption{Variables de entorno clave para la orquestación local.}
@@ -298,9 +294,9 @@ Para garantizar que el sistema SIGE pueda ser desplegado de forma idéntica, rep
 
 El procedimiento de despliegue se estructuró en fases de orquestación técnica:
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Aislamiento en Red Virtualizada Privada (\textit{Bridge Network}):} Se configuró la red virtual \texttt{sige-\allowbreak network}, interconectando los cinco servicios base y bloqueando el acceso externo directo a la base de datos y al almacenamiento S3.
-    \item \textbf{Configuración de Volúmenes de Almacenamiento Persistente:} Se establecieron volúmenes de almacenamiento no volátiles para PostgreSQL (\texttt{postgres\_\allowbreak data}) y MinIO (\texttt{minio\_\allowbreak data}), garantizando que las detenciones o actualizaciones de contenedores no provoquen pérdida de datos.
-    \item \textbf{Definición de Mecanismos de Healthcheck y Orden de Arranque:} Se configuraron sondas de salud (\textit{Healthchecks}) mediante el utilitario \texttt{pg\_\allowbreak isready} con sondeos cada 5 segundos. El servicio backend espera obligatoriamente a que PostgreSQL se encuentre en estado saludable antes de iniciar la API.
+    \item \textbf{Aislamiento en Red Virtualizada Privada (\textit{Bridge Network}):} Se configuró la red virtual \texttt{sige- network}, interconectando los cinco servicios base y bloqueando el acceso externo directo a la base de datos y al almacenamiento S3.
+    \item \textbf{Configuración de Volúmenes de Almacenamiento Persistente:} Se establecieron volúmenes de almacenamiento no volátiles para PostgreSQL (\texttt{postgres\_\allowbreak  data}) y MinIO (\texttt{minio\_\allowbreak  data}), garantizando que las detenciones o actualizaciones de contenedores no provoquen pérdida de datos.
+    \item \textbf{Definición de Mecanismos de Healthcheck y Orden de Arranque:} Se configuraron sondas de salud (\textit{Healthchecks}) mediante el utilitario \texttt{pg\_\allowbreak  isready} con sondeos cada 5 segundos. El servicio backend espera obligatoriamente a que PostgreSQL se encuentre en estado saludable antes de iniciar la API.
     \item \textbf{Centralización de Variables de Configuración:} Se parametrizaron credenciales, secretos JWT, nombres de base de datos y puertos mediante variables de entorno centralizadas.
 \end{enumerate}
 
@@ -318,9 +314,9 @@ El procedimiento de despliegue se estructuró en fases de orquestación técnica
 \textbf{Desglose Técnico y Análisis Estructural de la Topología Docker Compose:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Arquitectura de Microservicios Aislados y Puertos Mapeados:} El diagrama detalla la orquestación de los 5 contenedores: frontend en Vite (5173), API Express (3000), base de datos PostgreSQL (5432), MinIO S3 (9000 para API y 9001 para consola web) y LanguageTool local (8010).
-    \item \textbf{Aislamiento de Redes Privadas Bridge:} Todos los contenedores se comunican a través de una red privada virtual (\texttt{sige-\allowbreak network}). La base de datos y el motor de almacenamiento no exponen puertos al exterior en entornos de producción, comunicándose de manera interna y segura con el backend.
+    \item \textbf{Aislamiento de Redes Privadas Bridge:} Todos los contenedores se comunican a través de una red privada virtual (\texttt{sige- network}). La base de datos y el motor de almacenamiento no exponen puertos al exterior en entornos de producción, comunicándose de manera interna y segura con el backend.
     \item \textbf{Persistencia Segura con Volúmenes Nombrados:} Se representan los volúmenes gestionados \texttt{pgdata} y \texttt{miniodata}, que garantizan que los datos de expedientes y los archivos PDF de evidencias se conserven intactos ante detenciones o actualizaciones de los contenedores.
-    \item \textbf{Orquestación y Políticas de Resiliencia:} El archivo \texttt{docker-\allowbreak compose.\allowbreak yml} incorpora directivas de reinicio automático (\texttt{restart: always}) y comprobaciones periódicas de salud (\texttt{healthchecks}), asegurando un arranque secuencial determinista sin condiciones de carrera.
+    \item \textbf{Orquestación y Políticas de Resiliencia:} El archivo \texttt{docker- compose. yml} incorpora directivas de reinicio automático (\texttt{restart: always}) y comprobaciones periódicas de salud (\texttt{healthchecks}), asegurando un arranque secuencial determinista sin condiciones de carrera.
 \end{itemize}
 
 \subsubsection*{3. Matriz Técnica de Variables de Configuración y Parámetros de Entorno}

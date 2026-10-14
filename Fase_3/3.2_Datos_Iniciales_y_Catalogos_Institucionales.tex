@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Datos Iniciales y Catálogos Institucionales -- Código EDT: 3.2
 
@@ -192,7 +188,7 @@ El poblado de catálogos y datos maestros dotó al sistema de la estructura oper
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Recopilación y Normalización de Catálogos de la Facultad:} Se consolidó la información oficial de las 5 carreras de ingeniería de la FISEI (Software, Tecnologías de la Información, Industrial, Telecomunicaciones, Automatización y Robótica), asignando sus códigos institucionales y directores de carrera autorizados.
     \item \textbf{Estructuración del Catálogo de 14 Comisiones Académicas:} Se registraron las 14 comisiones permanentes establecidas en el estatuto de la facultad (Evaluación Interna, Vinculación, Investigación, Titulación, Prácticas Preprofesionales, etc.), permitiendo que los docentes vinculen sus horas de gestión conforme a la normativa universitaria.
-    \item \textbf{Carga y Tipificación del Claustro Docente:} Se procesaron las cuentas de los 120 docentes de la facultad, clasificándolos por dedicación horaria (Tiempo Completo 40h y Medio Tiempo 20h) y tipo de relación laboral (Titulares y Ocasionales), asociando sus correos institucionales (\texttt{@uta.\allowbreak edu.\allowbreak ec}).
+    \item \textbf{Carga y Tipificación del Claustro Docente:} Se procesaron las cuentas de los 120 docentes de la facultad, clasificándolos por dedicación horaria (Tiempo Completo 40h y Medio Tiempo 20h) y tipo de relación laboral (Titulares y Ocasionales), asociando sus correos institucionales (\texttt{@uta. edu. ec}).
     \item \textbf{Parametrización del Período Académico Activo B26:} Se configuró el ciclo semestral oficial correspondiente a Septiembre 2026 -- Febrero 2027, definiendo las fechas de inicio, corte medio término y entrega de informes de cumplimiento.
     \item \textbf{Construcción del Script Idempotente de Semilla (seed.sql):} Se implementaron sentencias \texttt{INSERT ... ON CONFLICT (codigo) DO NOTHING} encapsuladas en transacciones ACID, garantizando que el script pueda ejecutarse en cualquier entorno sin duplicar datos ni corromper llaves foráneas.
 \end{itemize}
@@ -212,9 +208,9 @@ Facultad & 1 & FISEI (Facultad de Ingeniería en Sistemas, Electrónica e Indust
 \hline
 Carreras & 4 & Software, Tecnologías de la Información, Telecomunicaciones, Computación & Activos \\
 \hline
-Roles RBAC & 5 & \texttt{DOCENTE}, \texttt{COORD\_\allowbreak AREA}, \texttt{COORD\_\allowbreak CARRERA}, \texttt{SUBDECANO}, \texttt{ADMIN\_\allowbreak SGC} & Activos \\
+Roles RBAC & 5 & \texttt{DOCENTE}, \texttt{COORD\_\allowbreak  AREA}, \texttt{COORD\_\allowbreak  CARRERA}, \texttt{SUBDECANO}, \texttt{ADMIN\_\allowbreak  SGC} & Activos \\
 \hline
-Periodo Académico & 1 & Octubre 2026 -- Febrero 2027 (Código: \texttt{2026-\allowbreak B}) & Vigente \\
+Periodo Académico & 1 & Octubre 2026 -- Febrero 2027 (Código: \texttt{2026- B}) & Vigente \\
 \hline
 Actividades SGC & 12 & Cátedra, Preparación, Tutorías Académicas, Proyectos de Investigación, etc. & Homologadas \\
 \hline
@@ -233,15 +229,15 @@ Actividades SGC & 12 & Cátedra, Preparación, Tutorías Académicas, Proyectos 
 \rowcolor{tableheader}
 \textbf{Rol Institucional} & \textbf{Correo Institucional de Prueba} & \textbf{Ámbito de Permisos / Facultad} \\
 \hline
-Docente Titular & \texttt{docente@uta.\allowbreak edu.\allowbreak ec} & Elaboración y edición de planes de trabajo propios. \\
+Docente Titular & \texttt{docente@uta. edu. ec} & Elaboración y edición de planes de trabajo propios. \\
 \hline
-Coordinador de Área & \texttt{coord.\allowbreak area@uta.\allowbreak edu.\allowbreak ec} & Revisión técnica y emisión de observaciones de área. \\
+Coordinador de Área & \texttt{coord. area@uta. edu. ec} & Revisión técnica y emisión de observaciones de área. \\
 \hline
-Coordinador de Carrera & \texttt{coordinador@uta.\allowbreak edu.\allowbreak ec} & Aprobación en primera instancia y firma digital. \\
+Coordinador de Carrera & \texttt{coordinador@uta. edu. ec} & Aprobación en primera instancia y firma digital. \\
 \hline
-Subdecano & \texttt{subdecano@uta.\allowbreak edu.\allowbreak ec} & Legalización en Consejo Directivo y cierre de plan. \\
+Subdecano & \texttt{subdecano@uta. edu. ec} & Legalización en Consejo Directivo y cierre de plan. \\
 \hline
-Administrador SGC & \texttt{admin@uta.\allowbreak edu.\allowbreak ec} & Gestión de usuarios, periodos y prórrogas extemporáneas. \\
+Administrador SGC & \texttt{admin@uta. edu. ec} & Gestión de usuarios, periodos y prórrogas extemporáneas. \\
 \hline
 \end{tabularx}
 \caption{Cuentas institucionales base para verificación de perfiles.}
@@ -287,11 +283,11 @@ Administrador SGC & \texttt{admin@uta.\allowbreak edu.\allowbreak ec} & Gestión
 El poblado de catálogos y datos maestros constituyó el hito indispensable para dotar al sistema de los datos institucionales reales de la FISEI. La información no fue inventada ni simulada de forma arbitraria; se obtuvo formalmente de los registros del Sistema de Gestión de Calidad (SGC) de la facultad y resoluciones vigentes del Consejo Directivo. El procedimiento de carga comprendió:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Mapeo de las 5 Carreras Oficiales de la FISEI:} Se estructuraron los registros para las 5 carreras de ingeniería vigentes: Software (código \texttt{ING-\allowbreak SOF}), Tecnologías de la Información (\texttt{ING-\allowbreak INF}), Industrial (\texttt{ING-\allowbreak IND}), Telecomunicaciones (\texttt{ING-\allowbreak TEL}) y Automatización y Robótica (\texttt{ING-\allowbreak AUT}), vinculando los directores de carrera asignados por decanato.
+    \item \textbf{Mapeo de las 5 Carreras Oficiales de la FISEI:} Se estructuraron los registros para las 5 carreras de ingeniería vigentes: Software (código \texttt{ING- SOF}), Tecnologías de la Información (\texttt{ING- INF}), Industrial (\texttt{ING- IND}), Telecomunicaciones (\texttt{ING- TEL}) y Automatización y Robótica (\texttt{ING- AUT}), vinculando los directores de carrera asignados por decanato.
     \item \textbf{Catalogación de las 14 Comisiones Académicas Permanentes:} Se cargaron las 14 comisiones institucionales de apoyo a la docencia (Evaluación Interna, Vinculación con la Sociedad, Investigación y Posgrados, Titulación y Grado, Prácticas Preprofesionales, etc.), garantizando que los docentes puedan vincular sus horas de gestión conforme al RRA.
-    \item \textbf{Carga del Claustro Docente de la Facultad:} Se registraron los 120 docentes activos de la planta de la FISEI clasificados por dedicación horaria (Tiempo Completo 40h y Medio Tiempo 20h) y tipo de nombramiento (Titular u Ocasional), asociándoles cuentas de usuario con correos institucionales (\texttt{@uta.\allowbreak edu.\allowbreak ec}).
+    \item \textbf{Carga del Claustro Docente de la Facultad:} Se registraron los 120 docentes activos de la planta de la FISEI clasificados por dedicación horaria (Tiempo Completo 40h y Medio Tiempo 20h) y tipo de nombramiento (Titular u Ocasional), asociándoles cuentas de usuario con correos institucionales (\texttt{@uta. edu. ec}).
     \item \textbf{Definición del Período Académico Oficial B26:} Se configuró el ciclo semestral activo correspondiente al período Septiembre 2026 -- Febrero 2027 (código \texttt{B26}), con sus hitos temporales reglamentarios: fecha límite de entrega de planes, fecha de corte de avance medio término y fecha de entrega de informes de cumplimiento.
-    \item \textbf{Construcción de Script Idempotente \texttt{seed.\allowbreak sql}:} Para permitir la ejecución repetible del script en entornos locales o de pruebas sin generar registros duplicados, se utilizaron cláusulas \texttt{ON CONFLICT (codigo) DO NOTHING} encapsuladas dentro de una transacción atómica \texttt{BEGIN ... COMMIT}.
+    \item \textbf{Construcción de Script Idempotente \texttt{seed. sql}:} Para permitir la ejecución repetible del script en entornos locales o de pruebas sin generar registros duplicados, se utilizaron cláusulas \texttt{ON CONFLICT (codigo) DO NOTHING} encapsuladas dentro de una transacción atómica \texttt{BEGIN ... COMMIT}.
 \end{enumerate}
 
 \subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
@@ -304,10 +300,10 @@ El poblado de catálogos y datos maestros constituyó el hito indispensable para
 
 \subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Elementos Estructurales Visualizados:} La imagen documenta la ejecución del script de poblado \texttt{01\_\allowbreak master\_\allowbreak catalog.\allowbreak sql}. Se evidencia la inserción automatizada de los registros maestros de la facultad: 5 carreras oficiales, 14 comisiones académicas permanentes y 120 docentes con sus correos institucionales (\texttt{@uta.\allowbreak edu.\allowbreak ec}).
+    \item \textbf{Elementos Estructurales Visualizados:} La imagen documenta la ejecución del script de poblado \texttt{01\_\allowbreak  master\_\allowbreak  catalog. sql}. Se evidencia la inserción automatizada de los registros maestros de la facultad: 5 carreras oficiales, 14 comisiones académicas permanentes y 120 docentes con sus correos institucionales (\texttt{@uta. edu. ec}).
     \item \textbf{Verificación Forense de Integridad Referencial:} La salida de la terminal muestra las consultas de verificación ejecutadas sobre las tablas \texttt{carreras}, \texttt{comisiones} y \texttt{users}, certificando que no existen registros huérfanos y que cada comisión está debidamente vinculada a su carrera correspondiente.
     \item \textbf{Alineación con la Estructura Orgánica de la FISEI:} El catálogo de comisiones reproduce exactamente la estructura departamental aprobada por el Consejo Directivo, garantizando que el sistema reconozca a las comisiones de Vinculación, Prácticas, Titulación e Investigación.
-    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde a los scripts de carga inicial \texttt{backend/\allowbreak src/\allowbreak database/\allowbreak seeds/\allowbreak 01\_\allowbreak master\_\allowbreak catalog.\allowbreak sql} y al script ejecutor \texttt{seed.\allowbreak js}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde a los scripts de carga inicial \texttt{backend/\allowbreak  src/\allowbreak  database/\allowbreak  seeds/\allowbreak  01\_\allowbreak  master\_\allowbreak  catalog. sql} y al script ejecutor \texttt{seed. js}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional y Pruebas de Carga Seed}
@@ -322,9 +318,9 @@ El poblado de catálogos y datos maestros constituyó el hito indispensable para
 \hline
 P1: Re-ejecución Idempotente & Ejecución consecutiva del comando \texttt{npm run db:seed}. & Inserción omitida mediante \texttt{ON CONFLICT}; 0 registros duplicados. & Idempotencia 100\% \\
 \hline
-P2: Clave Foránea Inválida & Inserción de docente asignado a carrera inexistente (\texttt{id = 999}). & Rechazo inmediato por clave foránea \texttt{fk\_\allowbreak carrera} no encontrada. & Integridad Preservada \\
+P2: Clave Foránea Inválida & Inserción de docente asignado a carrera inexistente (\texttt{id = 999}). & Rechazo inmediato por clave foránea \texttt{fk\_\allowbreak  carrera} no encontrada. & Integridad Preservada \\
 \hline
-P3: Validación de Fechas B26 & Período B26 con \texttt{fecha\_\allowbreak fin < fecha\_\allowbreak inicio}. & Rechazo en motor por restricción \texttt{CHECK (fecha\_\allowbreak fin > fecha\_\allowbreak inicio)}. & Rango Temporal Válido \\
+P3: Validación de Fechas B26 & Período B26 con \texttt{fecha\_\allowbreak  fin < fecha\_\allowbreak  inicio}. & Rechazo en motor por restricción \texttt{CHECK (fecha\_\allowbreak  fin > fecha\_\allowbreak  inicio)}. & Rango Temporal Válido \\
 \hline
 P4: Catálogo de Comisiones & Consulta \texttt{SELECT COUNT(*) FROM comisiones;} & Retorno exacto de 14 registros activos validados con estatuto de facultad. & Catálogo Completo \\
 \hline

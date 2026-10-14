@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Reglas de Negocio y Validation Gates Lógicas -- Código EDT: 1.5
 
@@ -190,7 +186,7 @@ La formulación de las reglas de negocio y de los mecanismos de intercepción l�
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Formalización Matemática de Reglas de Carga Horaria y Ponderación:} Se modeló algebraicamente la restricción horaria semanal según los Artículos 45 y 67 del RRA ($\sum h_{\text{docencia}} + h_{\text{investigación}} + h_{\text{gestión}} + h_{\text{vinculación}} = 40.0\text{ h}$ exactas para dedicación a Tiempo Completo) y la restricción de ponderación estricta ($\sum P_i = 100.00\%$) para las actividades planificadas en la Tabla 1 del SGC.
     \item \textbf{Diseño Lógico de la Cadena Interceptora de Validation Gates (VG-1 a VG-6):} Se especificó la arquitectura de compuertas lógicas transaccionales que bloquean el guardado o envío de documentos ante inconsistencias: VG-1 (Integridad Horaria), VG-2 (Ponderación 100\%), VG-3 (Custodia Obligatoria de Evidencias en avances $>0\%$), VG-4 (Orden Estricto de Firmas), VG-5 (Inmutabilidad del Documento Aprobado) y VG-6 (Control de Extemporaneidad).
-    \item \textbf{Modelado de la Matriz de Transiciones de Estado del Documento:} Se diseñó el autómata de estados finitos que gobierna el ciclo de vida del expediente (\texttt{Borrador} $\to$ \texttt{En\_\allowbreak Revision} $\to$ \texttt{Observado} $\to$ \texttt{Aprobado\_\allowbreak  Carrera} $\to$ \texttt{Legalizado\_\allowbreak  Subdecanato}), definiendo las condiciones de guarda requeridas para cada transición.
+    \item \textbf{Modelado de la Matriz de Transiciones de Estado del Documento:} Se diseñó el autómata de estados finitos que gobierna el ciclo de vida del expediente (\texttt{Borrador} $\to$ \texttt{En\_\allowbreak  Revision} $\to$ \texttt{Observado} $\to$ \texttt{Aprobado\_\allowbreak   Carrera} $\to$ \texttt{Legalizado\_\allowbreak   Subdecanato}), definiendo las condiciones de guarda requeridas para cada transición.
     \item \textbf{Protocolo Transaccional para la Gestión de Subsanaciones y Desbloqueos:} Se definió el procedimiento de reapertura controlada para expedientes observados, incorporando una bitácora forense que registra obligatoriamente el justificativo, usuario responsable y marca de tiempo UTC de cada modificación.
 \end{itemize}
 
@@ -265,9 +261,9 @@ Las compuertas lógicas de validación (\textit{Validation Gates}) representan e
 La formalización de compuertas lógicas se estructuró a partir del catálogo normativo de reglas de negocio:
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Especificación de la Regla RN-01 (Balance Horario Exacto):} El backend valida que la sumatoria de las horas de docencia, preparación, tutoría e investigación totalice exactamente 40 horas. Si la suma es $\ne 40$, la compuerta se activa y devuelve código HTTP 422 con el detalle de las horas sobrantes o faltantes.
-    \item \textbf{Especificación de la Regla RN-02 (Ponderación Matricial):} Las actividades de la matriz en el formato \texttt{P7-\allowbreak T1} deben sumar exactamente el 100.00\%. El sistema aplica aritmética decimal de dos dígitos para evitar discrepancias por redondeo.
+    \item \textbf{Especificación de la Regla RN-02 (Ponderación Matricial):} Las actividades de la matriz en el formato \texttt{P7- T1} deben sumar exactamente el 100.00\%. El sistema aplica aritmética decimal de dos dígitos para evitar discrepancias por redondeo.
     \item \textbf{Especificación de la Regla RN-03 (Cronograma Semestral):} Ninguna actividad puede ser registrada fuera del rango de semanas lectivas del periodo académico oficial (semanas 1 a 16).
-    \item \textbf{Especificación de la Regla RN-04 (Evidencia Obligatoria):} En el informe de cumplimiento (\texttt{P7-\allowbreak T4}), toda actividad con avance real reportado $> 0\%$ requiere obligatoriamente al menos un documento probatorio subido a MinIO S3.
+    \item \textbf{Especificación de la Regla RN-04 (Evidencia Obligatoria):} En el informe de cumplimiento (\texttt{P7- T4}), toda actividad con avance real reportado $> 0\%$ requiere obligatoriamente al menos un documento probatorio subido a MinIO S3.
     \item \textbf{Especificación de la Regla RN-05 (Justificación de Desvío):} Si el avance real es menor al planificado, el sistema exige un campo textual explicativo de al menos 10 caracteres para que la compuerta permita el envío a revisión.
     \item \textbf{Especificación de la Regla RN-06 (Cascada de Firmas Secuencial):} Una firma de nivel superior es rechazada si no existe la firma válida del nivel jerárquico anterior en la base de datos.
 \end{enumerate}
@@ -287,8 +283,8 @@ La formalización de compuertas lógicas se estructuró a partir del catálogo n
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Secuencia Jerárquica de Compuertas Lógicas:} El diagrama modela la cadena de 6 compuertas transaccionales dispuestas en cascada estricta: VG-1 (Suma exacta de 40.0h semanales), VG-2 (Ponderación exacta al 100.00\%), VG-3 (Adjuntos obligatorios para avances reportados $>0\%$), VG-4 (Precedencia estricta de firmas), VG-5 (Inmutabilidad post-aprobación) y VG-6 (Control de extemporaneidad con bitácora).
     \item \textbf{Manejo Transaccional y Respuestas de Error HTTP 422:} Se ilustra el comportamiento atómico del sistema: ante cualquier incumplimiento en alguna compuerta, la transacción se revierte de inmediato (\textit{rollback}), emitiendo una respuesta JSON estandarizada con el código del gate fallido y el mensaje de subsanación específico.
-    \item \textbf{Condiciones de Guarda y Transiciones de Estado Documental:} El árbol representa visualmente los requisitos previos requeridos para transitar de \texttt{Borrador} a \texttt{En\_\allowbreak Revision}, y de \texttt{Aprobado\_\allowbreak  Carrera} a \texttt{Legalizado\_\allowbreak  Subdecanato}, impidiendo la persistencia de estados incompletos.
-    \item \textbf{Implementación en el Código Fuente:} Este flujo se encuentra programado en el middleware \texttt{backend/\allowbreak src/\allowbreak middlewares/\allowbreak validationGates.\allowbreak js}, el cual intercepta las rutas \texttt{POST} y \texttt{PUT} antes de que las peticiones alcancen la capa de base de datos.
+    \item \textbf{Condiciones de Guarda y Transiciones de Estado Documental:} El árbol representa visualmente los requisitos previos requeridos para transitar de \texttt{Borrador} a \texttt{En\_\allowbreak  Revision}, y de \texttt{Aprobado\_\allowbreak   Carrera} a \texttt{Legalizado\_\allowbreak   Subdecanato}, impidiendo la persistencia de estados incompletos.
+    \item \textbf{Implementación en el Código Fuente:} Este flujo se encuentra programado en el middleware \texttt{backend/\allowbreak  src/\allowbreak  middlewares/\allowbreak  validationGates. js}, el cual intercepta las rutas \texttt{POST} y \texttt{PUT} antes de que las peticiones alcancen la capa de base de datos.
 \end{itemize}
 
 

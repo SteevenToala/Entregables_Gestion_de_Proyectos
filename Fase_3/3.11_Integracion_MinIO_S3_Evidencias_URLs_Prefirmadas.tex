@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Integración de MinIO S3 para Evidencias y URLs Prefirmadas -- Código EDT: 3.11
 
@@ -133,8 +129,8 @@ El almacenamiento de medios de verificación físicos (informes, actas de reunio
 Implementar y verificar la integración de MinIO S3 para la carga, almacenamiento, cálculo de integridad y visualización segura de evidencias documentales mediante URLs prefirmadas.
 \subsection{Objetivos Específicos}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Desplegar y configurar el bucket privado \texttt{sige-\allowbreak evidencias} en MinIO.
-    \item Implementar el servicio \texttt{minio.\allowbreak service.\allowbreak js} con soporte para subida de archivos y generación de URLs prefirmadas temporales.
+    \item Desplegar y configurar el bucket privado \texttt{sige- evidencias} en MinIO.
+    \item Implementar el servicio \texttt{minio. service. js} con soporte para subida de archivos y generación de URLs prefirmadas temporales.
     \item Desarrollar el cálculo de sumas de comprobación SHA-256 almacenadas en PostgreSQL 18.
 \end{itemize}
 
@@ -179,7 +175,7 @@ Implementar y verificar la integración de MinIO S3 para la carga, almacenamient
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
 Se utilizó el cliente oficial compatible con almacenamiento S3. Al cargar una evidencia, el archivo se transmite en memoria, calculándose su hash SHA-256 antes de almacenarlo en el repositorio privado seguro. El archivo se nombra de forma no colisionante bajo la convención:
-\texttt{evidencias/\allowbreak \{plan\_\allowbreak id\}/\{actividad\_id\}/\{uuid\}\_\{nombre\_original\}}. Para la visualización desde el frontend, el backend genera bajo demanda una URL prefirmada (\texttt{presignedGetObject}) válida por 900 segundos.
+\texttt{evidencias/\allowbreak  \{plan\_\allowbreak  id\}/\{actividad\_id\}/\{uuid\}\_\{nombre\_original\}}. Para la visualización desde el frontend, el backend genera bajo demanda una URL prefirmada (\texttt{presignedGetObject}) válida por 900 segundos.
 
 \subsection{Políticas de Calidad de Almacenamiento de Evidencias}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -192,10 +188,10 @@ Se utilizó el cliente oficial compatible con almacenamiento S3. Al cargar una e
 La custodia digital de respaldos docentes (actas de notas, registros de asistencia, fotos y sílabos) se implementó bajo una arquitectura de almacenamiento compatible con Amazon S3 utilizando MinIO en contenedor Docker local. Las actividades de desarrollo comprendieron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
-    \item \textbf{Aprovisionamiento de MinIO en Docker Compose:} Se configuró el servicio \texttt{sige-\allowbreak minio} escuchando en el puerto 9000 (API S3) y puerto 9001 (Consola de Administración), montando un volumen persistente \texttt{miniodata} para resguardo de objetos.
-    \item \textbf{Creación Automática del Bucket Institucional:} Mediante un script de inicialización con el cliente \texttt{mc} (MinIO Client), se automatizó la creación del bucket privado \texttt{sige-\allowbreak evidencias}, aplicando una política de acceso que prohíbe terminantemente la lectura pública sin token.
-    \item \textbf{Controlador de Carga Segura con Multer y Magic Bytes:} El backend procesa las subidas filtrando extensiones autorizadas (\texttt{.\allowbreak pdf}, \texttt{.\allowbreak png}, \texttt{.\allowbreak jpg}) y validando los primeros bytes del archivo (\textit{magic bytes}) para neutralizar archivos ejecutables camuflados. Se estableció un límite estricto de 10 MB por archivo.
-    \item \textbf{Generación de Huella Criptográfica SHA-256:} Al recibir el flujo de bytes, el backend calcula la suma de verificación SHA-256 del archivo y la almacena en la tabla \texttt{seguimiento\_\allowbreak  evidencias}, garantizando la inmutabilidad y la no alteración del documento en auditorías posteriores.
+    \item \textbf{Aprovisionamiento de MinIO en Docker Compose:} Se configuró el servicio \texttt{sige- minio} escuchando en el puerto 9000 (API S3) y puerto 9001 (Consola de Administración), montando un volumen persistente \texttt{miniodata} para resguardo de objetos.
+    \item \textbf{Creación Automática del Bucket Institucional:} Mediante un script de inicialización con el cliente \texttt{mc} (MinIO Client), se automatizó la creación del bucket privado \texttt{sige- evidencias}, aplicando una política de acceso que prohíbe terminantemente la lectura pública sin token.
+    \item \textbf{Controlador de Carga Segura con Multer y Magic Bytes:} El backend procesa las subidas filtrando extensiones autorizadas (\texttt{. pdf}, \texttt{. png}, \texttt{. jpg}) y validando los primeros bytes del archivo (\textit{magic bytes}) para neutralizar archivos ejecutables camuflados. Se estableció un límite estricto de 10 MB por archivo.
+    \item \textbf{Generación de Huella Criptográfica SHA-256:} Al recibir el flujo de bytes, el backend calcula la suma de verificación SHA-256 del archivo y la almacena en la tabla \texttt{seguimiento\_\allowbreak   evidencias}, garantizando la inmutabilidad y la no alteración del documento en auditorías posteriores.
     \item \textbf{Emisión de URLs Prefirmadas con Expiración a 900 Segundos (15 min):} Para la descarga y previsualización de evidencias por parte de coordinadores y evaluadores, el backend genera enlaces temporales firmados criptográficamente mediante la función \texttt{presigned GetObject()}. Una vez transcurridos 15 minutos, el enlace expira automáticamente en MinIO.
 \end{itemize}
 
@@ -210,7 +206,7 @@ A continuación se detalla la matriz técnica de configuración del almacenamien
 \rowcolor{tableheader}
 \textbf{Parámetro Técnico} & \textbf{Configuración} & \textbf{Justificación Operativa / Seguridad} & \textbf{Estado} \\
 \hline
-Nombre de Bucket & \texttt{sige-\allowbreak evidencias} & Bucket privado institucional exclusivo para evidencias SGC. & Activo \\
+Nombre de Bucket & \texttt{sige- evidencias} & Bucket privado institucional exclusivo para evidencias SGC. & Activo \\
 \hline
 Política de Bucket & \texttt{Private (None)} & Prohíbe lecturas anónimas; requiere firmas criptográficas. & Verificada \\
 \hline
@@ -218,7 +214,7 @@ TTL URL Prefirmada & 15 minutos ($900\text{ s}$) & Tiempo suficiente para lectur
 \hline
 Tamaño Máximo & $25\text{ MB}$ por archivo & Admite informes extensos con imágenes y anexos sin saturar red. & Limitado \\
 \hline
-Tipos Admitidos & \texttt{application/\allowbreak pdf} & Estandarización de formato para conservación a largo plazo. & Restringido \\
+Tipos Admitidos & \texttt{application/\allowbreak  pdf} & Estandarización de formato para conservación a largo plazo. & Restringido \\
 \hline
 Algoritmo de Hash & SHA-256 (64 hex) & Verificación de no alteración y trazabilidad en auditoría. & Activo \\
 \hline
@@ -287,10 +283,10 @@ DELETE & /api/evidencias/:id & Borrado lógico en base de datos (preserva objeto
 La custodia digital de respaldos docentes (actas de notas, registros de asistencia, fotos y sílabos) se implementó bajo una arquitectura de almacenamiento compatible con Amazon S3 utilizando MinIO en contenedor Docker local:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Aprovisionamiento de MinIO en Docker Compose:} Se configuró el servicio \texttt{sige-\allowbreak minio} escuchando en el puerto 9000 (API S3) y puerto 9001 (Consola de Administración), montando un volumen persistente \texttt{miniodata} para resguardo de objetos.
-    \item \textbf{Creación Automática del Bucket Institucional:} Mediante un script de inicialización con el cliente \texttt{mc} (MinIO Client), se automatizó la creación del bucket privado \texttt{sige-\allowbreak evidencias}, aplicando una política de acceso que prohíbe terminantemente la lectura pública sin token.
-    \item \textbf{Controlador de Carga Segura con Multer y Magic Bytes:} El backend procesa las subidas filtrando extensiones autorizadas (\texttt{.\allowbreak pdf}, \texttt{.\allowbreak png}, \texttt{.\allowbreak jpg}) y validando los primeros bytes del archivo (\textit{magic bytes}) para neutralizar archivos ejecutables camuflados. Se estableció un límite estricto de 10 MB por archivo.
-    \item \textbf{Generación de Huella Criptográfica SHA-256:} Al recibir el flujo de bytes, el backend calcula la suma de verificación SHA-256 del archivo y la almacena en la tabla \texttt{seguimiento\_\allowbreak evidencias}, garantizando la inmutabilidad y la no alteración del documento en auditorías posteriores.
+    \item \textbf{Aprovisionamiento de MinIO en Docker Compose:} Se configuró el servicio \texttt{sige- minio} escuchando en el puerto 9000 (API S3) y puerto 9001 (Consola de Administración), montando un volumen persistente \texttt{miniodata} para resguardo de objetos.
+    \item \textbf{Creación Automática del Bucket Institucional:} Mediante un script de inicialización con el cliente \texttt{mc} (MinIO Client), se automatizó la creación del bucket privado \texttt{sige- evidencias}, aplicando una política de acceso que prohíbe terminantemente la lectura pública sin token.
+    \item \textbf{Controlador de Carga Segura con Multer y Magic Bytes:} El backend procesa las subidas filtrando extensiones autorizadas (\texttt{. pdf}, \texttt{. png}, \texttt{. jpg}) y validando los primeros bytes del archivo (\textit{magic bytes}) para neutralizar archivos ejecutables camuflados. Se estableció un límite estricto de 10 MB por archivo.
+    \item \textbf{Generación de Huella Criptográfica SHA-256:} Al recibir el flujo de bytes, el backend calcula la suma de verificación SHA-256 del archivo y la almacena en la tabla \texttt{seguimiento\_\allowbreak  evidencias}, garantizando la inmutabilidad y la no alteración del documento en auditorías posteriores.
     \item \textbf{Emisión de URLs Prefirmadas con Expiración a 900 Segundos (15 min):} Para la descarga y previsualización de evidencias por parte de coordinadores y evaluadores, el backend genera enlaces temporales firmados criptográficamente mediante la función \texttt{presigned}\allowbreak\texttt{GetObject()}. Una vez transcurridos 15 minutos, el enlace expira automáticamente en MinIO.
 \end{enumerate}
 
@@ -304,10 +300,10 @@ La custodia digital de respaldos docentes (actas de notas, registros de asistenc
 
 \subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Elementos Estructurales Visualizados:} La captura muestra la bandeja de seguimiento de evidencias de SIGE y la consola administrativa de MinIO S3. Se listan los archivos PDF custodiados en el bucket \texttt{sige-\allowbreak evidencias}, mostrando nombre original, tamaño, estampa de tiempo UTC y huella digital SHA-256.
+    \item \textbf{Elementos Estructurales Visualizados:} La captura muestra la bandeja de seguimiento de evidencias de SIGE y la consola administrativa de MinIO S3. Se listan los archivos PDF custodiados en el bucket \texttt{sige- evidencias}, mostrando nombre original, tamaño, estampa de tiempo UTC y huella digital SHA-256.
     \item \textbf{Inspección de Magic Bytes y Filtrado de Carga:} Se ilustra el mecanismo de seguridad de Multer: el servidor inspecciona los primeros 4 bytes del archivo (\texttt{\%PDF-}) antes de transferirlo al almacenamiento S3, rechazando de inmediato scripts ejecutables camuflados con extensión .pdf.
     \item \textbf{Generación de URLs Prefirmadas con Expiración:} La descarga y previsualización de evidencias no expone las credenciales de MinIO: el backend emite enlaces temporales autenticados con validez de 900 segundos (15 minutos), transcurridos los cuales el enlace queda revocado automáticamente.
-    \item \textbf{Trazabilidad con el Código Fuente:} Servicio \texttt{backend/\allowbreak src/\allowbreak services/\allowbreak minioClient.\allowbreak js} y contenedor \texttt{sige-\allowbreak minio} en \texttt{docker-\allowbreak compose.\allowbreak yml}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Servicio \texttt{backend/\allowbreak  src/\allowbreak  services/\allowbreak  minioClient. js} y contenedor \texttt{sige- minio} en \texttt{docker- compose. yml}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional del Almacenamiento S3}
@@ -322,7 +318,7 @@ La custodia digital de respaldos docentes (actas de notas, registros de asistenc
 \hline
 P1: Subida de PDF Válido & Carga de acta en PDF de 2.4 MB con credenciales válidas. & Objeto almacenado en bucket; hash SHA-256 insertado en DB; HTTP 201. & Custodia Exitosa \\
 \hline
-P2: Archivo Ejecutable & Subida de script \texttt{.\allowbreak exe} renombrado artificialmente a \texttt{.\allowbreak pdf}. & Rechazo inmediato por validación de firma mágica; código HTTP 400. & Amenaza Bloqueada \\
+P2: Archivo Ejecutable & Subida de script \texttt{. exe} renombrado artificialmente a \texttt{. pdf}. & Rechazo inmediato por validación de firma mágica; código HTTP 400. & Amenaza Bloqueada \\
 \hline
 P3: Archivo Excede 10 MB & Intento de subida de archivo de video de 25 MB. & Interceptado por Multer; rechazo con código HTTP 413 Payload Too Large. & Límite Respetado \\
 \hline

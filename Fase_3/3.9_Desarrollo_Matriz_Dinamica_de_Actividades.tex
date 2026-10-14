@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Desarrollo de la Matriz Dinámica de Actividades -- Código EDT: 3.9
 
@@ -181,7 +177,7 @@ Desarrollar, integrar y validar el componente interactivo de Matriz Dinámica de
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Para garantizar inmutabilidad, predictibilidad y rendimiento óptimo en la manipulación de filas complejas, se empleó el hook \texttt{useReducer} de React con acciones tipadas (\texttt{ADD\_\allowbreak ROW}, \texttt{UPDATE\_\allowbreak FIELD}, \texttt{TOGGLE\_\allowbreak WEEK}, \texttt{REMOVE\_\allowbreak ROW}, \texttt{CALCULATE\_\allowbreak TOTALS}). Las fórmulas aritméticas operan en tiempo real con precisión de dos decimales:
+Para garantizar inmutabilidad, predictibilidad y rendimiento óptimo en la manipulación de filas complejas, se empleó el hook \texttt{useReducer} de React con acciones tipadas (\texttt{ADD\_\allowbreak  ROW}, \texttt{UPDATE\_\allowbreak  FIELD}, \texttt{TOGGLE\_\allowbreak  WEEK}, \texttt{REMOVE\_\allowbreak  ROW}, \texttt{CALCULATE\_\allowbreak  TOTALS}). Las fórmulas aritméticas operan en tiempo real con precisión de dos decimales:
 \begin{equation}
     P_{\text{total}} = \sum_{i=1}^{n} P_i, \qquad A_G = \sum_{i=1}^{n} \left( \frac{P_i}{100} \times A_i \right)
 \end{equation}
@@ -196,7 +192,7 @@ donde $P_{\text{total}}$ es la sumatoria de ponderaciones (obligatoriamente $100
 \end{enumerate}
 
 \section{Descripción de actividades}
-La matriz de distribución de actividades semanales constituye el núcleo operativo del formato \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}. Su construcción en React demandó un manejo exhaustivo de estados reactivos y reglas de balance matemático estrictas. Las actividades técnicas comprendieron:
+La matriz de distribución de actividades semanales constituye el núcleo operativo del formato \texttt{UTA- SGC- A- 2- 1- P7- T1}. Su construcción en React demandó un manejo exhaustivo de estados reactivos y reglas de balance matemático estrictas. Las actividades técnicas comprendieron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Modelado del Estado Complejo con useReducer:} Se estructuró un reductor que gestiona las operaciones tabulares: adición de actividades, edición de descripciones, clasificación por componentes (Docencia, Investigación, Tutorías y Gestión), asignación de horas semanales y cálculo de ponderaciones porcentuales.
@@ -207,7 +203,7 @@ La matriz de distribución de actividades semanales constituye el núcleo operat
     \end{itemize}
     \item \textbf{Construcción del Selector Matricial de 16 Semanas:} Se desarrolló una cuadrícula interactiva con casillas de verificación para las 16 semanas del ciclo semestral B26, calculando el total de horas semestrales por actividad de forma automatizada.
     \item \textbf{Insignias Visuales Condicionales de Control de Calidad:} Si las horas difieren de 40.0 o la ponderación no suma 100.00\%, la interfaz despliega badges rojos de advertencia y bloquea el avance en el Wizard. Cuando ambas sumatorias son exactas, las insignias conmutan a color verde con la leyenda "Conforme con Normativa RRA".
-    \item \textbf{Persistencia Lote y Validación de Restricciones CHECK:} Los cambios se persisten en la tabla \texttt{actividades\_\allowbreak matriz} mediante sentencias en lote que respetan las restricciones declarativas del motor relacional.
+    \item \textbf{Persistencia Lote y Validación de Restricciones CHECK:} Los cambios se persisten en la tabla \texttt{actividades\_\allowbreak  matriz} mediante sentencias en lote que respetan las restricciones declarativas del motor relacional.
 \end{itemize}
 
 \subsection{Matriz de Parámetros y Reglas de la Matriz Dinámica de Actividades}
@@ -303,7 +299,7 @@ A continuación se detalla la matriz que especifica los componentes, pesos y val
 \section{Anexos}
 
 \subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
-La matriz de distribución de actividades semanales representa el núcleo operativo del formato \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}. Su desarrollo en React demandó un manejo exhaustivo de estados reactivos y reglas matemáticas estrictas:
+La matriz de distribución de actividades semanales representa el núcleo operativo del formato \texttt{UTA- SGC- A- 2- 1- P7- T1}. Su desarrollo en React demandó un manejo exhaustivo de estados reactivos y reglas matemáticas estrictas:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Modelado del Estado Complejo con useReducer:} Se estructuró un reductor que gestiona las operaciones tabulares: agregar actividad, modificar descripción, cambiar tipo (Docencia, Investigación, Tutorías, Gestión), actualizar horas semanales, editar ponderación y marcar el cronograma de semanas activas.
@@ -314,7 +310,7 @@ La matriz de distribución de actividades semanales representa el núcleo operat
     \end{itemize}
     \item \textbf{Selector Matricial de 16 Semanas Académicas:} Se implementó una cuadrícula interactiva con casillas de verificación correspondientes a las 16 semanas del semestre B26, calculando el total de horas semestrales por actividad de forma automatizada.
     \item \textbf{Badges Visuales Condicionales de Calidad:} Si las horas difieren de 40.0 o la ponderación no suma 100.00\%, la interfaz despliega insignias rojas de advertencia y deshabilita el avance en el Wizard. Cuando ambas sumatorias son exactas, las insignias conmutan a color verde con la leyenda "Conforme con Normativa RRA".
-    \item \textbf{Persistencia y Sincronización en Base de Datos:} Los cambios se persisten en la tabla \texttt{actividades\_\allowbreak matriz} mediante sentencias en lote que respetan las restricciones \texttt{CHECK} declarativas del motor relacional.
+    \item \textbf{Persistencia y Sincronización en Base de Datos:} Los cambios se persisten en la tabla \texttt{actividades\_\allowbreak  matriz} mediante sentencias en lote que respetan las restricciones \texttt{CHECK} declarativas del motor relacional.
 \end{enumerate}
 
 \subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
@@ -330,7 +326,7 @@ La matriz de distribución de actividades semanales representa el núcleo operat
     \item \textbf{Elementos Estructurales Visualizados:} La imagen documenta la vista de la matriz en la Etapa Matricial del Wizard. Se visualizan las actividades distribuidas en los cuatro componentes académicos oficiales (Docencia, Investigación, Gestión y Vinculación), la cuadrícula de 16 semanas y los contadores en el pie de tabla.
     \item \textbf{Cálculo Reactivo de Balances en Tiempo Real:} Se aprecian los contadores activos: "Total Horas Semanales: 40.0 h / 40.0 h (100\%)" y "Ponderación Total: 100.00\% / 100.00\%", ambos resaltados en verde brillante, lo que confirma que el plan cumple con la distribución horaria exacta exigida por el RRA y el SGC.
     \item \textbf{Intercepción de Errores y Bloqueo de Avance:} Si el docente altera alguna casilla y la suma difiere de 40.0 horas o del 100.00\% de ponderación, los contadores conmutan automáticamente a color rojo carmesí y deshabilitan el botón de avance hacia la etapa de evidencias.
-    \item \textbf{Trazabilidad con el Código Fuente:} Programado en \texttt{frontend/\allowbreak src/\allowbreak components/\allowbreak matriz/\allowbreak MatrizActividades.\allowbreak jsx} y optimizado mediante el hook \texttt{useMatrizCalculator.\allowbreak js}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Programado en \texttt{frontend/\allowbreak  src/\allowbreak  components/\allowbreak  matriz/\allowbreak  MatrizActividades. jsx} y optimizado mediante el hook \texttt{useMatrizCalculator. js}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional de la Matriz Dinámica}

@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Diseño de Base de Datos Relacional y Modelo Físico en PostgreSQL 18 -- Código EDT: 2.4
 
@@ -187,8 +183,8 @@ Se aplicó un proceso de modelado de datos en tres etapas: conceptual, lógico y
 \subsection{Políticas de Calidad de la Base de Datos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Integridad Referencial Estricta:} Toda clave foránea implementa la cláusula \texttt{ON DELETE RESTRICT} para prevenir el borrado accidental de registros históricos auditables.
-    \item \textbf{Política de Claves Subrogadas Uniformes:} Todas las tablas emplean claves primarias de tipo \texttt{UUID v4} autogeneradas mediante \texttt{gen\_\allowbreak random\_\allowbreak uuid()}, garantizando unicidad global.
-    \item \textbf{Política de Auditoría Automatizada:} Cada tabla incluye campos de auditoría (\texttt{created\_\allowbreak at}, \texttt{updated\_\allowbreak at}) sincronizados mediante triggers automáticos en PostgreSQL.
+    \item \textbf{Política de Claves Subrogadas Uniformes:} Todas las tablas emplean claves primarias de tipo \texttt{UUID v4} autogeneradas mediante \texttt{gen\_\allowbreak  random\_\allowbreak  uuid()}, garantizando unicidad global.
+    \item \textbf{Política de Auditoría Automatizada:} Cada tabla incluye campos de auditoría (\texttt{created\_\allowbreak  at}, \texttt{updated\_\allowbreak  at}) sincronizados mediante triggers automáticos en PostgreSQL.
     \item \textbf{Política de Restricciones CHECK Declarativas:} La validación de que las ponderaciones no excedan el 100\% y las horas no sean negativas se ejecuta a nivel de motor de base de datos.
 \end{enumerate}
 
@@ -197,9 +193,9 @@ El diseño de la capa física de persistencia se orientó a garantizar la integr
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Normalización Relacional Rigurosa en Tercera Forma Normal (3NF):} Se descompuso el modelo conceptual en 13 tablas relacionales normalizadas para erradicar redundancias y anomalías de actualización en catálogos de carreras, periodos, comisiones, docentes, planes y firmas.
-    \item \textbf{Diseño de Restricciones de Integridad y Claves Primarias UUIDv4:} Se asignaron identificadores universales únicos (\texttt{uuid\_\allowbreak generate\_\allowbreak v4()}) en las tablas operativas para prevenir ataques de enumeración secuencial, junto con llaves foráneas \texttt{ON DELETE RESTRICT} que preservan los expedientes históricos.
-    \item \textbf{Programación de Restricciones CHECK Nativas en Motor:} Se implementaron validaciones a nivel de base de datos para garantizar que las horas docentes semanales no superen 40.0h (\texttt{chk\_\allowbreak horas\_\allowbreak rango}) y que las ponderaciones no excedan el 100.00\% (\texttt{chk\_\allowbreak pond\_\allowbreak rango}), blindando la consistencia incluso ante accesos directos al motor.
-    \item \textbf{Estrategia de Indexación Compuesta B-Tree e Invertida GIN:} Se diseñaron índices B-Tree en pares de consulta frecuente (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y de índices GIN sobre campos de contenido enriquecido JSONB (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) para búsquedas textuales de alta velocidad.
+    \item \textbf{Diseño de Restricciones de Integridad y Claves Primarias UUIDv4:} Se asignaron identificadores universales únicos (\texttt{uuid\_\allowbreak  generate\_\allowbreak  v4()}) en las tablas operativas para prevenir ataques de enumeración secuencial, junto con llaves foráneas \texttt{ON DELETE RESTRICT} que preservan los expedientes históricos.
+    \item \textbf{Programación de Restricciones CHECK Nativas en Motor:} Se implementaron validaciones a nivel de base de datos para garantizar que las horas docentes semanales no superen 40.0h (\texttt{chk\_\allowbreak  horas\_\allowbreak  rango}) y que las ponderaciones no excedan el 100.00\% (\texttt{chk\_\allowbreak  pond\_\allowbreak  rango}), blindando la consistencia incluso ante accesos directos al motor.
+    \item \textbf{Estrategia de Indexación Compuesta B-Tree e Invertida GIN:} Se diseñaron índices B-Tree en pares de consulta frecuente (\texttt{idx\_\allowbreak  plan\_\allowbreak  doc\_\allowbreak  per}) y de índices GIN sobre campos de contenido enriquecido JSONB (\texttt{idx\_\allowbreak  sec\_\allowbreak  jsonb}) para búsquedas textuales de alta velocidad.
 \end{itemize}
 
 \subsection{Matriz del Diccionario de Datos del Sistema (13 Tablas Normalizadas)}
@@ -255,15 +251,15 @@ notificaciones & id (UUID) & Usuario destinatario, título, mensaje, estado & Av
 \rowcolor{tableheader}
 \textbf{Nombre del Índice} & \textbf{Tabla Objetivo} & \textbf{Columnas y Tipo} & \textbf{Propósito} \\
 \hline
-\texttt{idx\_\allowbreak planes\_\allowbreak  doc\_\allowbreak periodo} & \texttt{planes\_\allowbreak  docente} & \texttt{(fk\_\allowbreak doc, fk\_\allowbreak per)} B-Tree & Búsqueda rápida de expedientes activos. \\
+\texttt{idx\_\allowbreak  planes\_\allowbreak   doc\_\allowbreak  periodo} & \texttt{planes\_\allowbreak   docente} & \texttt{(fk\_\allowbreak  doc, fk\_\allowbreak  per)} B-Tree & Búsqueda rápida de expedientes activos. \\
 \hline
-\texttt{idx\_\allowbreak actividades\_\allowbreak  plan} & \texttt{actividades\_\allowbreak  matriz} & \texttt{(fk\_\allowbreak plan)} B-Tree & Agrupación de actividades de la matriz. \\
+\texttt{idx\_\allowbreak  actividades\_\allowbreak   plan} & \texttt{actividades\_\allowbreak   matriz} & \texttt{(fk\_\allowbreak  plan)} B-Tree & Agrupación de actividades de la matriz. \\
 \hline
-\texttt{idx\_\allowbreak secciones\_\allowbreak  jsonb} & \texttt{secciones\_\allowbreak  documento} & \texttt{contenido} GIN & Búsqueda rápida de texto en secciones. \\
+\texttt{idx\_\allowbreak  secciones\_\allowbreak   jsonb} & \texttt{secciones\_\allowbreak   documento} & \texttt{contenido} GIN & Búsqueda rápida de texto en secciones. \\
 \hline
-\texttt{idx\_\allowbreak firmas\_\allowbreak  plan\_\allowbreak orden} & \texttt{firmas\_\allowbreak  documento} & \texttt{(fk\_\allowbreak plan, orden)} UNIQUE & Garantiza secuencia estricta de firmas. \\
+\texttt{idx\_\allowbreak  firmas\_\allowbreak   plan\_\allowbreak  orden} & \texttt{firmas\_\allowbreak   documento} & \texttt{(fk\_\allowbreak  plan, orden)} UNIQUE & Garantiza secuencia estricta de firmas. \\
 \hline
-\texttt{idx\_\allowbreak evidencias\_\allowbreak  hash} & \texttt{evidencias\_\allowbreak  adjuntas} & \texttt{hash\_\allowbreak sha256} B-Tree & Prevención de duplicados de archivos. \\
+\texttt{idx\_\allowbreak  evidencias\_\allowbreak   hash} & \texttt{evidencias\_\allowbreak   adjuntas} & \texttt{hash\_\allowbreak  sha256} B-Tree & Prevención de duplicados de archivos. \\
 \hline
 \end{tabularx}
 \caption{Matriz de índices físicos para optimización de consultas.}
@@ -313,8 +309,8 @@ El diseño físico de la base de datos se fundamentó en la normalización forma
 El proceso de ingeniería de datos comprendió:
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Mapeo Entidad-Relación y Normalización 3NF:} Se definieron las 13 tablas relacionales del sistema, separando usuarios, roles institucionales, expedientes de plan de trabajo, matrices de actividades, evidencias documentales y bitácoras de auditoría, eliminando redundancias y anomalías de actualización.
-    \item \textbf{Declaración de Restricciones CHECK en el Motor:} Para evitar que datos inválidos ingresen a la base de datos incluso en caso de fallo de la API, se programaron restricciones declarativas nativas: \texttt{CHECK (horas >= 0 AND horas <= 40)}, \texttt{CHECK (ponderacion >= 0.\allowbreak 00 AND ponderacion <= 100.\allowbreak 00)} y validación de estados permitidos.
-    \item \textbf{Estrategia de Indexación Física Especializada:} Se implementaron índices B-Tree en todas las claves foráneas (\textit{Foreign Keys}) para optimizar las consultas con \texttt{JOIN}, índices únicos compuestos para la secuencia de firmas \texttt{(fk\_\allowbreak plan, orden)}, e índices GIN sobre campos de texto enriquecido estructurado en formato JSONB.
+    \item \textbf{Declaración de Restricciones CHECK en el Motor:} Para evitar que datos inválidos ingresen a la base de datos incluso en caso de fallo de la API, se programaron restricciones declarativas nativas: \texttt{CHECK (horas >= 0 AND horas <= 40)}, \texttt{CHECK (ponderacion >= 0. 00 AND ponderacion <= 100. 00)} y validación de estados permitidos.
+    \item \textbf{Estrategia de Indexación Física Especializada:} Se implementaron índices B-Tree en todas las claves foráneas (\textit{Foreign Keys}) para optimizar las consultas con \texttt{JOIN}, índices únicos compuestos para la secuencia de firmas \texttt{(fk\_\allowbreak  plan, orden)}, e índices GIN sobre campos de texto enriquecido estructurado en formato JSONB.
 \end{enumerate}
 
 \subsubsection*{2. Evidencia Visual del Diagrama Entidad-Relación y Explicación Técnica}
@@ -331,9 +327,9 @@ El proceso de ingeniería de datos comprendió:
 \textbf{Desglose Técnico y Análisis Estructural del Modelo de Datos (PostgreSQL 18):}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Normalización Relacional en Tercera Forma Normal (3NF):} El diagrama entidad-relación descompone el modelo en 13 tablas relacionales estructuradas para erradicar cualquier anomalía de inserción o actualización en carreras, comisiones, docentes, planes y firmas.
-    \item \textbf{Esquema Híbrido Relacional y Documental (JSONB):} Las tablas maestras y de firmas se rigen por esquemas relacionales estrictos con llaves foráneas \texttt{ON DELETE RESTRICT}, mientras que las secciones redactadas en TipTap se almacenan en columnas \texttt{JSONB} (\texttt{secciones\_\allowbreak documento.\allowbreak contenido}), combinando integridad relacional con flexibilidad de texto enriquecido.
-    \item \textbf{Restricciones CHECK Declarativas a Nivel de Motor:} Se visualizan las restricciones de integridad: \texttt{chk\_\allowbreak horas\_\allowbreak rango} ($0 \le \text{horas} \le 40$) y \texttt{chk\_\allowbreak pond\_\allowbreak rango} ($0 \le \text{ponderacion} \le 100$), blindando la base de datos contra inconsistencias incluso ante accesos directos.
-    \item \textbf{Estrategia de Indexación de Alto Rendimiento:} Índices compuestos B-Tree en pares de consulta foránea (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y de tipo invertido GIN (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) que permiten búsquedas morfosintácticas en tiempos inferiores a 3 ms.
+    \item \textbf{Esquema Híbrido Relacional y Documental (JSONB):} Las tablas maestras y de firmas se rigen por esquemas relacionales estrictos con llaves foráneas \texttt{ON DELETE RESTRICT}, mientras que las secciones redactadas en TipTap se almacenan en columnas \texttt{JSONB} (\texttt{secciones\_\allowbreak  documento. contenido}), combinando integridad relacional con flexibilidad de texto enriquecido.
+    \item \textbf{Restricciones CHECK Declarativas a Nivel de Motor:} Se visualizan las restricciones de integridad: \texttt{chk\_\allowbreak  horas\_\allowbreak  rango} ($0 \le \text{horas} \le 40$) y \texttt{chk\_\allowbreak  pond\_\allowbreak  rango} ($0 \le \text{ponderacion} \le 100$), blindando la base de datos contra inconsistencias incluso ante accesos directos.
+    \item \textbf{Estrategia de Indexación de Alto Rendimiento:} Índices compuestos B-Tree en pares de consulta foránea (\texttt{idx\_\allowbreak  plan\_\allowbreak  doc\_\allowbreak  per}) y de tipo invertido GIN (\texttt{idx\_\allowbreak  sec\_\allowbreak  jsonb}) que permiten búsquedas morfosintácticas en tiempos inferiores a 3 ms.
 \end{itemize}
 
 \subsubsection*{3. Matriz Técnica de Índices Físicos y Estrategia de Optimización}

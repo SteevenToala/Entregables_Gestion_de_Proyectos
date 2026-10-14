@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Diagramas de Secuencia, Actividades y Clases de Dominio -- Código EDT: 2.3
 
@@ -199,7 +195,7 @@ El modelado del comportamiento dinámico del sistema y la definición de las ent
     \item \textbf{Modelado Dinámico de Secuencia UML para Casos de Uso Críticos:} Se construyeron diagramas de interacción temporal para los flujos más complejos del sistema: autenticación e intercambio de tokens JWT, creación asistida del plan mediante Wizard, y procesamiento concurrente de firmas con validación de compuertas.
     \item \textbf{Especificación de Diagramas de Actividades con Particiones (Swimlanes):} Se modelaron los flujos de control paralelos y condicionales distribuidos entre el Docente Elaborador, el Coordinador de Comisión, el Subdecano y el Motor de Reglas del Sistema, clarificando los puntos de decisión y bifurcación ante observaciones.
     \item \textbf{Modelado Estructural de Clases de Dominio Institucional:} Se modelaron las clases fundamentales del dominio en TypeScript y JavaScript: \texttt{Plan Trabajo Docente}, \texttt{Actividad Docente}, \texttt{Seccion Documento}, \texttt{Evidencia Respaldo} y \texttt{Firma Digital}, definiendo sus atributos, métodos de cálculo y contratos de validación intrínseca.
-    \item \textbf{Formalización de la Máquina de Estados del Documento SGC:} Se especificaron los estados válidos del ciclo documental (\texttt{Borrador}, \texttt{En\_\allowbreak Revision}, \texttt{Observado}, \texttt{Aprobado\_\allowbreak  Carrera}, \texttt{Legalizado\_\allowbreak  Subdecanato}) y las transiciones atómicas permitidas bajo control transaccional ACID.
+    \item \textbf{Formalización de la Máquina de Estados del Documento SGC:} Se especificaron los estados válidos del ciclo documental (\texttt{Borrador}, \texttt{En\_\allowbreak  Revision}, \texttt{Observado}, \texttt{Aprobado\_\allowbreak   Carrera}, \texttt{Legalizado\_\allowbreak   Subdecanato}) y las transiciones atómicas permitidas bajo control transaccional ACID.
 \end{itemize}
 
 \subsection{Matriz de Entidades del Dominio y Métodos Operativos}
@@ -212,17 +208,17 @@ El modelado del comportamiento dinámico del sistema y la definición de las ent
 \rowcolor{tableheader}
 \textbf{Clase de Dominio} & \textbf{Atributos Principales} & \textbf{Métodos de Negocio Clave} & \textbf{Multiplicidad} \\
 \hline
-\texttt{PlanDocente} & \texttt{id}, \texttt{periodo\_\allowbreak id}, \texttt{docente\_\allowbreak id}, \texttt{estado}, \texttt{horas} & \texttt{validarHorasMinimas()}, \texttt{avanzarEstado()} & 1 \\
+\texttt{PlanDocente} & \texttt{id}, \texttt{periodo\_\allowbreak  id}, \texttt{docente\_\allowbreak  id}, \texttt{estado}, \texttt{horas} & \texttt{validarHorasMinimas()}, \texttt{avanzarEstado()} & 1 \\
 \hline
-\texttt{Seccion Documento} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{orden}, \texttt{titulo}, \texttt{contenido} & \texttt{actualizarContenido()}, \texttt{sanitizarHtml()} & $1 \dots N$ \\
+\texttt{Seccion Documento} & \texttt{id}, \texttt{plan\_\allowbreak  id}, \texttt{orden}, \texttt{titulo}, \texttt{contenido} & \texttt{actualizarContenido()}, \texttt{sanitizarHtml()} & $1 \dots N$ \\
 \hline
-\texttt{Actividad Matriz} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{nombre}, \texttt{horas}, \texttt{ponderacion} & \texttt{calcularAvance()}, \texttt{recalcularPond()} & $1 \dots N$ \\
+\texttt{Actividad Matriz} & \texttt{id}, \texttt{plan\_\allowbreak  id}, \texttt{nombre}, \texttt{horas}, \texttt{ponderacion} & \texttt{calcularAvance()}, \texttt{recalcularPond()} & $1 \dots N$ \\
 \hline
-\texttt{Evidencia Adjunta} & \texttt{id}, \texttt{actividad\_\allowbreak id}, \texttt{url\_\allowbreak s3}, \texttt{hash\_\allowbreak sha256} & \texttt{verificarIntegridad()}, \texttt{generarUrl()} & $0 \dots N$ \\
+\texttt{Evidencia Adjunta} & \texttt{id}, \texttt{actividad\_\allowbreak  id}, \texttt{url\_\allowbreak  s3}, \texttt{hash\_\allowbreak  sha256} & \texttt{verificarIntegridad()}, \texttt{generarUrl()} & $0 \dots N$ \\
 \hline
-\texttt{Observacion Comite} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{usuario\_\allowbreak id}, \texttt{comentario} & \texttt{registrarObservacion()}, \texttt{marcarResuelto()} & $0 \dots N$ \\
+\texttt{Observacion Comite} & \texttt{id}, \texttt{plan\_\allowbreak  id}, \texttt{usuario\_\allowbreak  id}, \texttt{comentario} & \texttt{registrarObservacion()}, \texttt{marcarResuelto()} & $0 \dots N$ \\
 \hline
-\texttt{Firma Documento} & \texttt{id}, \texttt{plan\_\allowbreak id}, \texttt{firmante\_\allowbreak id}, \texttt{rol\_\allowbreak firma} & \texttt{estamparFirma()}, \texttt{validarSecuencia()} & $0 \dots 3$ \\
+\texttt{Firma Documento} & \texttt{id}, \texttt{plan\_\allowbreak  id}, \texttt{firmante\_\allowbreak  id}, \texttt{rol\_\allowbreak  firma} & \texttt{estamparFirma()}, \texttt{validarSecuencia()} & $0 \dots 3$ \\
 \hline
 \end{tabularx}
 \caption{Matriz de especificación de clases del dominio SGC.}
@@ -316,10 +312,10 @@ El proceso de especificación técnica comprendió:
 \noindent
 \textbf{Desglose Técnico y Análisis Estructural del Comportamiento Dinámico y Clases UML:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Flujo de Interacción Temporal en el Diagrama de Secuencia:} Se modela la llamada asíncrona \texttt{POST /\allowbreak api/\allowbreak v1/\allowbreak planes/\allowbreak :id/\allowbreak secciones} desde el cliente React. El controlador delega en la cadena interceptora de Validation Gates, la cual ejecuta en menos de 15 ms las comprobaciones VG-1 y VG-2 antes de autorizar la escritura atómica en la base de datos.
+    \item \textbf{Flujo de Interacción Temporal en el Diagrama de Secuencia:} Se modela la llamada asíncrona \texttt{POST /\allowbreak  api/\allowbreak  v1/\allowbreak  planes/\allowbreak  :id/\allowbreak  secciones} desde el cliente React. El controlador delega en la cadena interceptora de Validation Gates, la cual ejecuta en menos de 15 ms las comprobaciones VG-1 y VG-2 antes de autorizar la escritura atómica en la base de datos.
     \item \textbf{Bifurcaciones y Decisiones en el Diagrama de Actividades (Swimlanes):} Se aprecian los carriles paralelos entre el Docente, la Comisión y el Subdecano. Si el expediente es observado, el estado conmuta a \texttt{Observado} y se notifica al docente; si es conforme, avanza a la cascada secuencial de 3 firmas.
-    \item \textbf{Estructura de Entidades en el Modelo de Clases:} Modela las entidades ricas: \texttt{Plan\allowbreak Trabajo\allowbreak Docente} como agregado raíz que encapsula colecciones de \texttt{Actividad\allowbreak Docente}, \texttt{Seccion\allowbreak Documento}, \texttt{Evidencia\allowbreak Respaldo} y \texttt{Firma\allowbreak Digital}, definiendo sus métodos de cálculo de horas y contratos de inmutabilidad.
-    \item \textbf{Máquina de Estados Finita del Documento SGC:} Garantiza computacionalmente que ningún expediente alcance el estado \texttt{Legalizado\_\allowbreak  Subdecanato} sin haber transitado previamente por la firma del docente y el visto bueno del coordinador de carrera.
+    \item \textbf{Estructura de Entidades en el Modelo de Clases:} Modela las entidades ricas: \texttt{Plan Trabajo Docente} como agregado raíz que encapsula colecciones de \texttt{Actividad Docente}, \texttt{Seccion Documento}, \texttt{Evidencia Respaldo} y \texttt{Firma Digital}, definiendo sus métodos de cálculo de horas y contratos de inmutabilidad.
+    \item \textbf{Máquina de Estados Finita del Documento SGC:} Garantiza computacionalmente que ningún expediente alcance el estado \texttt{Legalizado\_\allowbreak   Subdecanato} sin haber transitado previamente por la firma del docente y el visto bueno del coordinador de carrera.
 \end{itemize}
 
 \subsubsection*{3. Matriz Técnica de Transición de Estados del Documento Institucional}

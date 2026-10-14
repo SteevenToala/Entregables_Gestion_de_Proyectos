@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Autenticación y Autorización de Usuarios -- Código EDT: 3.3
 
@@ -177,7 +173,7 @@ Implementar el subsistema de autenticación y autorización segura con JWT y RBA
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se implementó un esquema de autenticación sin estado (\textit{stateless}). Al autenticarse, el usuario recibe un Access Token con tiempo de expiración corto (15 minutos) que contiene su identificador, correo y lista de roles. Para mitigar ataques de fuerza bruta, se integró el middleware \texttt{express-\allowbreak rate-\allowbreak limit} restringiendo a 5 intentos fallidos por dirección IP en una ventana de 15 minutos. En el cliente, el token se custodia en memoria mediante React Context, con respaldo en \texttt{sessionStorage} para persistir recargas de pestaña.
+Se implementó un esquema de autenticación sin estado (\textit{stateless}). Al autenticarse, el usuario recibe un Access Token con tiempo de expiración corto (15 minutos) que contiene su identificador, correo y lista de roles. Para mitigar ataques de fuerza bruta, se integró el middleware \texttt{express- rate- limit} restringiendo a 5 intentos fallidos por dirección IP en una ventana de 15 minutos. En el cliente, el token se custodia en memoria mediante React Context, con respaldo en \texttt{sessionStorage} para persistir recargas de pestaña.
 
 \subsection{Políticas de Calidad de Seguridad}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -192,10 +188,10 @@ La protección de la información docente y la delimitación de accesos se imple
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Configuración de Hashing Criptográfico con Argon2id:} Se implementó la biblioteca nativa \texttt{argon2} para el almacenamiento de contraseñas, aplicando 64 MB de memoria RAM por cálculo, 3 iteraciones y 4 hilos de paralelismo, neutralizando intentos de ataque mediante fuerza bruta o tablas arcoíris.
-    \item \textbf{Diseño de Tokens de Acceso JWT de Vida Corta (15 minutos):} El backend genera un token de acceso firmado con algoritmo HS256 conteniendo los claims estrictamente necesarios (\texttt{sub}, \texttt{role}, \texttt{carrera\_\allowbreak id}, \texttt{exp}), asegurando que ante una eventual interceptación el token expire rápidamente.
-    \item \textbf{Mecanismo de Refresh Tokens Rotativos y Cookies HttpOnly Seguras:} Para mantener la sesión sin comprometer la seguridad en el cliente, se diseñó un Refresh Token con validez de 7 días transmitido exclusivamente mediante una cookie HTTP con banderas \texttt{HttpOnly}, \texttt{Secure} y \texttt{SameSite=Strict}. Cada renovación invalida el token previo en la tabla \texttt{refresh\_\allowbreak tokens}.
+    \item \textbf{Diseño de Tokens de Acceso JWT de Vida Corta (15 minutos):} El backend genera un token de acceso firmado con algoritmo HS256 conteniendo los claims estrictamente necesarios (\texttt{sub}, \texttt{role}, \texttt{carrera\_\allowbreak  id}, \texttt{exp}), asegurando que ante una eventual interceptación el token expire rápidamente.
+    \item \textbf{Mecanismo de Refresh Tokens Rotativos y Cookies HttpOnly Seguras:} Para mantener la sesión sin comprometer la seguridad en el cliente, se diseñó un Refresh Token con validez de 7 días transmitido exclusivamente mediante una cookie HTTP con banderas \texttt{HttpOnly}, \texttt{Secure} y \texttt{SameSite=Strict}. Cada renovación invalida el token previo en la tabla \texttt{refresh\_\allowbreak  tokens}.
     \item \textbf{Implementación del Middleware de Autorización por Roles (RBAC):} Se construyó el interceptor \texttt{verifyRole} en Express v5, el cual valida en cada petición que el rol en el token cuente con los permisos necesarios para la ruta invocada, emitiendo un código HTTP 403 Forbidden ante cualquier acceso no autorizado.
-    \item \textbf{Protocolo de Revocación Inmediata de Sesiones:} Se programó el endpoint \texttt{POST /\allowbreak api/\allowbreak  v1/\allowbreak  auth/\allowbreak  logout} que elimina el hash del Refresh Token en base de datos y purga la cookie del navegador, garantizando el cierre de sesión seguro.
+    \item \textbf{Protocolo de Revocación Inmediata de Sesiones:} Se programó el endpoint \texttt{POST /\allowbreak  api/\allowbreak   v1/\allowbreak   auth/\allowbreak   logout} que elimina el hash del Refresh Token en base de datos y purga la cookie del navegador, garantizando el cierre de sesión seguro.
 \end{itemize}
 
 \subsection{Matriz de Control de Acceso por Roles (RBAC) y Permisos en la API}
@@ -238,9 +234,9 @@ Gestión de Usuarios y Prórrogas & NO & NO & NO & NO & SÍ \\
 \hline
 \texttt{sub} & UUID v4 & Identificador único del usuario autenticado en la base de datos. \\
 \hline
-\texttt{email} & String & Correo institucional (e.g., \texttt{docente@uta.\allowbreak edu.\allowbreak ec}). \\
+\texttt{email} & String & Correo institucional (e.g., \texttt{docente@uta. edu. ec}). \\
 \hline
-\texttt{roles} & Array[String] & Roles asignados (e.g., \texttt{["DOCENTE", "COORD\_\allowbreak AREA"]}). \\
+\texttt{roles} & Array[String] & Roles asignados (e.g., \texttt{["DOCENTE", "COORD\_\allowbreak  AREA"]}). \\
 \hline
 \texttt{iat} & Timestamp & Marca temporal de emisión del token. \\
 \hline
@@ -291,8 +287,8 @@ El módulo de seguridad y autenticación se diseñó bajo las pautas de OWASP Ap
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Cifrado Robusto con Argon2id:} Para neutralizar ataques de tablas arcoíris y descifrado por GPU, las contraseñas se almacenan procesadas mediante la biblioteca \texttt{argon2} con los parámetros recomendados: 64 MB de memoria RAM asignada por cálculo, 3 iteraciones de cómputo y factor de paralelismo 4.
-    \item \textbf{Emisión de Access Tokens de Vida Corta (15 minutos):} Ante credenciales válidas, el backend genera un token JWT firmado asimétricamente con algoritmo HS256, conteniendo únicamente los claims estrictamente necesarios: identificador de usuario (\texttt{sub}), rol asignado (\texttt{role}), código de carrera (\texttt{carrera\_\allowbreak id}) y tiempo de expiración (\texttt{exp = 15m}).
-    \item \textbf{Gestión de Refresh Tokens Rotativos y Cookies HttpOnly:} Para mantener la sesión activa de forma segura sin exponer tokens a scripts maliciosos (XSS), se implementó un Refresh Token con validez de 7 días transmitido exclusivamente mediante una cookie HTTP con las banderas \texttt{HttpOnly}, \texttt{Secure} y \texttt{SameSite=Strict}. Cada renovación de token invalida el Refresh Token anterior en la tabla \texttt{refresh\_\allowbreak tokens}.
+    \item \textbf{Emisión de Access Tokens de Vida Corta (15 minutos):} Ante credenciales válidas, el backend genera un token JWT firmado asimétricamente con algoritmo HS256, conteniendo únicamente los claims estrictamente necesarios: identificador de usuario (\texttt{sub}), rol asignado (\texttt{role}), código de carrera (\texttt{carrera\_\allowbreak  id}) y tiempo de expiración (\texttt{exp = 15m}).
+    \item \textbf{Gestión de Refresh Tokens Rotativos y Cookies HttpOnly:} Para mantener la sesión activa de forma segura sin exponer tokens a scripts maliciosos (XSS), se implementó un Refresh Token con validez de 7 días transmitido exclusivamente mediante una cookie HTTP con las banderas \texttt{HttpOnly}, \texttt{Secure} y \texttt{SameSite=Strict}. Cada renovación de token invalida el Refresh Token anterior en la tabla \texttt{refresh\_\allowbreak  tokens}.
     \item \textbf{Middleware Declarativo de Autorización RBAC:} Se construyó el interceptor el middleware \texttt{verifyRole} con los roles institucionales. Cuando una petición arriba a una ruta protegida, el middleware extrae el token del encabezado \texttt{Authorization: Bearer <token>}, verifica su firma y valida si el rol del usuario posee los privilegios requeridos, rechazando accesos no autorizados con código HTTP 403.
     \item \textbf{Mecanismo de Revocación de Sesiones:} En el evento de cierre de sesión explícito (\texttt{logout}), el backend elimina el hash del Refresh Token en base de datos y borra la cookie en el cliente, impidiendo la reutilización de tokens huérfanos.
 \end{enumerate}
@@ -310,7 +306,7 @@ El módulo de seguridad y autenticación se diseñó bajo las pautas de OWASP Ap
     \item \textbf{Elementos Estructurales Visualizados:} La imagen muestra la vista de autenticación oficial del sistema SIGE: formulario centrado con identidad corporativa de la UTA (\#8B1D24), campos para correo institucional y contraseña con botón de visualización, sello de acreditación y mensaje de alerta reactivo ante credenciales inválidas.
     \item \textbf{Flujo Criptográfico y Protocolo de Tokens:} Tras validar las credenciales contra el hash Argon2id en PostgreSQL, el servidor genera un Access Token JWT de vida corta (15 minutos) firmado con HMAC-SHA256 y un Refresh Token de 7 días almacenado en una cookie segura con flags \texttt{HttpOnly}, \texttt{SameSite=Strict} y \texttt{Secure}.
     \item \textbf{Seguridad y Mitigación de Vulnerabilidades:} Este esquema mitiga ataques de secuestro de sesión (XSS) y falsificación de peticiones en sitios cruzados (CSRF), garantizando que las credenciales nunca queden expuestas en el almacenamiento local (\texttt{localStorage}) del navegador.
-    \item \textbf{Trazabilidad con el Código Fuente:} Módulos \texttt{auth.\allowbreak controller.\allowbreak js}, middleware \texttt{auth\allowbreak Middleware.\allowbreak js} y vista \texttt{LoginView.\allowbreak jsx}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Módulos \texttt{auth. controller. js}, middleware \texttt{auth Middleware. js} y vista \texttt{LoginView. jsx}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional y Pruebas de Seguridad}
@@ -325,9 +321,9 @@ El módulo de seguridad y autenticación se diseñó bajo las pautas de OWASP Ap
 \hline
 P1: Clave Incorrecta & Envío de correo válido con contraseña no coincidente. & Rechazo con código HTTP 401 Unauthorized y retraso intencional de 300 ms. & Acceso Denegado \\
 \hline
-P2: Rol No Autorizado & Docente intenta acceder a \texttt{GET /\allowbreak api/\allowbreak v1/\allowbreak subdecano/\allowbreak planes}. & Interceptado por \texttt{verifyRole}; retorno de código HTTP 403 Forbidden. & Privilegio Bloqueado \\
+P2: Rol No Autorizado & Docente intenta acceder a \texttt{GET /\allowbreak  api/\allowbreak  v1/\allowbreak  subdecano/\allowbreak  planes}. & Interceptado por \texttt{verifyRole}; retorno de código HTTP 403 Forbidden. & Privilegio Bloqueado \\
 \hline
-P3: Renovación de Token & Petición a \texttt{/\allowbreak auth/\allowbreak refresh} con cookie \texttt{HttpOnly} activa tras 16 min. & Generación exitosa de nuevo Access Token; sesión extendida sin reautenticación. & Token Renovado \\
+P3: Renovación de Token & Petición a \texttt{/\allowbreak  auth/\allowbreak  refresh} con cookie \texttt{HttpOnly} activa tras 16 min. & Generación exitosa de nuevo Access Token; sesión extendida sin reautenticación. & Token Renovado \\
 \hline
 P4: Token Expirado & Petición a ruta protegida con Access Token con más de 15 min de emisión. & Interceptado por \texttt{verifyToken}; retorno de error \texttt{TokenExpiredError}. & Expiración Cumplida \\
 \hline

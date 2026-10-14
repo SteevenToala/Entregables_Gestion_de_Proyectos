@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Pruebas de Interfaz, Accesibilidad (WCAG 2.1 AA) y Diseño Adaptable -- Código EDT: 4.3
 
@@ -192,7 +188,7 @@ La evaluación de la usabilidad y la accesibilidad web se orientó a certificar 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Auditoría Automatizada de Accesibilidad Web con Motor Axe-Core y Lighthouse:} Se ejecutaron análisis estáticos y dinámicos sobre las vistas clave de la aplicación (Dashboard, Asistente Wizard, Matriz de Actividades y Bandeja de Observaciones), alcanzando un índice de cumplimiento superior al 95\%.
     \item \textbf{Evaluación Heurística de Usabilidad basada en los 10 Principios de Nielsen:} Se inspeccionó la interacción del usuario en el Asistente Wizard, validando la visibilidad del estado del sistema mediante el Stepper visual, la consistencia terminológica con el SGC institucional y la prevención proactiva de errores de cálculo.
-    \item \textbf{Pruebas de Navegación Exclusiva por Teclado y Tecnologías de Asistencia:} Se comprobó la operabilidad del sistema prescindiendo del ratón, garantizando un orden lógico de tabulación en los formularios y la compatibilidad con el lector de pantalla NVDA mediante el uso de etiquetas semánticas ARIA (\texttt{aria-\allowbreak live}, \texttt{aria-\allowbreak describedby}).
+    \item \textbf{Pruebas de Navegación Exclusiva por Teclado y Tecnologías de Asistencia:} Se comprobó la operabilidad del sistema prescindiendo del ratón, garantizando un orden lógico de tabulación en los formularios y la compatibilidad con el lector de pantalla NVDA mediante el uso de etiquetas semánticas ARIA (\texttt{aria- live}, \texttt{aria- describedby}).
     \item \textbf{Comprobación Espectral de Ratios de Contraste Cromático bajo Norma WCAG 2.1 AA:} Se certificó que el color primario institucional (\#8B1D24 Rojo UTA) presenta una relación de contraste de 7.2:1 frente al fondo blanco, superando con holgura el umbral mínimo de 4.5:1 exigido para texto normal.
 \end{itemize}
 
@@ -272,8 +268,8 @@ El desarrollo del frontend del sistema SIGE priorizó la eliminación de fricci�
 Los aspectos técnicos implementados incluyen:
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Navegación Total por Teclado:} Cada elemento interactivo (botones, inputs, selectores y pestañas) posee un orden de tabulación predecible (\textit{tabindex}), con indicadores de foco visibles de alto contraste para facilitar la navegación a personas con dificultades motoras o visuales.
-    \item \textbf{Semántica Accesible ARIA:} Se incorporaron atributos \texttt{aria-\allowbreak selected}, \texttt{aria-\allowbreak expanded} y roles de diálogo en modales para asegurar la compatibilidad con tecnologías de asistencia y lectores de pantalla (NVDA, JAWS).
-    \item \textbf{Manejo Reactivo de Alertas:} Las alertas del sistema emplean regiones de anuncio dinámico (\texttt{aria-\allowbreak live="polite"}), permitiendo que los errores de las Validation Gates sean comunicados sin interrumpir abruptamente el foco del usuario.
+    \item \textbf{Semántica Accesible ARIA:} Se incorporaron atributos \texttt{aria- selected}, \texttt{aria- expanded} y roles de diálogo en modales para asegurar la compatibilidad con tecnologías de asistencia y lectores de pantalla (NVDA, JAWS).
+    \item \textbf{Manejo Reactivo de Alertas:} Las alertas del sistema emplean regiones de anuncio dinámico (\texttt{aria- live="polite"}), permitiendo que los errores de las Validation Gates sean comunicados sin interrumpir abruptamente el foco del usuario.
     \item \textbf{Diseño Adaptable Multiresolución:} El layout se ajusta dinámicamente mediante breakpoints CSS fluidos, reorganizando la barra lateral y los paneles de métricas para optimizar el espacio útil en pantallas panorámicas y portátiles docentes.
 \end{itemize}
 
@@ -293,8 +289,8 @@ A continuación se presentan capturas del sistema en funcionamiento real, eviden
 \textbf{Desglose Técnico y Análisis Estructural de Usabilidad y Accesibilidad (WCAG 2.1 AA):}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Arquitectura Visual del Dashboard y Feedback Cognitivo:} La captura superior ilustra la pantalla principal recibida por el docente: tarjetas de balance horaria semanal en tiempo real, accesos directos al Wizard y listado de planes activos con indicadores semánticos de estado que reducen la sobrecarga cognitiva del usuario.
-    \item \textbf{Simulación de Formato Oficial A4 en Tiempo Real:} La segunda captura muestra la vista de edición modular en TipTap, donde el docente redacta sobre un lienzo con dimensiones y márgenes idénticos a la plantilla física oficial \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}, eliminando la desconfiguración visual al momento de exportar a PDF.
-    \item \textbf{Navegación por Teclado y Tecnologías de Asistencia:} Se certifica el soporte completo para lectores de pantalla (NVDA) mediante etiquetas semánticas ARIA (\texttt{aria-\allowbreak live}, \texttt{aria-\allowbreak describedby}) y una secuencia lógica de tabulación en todos los formularios modulares sin requerir el uso de ratón.
+    \item \textbf{Simulación de Formato Oficial A4 en Tiempo Real:} La segunda captura muestra la vista de edición modular en TipTap, donde el docente redacta sobre un lienzo con dimensiones y márgenes idénticos a la plantilla física oficial \texttt{UTA- SGC- A- 2- 1- P7- T1}, eliminando la desconfiguración visual al momento de exportar a PDF.
+    \item \textbf{Navegación por Teclado y Tecnologías de Asistencia:} Se certifica el soporte completo para lectores de pantalla (NVDA) mediante etiquetas semánticas ARIA (\texttt{aria- live}, \texttt{aria- describedby}) y una secuencia lógica de tabulación en todos los formularios modulares sin requerir el uso de ratón.
     \item \textbf{Verificación Espectral de Contraste Cromático:} La medición instrumental certifica que el color primario corporativo (\#8B1D24 Rojo UTA) presenta una relación de contraste de 7.2:1 frente a fondos blancos, superando con holgura el mínimo de 4.5:1 exigido para el nivel AA de la norma ISO/IEC 40500.
 \end{itemize}
 

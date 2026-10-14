@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} HITO 4: Sprint 3 Review: Matriz Dinámica y Evidencias MinIO -- Código EDT: 3.12
 
@@ -177,12 +173,12 @@ Evaluar, demostrar y formalizar la aprobación del Sprint 3 del sistema SIGE, ap
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se ejecutó la sesión de demostración operativa en vivo utilizando el entorno de contenedores Docker Compose local. Se recreó el flujo real de un docente titular de FISEI: registro interactivo de 6 actividades en la matriz dinámica, forzado de un error de ponderación (105\%) comprobando el bloqueo preventivo del sistema, corrección al 100.00\% exacto con desbloqueo automático, subida de un archivo PDF de evidencia con cálculo en tiempo real de su hash SHA-256 e inspección directa en la consola de MinIO confirmando el almacenamiento en el bucket \texttt{sige-\allowbreak evidencias}.
+Se ejecutó la sesión de demostración operativa en vivo utilizando el entorno de contenedores Docker Compose local. Se recreó el flujo real de un docente titular de FISEI: registro interactivo de 6 actividades en la matriz dinámica, forzado de un error de ponderación (105\%) comprobando el bloqueo preventivo del sistema, corrección al 100.00\% exacto con desbloqueo automático, subida de un archivo PDF de evidencia con cálculo en tiempo real de su hash SHA-256 e inspección directa en la consola de MinIO confirmando el almacenamiento en el bucket \texttt{sige- evidencias}.
 
 \subsection{Políticas de Calidad de Hito 4}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Consistencia Total:} Las actividades registradas en la matriz deben ser idénticas en base de datos, en memoria del cliente y en los archivos de evidencia asociados.
-    \item \textbf{Política de Transparencia de Auditoría:} Toda prueba debe evidenciar los registros generados en los logs de auditoría (\texttt{auditoria\_\allowbreak logs}).
+    \item \textbf{Política de Transparencia de Auditoría:} Toda prueba debe evidenciar los registros generados en los logs de auditoría (\texttt{auditoria\_\allowbreak  logs}).
     \item \textbf{Política de Cero Defectos Funcionales:} No se autoriza el avance al Sprint 4 si existen inconsistencias aritméticas o fallas de carga en MinIO.
 \end{enumerate}
 
@@ -190,7 +186,7 @@ Se ejecutó la sesión de demostración operativa en vivo utilizando el entorno 
 Al culminar el Sprint 3 de desarrollo, se ejecutó la sesión formal de demostración y revisión de sprint bajo metodología Scrum, focalizada en validar la integración entre la Matriz Dinámica, las Validation Gates y el almacenamiento en MinIO S3. Las actividades de demostración comprendieron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
-    \item \textbf{Preparación del Entorno Integrado de Demostración:} Se verificó el funcionamiento conjunto de los contenedores \texttt{sige-\allowbreak backend}, \texttt{sige-\allowbreak postgres} y \texttt{sige-\allowbreak minio}, precargando un informe de cumplimiento semestral para pruebas en vivo.
+    \item \textbf{Preparación del Entorno Integrado de Demostración:} Se verificó el funcionamiento conjunto de los contenedores \texttt{sige- backend}, \texttt{sige- postgres} y \texttt{sige- minio}, precargando un informe de cumplimiento semestral para pruebas en vivo.
     \item \textbf{Demostración de la Matriz Dinámica en Tiempo Real:} Se mostró la distribución de 40 horas en 6 actividades académicas y la asignación del cronograma en 16 semanas. Se ejecutó una alteración deliberada de la carga horaria a 38h, mostrando en pantalla cómo los badges visuales se tornaban rojos y el sistema bloqueaba el botón de guardado. Se restableció la suma exacta a 40.0h y 100.00\%, observando la transición inmediata a color verde.
     \item \textbf{Comprobación de la Compuerta VG-3 y Custodia S3:} Se ingresó un avance del 60\% en la actividad de docencia e intentó enviar a revisión sin evidencias; la compuerta VG-3 bloqueó la operación devolviendo el error HTTP 422. Se adjuntó un archivo PDF de calificaciones de 1.8 MB; el backend calculó su hash SHA-256 y lo custodió en MinIO, permitiendo el envío exitoso tras la adjunción del respaldo.
     \item \textbf{Inspección en Caliente del Bucket MinIO:} Se proyectó la consola de administración de MinIO en el puerto 9001, evidenciando el objeto almacenado con clave UUID y metadatos inmutables.
@@ -312,7 +308,7 @@ A la fecha de corte del Hito 4 (02 de octubre de 2026), se certifica la culminac
 Al concluir el Sprint 3 de desarrollo, se ejecutó la sesión formal de demostración y revisión de sprint bajo metodología Scrum, focalizada en validar la integración entre la Matriz Dinámica, las Validation Gates y el almacenamiento en MinIO S3:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Preparación del Entorno Integrado de Demostración:} Se verificó el funcionamiento conjunto de los contenedores \texttt{sige-\allowbreak backend}, \texttt{sige-\allowbreak postgres} y \texttt{sige-\allowbreak minio}, precargando un informe de cumplimiento semestral para pruebas en vivo.
+    \item \textbf{Preparación del Entorno Integrado de Demostración:} Se verificó el funcionamiento conjunto de los contenedores \texttt{sige- backend}, \texttt{sige- postgres} y \texttt{sige- minio}, precargando un informe de cumplimiento semestral para pruebas en vivo.
     \item \textbf{Demostración de la Matriz Dinámica en Tiempo Real:}
     \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
         \item Se mostró la distribución de 40 horas en 6 actividades académicas y la asignación del cronograma en 16 semanas.

@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Pruebas de Integración y Seguridad (Auditoría OWASP Top 10) -- Código EDT: 4.2
 
@@ -193,8 +189,8 @@ La validación de seguridad de caja gris y las pruebas de integración de extrem
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Diseño y Ejecución de la Suite de Pruebas de Integración con Supertest:} Se automatizaron escenarios de prueba sobre los endpoints de la API REST de Express v5, simulando el ciclo completo del documento desde la autenticación, creación del borrador y persistencia en lote de la matriz, hasta la emisión de firmas y exportación en PDF.
     \item \textbf{Auditoría de Vulnerabilidades Web según el Estándar OWASP Top 10:2021:} Se aplicaron pruebas de penetración sobre la interfaz web y los controladores backend, evaluando la resistencia frente a inyección SQL, control de acceso roto (Broken Access Control), fallas criptográficas y exposición indebida de datos.
-    \item \textbf{Simulación de Vectores de Inyección SQL y Tampering de Tokens JWT:} Se verificó que el uso de consultas parametrizadas en \texttt{pg-\allowbreak promise} y la firma criptográfica HMAC-SHA256 de los tokens impidan cualquier escalamiento no autorizado de privilegios o alteración del identificador de usuario (\texttt{user\_\allowbreak id}).
-    \item \textbf{Inspección de Cabeceras de Seguridad HTTP y Políticas CORS:} Se configuró e inspeccionó el middleware \texttt{helmet}, verificando la aplicación de Content Security Policy (CSP), protección contra ataques de clickjacking (\texttt{X-\allowbreak Frame-\allowbreak Options: DENY}) y restricción estricta de orígenes permitidos en llamadas asíncronas.
+    \item \textbf{Simulación de Vectores de Inyección SQL y Tampering de Tokens JWT:} Se verificó que el uso de consultas parametrizadas en \texttt{pg- promise} y la firma criptográfica HMAC-SHA256 de los tokens impidan cualquier escalamiento no autorizado de privilegios o alteración del identificador de usuario (\texttt{user\_\allowbreak  id}).
+    \item \textbf{Inspección de Cabeceras de Seguridad HTTP y Políticas CORS:} Se configuró e inspeccionó el middleware \texttt{helmet}, verificando la aplicación de Content Security Policy (CSP), protección contra ataques de clickjacking (\texttt{X- Frame- Options: DENY}) y restricción estricta de orígenes permitidos en llamadas asíncronas.
 \end{itemize}
 
 \subsection{Matriz Oficial de Evaluación OWASP Top 10:2021 en SIGE}
@@ -299,9 +295,9 @@ Las comprobaciones técnicas incluyeron:
 \textbf{Desglose Técnico y Análisis Estructural de Seguridad OWASP Top 10:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Control de Acceso Basado en Roles (RBAC) y Seguridad JWT:} El diagrama ilustra el flujo de intercepción en Express v5: cada solicitud entrante debe presentar un token Bearer firmado con HMAC-SHA256; el middleware extrae el payload con el rol institucional del usuario y valida los permisos de acceso antes de autorizar la ejecución del controlador.
-    \item \textbf{Mitigación de Inyecciones SQL (A03:2021):} La arquitectura garantiza que el 100\% de las consultas hacia PostgreSQL 18 emplean parámetros bindeados (\texttt{\$1, \$2}) mediante \texttt{pg-\allowbreak promise}, imposibilitando cualquier manipulación o inyección de código SQL malicioso.
+    \item \textbf{Mitigación de Inyecciones SQL (A03:2021):} La arquitectura garantiza que el 100\% de las consultas hacia PostgreSQL 18 emplean parámetros bindeados (\texttt{\$1, \$2}) mediante \texttt{pg- promise}, imposibilitando cualquier manipulación o inyección de código SQL malicioso.
     \item \textbf{Protección contra Tampering y Ataques XSS en TipTap (A08:2021):} Se desglosa el protocolo de sanitización aplicado sobre los contenidos JSONB: el backend valida y filtra etiquetas HTML maliciosas antes de almacenar el texto enriquecido en la base de datos.
-    \item \textbf{Directivas de Seguridad HTTP con Helmet (A05:2021):} Se verifica la configuración activa de cabeceras seguras: Content Security Policy (CSP), \texttt{X-\allowbreak Frame-\allowbreak Options: DENY} para prevenir clickjacking y cookies HttpOnly con flags \texttt{SameSite=Strict} para mitigar ataques CSRF.
+    \item \textbf{Directivas de Seguridad HTTP con Helmet (A05:2021):} Se verifica la configuración activa de cabeceras seguras: Content Security Policy (CSP), \texttt{X- Frame- Options: DENY} para prevenir clickjacking y cookies HttpOnly con flags \texttt{SameSite=Strict} para mitigar ataques CSRF.
 \end{itemize}
 
 \subsubsection*{3. Matriz de Ensayos Operativos de Penetración y Verificación de Seguridad}

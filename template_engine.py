@@ -119,10 +119,6 @@ PREAMBLE_TEMPLATE = r"""\documentclass[12pt,a4paper]{article}
 \renewcommand{\headrulewidth}{0pt}
 
 \begin{document}
-
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
 """
 
 FOOTER_TEMPLATE = r"""

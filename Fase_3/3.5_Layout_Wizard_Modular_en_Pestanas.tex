@@ -118,15 +118,11 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Layout del Wizard Modular en Pestañas -- Código EDT: 3.5
 
 \section{Introducción}
-El diligenciamiento del formato de Plan de Trabajo Docente (\texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}) implica una gran cantidad de campos administrativos, académicos y descriptivos. Presentar toda esta información en un único formulario vertical genera sobrecarga cognitiva y alta probabilidad de abandono o errores de llenado. Para optimizar este flujo se implementó un asistente guiado por pestañas (\textit{Wizard}) en 5 etapas secuenciales que valida progresivamente la información antes de permitir el avance al siguiente bloque, asegurando que el docente cumpla con las políticas del SGC sin omitir datos obligatorios.
+El diligenciamiento del formato de Plan de Trabajo Docente (\texttt{UTA- SGC- A- 2- 1- P7- T1}) implica una gran cantidad de campos administrativos, académicos y descriptivos. Presentar toda esta información en un único formulario vertical genera sobrecarga cognitiva y alta probabilidad de abandono o errores de llenado. Para optimizar este flujo se implementó un asistente guiado por pestañas (\textit{Wizard}) en 5 etapas secuenciales que valida progresivamente la información antes de permitir el avance al siguiente bloque, asegurando que el docente cumpla con las políticas del SGC sin omitir datos obligatorios.
 
 \section{Objetivo}
 \subsection{Objetivo General}
@@ -142,7 +138,7 @@ Desarrollar el Wizard modular por etapas para la elaboración y edición estruct
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item Estructura del Wizard en 5 etapas: 1. Datos Generales, 2. Docencia y Carga Horaria, 3. Matriz de Actividades, 4. Medios de Verificación, 5. Revisión y Firmas.
-    \item Vista de Bandeja de Planes (\texttt{/\allowbreak planes}) con visualización del estado y accesos directos.
+    \item Vista de Bandeja de Planes (\texttt{/\allowbreak  planes}) con visualización del estado y accesos directos.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
@@ -187,11 +183,11 @@ Se estructuró el componente utilizando la librería de componentes Headless UI 
 \end{enumerate}
 
 \section{Descripción de actividades}
-Para guiar al docente de manera secuencial y estructurada en el diligenciamiento de los formatos oficiales \texttt{P7-\allowbreak T1} y \texttt{P7-\allowbreak T4}, se desarrolló el asistente modular por etapas (\texttt{PlanWizard.\allowbreak jsx}). Las actividades de construcción abarcaron:
+Para guiar al docente de manera secuencial y estructurada en el diligenciamiento de los formatos oficiales \texttt{P7- T1} y \texttt{P7- T4}, se desarrolló el asistente modular por etapas (\texttt{PlanWizard. jsx}). Las actividades de construcción abarcaron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Descomposición Modular en 5 Etapas del Ciclo Documental:} Se fragmentó la captura de información en cinco bloques lógicos: Etapa Inicial (Datos Generales y Carga Horaria), Etapa Descriptiva (Justificación Académica), Etapa Matricial (Matriz de Actividades y Ponderación), Etapa de Evidencias (Custodia de Archivos en MinIO S3) y Etapa de Firmas (Previsualización A4 y Solicitud de Firma).
-    \item \textbf{Modelado de la Máquina de Estados con useReducer:} Se centralizó la lógica del asistente en un reductor reactivo que administra las transiciones de avance (\texttt{NEXT\_\allowbreak STEP}), retroceso (\texttt{PREV\_\allowbreak STEP}), actualización de borradores y validaciones por etapa.
+    \item \textbf{Modelado de la Máquina de Estados con useReducer:} Se centralizó la lógica del asistente en un reductor reactivo que administra las transiciones de avance (\texttt{NEXT\_\allowbreak  STEP}), retroceso (\texttt{PREV\_\allowbreak  STEP}), actualización de borradores y validaciones por etapa.
     \item \textbf{Implementación de Compuertas de Avance Condicional (Step Gates):} Se condicionó la habilitación del botón "Siguiente" a la superación de las reglas de validación en tiempo real, bloqueando el avance si los campos obligatorios se encuentran incompletos o inconsistentes.
     \item \textbf{Construcción del Stepper Visual con Estados de Color:} Se diseñó una barra superior interactiva que muestra el porcentaje de avance global y clasifica cada etapa en verde (validado), azul institucional (en edición) o gris (bloqueado pendiente de prerrequisitos).
     \item \textbf{Persistencia y Resiliencia en Memoria Local:} Se configuró un mecanismo de sincronización que almacena los cambios en \texttt{LocalStorage} cada 2 segundos, permitiendo recuperar el borrador completo ante cierres accidentales de pestaña o caídas de red.
@@ -282,10 +278,10 @@ Etapa 5 & Revisión y Firmas & Vista previa del formato oficial A4 y solicitud d
 \section{Anexos}
 
 \subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
-Para erradicar la confusión generada por los formatos manuales en Word y guiar al docente en el cumplimiento de los estándares institucionales, se construyó el componente central \texttt{PlanWizard.\allowbreak jsx}:
+Para erradicar la confusión generada por los formatos manuales en Word y guiar al docente en el cumplimiento de los estándares institucionales, se construyó el componente central \texttt{PlanWizard. jsx}:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Descomposición Modular en 5 etapas modulares:} Siguiendo la estructura del formulario oficial \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}, el asistente se estructuró en 5 etapas secuenciales:
+    \item \textbf{Descomposición Modular en 5 etapas modulares:} Siguiendo la estructura del formulario oficial \texttt{UTA- SGC- A- 2- 1- P7- T1}, el asistente se estructuró en 5 etapas secuenciales:
     \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
         \item \textbf{Configuración Inicial de Carrera y Carga Horaria:} Selección de carrera, período B26, dedicación horaria (40h) y asignaturas vinculadas.
         \item \textbf{Redacción Descriptiva y Objetivos Académicos:} Redacción de objetivos académicos con asistencia ortográfica y autoguardado.
@@ -293,7 +289,7 @@ Para erradicar la confusión generada por los formatos manuales en Word y guiar 
         \item \textbf{Custodia Digital de Evidencias en MinIO:} Carga de documentación probatoria en MinIO S3 con hash criptográfico.
         \item \textbf{Revisión General y Legalización con Firmas:} Previsualización en formato A4 y despacho del expediente al comité de revisión.
     \end{itemize}
-    \item \textbf{Implementación de Máquina de Estados Local:} Se modeló el estado del asistente con el hook \texttt{useReducer}, centralizando acciones de avance (\texttt{NEXT\_\allowbreak STEP}), retroceso (\texttt{PREV\_\allowbreak STEP}), actualización de borrador (\texttt{UPDATE\_\allowbreak DRAFT}) y marcado de etapa completada.
+    \item \textbf{Implementación de Máquina de Estados Local:} Se modeló el estado del asistente con el hook \texttt{useReducer}, centralizando acciones de avance (\texttt{NEXT\_\allowbreak  STEP}), retroceso (\texttt{PREV\_\allowbreak  STEP}), actualización de borrador (\texttt{UPDATE\_\allowbreak  DRAFT}) y marcado de etapa completada.
     \item \textbf{Compuertas de Avance Condicional (Step Gates):} El botón de navegación "Siguiente Etapa" se encuentra inhabilitado de forma declarativa si los campos obligatorios de la etapa en curso no superan las reglas de validación en tiempo real.
     \item \textbf{Barra de Progreso Reactiva con Estados de Color:} La cabecera del Wizard muestra un stepper visual donde cada etapa refleja su estado: verde con icono de visto (completado y validado), azul institucional (en edición activa) o gris (bloqueado pendiente de prerrequisitos).
     \item \textbf{Persistencia Temporal en LocalStorage:} Para prevenir pérdidas ante cierres intempestivos del navegador, las modificaciones locales se persisten en caché cada 2 segundos y se sincronizan contra la base de datos PostgreSQL.
@@ -311,8 +307,8 @@ Para erradicar la confusión generada por los formatos manuales en Word y guiar 
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Elementos Estructurales Visualizados:} La captura documenta el Asistente Wizard en la Etapa Inicial de configuración. Se aprecia la barra de progreso superior mostrando el 20\% de avance completado, el Stepper con 5 indicadores circulares y el formulario de selección de carrera y carga horaria base (40h).
     \item \textbf{Máquina de Estados y Navegación Reactiva:} Se visualiza el bloqueo declarativo de las etapas subsiguientes (2 a 5): el botón "Siguiente Etapa" permanece inhabilitado hasta que el docente confirme la carrera y el periodo académico activo.
-    \item \textbf{Prevención Activa de Errores Cognitivos:} Al desglosar el extenso formulario oficial \texttt{P7-\allowbreak T1} en 5 módulos manejables, el sistema reduce la fatiga visual del docente y elimina el riesgo de omisión de campos requeridos por el SGC.
-    \item \textbf{Trazabilidad con el Código Fuente:}\newline Programado en el componente \texttt{frontend/\allowbreak src/\allowbreak components/\allowbreak wizard/\allowbreak PlanWizard.\allowbreak jsx} y administrado por el hook personalizado \texttt{usePlanWizard.\allowbreak js} con \texttt{useReducer}.
+    \item \textbf{Prevención Activa de Errores Cognitivos:} Al desglosar el extenso formulario oficial \texttt{P7- T1} en 5 módulos manejables, el sistema reduce la fatiga visual del docente y elimina el riesgo de omisión de campos requeridos por el SGC.
+    \item \textbf{Trazabilidad con el Código Fuente:}\newline Programado en el componente \texttt{frontend/\allowbreak  src/\allowbreak  components/\allowbreak  wizard/\allowbreak  PlanWizard. jsx} y administrado por el hook personalizado \texttt{usePlanWizard. js} con \texttt{useReducer}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional del Asistente Wizard}

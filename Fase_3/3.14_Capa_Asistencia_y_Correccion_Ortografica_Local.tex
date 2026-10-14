@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Capa de Asistencia y Corrección Ortográfica Local -- Código EDT: 3.14
 
@@ -177,7 +173,7 @@ Implementar y desplegar el subsistema de corrección ortográfica, gramatical y 
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se priorizó la privacidad institucional y la independencia operativa (\textit{offline-first}). El servicio local LanguageTool analiza el texto plano extraído del editor TipTap mediante peticiones HTTP REST a \texttt{http://\allowbreak sige-\allowbreak grammar:8010/\allowbreak v2/\allowbreak check}. El análisis identifica errores ortográficos y sintácticos retornando el desplazamiento (\textit{offset}), longitud y alternativas de corrección en menos de 120 ms. Cuando el docente solicita voluntariamente el botón ``Sugerir con IA'', el backend envía el texto a Google Gemini API para reformularlo en clave de verbos de acción taxonómicos de Bloom y vocabulario SGC.
+Se priorizó la privacidad institucional y la independencia operativa (\textit{offline-first}). El servicio local LanguageTool analiza el texto plano extraído del editor TipTap mediante peticiones HTTP REST a \texttt{http://\allowbreak  sige- grammar:8010/\allowbreak  v2/\allowbreak  check}. El análisis identifica errores ortográficos y sintácticos retornando el desplazamiento (\textit{offset}), longitud y alternativas de corrección en menos de 120 ms. Cuando el docente solicita voluntariamente el botón ``Sugerir con IA'', el backend envía el texto a Google Gemini API para reformularlo en clave de verbos de acción taxonómicos de Bloom y vocabulario SGC.
 
 \subsection{Políticas de Calidad de la Asistencia Editorial}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -190,9 +186,9 @@ Se priorizó la privacidad institucional y la independencia operativa (\textit{o
 Para asegurar que los planes e informes cumplan con los estándares ortográficos y de redacción exigidos por las auditorías de calidad ISO 9001:2015 del SGC, se desarrolló una arquitectura híbrida de asistencia lingüística. Las actividades ejecutadas comprendieron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
-    \item \textbf{Aprovisionamiento de LanguageTool en Contenedor Local:} Se configuró el servicio \texttt{sige-\allowbreak languagetool} basado en imagen Java oficial de LanguageTool, desplegado en Docker Compose en el puerto 8010 interno. Esta solución opera localmente sin necesidad de enviar textos confidenciales a servidores externos.
-    \item \textbf{Carga del Diccionario Institucional de la UTA:} Se incorporó un archivo de reglas personalizadas (\texttt{es-\allowbreak UTA.\allowbreak xml}) con los acrónimos y términos oficiales de la facultad (FISEI, UTA, SGC, RRA, LOES, CES, TipTap, Docker, JSONB, etc.), evitando falsos positivos durante la corrección técnica.
-    \item \textbf{Integración Asíncrona con el Editor TipTap:} En el cliente React se diseñó un servicio que analiza el texto en segundo plano mediante \texttt{POST /\allowbreak v2/\allowbreak check} al puerto 8010, subrayando reactivamente los errores ortográficos (rojo) y gramaticales (azul) con sugerencias de sustitución en tarjetas flotantes.
+    \item \textbf{Aprovisionamiento de LanguageTool en Contenedor Local:} Se configuró el servicio \texttt{sige- languagetool} basado en imagen Java oficial de LanguageTool, desplegado en Docker Compose en el puerto 8010 interno. Esta solución opera localmente sin necesidad de enviar textos confidenciales a servidores externos.
+    \item \textbf{Carga del Diccionario Institucional de la UTA:} Se incorporó un archivo de reglas personalizadas (\texttt{es- UTA. xml}) con los acrónimos y términos oficiales de la facultad (FISEI, UTA, SGC, RRA, LOES, CES, TipTap, Docker, JSONB, etc.), evitando falsos positivos durante la corrección técnica.
+    \item \textbf{Integración Asíncrona con el Editor TipTap:} En el cliente React se diseñó un servicio que analiza el texto en segundo plano mediante \texttt{POST /\allowbreak  v2/\allowbreak  check} al puerto 8010, subrayando reactivamente los errores ortográficos (rojo) y gramaticales (azul) con sugerencias de sustitución en tarjetas flotantes.
     \item \textbf{Mecanismo de Fallback Resiliente hacia Gemini API:} Si el contenedor local LanguageTool se encuentra detenido por mantenimiento o sobrecargado, el backend intercepta la contingencia y redirige asíncronamente la petición hacia la API de Google Gemini (vía SDK oficial) para sugerencias de estilo académico.
     \item \textbf{Protección de Datos Personales (LOPDP):} Antes de despachar cualquier payload al servicio secundario de asistencia lingüística, un filtro regex elimina automáticamente nombres propios, correos electrónicos y números de cédula.
 \end{itemize}
@@ -281,9 +277,9 @@ RG-04 & Siglas académicas & Detección de mayúsculas incorrectas en siglas del
 Para asegurar que los planes e informes cumplan con los estándares ortográficos y de redacción exigidos por las auditorías de calidad ISO 9001:2015 del SGC, se desarrolló una arquitectura híbrida de asistencia lingüística:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Aprovisionamiento de LanguageTool en Contenedor Local:} Se configuró el servicio \texttt{sige-\allowbreak languagetool} basado en imagen Java oficial de LanguageTool, desplegado en Docker Compose en el puerto 8010 interno. Esta solución opera localmente sin necesidad de enviar textos confidenciales a servidores externos.
-    \item \textbf{Carga del Diccionario Institucional de la UTA:} Se incorporó un archivo de reglas personalizadas (\texttt{es-\allowbreak UTA.\allowbreak xml}) con los acrónimos y términos oficiales de la facultad (FISEI, UTA, SGC, RRA, LOES, CES, TipTap, Docker, JSONB, etc.), evitando falsos positivos durante la corrección técnica.
-    \item \textbf{Integración Asíncrona con el Editor TipTap:} En el cliente React se diseñó un servicio que analiza el texto en segundo plano mediante \texttt{POST /\allowbreak v2/\allowbreak check} al puerto 8010, subrayando reactivamente los errores ortográficos (rojo) y gramaticales (azul) con sugerencias de sustitución en tarjetas flotantes.
+    \item \textbf{Aprovisionamiento de LanguageTool en Contenedor Local:} Se configuró el servicio \texttt{sige- languagetool} basado en imagen Java oficial de LanguageTool, desplegado en Docker Compose en el puerto 8010 interno. Esta solución opera localmente sin necesidad de enviar textos confidenciales a servidores externos.
+    \item \textbf{Carga del Diccionario Institucional de la UTA:} Se incorporó un archivo de reglas personalizadas (\texttt{es- UTA. xml}) con los acrónimos y términos oficiales de la facultad (FISEI, UTA, SGC, RRA, LOES, CES, TipTap, Docker, JSONB, etc.), evitando falsos positivos durante la corrección técnica.
+    \item \textbf{Integración Asíncrona con el Editor TipTap:} En el cliente React se diseñó un servicio que analiza el texto en segundo plano mediante \texttt{POST /\allowbreak  v2/\allowbreak  check} al puerto 8010, subrayando reactivamente los errores ortográficos (rojo) y gramaticales (azul) con sugerencias de sustitución en tarjetas flotantes.
     \item \textbf{Mecanismo de Fallback Resiliente hacia Gemini API:} Si el contenedor local LanguageTool se encuentra detenido por mantenimiento o sobrecargado, el backend intercepta la contingencia y redirige asíncronamente la petición hacia la API de Google Gemini (vía SDK oficial) para sugerencias de estilo académico.
     \item \textbf{Protección de Datos Personales (LOPDP):} Antes de despachar cualquier payload al servicio secundario de asistencia lingüística, un filtro regex elimina automáticamente nombres propios, correos electrónicos y números de cédula.
 \end{enumerate}
@@ -299,9 +295,9 @@ Para asegurar que los planes e informes cumplan con los estándares ortográfico
 \subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Elementos Estructurales Visualizados:} La captura documenta la asistencia ortográfica y gramatical en tiempo real dentro del editor TipTap. Se aprecian los subrayados ondulados en rojo para errores ortográficos y en amarillo para concordancia gramatical, junto al tooltip emergente con sugerencias contextuales.
-    \item \textbf{Topología del Contenedor Local LanguageTool:} Las solicitudes de verificación morfosintáctica se canalizan al contenedor local \texttt{sige-\allowbreak languagetool} en el puerto 8010. Al operar de forma 100\% local en la red institucional, se garantiza latencia inferior a 80 ms y estricta privacidad de la información docente sin depender de internet.
-    \item \textbf{Diccionario Institucional Personalizado:} El motor incorpora el archivo \texttt{uta\_\allowbreak diccionario.\allowbreak txt} con términos de la facultad (sílabo, FISEI, RRA, CACES, tutoría), suprimiendo falsos positivos comunes en correctores comerciales.
-    \item \textbf{Trazabilidad con el Código Fuente:}\newline Contenedor \texttt{sige-\allowbreak languagetool} en \texttt{docker-\allowbreak compose.\allowbreak yml} y servicio cliente \texttt{frontend/\allowbreak src/\allowbreak services/\allowbreak spellcheckService.\allowbreak js}.
+    \item \textbf{Topología del Contenedor Local LanguageTool:} Las solicitudes de verificación morfosintáctica se canalizan al contenedor local \texttt{sige- languagetool} en el puerto 8010. Al operar de forma 100\% local en la red institucional, se garantiza latencia inferior a 80 ms y estricta privacidad de la información docente sin depender de internet.
+    \item \textbf{Diccionario Institucional Personalizado:} El motor incorpora el archivo \texttt{uta\_\allowbreak  diccionario. txt} con términos de la facultad (sílabo, FISEI, RRA, CACES, tutoría), suprimiendo falsos positivos comunes en correctores comerciales.
+    \item \textbf{Trazabilidad con el Código Fuente:}\newline Contenedor \texttt{sige- languagetool} en \texttt{docker- compose. yml} y servicio cliente \texttt{frontend/\allowbreak  src/\allowbreak  services/\allowbreak  spellcheckService. js}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional de Asistencia Lingüística}
@@ -316,7 +312,7 @@ Para asegurar que los planes e informes cumplan con los estándares ortográfico
 \hline
 P1: Falta Ortográfica & Párrafo con palabras con tildes faltantes y errores de tipeo. & Detección inmediata en 95 ms; sugerencias de reemplazo precisas en UI. & Corrección Exitosa \\
 \hline
-P2: Acrónimos Institucionales & Redacción que incluye "FISEI", "UTA" y "SGC". & Términos reconocidos por diccionario \texttt{es-\allowbreak UTA.\allowbreak xml}; 0 falsas alarmas. & Sin Falsos Positivos \\
+P2: Acrónimos Institucionales & Redacción que incluye "FISEI", "UTA" y "SGC". & Términos reconocidos por diccionario \texttt{es- UTA. xml}; 0 falsas alarmas. & Sin Falsos Positivos \\
 \hline
 P3: Caída de LanguageTool & Simulación de apagado del contenedor local (puerto 8010). & Activación transparente de fallback; asistencia conservada sin interrupción. & Alta Disponibilidad \\
 \hline

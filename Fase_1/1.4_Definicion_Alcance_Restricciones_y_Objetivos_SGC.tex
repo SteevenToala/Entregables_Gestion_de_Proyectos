@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Definición del Alcance, Restricciones y Objetivos SGC -- Código EDT: 1.4
 
@@ -141,7 +137,7 @@ Delimitar formalmente el alcance operativo y técnico del sistema SIGE, establec
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Automatización integral de los formatos \texttt{P7-\allowbreak T1} y \texttt{P7-\allowbreak T2} en las carreras de la FISEI.
+    \item Automatización integral de los formatos \texttt{P7- T1} y \texttt{P7- T2} en las carreras de la FISEI.
     \item Soporte para despliegue reproducible en contenedores locales mediante Docker Compose.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
@@ -190,7 +186,7 @@ Se aplicó la técnica de descomposición analítica y consulta a expertos para 
 La delimitación precisa del alcance del software y su alineación con los requerimientos del Sistema de Gestión de Calidad (SGC) demandaron un trabajo conjunto entre los analistas del proyecto y las autoridades académicas. Las actividades técnicas ejecutadas incluyeron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
-    \item \textbf{Delimitación Estructural del Perímetro del Sistema Web SIGE:} Se definieron con exactitud los módulos que componen la solución tecnológica: gestión de planes de trabajo docente (\texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}), informes de cumplimiento semestral (\texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T4}), matriz dinámica de actividades de 40 horas semanales, repositorio de evidencias en almacenamiento de objetos S3 y flujo de 3 firmas electrónicas.
+    \item \textbf{Delimitación Estructural del Perímetro del Sistema Web SIGE:} Se definieron con exactitud los módulos que componen la solución tecnológica: gestión de planes de trabajo docente (\texttt{UTA- SGC- A- 2- 1- P7- T1}), informes de cumplimiento semestral (\texttt{UTA- SGC- A- 2- 1- P7- T4}), matriz dinámica de actividades de 40 horas semanales, repositorio de evidencias en almacenamiento de objetos S3 y flujo de 3 firmas electrónicas.
     \item \textbf{Identificación y Documentación de Exclusiones Explícitas del Proyecto:} Se formalizaron las fronteras operativas del sistema para prevenir desviaciones en el desarrollo: se excluyeron expresamente el procesamiento de nómina financiera, el control biométrico de asistencia y la gestión de matrículas estudiantiles, atribuciones exclusivas del Sistema de Gestión Académica (SGA) central.
     \item \textbf{Alineación de Restricciones Operativas con Normas ISO 9001:2015 e Indicadores CACES:} Se vincularon los requerimientos del software con los estándares de acreditación universitaria, garantizando que el sistema provea evidencias inmutables, trazabilidad forense y respaldo documental para las auditorías institucionales.
     \item \textbf{Formulación de Métricas de Éxito del Software:} Se establecieron indicadores clave de desempeño (KPI) para el proyecto: digitalización del 100\% de planes en las cinco carreras de la facultad, 0\% de errores aritméticos en la suma horaria y reducción mínima del 85\% en los tiempos totales de legalización.
@@ -262,7 +258,7 @@ Para salvaguardar la viabilidad del proyecto de software dentro del periodo acad
 
 El proceso de delimitación comprendió:
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
-    \item \textbf{Delimitación de Fronteras del Sistema (In-Scope):} Se definió como núcleo del sistema el ciclo de vida documental de los formatos \texttt{P7-\allowbreak T1} y \texttt{P7-\allowbreak T4}, la gestión de las 14 comisiones académicas de carrera, el catálogo de 5 carreras de la FISEI, el almacenamiento seguro de evidencias en MinIO S3 y la exportación idéntica en PDF y Word.
+    \item \textbf{Delimitación de Fronteras del Sistema (In-Scope):} Se definió como núcleo del sistema el ciclo de vida documental de los formatos \texttt{P7- T1} y \texttt{P7- T4}, la gestión de las 14 comisiones académicas de carrera, el catálogo de 5 carreras de la FISEI, el almacenamiento seguro de evidencias en MinIO S3 y la exportación idéntica en PDF y Word.
     \item \textbf{Declaración Formal de Exclusiones (Out-of-Scope):} Para prevenir la corrupción del alcance (\textit{Scope Creep}), se excluyeron explícitamente: la integración con relojes biométricos físicos de la universidad, el procesamiento de expedientes de periodos anteriores a 2026 y la firma con tokens criptográficos físicos USB (Banco Central), manteniéndose la firma digital interna por software con hash SHA-256.
     \item \textbf{Identificación de Supuestos y Restricciones de Infraestructura:} Se definieron las restricciones tecnológicas: despliegue local reproducible mediante Docker Compose, base de datos relacional PostgreSQL 18, backend Node.js 20 LTS con Express v5 y frontend en React 19.
 \end{enumerate}
@@ -280,7 +276,7 @@ El proceso de delimitación comprendió:
 \noindent
 \textbf{Desglose Técnico y Análisis Estructural de Fronteras y Perímetro:}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Delimitación del Perímetro Interno del Sistema SIGE:} El recuadro central delimita las funciones nativas: gestión de planes (\texttt{P7-\allowbreak T1}), informes de cumplimiento (\texttt{P7-\allowbreak T4}), editor TipTap con autoguardado, matriz interactiva de 16 semanas, repositorio de evidencias en MinIO S3 y circuito de 3 firmas electrónicas.
+    \item \textbf{Delimitación del Perímetro Interno del Sistema SIGE:} El recuadro central delimita las funciones nativas: gestión de planes (\texttt{P7- T1}), informes de cumplimiento (\texttt{P7- T4}), editor TipTap con autoguardado, matriz interactiva de 16 semanas, repositorio de evidencias en MinIO S3 y circuito de 3 firmas electrónicas.
     \item \textbf{Interfaces Externas y Puntos de Integración con SGA:} El diagrama modela el enlace unidireccional de sólo lectura hacia las bases de datos académicas institucionales para consumir la nómina de 120 docentes, 5 carreras y asignaturas oficiales, evitando redundancias en la captura inicial de datos maestros.
     \item \textbf{Declaración Explícita de Exclusiones del Alcance:} El gráfico delimita formalmente las responsabilidades externas excluidas del proyecto: procesamiento de nómina financiera, control biométrico de asistencia y matrícula de estudiantes, salvaguardando al equipo contra desbordamientos de alcance (\textit{scope creep}).
     \item \textbf{Alineación con la Normativa SGC y Acreditación CACES:} Se evidencia cómo las salidas del sistema SIGE alimentan directamente los repositorios de auditoría institucional mediante reportes vectoriales certificados con código QR.

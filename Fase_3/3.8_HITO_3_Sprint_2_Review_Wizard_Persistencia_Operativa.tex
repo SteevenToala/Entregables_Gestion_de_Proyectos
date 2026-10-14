@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} HITO 3: Sprint 2 Review: Wizard y Persistencia Operativa -- Código EDT: 3.8
 
@@ -192,7 +188,7 @@ Al culminar la segunda iteración del ciclo de desarrollo de la Fase 3, se llev�
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Preparación del Entorno Integrado de Demostración:} Se verificó el funcionamiento saludable de los 5 contenedores en Docker Compose, precargando los datos maestros de la carrera de Ingeniería de Software para las pruebas en vivo.
     \item \textbf{Demostración End-to-End del Asistente Wizard en Vivo:} Ante el equipo de desarrollo y el Docente Evaluador, se ejecutó una sesión real que demostró la autenticación del usuario, la creación guiada de un nuevo plan de trabajo para el período B26, el autoguardado a los 1500 ms tras redactar justificaciones y la recuperación intacta del borrador tras un cierre forzado del navegador.
-    \item \textbf{Inspección Forense de la Capa de Datos en PostgreSQL 18:} Se accedió a la consola de base de datos para comprobar que los registros en las tablas \texttt{planes\_\allowbreak docente} y \texttt{secciones\_\allowbreak documento} se crearon con identificadores UUID válidos, claves foráneas correctas y tipos JSONB estructurados.
+    \item \textbf{Inspección Forense de la Capa de Datos en PostgreSQL 18:} Se accedió a la consola de base de datos para comprobar que los registros en las tablas \texttt{planes\_\allowbreak  docente} y \texttt{secciones\_\allowbreak  documento} se crearon con identificadores UUID válidos, claves foráneas correctas y tipos JSONB estructurados.
     \item \textbf{Levantamiento de Retroalimentación de Coordinadores de Área:} Se recopilaron recomendaciones respecto al contraste de los botones de acción del Wizard, aprobándose el avance inmediato al desarrollo de la Matriz Dinámica en el Sprint 3.
     \item \textbf{Suscripción del Acta Formal de Aprobación de Sprint Review:} Se legalizó el documento de aceptación de los incrementos construidos, certificando el cumplimiento del 100\% de los criterios de las Historias de Usuario HU-01 a HU-08 con cero defectos abiertos.
 \end{itemize}
@@ -325,7 +321,7 @@ Al finalizar la segunda semana del ciclo de desarrollo de la Fase 3, se llevó a
         \item Comprobación en vivo del autoguardado a los 1500 ms tras pausar la redacción.
         \item Simulación de cierre forzado de pestaña y reapertura inmediata, comprobando la restauración exacta de todos los campos.
     \end{itemize}
-    \item \textbf{Auditoría Directa sobre el Motor Relacional:} Se accedió a la consola de PostgreSQL para consultar las tablas \texttt{planes\_\allowbreak docente} y \texttt{secciones\_\allowbreak documento}, constatando que los registros se crearon con sus claves foráneas, restricciones CHECK y estampas de tiempo correctas.
+    \item \textbf{Auditoría Directa sobre el Motor Relacional:} Se accedió a la consola de PostgreSQL para consultar las tablas \texttt{planes\_\allowbreak  docente} y \texttt{secciones\_\allowbreak  documento}, constatando que los registros se crearon con sus claves foráneas, restricciones CHECK y estampas de tiempo correctas.
     \item \textbf{Levantamiento de Retroalimentación de Coordinación:} Se recogieron observaciones de usabilidad respecto al contraste de los botones de acción del Wizard, aprobándose el avance inmediato al desarrollo de la Matriz Dinámica en el Sprint 3.
     \item \textbf{Formalización del Acta Técnica de Sprint Review:} Se legalizó el documento de aceptación de los incrementos construidos, certificando 0 defectos bloqueantes en las Historias de Usuario HU-01 a HU-08.
 \end{enumerate}
@@ -343,7 +339,7 @@ Al finalizar la segunda semana del ciclo de desarrollo de la Fase 3, se llevó a
     \item \textbf{Elementos Estructurales Visualizados:} La captura documenta la bandeja de expedientes presentada durante la sesión de Sprint 2 Review. Se visualizan los planes persistidos en PostgreSQL correspondientes a las carreras de Software y TI, con sus identificadores UUID, periodo académico y marcas de tiempo UTC.
     \item \textbf{Demostración en Vivo ante Evaluadores:} Durante la revisión colegiada, se demostró el flujo completo de creación asistida con el Wizard, el guardado automático de secciones enriquecidas y la recuperación íntegra de borradores tras forzar el reinicio del contenedor del backend.
     \item \textbf{Certificación de Objetivos de Iteración:} El equipo evaluador constató que los objetivos del Sprint 2 fueron superados al 100\%, registrando cero defectos bloqueantes y autorizando el inicio del Sprint 3 para la Matriz Dinámica y el almacenamiento MinIO.
-    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde al release tag de Sprint 2 en el repositorio Git y a los registros de planes en la tabla \texttt{planes\_\allowbreak docente}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde al release tag de Sprint 2 en el repositorio Git y a los registros de planes en la tabla \texttt{planes\_\allowbreak  docente}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional del Sprint 2 Review}
@@ -360,7 +356,7 @@ Operación del Asistente Wizard & Recorrido de las 5 etapas modulares con datos 
 \hline
 Autoguardado y Debounce & Escritura de párrafo y observación de red en DevTools. & Petición despachada exactamente a los 1500 ms; confirmación visual verde en UI. & Aceptado sin Defectos \\
 \hline
-Persistencia en PostgreSQL & Consulta \texttt{SELECT * FROM planes\_\allowbreak docente;} en terminal. & Registros almacenados con UUID, llaves foráneas y tipos JSONB íntegros. & Aceptado sin Defectos \\
+Persistencia en PostgreSQL & Consulta \texttt{SELECT * FROM planes\_\allowbreak  docente;} en terminal. & Registros almacenados con UUID, llaves foráneas y tipos JSONB íntegros. & Aceptado sin Defectos \\
 \hline
 Resiliencia de Sesión & Recarga de página con cierre accidental de sesión. & Recuperación transparente del borrador sin pérdida de datos del docente. & Aceptado sin Defectos \\
 \hline

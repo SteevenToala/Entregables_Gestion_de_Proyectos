@@ -118,15 +118,11 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Motor de Exportación Oficial en PDF y Word -- Código EDT: 3.15
 
 \section{Introducción}
-Aunque la interacción diaria y el ciclo de revisión del sistema SIGE se efectúan dentro de la plataforma web, los requerimientos institucionales de la Universidad Técnica de Ambato exigen la entrega física y archivo documental de expedientes legalizados en formatos oficiales (documentos portables PDF estandarizados y procesadores ofimáticos Word). Cualquier discrepancia de márgenes, encabezados institucionales, códigos de formato o ubicación de firmas respecto a las plantillas \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} y \texttt{T2} representaría una no conformidad de calidad. El presente entregable documenta el motor de generación documental de lado del servidor (\textit{Server-Side Document Export Pipeline}) que renderiza e imprime documentos idénticos al estándar institucional.
+Aunque la interacción diaria y el ciclo de revisión del sistema SIGE se efectúan dentro de la plataforma web, los requerimientos institucionales de la Universidad Técnica de Ambato exigen la entrega física y archivo documental de expedientes legalizados en formatos oficiales (documentos portables PDF estandarizados y procesadores ofimáticos Word). Cualquier discrepancia de márgenes, encabezados institucionales, códigos de formato o ubicación de firmas respecto a las plantillas \texttt{UTA- SGC- A- 2- 1- P7- T1} y \texttt{T2} representaría una no conformidad de calidad. El presente entregable documenta el motor de generación documental de lado del servidor (\textit{Server-Side Document Export Pipeline}) que renderiza e imprime documentos idénticos al estándar institucional.
 
 \section{Objetivo}
 \subsection{Objetivo General}
@@ -141,7 +137,7 @@ Desarrollar y validar el motor de exportación de documentos oficiales en format
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Exportación oficial para el Plan de Trabajo Docente (\texttt{P7-\allowbreak T1}) y el Informe de Cumplimiento (\texttt{P7-\allowbreak T2}).
+    \item Exportación oficial para el Plan de Trabajo Docente (\texttt{P7- T1}) y el Informe de Cumplimiento (\texttt{P7- T2}).
     \item Preservación exacta de logotipos, códigos de control SGC, tablas de actividades y bloques de firmas.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
@@ -167,7 +163,7 @@ Desarrollar y validar el motor de exportación de documentos oficiales en format
 \subsection{Marco Legal Ecuatoriano}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Ley Orgánica de Educación Superior (LOES), Art. 122 y 149.}
-    \item \textbf{Normativa Institucional del Sistema de Gestión de Calidad (UTA):} Formatos oficiales \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} y \texttt{T2}.
+    \item \textbf{Normativa Institucional del Sistema de Gestión de Calidad (UTA):} Formatos oficiales \texttt{UTA- SGC- A- 2- 1- P7- T1} y \texttt{T2}.
 \end{itemize}
 \subsection{Normas Técnicas Internacionales}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
@@ -177,12 +173,12 @@ Desarrollar y validar el motor de exportación de documentos oficiales en format
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se estructuró el servicio de exportación documental. Para la salida en formato imprimible, el servicio inyecta los datos del documento en una plantilla HTML semántica optimizada con CSS para impresión: márgenes exactos de $2.5\text{ cm}$, repetición automática de cabeceras de tabla en quiebres de página (\texttt{thead \{ display: table-\allowbreak header-\allowbreak group; \}}), numeración de páginas (\textit{``Página X de Y''}) y renderizado headless en Chromium con resolución de 300 DPI. Para la salida Word, se utiliza la librería \texttt{docx} en Node.js que construye programáticamente los párrafos, tablas con bordes y celdas combinadas.
+Se estructuró el servicio de exportación documental. Para la salida en formato imprimible, el servicio inyecta los datos del documento en una plantilla HTML semántica optimizada con CSS para impresión: márgenes exactos de $2.5\text{ cm}$, repetición automática de cabeceras de tabla en quiebres de página (\texttt{thead \{ display: table- header- group; \}}), numeración de páginas (\textit{``Página X de Y''}) y renderizado headless en Chromium con resolución de 300 DPI. Para la salida Word, se utiliza la librería \texttt{docx} en Node.js que construye programáticamente los párrafos, tablas con bordes y celdas combinadas.
 
 \subsection{Políticas de Calidad de Exportación Documental}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Fidelidad Milimétrica:} El documento exportado debe coincidir exactamente en márgenes, logotipos y disposición con el formato original del SGC.
-    \item \textbf{Política de No Huérfanos de Firmas:} La sección de firmas jamás debe quedar aislada en una página en blanco sin contenido que la acompañe (\texttt{page-\allowbreak break-\allowbreak inside: avoid}).
+    \item \textbf{Política de No Huérfanos de Firmas:} La sección de firmas jamás debe quedar aislada en una página en blanco sin contenido que la acompañe (\texttt{page- break- inside: avoid}).
     \item \textbf{Política de Integridad y Código QR:} Todo PDF legalizado debe incluir un código QR que enlaza a la URL de verificación pública de la institución con el hash de autenticidad.
 \end{enumerate}
 
@@ -191,8 +187,8 @@ La emisión de los formatos oficiales impresos y descargables requirió la const
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
     \item \textbf{Integración de Puppeteer en Contenedor Node.js:} Se configuró una instancia optimizada de Chromium sin interfaz gráfica, administrada mediante un pool reutilizable de pestañas para mitigar el consumo de memoria RAM.
-    \item \textbf{Plantilla HTML/CSS de Alta Fidelidad SGC:} Se diseñó la estructura de maquetación replicando con precisión milimétrica los formatos institucionales \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} y \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T4}: formato A4 estándar con márgenes de 25 mm, encabezado institucional con imagotipo de la UTA, matriz de actividades con reglas CSS estrictas (\texttt{page-\allowbreak break-\allowbreak inside: avoid}) impidiendo cortes huérfanos de filas y recuadros de firmas inferiores.
-    \item \textbf{Incrustación de Código QR Vectorial de Validación:} En el pie de página de cada hoja generada se inserta un código QR vectorial. Al ser escaneado con cualquier dispositivo móvil, direcciona al endpoint público de validación institucional (\texttt{/\allowbreak api/\allowbreak v1/\allowbreak validar/\allowbreak :codigo}), certificando la autenticidad del documento sin revelar datos privados.
+    \item \textbf{Plantilla HTML/CSS de Alta Fidelidad SGC:} Se diseñó la estructura de maquetación replicando con precisión milimétrica los formatos institucionales \texttt{UTA- SGC- A- 2- 1- P7- T1} y \texttt{UTA- SGC- A- 2- 1- P7- T4}: formato A4 estándar con márgenes de 25 mm, encabezado institucional con imagotipo de la UTA, matriz de actividades con reglas CSS estrictas (\texttt{page- break- inside: avoid}) impidiendo cortes huérfanos de filas y recuadros de firmas inferiores.
+    \item \textbf{Incrustación de Código QR Vectorial de Validación:} En el pie de página de cada hoja generada se inserta un código QR vectorial. Al ser escaneado con cualquier dispositivo móvil, direcciona al endpoint público de validación institucional (\texttt{/\allowbreak  api/\allowbreak  v1/\allowbreak  validar/\allowbreak  :codigo}), certificando la autenticidad del documento sin revelar datos privados.
     \item \textbf{Estampado de Huella Criptográfica SHA-256:} El código hash del expediente completo se imprime de forma textual junto al código QR, garantizando la trazabilidad ante auditorías forenses del SGC.
     \item \textbf{Optimización de Peso y Vectorización de Fuentes:} Se embebieron fuentes TrueType institucionales (Inter), generando archivos PDF vectoriales con texto seleccionable, peso promedio inferior a 650 KB y tiempo de renderizado menor a 1.8 segundos.
 \end{itemize}
@@ -216,7 +212,7 @@ Membrete Superior & Logotipo y códigos & Tabla de encabezado repetida en cada p
 \hline
 Tabla de Actividades & Celdas con bordes & Tablas con ancho $100\%$ y formato numérico con dos decimales. & 100\% \\
 \hline
-Bloque de Firmas & 3 casillas alineadas & Contenedor con regla \texttt{break-\allowbreak inside: avoid} e imágenes de firmas. & 100\% \\
+Bloque de Firmas & 3 casillas alineadas & Contenedor con regla \texttt{break- inside: avoid} e imágenes de firmas. & 100\% \\
 \hline
 Código QR Verificador & Módulo de seguridad & QR vectorial de $2.5\text{ cm}$ con URL y hash SHA-256 embebido. & 100\% \\
 \hline
@@ -235,11 +231,11 @@ Código QR Verificador & Módulo de seguridad & QR vectorial de $2.5\text{ cm}$ 
 \rowcolor{tableheader}
 \textbf{Método} & \textbf{Ruta URL} & \textbf{Tipo de Salida / Cabecera Content-Type} & \textbf{Descarga} \\
 \hline
-\texttt{GET} & \texttt{/\allowbreak api/\allowbreak export/\allowbreak :id/\allowbreak pdf} & Documento oficial en formato PDF institucional & Directa \\
+\texttt{GET} & \texttt{/\allowbreak  api/\allowbreak  export/\allowbreak  :id/\allowbreak  pdf} & Documento oficial en formato PDF institucional & Directa \\
 \hline
-\texttt{GET} & \texttt{/\allowbreak api/\allowbreak export/\allowbreak :id/\allowbreak word} & Documento editable en formato Microsoft Word & Directa \\
+\texttt{GET} & \texttt{/\allowbreak  api/\allowbreak  export/\allowbreak  :id/\allowbreak  word} & Documento editable en formato Microsoft Word & Directa \\
 \hline
-\texttt{GET} & \texttt{/\allowbreak api/\allowbreak export/\allowbreak  :id/\allowbreak preview} & Vista previa para visor institucional integrado & Streaming \\
+\texttt{GET} & \texttt{/\allowbreak  api/\allowbreak  export/\allowbreak   :id/\allowbreak  preview} & Vista previa para visor institucional integrado & Streaming \\
 \hline
 \end{tabularx}
 \caption{Endpoints RESTful para generación y descarga de documentos.}
@@ -286,14 +282,14 @@ La emisión de los formatos oficiales impresos y descargables requirió la const
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Integración de Puppeteer en Contenedor Node.js:} Se configuró una instancia optimizada de Chromium sin interfaz gráfica, administrada mediante un pool reutilizable de pestañas para mitigar el consumo de memoria RAM.
-    \item \textbf{Plantilla HTML/CSS de Alta Fidelidad SGC:} Se diseñó la estructura de maquetación replicando con precisión milimétrica los formatos institucionales \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1} y \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T4}:
+    \item \textbf{Plantilla HTML/CSS de Alta Fidelidad SGC:} Se diseñó la estructura de maquetación replicando con precisión milimétrica los formatos institucionales \texttt{UTA- SGC- A- 2- 1- P7- T1} y \texttt{UTA- SGC- A- 2- 1- P7- T4}:
     \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
         \item Formato de página A4 estándar (210 x 297 mm) con márgenes reglamentarios de 25 mm.
         \item Encabezado institucional con logotipo vectorial de la UTA y escudo de la FISEI.
-        \item Tabla de matriz semanal con reglas CSS estrictas (\texttt{page-\allowbreak break-\allowbreak inside: avoid}) impidiendo saltos de página huérfanos que corten filas a la mitad.
+        \item Tabla de matriz semanal con reglas CSS estrictas (\texttt{page- break- inside: avoid}) impidiendo saltos de página huérfanos que corten filas a la mitad.
         \item Recuadros inferiores oficiales para el estampado de las 3 firmas de responsabilidad.
     \end{itemize}
-    \item \textbf{Incrustación de Código QR Vectorial de Validación:} En el pie de página de cada hoja generada se inserta un código QR generado con la biblioteca \texttt{qrcode}. Al ser escaneado con cualquier dispositivo móvil, direcciona al endpoint público de validación institucional (\texttt{/\allowbreak api/\allowbreak v1/\allowbreak validar/\allowbreak :codigo}), certificando la autenticidad del documento sin revelar datos privados.
+    \item \textbf{Incrustación de Código QR Vectorial de Validación:} En el pie de página de cada hoja generada se inserta un código QR generado con la biblioteca \texttt{qrcode}. Al ser escaneado con cualquier dispositivo móvil, direcciona al endpoint público de validación institucional (\texttt{/\allowbreak  api/\allowbreak  v1/\allowbreak  validar/\allowbreak  :codigo}), certificando la autenticidad del documento sin revelar datos privados.
     \item \textbf{Estampado de Huella Criptográfica SHA-256:} El código hash del expediente completo se imprime de forma textual junto al código QR, garantizando la trazabilidad ante auditorías forenses del SGC.
     \item \textbf{Optimización de Peso y Vectorización de Fuentes:} Se embebieron fuentes TrueType institucionales (Inter), generando archivos PDF vectoriales con texto seleccionable, peso promedio inferior a 650 KB y tiempo de renderizado menor a 1.8 segundos.
 \end{enumerate}
@@ -308,10 +304,10 @@ La emisión de los formatos oficiales impresos y descargables requirió la const
 
 \subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Elementos Estructurales Visualizados:} La captura muestra la previsualización del documento PDF generado mediante el motor de exportación de Puppeteer. Se evidencia la maquetación vectorial idéntica a la plantilla oficial \texttt{UTA- SGC- A-\allowbreak 2-\allowbreak 1- P7-\allowbreak T1}: encabezado oficial con logotipo institucional, tablas normalizadas de actividades, bloques de las 3 firmas digitales y el código QR de verificación.
+    \item \textbf{Elementos Estructurales Visualizados:} La captura muestra la previsualización del documento PDF generado mediante el motor de exportación de Puppeteer. Se evidencia la maquetación vectorial idéntica a la plantilla oficial \texttt{UTA- SGC- A- 2- 1- P7- T1}: encabezado oficial con logotipo institucional, tablas normalizadas de actividades, bloques de las 3 firmas digitales y el código QR de verificación.
     \item \textbf{Pipeline de Compilación Vectorial Headless:} El backend en Node.js renderiza una plantilla HTML/CSS de alta fidelidad alimentada con los datos del plan y genera el PDF utilizando Chromium en modo headless con banderas de optimización vectorial, garantizando que textos y tablas conserven nitidez tipográfica al imprimirse.
-    \item \textbf{Código QR Vectorial de Validación Criptográfica:} Al escanear el código QR impreso en el documento, se redirige al endpoint público \texttt{/\allowbreak api/\allowbreak v1/\allowbreak verificar/\allowbreak :hash}, permitiendo a auditores del CACES constatar de inmediato la autenticidad, autor y fecha exacta de legalización del expediente.
-    \item \textbf{Trazabilidad con el Código Fuente:} Servicio de generación \texttt{backend/\allowbreak src/\allowbreak services/\allowbreak pdfGenerator.\allowbreak js} y plantilla \texttt{backend/\allowbreak src/\allowbreak templates/\allowbreak planTrabajoTemplate.\allowbreak html}.
+    \item \textbf{Código QR Vectorial de Validación Criptográfica:} Al escanear el código QR impreso en el documento, se redirige al endpoint público \texttt{/\allowbreak  api/\allowbreak  v1/\allowbreak  verificar/\allowbreak  :hash}, permitiendo a auditores del CACES constatar de inmediato la autenticidad, autor y fecha exacta de legalización del expediente.
+    \item \textbf{Trazabilidad con el Código Fuente:} Servicio de generación \texttt{backend/\allowbreak  src/\allowbreak  services/\allowbreak  pdfGenerator. js} y plantilla \texttt{backend/\allowbreak  src/\allowbreak  templates/\allowbreak  planTrabajoTemplate. html}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional del Motor PDF y Código QR}

@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Implementación de Tablas, Índices y Scripts DDL en PostgreSQL 18 -- Código EDT: 3.1
 
@@ -141,7 +137,7 @@ Implementar físicamente en el contenedor PostgreSQL 18 el esquema relacional de
 \section{Alcance}
 \subsection{Límites del Entregable (In-Scope)}
 \begin{itemize}[leftmargin=1.5em, itemsep=2pt]
-    \item Creación de las 13 tablas en el contenedor \texttt{sige-\allowbreak postgres} versión 18.
+    \item Creación de las 13 tablas en el contenedor \texttt{sige- postgres} versión 18.
     \item Verificación de transacciones concurrentes y soporte de tipos JSONB para texto enriquecido.
 \end{itemize}
 \subsection{Exclusiones (Out-of-Scope)}
@@ -155,7 +151,7 @@ Implementar físicamente en el contenedor PostgreSQL 18 el esquema relacional de
     \item \textbf{DDL (Data Definition Language):} Sentencias SQL empleadas para crear y modificar estructuras de bases de datos.
     \item \textbf{Restricción CHECK:} Regla declarativa en el motor que restringe los valores admisibles en una columna específica.
     \item \textbf{Índice GIN (Generalized Inverted Index):} Índice especializado en PostgreSQL para búsquedas de alta eficiencia en datos JSONB.
-    \item \textbf{Trigger de Auditoría:} Procedimiento almacenado que se dispara automáticamente ante inserciones o actualizaciones para actualizar \texttt{updated\_\allowbreak at}.
+    \item \textbf{Trigger de Auditoría:} Procedimiento almacenado que se dispara automáticamente ante inserciones o actualizaciones para actualizar \texttt{updated\_\allowbreak  at}.
 \end{itemize}
 
 \section{Responsabilidades}
@@ -184,20 +180,20 @@ Se utilizó el contenedor oficial de PostgreSQL 18 orquestado en Docker Compose.
 \subsection{Políticas de Calidad de la Capa de Datos}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
     \item \textbf{Política de Integridad Referencial Bloqueante:} Las llaves foráneas implementan \texttt{ON DELETE RESTRICT} para impedir pérdida de datos históricos.
-    \item \textbf{Política de Validación Matemática Declarativa:} Toda fila de actividad debe cumplir \texttt{CHECK(horas >= 0)} y \texttt{CHECK(ponderacion <= 100.\allowbreak 00)}.
+    \item \textbf{Política de Validación Matemática Declarativa:} Toda fila de actividad debe cumplir \texttt{CHECK(horas >= 0)} y \texttt{CHECK(ponderacion <= 100. 00)}.
     \item \textbf{Política de Índices Compuestos para Vistas Críticas:} La búsqueda de expedientes de docentes por periodo debe resolverse mediante índice compuesto B-Tree con latencia menor a 10 ms.
     \item \textbf{Política de Auditoría Automatizada:} Ningún registro puede actualizarse sin reflejar la marca temporal exacta mediante triggers PL/pgSQL.
 \end{enumerate}
 
 \section{Descripción de actividades}
-La materialización de la capa física de persistencia se desarrolló en el contenedor \texttt{sige-\allowbreak postgres} bajo PostgreSQL 18-alpine, asegurando consistencia ACID y soporte nativo para documentos semiestructurados JSONB. El equipo de desarrollo ejecutó las siguientes actividades de ingeniería de base de datos:
+La materialización de la capa física de persistencia se desarrolló en el contenedor \texttt{sige- postgres} bajo PostgreSQL 18-alpine, asegurando consistencia ACID y soporte nativo para documentos semiestructurados JSONB. El equipo de desarrollo ejecutó las siguientes actividades de ingeniería de base de datos:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
-    \item \textbf{Aprovisionamiento y Parametrización del Motor Relacional:} Se configuró el servicio en \texttt{docker-\allowbreak compose.\allowbreak yml} montando un volumen persistente \texttt{pgdata}, ajustando los parámetros de rendimiento en \texttt{postgresql.\allowbreak conf} (\texttt{shared\_\allowbreak buffers = 256MB}, \texttt{work\_\allowbreak mem = 16MB}) y definiendo la codificación UTF-8 para soporte estricto del idioma español y caracteres especiales institucionales.
-    \item \textbf{Despliegue Secuencial del Esquema Relacional en 3NF:} Se ejecutó el script estructurado \texttt{schema.\allowbreak sql} creando las 13 tablas relacionales normalizadas en tercera forma normal: entidades maestras (\texttt{users}, \texttt{roles}, \texttt{carreras}, \texttt{periodos}, \texttt{comisiones}), entidades operativas (\texttt{planes\_\allowbreak docente}, \texttt{secciones\_\allowbreak documento}, \texttt{actividades\_\allowbreak matriz}, \texttt{plan\_\allowbreak seguimiento}), entidades probatorias (\texttt{seguimiento\_\allowbreak  evidencias}, \texttt{firmas\_\allowbreak  documento}) y tablas de soporte (\texttt{audit\_\allowbreak logs}, \texttt{refresh\_\allowbreak tokens}).
-    \item \textbf{Programación de Restricciones Declarativas CHECK en Motor:} Para blindar la consistencia a nivel de base de datos, se programaron cláusulas \texttt{CHECK} declarativas: \texttt{chk\_\allowbreak horas\_\allowbreak rango} limitando la carga semanal a valores entre 0 y 40 horas según el RRA, \texttt{chk\_\allowbreak pond\_\allowbreak rango} garantizando ponderaciones entre 0.00\% y 100.00\%, y \texttt{chk\_\allowbreak estado\_\allowbreak valido} restringiendo los estados documentales a los cuatro estadios del SGC.
-    \item \textbf{Estrategia de Indexación Compuesta B-Tree e Invertida GIN:} Se crearon índices B-Tree en pares de llaves foráneas de alta concurrencia (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y secuencia de firmas (\texttt{idx\_\allowbreak firma\_\allowbreak sec}). Para los campos semiestructurados que albergan texto enriquecido redactado con TipTap, se generaron índices GIN (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) acelerando búsquedas contextuales en tiempos inferiores a 3 ms.
-    \item \textbf{Automatización de Auditoría con Triggers PL/pgSQL:} Se creó la función disparadora \texttt{trigger\_\allowbreak set\_\allowbreak timestamp()} asociada a todas las tablas para estampar la fecha y hora UTC (\texttt{NOW()}) ante cualquier actualización de registro.
+    \item \textbf{Aprovisionamiento y Parametrización del Motor Relacional:} Se configuró el servicio en \texttt{docker- compose. yml} montando un volumen persistente \texttt{pgdata}, ajustando los parámetros de rendimiento en \texttt{postgresql. conf} (\texttt{shared\_\allowbreak  buffers = 256MB}, \texttt{work\_\allowbreak  mem = 16MB}) y definiendo la codificación UTF-8 para soporte estricto del idioma español y caracteres especiales institucionales.
+    \item \textbf{Despliegue Secuencial del Esquema Relacional en 3NF:} Se ejecutó el script estructurado \texttt{schema. sql} creando las 13 tablas relacionales normalizadas en tercera forma normal: entidades maestras (\texttt{users}, \texttt{roles}, \texttt{carreras}, \texttt{periodos}, \texttt{comisiones}), entidades operativas (\texttt{planes\_\allowbreak  docente}, \texttt{secciones\_\allowbreak  documento}, \texttt{actividades\_\allowbreak  matriz}, \texttt{plan\_\allowbreak  seguimiento}), entidades probatorias (\texttt{seguimiento\_\allowbreak   evidencias}, \texttt{firmas\_\allowbreak   documento}) y tablas de soporte (\texttt{audit\_\allowbreak  logs}, \texttt{refresh\_\allowbreak  tokens}).
+    \item \textbf{Programación de Restricciones Declarativas CHECK en Motor:} Para blindar la consistencia a nivel de base de datos, se programaron cláusulas \texttt{CHECK} declarativas: \texttt{chk\_\allowbreak  horas\_\allowbreak  rango} limitando la carga semanal a valores entre 0 y 40 horas según el RRA, \texttt{chk\_\allowbreak  pond\_\allowbreak  rango} garantizando ponderaciones entre 0.00\% y 100.00\%, y \texttt{chk\_\allowbreak  estado\_\allowbreak  valido} restringiendo los estados documentales a los cuatro estadios del SGC.
+    \item \textbf{Estrategia de Indexación Compuesta B-Tree e Invertida GIN:} Se crearon índices B-Tree en pares de llaves foráneas de alta concurrencia (\texttt{idx\_\allowbreak  plan\_\allowbreak  doc\_\allowbreak  per}) y secuencia de firmas (\texttt{idx\_\allowbreak  firma\_\allowbreak  sec}). Para los campos semiestructurados que albergan texto enriquecido redactado con TipTap, se generaron índices GIN (\texttt{idx\_\allowbreak  sec\_\allowbreak  jsonb}) acelerando búsquedas contextuales en tiempos inferiores a 3 ms.
+    \item \textbf{Automatización de Auditoría con Triggers PL/pgSQL:} Se creó la función disparadora \texttt{trigger\_\allowbreak  set\_\allowbreak  timestamp()} asociada a todas las tablas para estampar la fecha y hora UTC (\texttt{NOW()}) ante cualquier actualización de registro.
 \end{itemize}
 
 \subsection{Matriz Técnica de Integridad e Índices en PostgreSQL 18}
@@ -211,17 +207,17 @@ A continuación se detalla la matriz técnica de especificación de restriccione
 \rowcolor{tableheader}
 \textbf{Tabla Relacional} & \textbf{Restricción / Índice} & \textbf{Definición SQL / Tipo de Optimización} & \textbf{Propósito SGC} \\
 \hline
-planes\allowbreak\_docente & \texttt{chk\_\allowbreak estado\_\allowbreak valido} & \texttt{CHECK (estado IN ('Borrador', 'En Revision', 'Observado', 'Aprobado'))} & Ciclo de vida estricto del plan P7-T1. \\
+planes\allowbreak\_docente & \texttt{chk\_\allowbreak  estado\_\allowbreak  valido} & \texttt{CHECK (estado IN ('Borrador', 'En Revision', 'Observado', 'Aprobado'))} & Ciclo de vida estricto del plan P7-T1. \\
 \hline
-planes\allowbreak\_docente & \texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per} & Índice B-Tree en \texttt{(fk\_\allowbreak docente, fk\_\allowbreak periodo)} & Aceleración de bandeja docente. \\
+planes\allowbreak\_docente & \texttt{idx\_\allowbreak  plan\_\allowbreak  doc\_\allowbreak  per} & Índice B-Tree en \texttt{(fk\_\allowbreak  docente, fk\_\allowbreak  periodo)} & Aceleración de bandeja docente. \\
 \hline
-actividades\allowbreak\_matriz & \texttt{chk\_\allowbreak horas\_\allowbreak rango} & \texttt{CHECK (horas >= 0 AND horas <= 40)} & Previene carga horaria irreal. \\
+actividades\allowbreak\_matriz & \texttt{chk\_\allowbreak  horas\_\allowbreak  rango} & \texttt{CHECK (horas >= 0 AND horas <= 40)} & Previene carga horaria irreal. \\
 \hline
-actividades\allowbreak\_matriz & \texttt{chk\_\allowbreak pond\_\allowbreak rango} & \texttt{CHECK (ponderacion >= 0.\allowbreak 00 AND ponderacion <= 100.\allowbreak 00)} & Integridad de sumatoria al 100\%. \\
+actividades\allowbreak\_matriz & \texttt{chk\_\allowbreak  pond\_\allowbreak  rango} & \texttt{CHECK (ponderacion >= 0. 00 AND ponderacion <= 100. 00)} & Integridad de sumatoria al 100\%. \\
 \hline
-secciones\allowbreak\_documento & \texttt{idx\_\allowbreak sec\_\allowbreak jsonb} & Índice GIN en \texttt{contenido\_\allowbreak jsonb} & Búsqueda rápida de texto enriquecido. \\
+secciones\allowbreak\_documento & \texttt{idx\_\allowbreak  sec\_\allowbreak  jsonb} & Índice GIN en \texttt{contenido\_\allowbreak  jsonb} & Búsqueda rápida de texto enriquecido. \\
 \hline
-firmas\allowbreak\_documento & \texttt{idx\_\allowbreak firma\_\allowbreak sec} & B-Tree UNIQUE en \texttt{(fk\_\allowbreak plan, orden)} & Garantiza secuencia 1 $\to$ 2 $\to$ 3. \\
+firmas\allowbreak\_documento & \texttt{idx\_\allowbreak  firma\_\allowbreak  sec} & B-Tree UNIQUE en \texttt{(fk\_\allowbreak  plan, orden)} & Garantiza secuencia 1 $\to$ 2 $\to$ 3. \\
 \hline
 \end{tabularx}
 \caption{Matriz técnica de integridad e índices en PostgreSQL 18.}
@@ -287,20 +283,20 @@ firmas\allowbreak\_documento & 384 B & $\sim 600$ & Registros inmutables con has
 \section{Anexos}
 
 \subsection*{Anexo 1: Desglose Metodológico y Procedimiento Técnico de Construcción}
-La materialización de la capa física de persistencia se desarrolló en el contenedor \texttt{sige-\allowbreak postgres} bajo PostgreSQL 18-alpine, asegurando consistencia ACID y soporte nativo para documentos semiestructurados \texttt{JSONB}. El procedimiento técnico ejecutado comprendió las siguientes fases metodológicas:
+La materialización de la capa física de persistencia se desarrolló en el contenedor \texttt{sige- postgres} bajo PostgreSQL 18-alpine, asegurando consistencia ACID y soporte nativo para documentos semiestructurados \texttt{JSONB}. El procedimiento técnico ejecutado comprendió las siguientes fases metodológicas:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
     \item \textbf{Aprovisionamiento de Base de Datos:} Se configuró el servicio Docker con volumen persistente montado en el directorio de datos, codificación UTF-8 y memoria compartida optimizada para PostgreSQL 18.
-    \item \textbf{Ejecución del Script DDL:} Se desplegó el script \texttt{schema.\allowbreak sql} creando las 13 tablas relacionales en 3NF (usuarios, roles, comisiones, carreras, períodos, planes, matrices, secciones, evidencias, firmas y auditoría).
+    \item \textbf{Ejecución del Script DDL:} Se desplegó el script \texttt{schema. sql} creando las 13 tablas relacionales en 3NF (usuarios, roles, comisiones, carreras, períodos, planes, matrices, secciones, evidencias, firmas y auditoría).
     \item \textbf{Implementación de Restricciones Declarativas CHECK:} Para garantizar la calidad de datos sin sobrecargar la capa de aplicación, se programaron restricciones a nivel de motor:
     \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
-        \item \texttt{chk\_\allowbreak horas\_\allowbreak rango}: Restringe las horas semanales por actividad a un rango entre 0 y 40 horas según el Art. 45 del Reglamento de Régimen Académico (RRA).
-        \item \texttt{chk\_\allowbreak pond\_\allowbreak rango}: Restringe la ponderación porcentual individual a valores entre 0.00\% y 100.00\%.
-        \item \texttt{chk\_\allowbreak estado\_\allowbreak valido}: Limita el ciclo de vida documental a los estados oficiales del SGC: \texttt{'Borrador'}, \texttt{'En Revision'}, \texttt{'Observado'} y \texttt{'Aprobado'}.
+        \item \texttt{chk\_\allowbreak  horas\_\allowbreak  rango}: Restringe las horas semanales por actividad a un rango entre 0 y 40 horas según el Art. 45 del Reglamento de Régimen Académico (RRA).
+        \item \texttt{chk\_\allowbreak  pond\_\allowbreak  rango}: Restringe la ponderación porcentual individual a valores entre 0.00\% y 100.00\%.
+        \item \texttt{chk\_\allowbreak  estado\_\allowbreak  valido}: Limita el ciclo de vida documental a los estados oficiales del SGC: \texttt{'Borrador'}, \texttt{'En Revision'}, \texttt{'Observado'} y \texttt{'Aprobado'}.
     \end{itemize}
-    \item \textbf{Configuración de Integridad Referencial y Políticas de Borrado:} Se aplicó \texttt{ON DELETE RESTRICT} en todas las llaves foráneas críticas (\texttt{fk\_\allowbreak docente}, \texttt{fk\_\allowbreak plan}, \texttt{fk\_\allowbreak actividad}) impidiendo la eliminación accidental de registros que contengan auditoría institucional.
-    \item \textbf{Indexación Especializada B-Tree y GIN:} Se crearon índices compuestos B-Tree en pares de alta cardinalidad para acelerar las consultas de bandeja docente (\texttt{idx\_\allowbreak plan\_\allowbreak doc\_\allowbreak per}) y secuencia de firmas (\texttt{idx\_\allowbreak firma\_\allowbreak sec}). Para los campos descriptivos almacenados en \texttt{JSONB} dentro de \texttt{secciones\_\allowbreak documento}, se indexó mediante GIN (\texttt{idx\_\allowbreak sec\_\allowbreak jsonb}) permitiendo búsquedas textuales aceleradas.
-    \item \textbf{Automatización de Estampas de Auditoría con Triggers PL/pgSQL:} Se creó una función disparadora genérica \texttt{trigger\_\allowbreak set\_\allowbreak timestamp()} asociada a cada tabla para actualizar automáticamente el campo \texttt{updated\_\allowbreak at = NOW()} ante cualquier operación \texttt{UPDATE}.
+    \item \textbf{Configuración de Integridad Referencial y Políticas de Borrado:} Se aplicó \texttt{ON DELETE RESTRICT} en todas las llaves foráneas críticas (\texttt{fk\_\allowbreak  docente}, \texttt{fk\_\allowbreak  plan}, \texttt{fk\_\allowbreak  actividad}) impidiendo la eliminación accidental de registros que contengan auditoría institucional.
+    \item \textbf{Indexación Especializada B-Tree y GIN:} Se crearon índices compuestos B-Tree en pares de alta cardinalidad para acelerar las consultas de bandeja docente (\texttt{idx\_\allowbreak  plan\_\allowbreak  doc\_\allowbreak  per}) y secuencia de firmas (\texttt{idx\_\allowbreak  firma\_\allowbreak  sec}). Para los campos descriptivos almacenados en \texttt{JSONB} dentro de \texttt{secciones\_\allowbreak  documento}, se indexó mediante GIN (\texttt{idx\_\allowbreak  sec\_\allowbreak  jsonb}) permitiendo búsquedas textuales aceleradas.
+    \item \textbf{Automatización de Estampas de Auditoría con Triggers PL/pgSQL:} Se creó una función disparadora genérica \texttt{trigger\_\allowbreak  set\_\allowbreak  timestamp()} asociada a cada tabla para actualizar automáticamente el campo \texttt{updated\_\allowbreak  at = NOW()} ante cualquier operación \texttt{UPDATE}.
 \end{enumerate}
 
 \subsection*{Anexo 2: Evidencia Visual de Funcionamiento Operativo}
@@ -314,10 +310,10 @@ La materialización de la capa física de persistencia se desarrolló en el cont
 
 \subsubsection*{Desglose Técnico y Análisis Estructural del Artefacto Visual}
 \begin{itemize}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Elementos Estructurales Visualizados:} La captura de pantalla documenta la ejecución del script \texttt{schema.\allowbreak sql} sobre el contenedor \texttt{sige-\allowbreak postgres} en PostgreSQL 18-alpine. Se aprecia la creación secuencial de las 13 tablas relacionales normalizadas en 3NF y sus índices auxiliares en un tiempo de compilación neto de 142 ms.
-    \item \textbf{Inspección de Restricciones en Catálogo del Motor:} En la sección inferior se evidencia el resultado de la consulta a \texttt{information\_\allowbreak schema.\allowbreak table\_\allowbreak constraints}, confirmando que las 4 restricciones declarativas \texttt{CHECK} (\texttt{chk\_\allowbreak horas\_\allowbreak rango}, \texttt{chk\_\allowbreak pond\_\allowbreak rango}, \texttt{chk\_\allowbreak estado\_\allowbreak valido}, \texttt{chk\_\allowbreak tipo\_\allowbreak actividad}) y las 18 llaves foráneas se encuentran activas y catalogadas en el motor.
+    \item \textbf{Elementos Estructurales Visualizados:} La captura de pantalla documenta la ejecución del script \texttt{schema. sql} sobre el contenedor \texttt{sige- postgres} en PostgreSQL 18-alpine. Se aprecia la creación secuencial de las 13 tablas relacionales normalizadas en 3NF y sus índices auxiliares en un tiempo de compilación neto de 142 ms.
+    \item \textbf{Inspección de Restricciones en Catálogo del Motor:} En la sección inferior se evidencia el resultado de la consulta a \texttt{information\_\allowbreak  schema. table\_\allowbreak  constraints}, confirmando que las 4 restricciones declarativas \texttt{CHECK} (\texttt{chk\_\allowbreak  horas\_\allowbreak  rango}, \texttt{chk\_\allowbreak  pond\_\allowbreak  rango}, \texttt{chk\_\allowbreak  estado\_\allowbreak  valido}, \texttt{chk\_\allowbreak  tipo\_\allowbreak  actividad}) y las 18 llaves foráneas se encuentran activas y catalogadas en el motor.
     \item \textbf{Control de Calidad e Integridad Relacional:} Se comprueba que la base de datos rechaza de forma nativa inserciones con horas mayores a 40.0 o ponderaciones que excedan el 100.00\%, blindando al sistema contra datos corruptos incluso ante accesos directos por consola.
-    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde al archivo de migración \texttt{backend/\allowbreak src/\allowbreak database/\allowbreak schema.\allowbreak sql} y al volumen persistente \texttt{pgdata} configurado en \texttt{docker-\allowbreak compose.\allowbreak yml}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Corresponde al archivo de migración \texttt{backend/\allowbreak  src/\allowbreak  database/\allowbreak  schema. sql} y al volumen persistente \texttt{pgdata} configurado en \texttt{docker- compose. yml}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional y Pruebas de Integridad}
@@ -330,13 +326,13 @@ La materialización de la capa física de persistencia se desarrolló en el cont
 \rowcolor{tableheader}
 \textbf{Escenario de Prueba} & \textbf{Condición de Entrada y Payload} & \textbf{Respuesta del Motor PostgreSQL 18} & \textbf{Resultado Verificado} \\
 \hline
-P1: Horas Negativas & \texttt{INSERT INTO actividades\_\allowbreak matriz (horas) VALUES (-\allowbreak 4.\allowbreak 5);} & Violación de restricción \texttt{chk\_\allowbreak horas\_\allowbreak rango} (código de error \texttt{23514}). & Inserción Rechazada \\
+P1: Horas Negativas & \texttt{INSERT INTO actividades\_\allowbreak  matriz (horas) VALUES (- 4. 5);} & Violación de restricción \texttt{chk\_\allowbreak  horas\_\allowbreak  rango} (código de error \texttt{23514}). & Inserción Rechazada \\
 \hline
-P2: Ponderación Excesiva & \texttt{INSERT INTO actividades\_\allowbreak matriz (ponderacion) VALUES (110.\allowbreak 0);} & Rechazo automático por condición \texttt{CHECK (ponderacion <= 100.\allowbreak 00)}. & Inserción Rechazada \\
+P2: Ponderación Excesiva & \texttt{INSERT INTO actividades\_\allowbreak  matriz (ponderacion) VALUES (110. 0);} & Rechazo automático por condición \texttt{CHECK (ponderacion <= 100. 00)}. & Inserción Rechazada \\
 \hline
-P3: Integridad Referencial & \texttt{DELETE FROM users WHERE id = 'doc-\allowbreak 001';} con planes asociados. & Bloqueo por regla \texttt{ON DELETE RESTRICT} en \texttt{fk\_\allowbreak docente}. & Borrado Bloqueado \\
+P3: Integridad Referencial & \texttt{DELETE FROM users WHERE id = 'doc- 001';} con planes asociados. & Bloqueo por regla \texttt{ON DELETE RESTRICT} en \texttt{fk\_\allowbreak  docente}. & Borrado Bloqueado \\
 \hline
-P4: Búsqueda Indexada & Consulta \texttt{WHERE contenido\_\allowbreak jsonb @> '\{"tipo": "docencia"\}'} & Plan de ejecución \texttt{Bitmap Index Scan} usando \texttt{idx\_\allowbreak sec\_\allowbreak jsonb} (2.4 ms). & Consulta Optimizada \\
+P4: Búsqueda Indexada & Consulta \texttt{WHERE contenido\_\allowbreak  jsonb @> '\{"tipo": "docencia"\}'} & Plan de ejecución \texttt{Bitmap Index Scan} usando \texttt{idx\_\allowbreak  sec\_\allowbreak  jsonb} (2.4 ms). & Consulta Optimizada \\
 \hline
 \end{tabularx}
 \caption{Matriz de pruebas de verificación de restricciones e integridad física en PostgreSQL 18.}

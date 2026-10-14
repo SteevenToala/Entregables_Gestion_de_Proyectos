@@ -118,10 +118,6 @@
 
 \begin{document}
 
-\noindent{\fontsize{10.5}{12.5}\selectfont \textbf{Integrantes:} Heidi Villavicencio \quad$\vert$\quad Steeven Toala \quad$\vert$\quad Nixon Hurtado \quad$\vert$\quad Andrea Vásquez}
-
-\vspace{0.25cm}
-
 \section{Título}
 \textbf{Denominación Oficial del Entregable:} Integración del Editor TipTap con Autoguardado Debounce -- Código EDT: 3.6
 
@@ -178,7 +174,7 @@ Integrar y configurar el editor de texto enriquecido TipTap con mecanismo de aut
 
 \section{Método, Políticas y Contenidos}
 \subsection{Enfoque Metodológico}
-Se configuró TipTap como editor \textit{headless} desacoplado con estilos Tailwind Typography (\texttt{prose prose-\allowbreak sm}). Cada pulsación de tecla desencadena la actualización del árbol DOM local; el hook \texttt{useDebounce} reinicia un temporizador de 800 ms. Al vencer el temporizador, el contenido HTML es sanitizado con DOMPurify y transmitido vía HTTP PUT al endpoint \texttt{/\allowbreak api/\allowbreak secciones/\allowbreak :id}. En caso de fallo de red, el contenido se respalda de forma transparente en \texttt{localStorage} para recuperación offline inmediata.
+Se configuró TipTap como editor \textit{headless} desacoplado con estilos Tailwind Typography (\texttt{prose prose- sm}). Cada pulsación de tecla desencadena la actualización del árbol DOM local; el hook \texttt{useDebounce} reinicia un temporizador de 800 ms. Al vencer el temporizador, el contenido HTML es sanitizado con DOMPurify y transmitido vía HTTP PUT al endpoint \texttt{/\allowbreak  api/\allowbreak  secciones/\allowbreak  :id}. En caso de fallo de red, el contenido se respalda de forma transparente en \texttt{localStorage} para recuperación offline inmediata.
 
 \subsection{Políticas de Calidad de la Edición de Texto}
 \begin{enumerate}[leftmargin=1.5em, itemsep=2pt]
@@ -192,8 +188,8 @@ Se configuró TipTap como editor \textit{headless} desacoplado con estilos Tailw
 La redacción de las secciones descriptivas de los planes docentes (justificación, metodología y compromisos académicos) requirió un editor que garantizara tipografía homogénea y persistencia asíncrona segura. Las actividades ejecutadas comprendieron:
 
 \begin{itemize}[leftmargin=1.5em, itemsep=4pt]
-    \item \textbf{Integración del Núcleo TipTap sobre la Aplicación React:} Se incorporó la suite modular \texttt{@tiptap/\allowbreak react} con extensiones oficiales esenciales (\texttt{StarterKit}, \texttt{Table}, \texttt{Link}), configurando una barra de herramientas enriquecida con formatos autorizados por el SGC.
-    \item \textbf{Serialización Estructurada en Formato JSONB:} En lugar de almacenar cadenas HTML planas susceptibles a inyecciones de código y difíciles de paginar en reportes PDF, el editor serializa el contenido en un árbol de nodos JSON nativo, persistido en la columna \texttt{contenido\_\allowbreak jsonb} de PostgreSQL 18.
+    \item \textbf{Integración del Núcleo TipTap sobre la Aplicación React:} Se incorporó la suite modular \texttt{@tiptap/\allowbreak  react} con extensiones oficiales esenciales (\texttt{StarterKit}, \texttt{Table}, \texttt{Link}), configurando una barra de herramientas enriquecida con formatos autorizados por el SGC.
+    \item \textbf{Serialización Estructurada en Formato JSONB:} En lugar de almacenar cadenas HTML planas susceptibles a inyecciones de código y difíciles de paginar en reportes PDF, el editor serializa el contenido en un árbol de nodos JSON nativo, persistido en la columna \texttt{contenido\_\allowbreak  jsonb} de PostgreSQL 18.
     \item \textbf{Mecanismo de Autoguardado Asíncrono con Debounce de 1500 ms:} Mediante el hook \texttt{useDebounce}, el sistema reinicia el contador mientras el usuario escribe activamente; al detectar 1500 ms de inactividad tras la última pulsación, despacha la petición de guardado al backend sin interrumpir la experiencia de redacción.
     \item \textbf{Indicador Visual Reactivo del Estado de Persistencia:} Se implementó un componente de estado en la cabecera del editor que informa de forma no intrusiva si el borrador se está guardando, si la persistencia fue exitosa o si existe una anomalía de red.
     \item \textbf{Sanitización Perimetral de Contenido con DOMPurify:} Como medida de protección contra ataques XSS, el contenido se procesa a través de un pipeline de sanitización estricta que remueve cualquier etiqueta potencialmente peligrosa antes del guardado en el servidor.
@@ -287,8 +283,8 @@ Error & \textit{``Sin conexión - Guardado local''} & Alerta ámbar & Error de r
 La redacción de las secciones descriptivas (justificación, metodología y compromisos académicos) requirió un editor que garantizara tipografía estandarizada y persistencia sin riesgo de pérdida de datos:
 
 \begin{enumerate}[leftmargin=1.5em, itemsep=3pt]
-    \item \textbf{Integración del Núcleo TipTap sobre React:} Se incorporó \texttt{@tiptap/\allowbreak react} con extensiones oficiales esenciales: \texttt{StarterKit} (títulos de nivel 2 y 3, negrita, cursiva, listas viñeteadas y ordenadas), \texttt{Table} y \texttt{Link} con apertura segura (\texttt{rel="noopener noreferrer"}).
-    \item \textbf{Estructura de Datos Semi-estructurada JSONB:} En lugar de almacenar cadenas HTML arbitrarias propensas a ataques XSS y difíciles de renderizar en PDF vectorial, el editor serializa el documento en un árbol de nodos JSON nativo (\textit{TipTap JSON Schema}), persistido en la columna \texttt{contenido\_\allowbreak jsonb} de PostgreSQL 18.
+    \item \textbf{Integración del Núcleo TipTap sobre React:} Se incorporó \texttt{@tiptap/\allowbreak  react} con extensiones oficiales esenciales: \texttt{StarterKit} (títulos de nivel 2 y 3, negrita, cursiva, listas viñeteadas y ordenadas), \texttt{Table} y \texttt{Link} con apertura segura (\texttt{rel="noopener noreferrer"}).
+    \item \textbf{Estructura de Datos Semi-estructurada JSONB:} En lugar de almacenar cadenas HTML arbitrarias propensas a ataques XSS y difíciles de renderizar en PDF vectorial, el editor serializa el documento en un árbol de nodos JSON nativo (\textit{TipTap JSON Schema}), persistido en la columna \texttt{contenido\_\allowbreak  jsonb} de PostgreSQL 18.
     \item \textbf{Autoguardado con Debounce de 1500 ms:} Se implementó el hook \texttt{useDebounce}. Mientras el docente escribe, los temporizadores se reinician; tras 1500 ms de inactividad, se despacha la petición asíncrona al backend.
     \item \textbf{Indicador Visual de Estado de Persistencia:} En la esquina superior derecha del editor se presenta un badge dinámico con tres estados:
     \begin{itemize}[leftmargin=1.2em, itemsep=2pt]
@@ -312,7 +308,7 @@ La redacción de las secciones descriptivas (justificación, metodología y comp
     \item \textbf{Elementos Estructurales Visualizados:} La imagen ilustra la edición del apartado descriptivo del Plan de Trabajo Docente. Se observa la barra de herramientas del editor TipTap (encabezados, negrita, cursiva, viñetas, tablas), el lienzo con proporciones oficiales de hoja A4 y el indicador de autoguardado activo.
     \item \textbf{Mecanismo de Autoguardado Asíncrono con Debounce:} Conforme el docente redacta, el contenido se serializa en formato JSONB estructurado. Un hook de debounce retarda la petición de red durante 1500 ms tras la última pulsación de tecla, enviando la actualización sin saturar el servidor ni interrumpir la escritura.
     \item \textbf{Fidelidad Visual y Erradicación de Inconsistencias Word:} La previsualización A4 en tiempo real garantiza que el formato visual del texto editado coincida con exactitud milimétrica con el documento final exportado en PDF, eliminando desconfiguraciones tipográficas.
-    \item \textbf{Trazabilidad con el Código Fuente:} Implementado en \texttt{frontend/\allowbreak src/\allowbreak components/\allowbreak editor/\allowbreak TipTapEditor.\allowbreak jsx} y el hook \texttt{useAutosave.\allowbreak js}.
+    \item \textbf{Trazabilidad con el Código Fuente:} Implementado en \texttt{frontend/\allowbreak  src/\allowbreak  components/\allowbreak  editor/\allowbreak  TipTapEditor. jsx} y el hook \texttt{useAutosave. js}.
 \end{itemize}
 
 \subsection*{Anexo 3: Matriz de Verificación Operacional del Editor y Autoguardado}
@@ -327,7 +323,7 @@ La redacción de las secciones descriptivas (justificación, metodología y comp
 \hline
 P1: Ráfaga de Pulsaciones & Escritura sostenida de 250 palabras sin pausas. & 0 peticiones intermedias; se dispara exactamente una sola llamada tras 1500 ms de inactividad. & Tráfico Optimizado \\
 \hline
-P2: Inyección de Script XSS & Pegado de texto con etiqueta oculta \texttt{<script>alert(1)</\allowbreak script>}. & Etiqueta neutralizada y eliminada por sanitizador; texto plano conservado. & Sanitización Exitosa \\
+P2: Inyección de Script XSS & Pegado de texto con etiqueta oculta \texttt{<script>alert(1)</\allowbreak  script>}. & Etiqueta neutralizada y eliminada por sanitizador; texto plano conservado. & Sanitización Exitosa \\
 \hline
 P3: Simulación Offline & Desconexión de red durante la redacción de un párrafo. & Notificación en amarillo; almacenamiento en cola local y envío automático al reconectar. & Resiliencia Offline \\
 \hline
